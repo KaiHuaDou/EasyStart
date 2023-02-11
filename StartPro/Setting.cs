@@ -21,7 +21,7 @@ namespace StartPro
         public static int LargeSize { get { return SmallSize * 4; } }
         public static CornerRadius Radius { get { return new CornerRadius(8); } }
         public static double FontSize { get { return 14; } }
-        public static SolidColorBrush Background { get { return new SolidColorBrush(new Color { R = 0, G = 0, B = 0 }); ; } }
+        public static SolidColorBrush Background { get { return new SolidColorBrush(new Color { A = 255, R = 0, G = 0, B = 0 }); ; } }
 
     }
 }

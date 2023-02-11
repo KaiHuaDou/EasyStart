@@ -20,9 +20,7 @@ namespace StartPro
         public static readonly DependencyProperty AppIconProperty;
         public static readonly DependencyProperty AppPathProperty;
         public static readonly DependencyProperty ClipSizeProperty;
-        public static readonly DependencyProperty ClipColorProperty;
         public static readonly DependencyProperty ClipRadiusProperty;
-        public static readonly DependencyProperty ClipFontSizeProperty;
 
 
         public string AppName
@@ -45,20 +43,10 @@ namespace StartPro
             get { return (ClipType) GetValue(ClipSizeProperty); }
             set { SetValue(ClipSizeProperty, value); }
         }
-        public SolidColorBrush ClipColor
-        {
-            get { return (SolidColorBrush) GetValue(ClipColorProperty); }
-            set { SetValue(ClipColorProperty, value); }
-        }
         public CornerRadius ClipRadius
         {
             get { return (CornerRadius) GetValue(ClipRadiusProperty); }
             set { SetValue(ClipRadiusProperty, value); }
-        }
-        public double ClipFontSize
-        {
-            get { return (double) GetValue(ClipFontSizeProperty); }
-            set { SetValue(ClipFontSizeProperty, value); }
         }
 
         public AppClip( )
@@ -74,16 +62,12 @@ namespace StartPro
             PropertyMetadata appIconMetadata = new PropertyMetadata(SysIcon.Get(Setting.ProcessName));
             PropertyMetadata appPathMetadata = new PropertyMetadata(Setting.ProcessName, AppPathChanged);
             PropertyMetadata clipSizeMetaData = new PropertyMetadata(ClipSizeChanged);
-            PropertyMetadata clipColorMetaData = new PropertyMetadata(Setting.Background);
             PropertyMetadata clipRadiusMetaData = new PropertyMetadata(Setting.Radius);
-            PropertyMetadata clipFontSizeMetaData = new PropertyMetadata(Setting.FontSize);
             AppNameProperty = DependencyProperty.Register("AppName", typeof(string), thisType, appNameMetadata);
             AppIconProperty = DependencyProperty.Register("SysIcon", typeof(ImageSource), thisType, appIconMetadata);
             AppPathProperty = DependencyProperty.Register("AppPath", typeof(string), thisType, appPathMetadata);
             ClipSizeProperty = DependencyProperty.Register("ClipSize", typeof(ClipType), thisType, clipSizeMetaData);
-            ClipColorProperty = DependencyProperty.Register("ClipColor", typeof(SolidColorBrush), thisType, clipColorMetaData);
             ClipRadiusProperty = DependencyProperty.Register("ClipRadius", typeof(CornerRadius), thisType, clipRadiusMetaData);
-            ClipFontSizeProperty = DependencyProperty.Register("ClipFontSize", typeof(double), thisType, clipFontSizeMetaData);
         }
 
         public static void AppPathChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
