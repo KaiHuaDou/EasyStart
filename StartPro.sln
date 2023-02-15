@@ -7,15 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartPro", "StartPro\StartP
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{C49A5913-3005-48EB-A8E0-1AB53AB798DE}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		LICENSE = LICENSE
 		README.md = README.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A762BBEF-6568-4E92-B48C-55B6319E07A3}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
 Global

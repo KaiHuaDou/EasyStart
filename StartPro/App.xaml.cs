@@ -1,11 +1,19 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace StartPro
 {
-    /// <summary>
-    /// App.xaml 的交互逻辑
-    /// </summary>
     public partial class App : Application
     {
+        public class Program
+        {
+            [STAThread]
+            public static void Main( )
+            {
+                App app = new App( );
+                app.InitializeComponent( );
+                app.Run( );
+            }
+        }
     }
 }

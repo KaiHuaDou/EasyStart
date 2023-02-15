@@ -10,7 +10,7 @@
             <ComboBoxItem Content="大" />
         </ComboBox>
         <local:AppClip x:Name="appClip" AppName="Notepad" AppPath="C:\Windows\System32\notepad.exe"
-                AppIcon="Test.png" ClipRadius="32,32,32,32" ClipFontSize="22" Margin="10,10,10,10"
-                ClipSize="Medium" />
+                AppIcon="Test.png" ClipRadius="32,32,32,32" ClipFontSize="22"
+                ClipSize="Small" />
     </StackPanel>
 </Window>
