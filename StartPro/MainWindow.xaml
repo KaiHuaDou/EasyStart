@@ -1,35 +1,16 @@
-﻿<Window x:Class="StartPro.MainWindow"
+﻿<Window Width="512" Height="512" x:Class="StartPro.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:StartPro"
-        Height="512" Width="512">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <local:AppClip Grid.Row="0" Grid.Column="0" />
-        <local:AppClip Grid.Row="0" Grid.Column="1" />
-        <local:AppClip Grid.Row="0" Grid.Column="2" />
-        <local:AppClip Grid.Row="0" Grid.Column="3" />
-        <local:AppClip Grid.Row="1" Grid.Column="0" />
-        <local:AppClip Grid.Row="1" Grid.Column="1" />
-        <local:AppClip Grid.Row="1" Grid.Column="2" />
-        <local:AppClip Grid.Row="1" Grid.Column="3" />
-        <local:AppClip Grid.Row="2" Grid.Column="0" />
-        <local:AppClip Grid.Row="2" Grid.Column="1" />
-        <local:AppClip Grid.Row="2" Grid.Column="2" />
-        <local:AppClip Grid.Row="2" Grid.Column="3" />
-        <local:AppClip Grid.Row="3" Grid.Column="0" />
-        <local:AppClip Grid.Row="3" Grid.Column="1" />
-        <local:AppClip Grid.Row="3" Grid.Column="2" />
-        <local:AppClip Grid.Row="3" Grid.Column="3" />
-    </Grid>
+        ResizeMode="CanMinimize" MouseDown="GoDragMove">
+    <StackPanel>
+        <ComboBox x:Name="clipTypeCombo" SelectionChanged="ChangeClipType">
+            <ComboBoxItem Content="小" />
+            <ComboBoxItem Content="中" />
+            <ComboBoxItem Content="宽" />
+            <ComboBoxItem Content="大" />
+        </ComboBox>
+        <local:AppClip x:Name="appClip" AppName="Notepad" AppPath="C:\Windows\System32\notepad.exe"
+                AppIcon="Test.png" ClipRadius="32,32,32,32" ClipFontSize="22" Margin="10,10,10,10"
+                ClipSize="Medium" />
+    </StackPanel>
 </Window>
