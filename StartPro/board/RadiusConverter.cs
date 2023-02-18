@@ -9,12 +9,12 @@ namespace StartPro
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            switch ((ClipType) value)
+            switch ((BoardType) value)
             {
-                case ClipType.Small: return new CornerRadius(Default.Radius / 2.0);
-                case ClipType.Medium:
-                case ClipType.Wide: return new CornerRadius(Default.Radius);
-                case ClipType.Large: return new CornerRadius(Default.Radius * 2.0);
+                case BoardType.Small: return new CornerRadius(Default.Radius / Default.Zoom);
+                case BoardType.Medium:
+                case BoardType.Wide: return new CornerRadius(Default.Radius);
+                case BoardType.Large: return new CornerRadius(Default.Radius * Default.Zoom);
             }
             return new CornerRadius(Default.Radius);
         }

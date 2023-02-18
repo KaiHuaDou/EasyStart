@@ -6,15 +6,11 @@ using System.Windows.Input;
 
 namespace StartPro
 {
-    public enum ClipType
-    {
-        Small, Medium, Wide, Large
-    }
-    public partial class AppClip : UserControl
+    public partial class Board : UserControl
     {
         private ProcessStartInfo exec = new ProcessStartInfo(Default.AppName);
 
-        public AppClip( )
+        public Board( )
         {
             InitializeComponent( );
             border.DataContext = this;
@@ -22,12 +18,13 @@ namespace StartPro
 
         public static void AppPathChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            (o as AppClip).exec = new ProcessStartInfo(e.NewValue as string);
+            (o as Board).exec = new ProcessStartInfo(e.NewValue as string);
         }
 
-        private void Execute(object sender, MouseButtonEventArgs e)
+        private void Execute(object o, MouseButtonEventArgs e)
         {
-            Process.Start(exec);
+            if (!IsDrag)
+                Process.Start(exec);
         }
     }
 }

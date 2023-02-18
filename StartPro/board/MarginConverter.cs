@@ -9,24 +9,24 @@ namespace StartPro
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            ClipType clipType = (ClipType) value;
+            BoardType clipType = (BoardType) value;
             switch (clipType)
             {
-                case ClipType.Small:
-                    return new Thickness(Default.ImageMargin / 2.0);
-                case ClipType.Medium:
-                case ClipType.Wide:
+                case BoardType.Small:
+                    return new Thickness(Default.ImageMargin / Default.Zoom);
+                case BoardType.Medium:
+                case BoardType.Wide:
                     return new Thickness(
                         Default.ImageMargin,
                         Default.ImageMargin,
                         Default.ImageMargin,
-                        Default.ImageMargin / 2);
-                case ClipType.Large:
+                        Default.ImageMargin / Default.Zoom);
+                case BoardType.Large:
                     return new Thickness(
-                        Default.ImageMargin * 2,
-                        Default.ImageMargin * 2,
-                        Default.ImageMargin * 2,
-                        Default.ImageMargin / 2);
+                        Default.ImageMargin * Default.Zoom,
+                        Default.ImageMargin * Default.Zoom,
+                        Default.ImageMargin * Default.Zoom,
+                        Default.ImageMargin / Default.Zoom);
             }
             return Default.ImageMargin;
         }

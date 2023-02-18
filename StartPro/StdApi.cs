@@ -1,11 +1,14 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.IO;
+using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace StartPro
 {
-    public static class SysIcon
+    public static class StdApi
     {
         public static ImageSource Get(string path)
         {

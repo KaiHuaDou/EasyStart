@@ -10,20 +10,20 @@ namespace StartPro
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string mode = (string) parameter;
-            ClipType clipType = (ClipType) value;
+            BoardType clipType = (BoardType) value;
             if (mode == "Label")
-                return clipType == ClipType.Small ? Visibility.Collapsed : Visibility.Visible;
+                return clipType == BoardType.Small ? Visibility.Collapsed : Visibility.Visible;
             switch (clipType)
             {
-                case ClipType.Small: return Default.SmallSize;
-                case ClipType.Medium: return Default.MediumSize;
-                case ClipType.Wide:
+                case BoardType.Small: return Default.SmallSize;
+                case BoardType.Medium: return Default.MediumSize;
+                case BoardType.Wide:
                     if (mode == "Height")
-                        return Default.WideSize / 2.0;
+                        return Default.WideSize / Default.Zoom;
                     else if (mode == "Width")
                         return Default.WideSize;
                     break;
-                case ClipType.Large: return Default.LargeSize;
+                case BoardType.Large: return Default.LargeSize;
             }
             return Default.MediumSize;
         }

@@ -1,16 +1,31 @@
-﻿<Window Width="512" Height="512" x:Class="StartPro.MainWindow"
+﻿<Window x:Class="StartPro.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:StartPro"
-        ResizeMode="CanMinimize" MouseDown="GoDragMove">
+        SizeChanged="SetGrid" Width="512" Height="512">
     <StackPanel>
-        <ComboBox x:Name="clipTypeCombo" SelectionChanged="ChangeClipType">
+        <ComboBox x:Name="clipTypeCombo" SelectionChanged="ChangeBoardType">
             <ComboBoxItem Content="小" />
             <ComboBoxItem Content="中" />
             <ComboBoxItem Content="宽" />
             <ComboBoxItem Content="大" />
         </ComboBox>
-        <local:AppClip x:Name="appClip" AppName="Notepad" AppPath="C:\Windows\System32\notepad.exe"
-                AppIcon="Test.png" ClipRadius="32,32,32,32" ClipFontSize="22"
-                ClipSize="Small" />
+        <Grid x:Name="mainGrid" ShowGridLines="True">
+            <local:Board AppName="Notepad" AppPath="C:\Windows\System32\notepad.exe"
+                    AppIcon="Test.png" BoardFontSize="22" BoardSize="Small"
+                    MouseRightButtonDown="BoardDragStart" MouseMove="BoardDragging"
+                    MouseRightButtonUp="BoardDragStop" />
+            <local:Board AppName="Notepad" AppPath="C:\Windows\System32\notepad.exe"
+                    AppIcon="Test.png" BoardFontSize="22" BoardSize="Small" Grid.Row="1"
+                    MouseRightButtonDown="BoardDragStart" MouseMove="BoardDragging"
+                    MouseRightButtonUp="BoardDragStop" />
+            <local:Board AppName="Notepad" AppPath="C:\Windows\System32\notepad.exe"
+                    AppIcon="Test.png" BoardFontSize="22" BoardSize="Small" Grid.Row="3"
+                    MouseRightButtonDown="BoardDragStart" MouseMove="BoardDragging"
+                    MouseRightButtonUp="BoardDragStop" />
+            <local:Board AppName="Notepad" AppPath="C:\Windows\System32\notepad.exe"
+                    AppIcon="Test.png" BoardFontSize="22" BoardSize="Small" Grid.Row="2"
+                    MouseRightButtonDown="BoardDragStart" MouseMove="BoardDragging"
+                    MouseRightButtonUp="BoardDragStop" />
+        </Grid>
     </StackPanel>
 </Window>
