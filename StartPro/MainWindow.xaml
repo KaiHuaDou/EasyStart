@@ -3,29 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:StartPro"
         SizeChanged="SetGrid" Width="512" Height="512">
     <StackPanel>
-        <ComboBox x:Name="clipTypeCombo" SelectionChanged="ChangeBoardType">
-            <ComboBoxItem Content="小" />
-            <ComboBoxItem Content="中" />
-            <ComboBoxItem Content="宽" />
-            <ComboBoxItem Content="大" />
-        </ComboBox>
-        <Grid x:Name="mainGrid" ShowGridLines="True">
-            <local:Board AppName="Notepad" AppPath="C:\Windows\System32\notepad.exe"
-                    AppIcon="Test.png" BoardFontSize="22" BoardSize="Small"
-                    MouseRightButtonDown="BoardDragStart" MouseMove="BoardDragging"
-                    MouseRightButtonUp="BoardDragStop" />
-            <local:Board AppName="Notepad" AppPath="C:\Windows\System32\notepad.exe"
-                    AppIcon="Test.png" BoardFontSize="22" BoardSize="Small" Grid.Row="1"
-                    MouseRightButtonDown="BoardDragStart" MouseMove="BoardDragging"
-                    MouseRightButtonUp="BoardDragStop" />
-            <local:Board AppName="Notepad" AppPath="C:\Windows\System32\notepad.exe"
-                    AppIcon="Test.png" BoardFontSize="22" BoardSize="Small" Grid.Row="3"
-                    MouseRightButtonDown="BoardDragStart" MouseMove="BoardDragging"
-                    MouseRightButtonUp="BoardDragStop" />
-            <local:Board AppName="Notepad" AppPath="C:\Windows\System32\notepad.exe"
-                    AppIcon="Test.png" BoardFontSize="22" BoardSize="Small" Grid.Row="2"
-                    MouseRightButtonDown="BoardDragStart" MouseMove="BoardDragging"
-                    MouseRightButtonUp="BoardDragStop" />
-        </Grid>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="添加" Margin="10,10,5,10" Padding="5" Click="AddBoard" />
+            <Button Content="设置" Margin="10,10,5,10" Padding="5"/>
+        </StackPanel>
+        <Grid x:Name="mainGrid" ShowGridLines="True"/>
     </StackPanel>
 </Window>

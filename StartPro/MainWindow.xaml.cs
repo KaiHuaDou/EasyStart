@@ -6,28 +6,14 @@ using System.Windows.Input;
 namespace StartPro
 {
 
-    public struct BoardGrid
-    {
-        public int Row;
-        public int Col;
-    }
     public partial class MainWindow : Window
     {
-        bool[,] BoardPos = new bool[64, 64];
+        private Point dragPos;
+        private Thickness dragMargin;
 
         public MainWindow( )
         {
             InitializeComponent( );
-        }
-
-        private void ChangeBoardType(object o, SelectionChangedEventArgs e)
-        {
-            foreach (Board clip in mainGrid.Children)
-            {
-                clip.BoardSize = (BoardType) clipTypeCombo.SelectedIndex;
-                Grid.SetRowSpan(clip, clipTypeCombo.SelectedIndex + 1);
-                Grid.SetColumnSpan(clip, clipTypeCombo.SelectedIndex + 1);
-            }
         }
 
         private void SetGrid(object o, SizeChangedEventArgs e)
@@ -54,14 +40,11 @@ namespace StartPro
             }
         }
 
-        Point dragPos;
-        Thickness dragMargin;
-
         private void BoardDragStart(object o, MouseButtonEventArgs e)
         {
             Board c = o as Board;
             BoardGrid pos = PtrPos;
-            MarkBoard(pos, c.BoardSize, false);
+            Board.SetBoardPos(pos, c.BoardSize, false);
             Board.IsDrag = true;
             dragPos = e.GetPosition(this);
             dragMargin = c.Margin;
@@ -83,11 +66,11 @@ namespace StartPro
             c.Margin = new Thickness(0);
             c.ReleaseMouseCapture( );
             BoardGrid pos = PtrPos;
-            while (!CheckBoard(pos, c.BoardSize))
-                pos.Row += 1;
+            if (!Board.IsPosEmpty(pos, c.BoardSize))
+                return;
             Grid.SetRow(c, pos.Row);
             Grid.SetColumn(c, pos.Col);
-            MarkBoard(pos, c.BoardSize, true);
+            Board.SetBoardPos(pos, c.BoardSize, true);
         }
         private BoardGrid PtrPos
         {
@@ -103,21 +86,24 @@ namespace StartPro
             }
         }
 
-        private void MarkBoard(BoardGrid pos, BoardType type, bool mark = true)
+        private void AddBoard(object sender, RoutedEventArgs e)
         {
-            BoardGrid size = Board.GetSize(type);
-            for (int i = 0; i < size.Row; i++)
-                for (int j = 0; j < size.Col; j++)
-                    BoardPos[pos.Row + i, pos.Col + j] = mark;
-        }
-        private bool CheckBoard(BoardGrid pos, BoardType type)
-        {
-            BoardGrid size = Board.GetSize(type);
-            for (int i = 0; i < size.Row; i++)
-                for (int j = 0; j < size.Col; j++)
-                    if (BoardPos[pos.Row + i, pos.Col + j])
-                        return false;
-            return true;
+            Add window = new Add( );
+            window.ShowDialog( );
+            if (window.board.IsEnabled == true)
+            {
+                Board board = window.board;
+                BoardGrid grid = Board.GetSize(board.BoardSize);
+                while (!Board.IsPosEmpty(grid, board.BoardSize))
+                    grid.Col += 1;
+                Grid.SetRowSpan(board, grid.Row);
+                Grid.SetColumnSpan(board, grid.Col);
+                board.MouseRightButtonDown += BoardDragStart;
+                board.MouseMove += BoardDragging;
+                board.MouseRightButtonUp += BoardDragStop;
+                board.Margin = new Thickness(0);
+                mainGrid.Children.Add(board);
+            }
         }
     }
 }

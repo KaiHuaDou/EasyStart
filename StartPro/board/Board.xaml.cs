@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 
 namespace StartPro
@@ -18,12 +18,16 @@ namespace StartPro
 
         public static void AppPathChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            (o as Board).exec = new ProcessStartInfo(e.NewValue as string);
+            Board board = o as Board;
+            board.exec = new ProcessStartInfo(e.NewValue as string);
+            board.AppName = new FileInfo(e.NewValue as string).Name;
+            board.AppIcon = StdApi.GetIcon(e.NewValue as string);
+
         }
 
         private void Execute(object o, MouseButtonEventArgs e)
         {
-            if (!IsDrag)
+            if (!IsDrag && IsEnabled)
                 Process.Start(exec);
         }
     }

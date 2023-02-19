@@ -1,8 +1,6 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Reflection;
-using System.Runtime.Serialization.Formatters.Binary;
+﻿using System.Drawing;
+using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -10,15 +8,20 @@ namespace StartPro
 {
     public static class StdApi
     {
-        public static ImageSource Get(string path)
+        public static ImageSource GetIcon(string path)
         {
             try
             {
-                MemoryStream stream = new MemoryStream( );
-                Icon.ExtractAssociatedIcon(path).Save(stream);
-                return new BitmapImage { StreamSource = stream };
+                Icon icon = Icon.ExtractAssociatedIcon(path);
+                ImageSource image = Imaging.CreateBitmapSourceFromHIcon(
+                    icon.Handle, Int32Rect.Empty,
+                    BitmapSizeOptions.FromEmptyOptions( ));
+                return image;
             }
-            catch { return null; }
+            catch
+            {
+                return new BitmapImage( );
+            }
         }
     }
 }

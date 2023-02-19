@@ -15,15 +15,18 @@ namespace StartPro
                 return clipType == BoardType.Small ? Visibility.Collapsed : Visibility.Visible;
             switch (clipType)
             {
-                case BoardType.Small: return Default.SmallSize;
-                case BoardType.Medium: return Default.MediumSize;
+                case BoardType.Small:
+                    return Default.SmallSize;
+                case BoardType.Medium:
+                    return Default.MediumSize;
                 case BoardType.Wide:
                     if (mode == "Height")
                         return Default.WideSize / Default.Zoom;
                     else if (mode == "Width")
                         return Default.WideSize;
                     break;
-                case BoardType.Large: return Default.LargeSize;
+                case BoardType.Large:
+                    return Default.LargeSize;
             }
             return Default.MediumSize;
         }

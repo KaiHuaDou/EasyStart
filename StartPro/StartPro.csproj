@@ -53,6 +53,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Add.xaml.cs">
+      <DependentUpon>Add.xaml</DependentUpon>
+    </Compile>
     <Compile Include="board\Board.cs" />
     <Compile Include="board\BoardType.cs" />
     <Compile Include="board\Default.cs" />
@@ -60,6 +63,10 @@
     <Compile Include="board\RadiusConverter.cs" />
     <Compile Include="board\SizeConverter.cs" />
     <Compile Include="StdApi.cs" />
+    <Page Include="Add.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="board\Board.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

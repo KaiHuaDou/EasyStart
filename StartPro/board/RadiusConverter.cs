@@ -11,10 +11,13 @@ namespace StartPro
         {
             switch ((BoardType) value)
             {
-                case BoardType.Small: return new CornerRadius(Default.Radius / Default.Zoom);
+                case BoardType.Small:
+                    return new CornerRadius(Default.Radius / Default.Zoom);
                 case BoardType.Medium:
-                case BoardType.Wide: return new CornerRadius(Default.Radius);
-                case BoardType.Large: return new CornerRadius(Default.Radius * Default.Zoom);
+                case BoardType.Wide:
+                    return new CornerRadius(Default.Radius);
+                case BoardType.Large:
+                    return new CornerRadius(Default.Radius * Default.Zoom);
             }
             return new CornerRadius(Default.Radius);
         }

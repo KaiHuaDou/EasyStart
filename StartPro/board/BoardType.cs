@@ -5,6 +5,12 @@
         Small, Medium, Wide, Large
     }
 
+    public struct BoardGrid
+    {
+        public int Row;
+        public int Col;
+    }
+
     public partial class Board
     {
         public static BoardGrid GetSize(BoardType type)
