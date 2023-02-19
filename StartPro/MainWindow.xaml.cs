@@ -40,45 +40,45 @@ namespace StartPro
             }
         }
 
-        private void BoardDragStart(object o, MouseButtonEventArgs e)
+        private void TileDragStart(object o, MouseButtonEventArgs e)
         {
-            Board c = o as Board;
-            BoardGrid pos = PtrPos;
-            Board.SetBoardPos(pos, c.BoardSize, false);
-            Board.IsDrag = true;
+            Tile c = o as Tile;
+            TileGrid pos = PtrPos;
+            Tile.SetTilePos(pos, c.TileSize, false);
+            Tile.IsDrag = true;
             dragPos = e.GetPosition(this);
             dragMargin = c.Margin;
             c.CaptureMouse( );
         }
-        private void BoardDragging(object o, MouseEventArgs e)
+        private void TileDragging(object o, MouseEventArgs e)
         {
-            if (!Board.IsDrag)
+            if (!Tile.IsDrag)
                 return;
             var pos = e.GetPosition(this);
             var dp = pos - dragPos;
-            Board c = o as Board;
+            Tile c = o as Tile;
             c.Margin = new Thickness(dragMargin.Left + dp.X, dragMargin.Top + dp.Y, dragMargin.Right - dp.X, dragMargin.Bottom - dp.Y);
         }
-        private void BoardDragStop(object o, MouseButtonEventArgs e)
+        private void TileDragStop(object o, MouseButtonEventArgs e)
         {
-            Board.IsDrag = false;
-            Board c = o as Board;
+            Tile.IsDrag = false;
+            Tile c = o as Tile;
             c.Margin = new Thickness(0);
             c.ReleaseMouseCapture( );
-            BoardGrid pos = PtrPos;
-            if (!Board.IsPosEmpty(pos, c.BoardSize))
+            TileGrid pos = PtrPos;
+            if (!Tile.IsPosEmpty(pos, c.TileSize))
                 return;
             Grid.SetRow(c, pos.Row);
             Grid.SetColumn(c, pos.Col);
-            Board.SetBoardPos(pos, c.BoardSize, true);
+            Tile.SetTilePos(pos, c.TileSize, true);
         }
-        private BoardGrid PtrPos
+        private TileGrid PtrPos
         {
             get
             {
                 Point point = Mouse.GetPosition(mainGrid);
                 int cellSize = Default.SmallSize + Default.Margin;
-                return new BoardGrid
+                return new TileGrid
                 {
                     Row = (int) Math.Floor(point.Y / cellSize),
                     Col = (int) Math.Floor(point.X / cellSize)
@@ -86,23 +86,23 @@ namespace StartPro
             }
         }
 
-        private void AddBoard(object sender, RoutedEventArgs e)
+        private void AddTile(object sender, RoutedEventArgs e)
         {
             Add window = new Add( );
             window.ShowDialog( );
-            if (window.board.IsEnabled == true)
+            if (window.tile.IsEnabled == true)
             {
-                Board board = window.board;
-                BoardGrid grid = Board.GetSize(board.BoardSize);
-                while (!Board.IsPosEmpty(grid, board.BoardSize))
+                Tile tile = window.tile;
+                TileGrid grid = Tile.GetSize(tile.TileSize);
+                while (!Tile.IsPosEmpty(grid, tile.TileSize))
                     grid.Col += 1;
-                Grid.SetRowSpan(board, grid.Row);
-                Grid.SetColumnSpan(board, grid.Col);
-                board.MouseRightButtonDown += BoardDragStart;
-                board.MouseMove += BoardDragging;
-                board.MouseRightButtonUp += BoardDragStop;
-                board.Margin = new Thickness(0);
-                mainGrid.Children.Add(board);
+                Grid.SetRowSpan(tile, grid.Row);
+                Grid.SetColumnSpan(tile, grid.Col);
+                tile.MouseRightButtonDown += TileDragStart;
+                tile.MouseMove += TileDragging;
+                tile.MouseRightButtonUp += TileDragStop;
+                tile.Margin = new Thickness(0);
+                mainGrid.Children.Add(tile);
             }
         }
     }

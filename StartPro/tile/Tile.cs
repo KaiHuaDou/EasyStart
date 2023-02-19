@@ -5,24 +5,24 @@ using System.Windows.Media.Imaging;
 
 namespace StartPro
 {
-    public partial class Board
+    public partial class Tile
     {
         public static bool IsDrag { get; set; }
-        public static bool[,] BoardPos = new bool[64, 64];
+        public static bool[,] TilePos = new bool[64, 64];
 
-        public static void SetBoardPos(BoardGrid pos, BoardType type, bool mark = true)
+        public static void SetTilePos(TileGrid pos, TileType type, bool mark = true)
         {
-            BoardGrid size = Board.GetSize(type);
+            TileGrid size = Tile.GetSize(type);
             for (int i = 0; i < size.Row; i++)
                 for (int j = 0; j < size.Col; j++)
-                    BoardPos[pos.Row + i, pos.Col + j] = mark;
+                    TilePos[pos.Row + i, pos.Col + j] = mark;
         }
-        public static bool IsPosEmpty(BoardGrid pos, BoardType type)
+        public static bool IsPosEmpty(TileGrid pos, TileType type)
         {
-            BoardGrid size = Board.GetSize(type);
+            TileGrid size = Tile.GetSize(type);
             for (int i = 0; i < size.Row; i++)
                 for (int j = 0; j < size.Col; j++)
-                    if (BoardPos[pos.Row + i, pos.Col + j])
+                    if (TilePos[pos.Row + i, pos.Col + j])
                         return false;
             return true;
         }
@@ -31,41 +31,41 @@ namespace StartPro
         public static readonly DependencyProperty AppNameProperty;
         public static readonly DependencyProperty AppIconProperty;
         public static readonly DependencyProperty AppPathProperty;
-        public static readonly DependencyProperty BoardSizeProperty;
-        public static readonly DependencyProperty BoardColorProperty;
-        public static readonly DependencyProperty BoardFontSizeProperty;
+        public static readonly DependencyProperty TileSizeProperty;
+        public static readonly DependencyProperty TileColorProperty;
+        public static readonly DependencyProperty TileFontSizeProperty;
 
-        static Board( )
+        static Tile( )
         {
-            Type thisType = typeof(Board);
+            Type thisType = typeof(Tile);
             PropertyMetadata appNameMeta = new PropertyMetadata("Application");
             PropertyMetadata appIconMeta = new PropertyMetadata(new BitmapImage( ));
             PropertyMetadata appPathMeta = new PropertyMetadata(Default.AppName, AppPathChanged);
-            PropertyMetadata boardSizeMeta = new PropertyMetadata(BoardType.Medium);
-            PropertyMetadata boardColorMeta = new PropertyMetadata(Default.Background);
-            PropertyMetadata boardFontSizeMeta = new PropertyMetadata(Default.FontSize);
+            PropertyMetadata TileSizeMeta = new PropertyMetadata(TileType.Medium);
+            PropertyMetadata TileColorMeta = new PropertyMetadata(Default.Background);
+            PropertyMetadata TileFontSizeMeta = new PropertyMetadata(Default.FontSize);
             AppNameProperty = DependencyProperty.Register("AppName", typeof(string), thisType, appNameMeta);
             AppIconProperty = DependencyProperty.Register("AppIcon", typeof(ImageSource), thisType, appIconMeta);
             AppPathProperty = DependencyProperty.Register("AppPath", typeof(string), thisType, appPathMeta);
-            BoardSizeProperty = DependencyProperty.Register("BoardSize", typeof(BoardType), thisType, boardSizeMeta);
-            BoardColorProperty = DependencyProperty.Register("BoardColor", typeof(SolidColorBrush), thisType, boardColorMeta);
-            BoardFontSizeProperty = DependencyProperty.Register("BoardFontSize", typeof(double), thisType, boardFontSizeMeta);
+            TileSizeProperty = DependencyProperty.Register("TileSize", typeof(TileType), thisType, TileSizeMeta);
+            TileColorProperty = DependencyProperty.Register("TileColor", typeof(SolidColorBrush), thisType, TileColorMeta);
+            TileFontSizeProperty = DependencyProperty.Register("TileFontSize", typeof(double), thisType, TileFontSizeMeta);
         }
 
-        public BoardType BoardSize
+        public TileType TileSize
         {
-            get => (BoardType) GetValue(BoardSizeProperty);
-            set => SetValue(BoardSizeProperty, value);
+            get => (TileType) GetValue(TileSizeProperty);
+            set => SetValue(TileSizeProperty, value);
         }
-        public SolidColorBrush BoardColor
+        public SolidColorBrush TileColor
         {
-            get => (SolidColorBrush) GetValue(BoardColorProperty);
-            set => SetValue(BoardColorProperty, value);
+            get => (SolidColorBrush) GetValue(TileColorProperty);
+            set => SetValue(TileColorProperty, value);
         }
-        public double BoardFontSize
+        public double TileFontSize
         {
-            get => (double) GetValue(BoardFontSizeProperty);
-            set => SetValue(BoardFontSizeProperty, value);
+            get => (double) GetValue(TileFontSizeProperty);
+            set => SetValue(TileFontSizeProperty, value);
         }
 
         public string AppName

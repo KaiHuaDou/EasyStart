@@ -5,18 +5,18 @@ using System.Windows.Data;
 
 namespace StartPro
 {
-    public class RadiusConverter : IValueConverter
+    internal class RadiusConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            switch ((BoardType) value)
+            switch ((TileType) value)
             {
-                case BoardType.Small:
+                case TileType.Small:
                     return new CornerRadius(Default.Radius / Default.Zoom);
-                case BoardType.Medium:
-                case BoardType.Wide:
+                case TileType.Medium:
+                case TileType.Wide:
                     return new CornerRadius(Default.Radius);
-                case BoardType.Large:
+                case TileType.Large:
                     return new CornerRadius(Default.Radius * Default.Zoom);
             }
             return new CornerRadius(Default.Radius);

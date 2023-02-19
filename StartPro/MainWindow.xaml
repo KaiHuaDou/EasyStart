@@ -4,9 +4,12 @@
         SizeChanged="SetGrid" Width="512" Height="512">
     <StackPanel>
         <StackPanel Orientation="Horizontal">
-            <Button Content="添加" Margin="10,10,5,10" Padding="5" Click="AddBoard" />
+            <Button Content="添加" Margin="10,10,5,10" Padding="5" Click="AddTile" />
             <Button Content="设置" Margin="10,10,5,10" Padding="5"/>
         </StackPanel>
-        <Grid x:Name="mainGrid" ShowGridLines="True"/>
+        <Grid x:Name="mainGrid" ShowGridLines="True">
+            <local:Tile AppPath="D:\编程\EasyBrowserAdvanced\极简浏览器Cef\bin\2.0D\极简浏览器.exe"
+                    Grid.RowSpan="2" Grid.ColumnSpan="2" />
+        </Grid>
     </StackPanel>
 </Window>

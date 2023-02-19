@@ -3,14 +3,15 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace StartPro
 {
-    public partial class Board : UserControl
+    public partial class Tile : UserControl
     {
         private ProcessStartInfo exec = new ProcessStartInfo(Default.AppName);
 
-        public Board( )
+        public Tile( )
         {
             InitializeComponent( );
             border.DataContext = this;
@@ -18,10 +19,10 @@ namespace StartPro
 
         public static void AppPathChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            Board board = o as Board;
-            board.exec = new ProcessStartInfo(e.NewValue as string);
-            board.AppName = new FileInfo(e.NewValue as string).Name;
-            board.AppIcon = StdApi.GetIcon(e.NewValue as string);
+            Tile tile = o as Tile;
+            tile.exec = new ProcessStartInfo(e.NewValue as string);
+            tile.AppName = new FileInfo(e.NewValue as string).Name;
+            tile.AppIcon = StdApi.GetIcon(e.NewValue as string);
 
         }
 

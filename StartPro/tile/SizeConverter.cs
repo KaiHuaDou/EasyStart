@@ -5,27 +5,27 @@ using System.Windows.Data;
 
 namespace StartPro
 {
-    public class SizeConverter : IValueConverter
+    internal class SizeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string mode = (string) parameter;
-            BoardType clipType = (BoardType) value;
+            TileType clipType = (TileType) value;
             if (mode == "Label")
-                return clipType == BoardType.Small ? Visibility.Collapsed : Visibility.Visible;
+                return clipType == TileType.Small ? Visibility.Collapsed : Visibility.Visible;
             switch (clipType)
             {
-                case BoardType.Small:
+                case TileType.Small:
                     return Default.SmallSize;
-                case BoardType.Medium:
+                case TileType.Medium:
                     return Default.MediumSize;
-                case BoardType.Wide:
+                case TileType.Wide:
                     if (mode == "Height")
                         return Default.WideSize / Default.Zoom;
                     else if (mode == "Width")
                         return Default.WideSize;
                     break;
-                case BoardType.Large:
+                case TileType.Large:
                     return Default.LargeSize;
             }
             return Default.MediumSize;

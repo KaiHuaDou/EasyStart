@@ -10,8 +10,8 @@ namespace StartPro
     {
         public Add( ) => InitializeComponent( );
 
-        private void BoardSizeChanged(object o, SelectionChangedEventArgs e) 
-            => board.BoardSize = (BoardType) sizeBox.SelectedIndex;
+        private void TileSizeChanged(object o, SelectionChangedEventArgs e) 
+            => tile.TileSize = (TileType) sizeBox.SelectedIndex;
 
         private void SelectExe(object o, RoutedEventArgs e)
         {
@@ -45,8 +45,8 @@ namespace StartPro
         {
             try
             {
-                board.AppPath = pathBox.Text;
-                nameBox.Text = board.AppName;
+                tile.AppPath = pathBox.Text;
+                nameBox.Text = tile.AppName;
                 iconBox.Text = "";
                 OkButton.IsEnabled = true;
             }
@@ -58,19 +58,19 @@ namespace StartPro
         {
             try
             {
-                board.AppIcon = new BitmapImage(new Uri(iconBox.Text));
+                tile.AppIcon = new BitmapImage(new Uri(iconBox.Text));
             }
             catch { }
         }
 
         private void NameChanged(object o, TextChangedEventArgs e)
-            => board.AppName = nameBox.Text;
+            => tile.AppName = nameBox.Text;
 
         private void fontBox_TextChanged(object o, TextChangedEventArgs e)
         {
             try
             {
-                board.BoardFontSize = int.Parse(fontBox.Text);
+                tile.TileFontSize = int.Parse(fontBox.Text);
             }
             catch { }
         }
@@ -80,8 +80,8 @@ namespace StartPro
 
         private void TaskOk(object sender, RoutedEventArgs e)
         {
-            board.IsEnabled = true;
-            mainPanel.Children.Remove(board);
+            tile.IsEnabled = true;
+            mainPanel.Children.Remove(tile);
             this.Close( );
         }
     }

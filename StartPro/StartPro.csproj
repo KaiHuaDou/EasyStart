@@ -56,18 +56,19 @@
     <Compile Include="Add.xaml.cs">
       <DependentUpon>Add.xaml</DependentUpon>
     </Compile>
-    <Compile Include="board\Board.cs" />
-    <Compile Include="board\BoardType.cs" />
-    <Compile Include="board\Default.cs" />
-    <Compile Include="board\MarginConverter.cs" />
-    <Compile Include="board\RadiusConverter.cs" />
-    <Compile Include="board\SizeConverter.cs" />
+    <Compile Include="tile\Tile.cs" />
+    <Compile Include="tile\TileType.cs" />
+    <Compile Include="tile\Default.cs" />
+    <Compile Include="tile\MarginConverter.cs" />
+    <Compile Include="tile\RadiusConverter.cs" />
+    <Compile Include="tile\ColorConverter.cs" />
+    <Compile Include="tile\SizeConverter.cs" />
     <Compile Include="StdApi.cs" />
     <Page Include="Add.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="board\Board.xaml">
+    <Page Include="tile\Tile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -79,8 +80,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="board\Board.xaml.cs">
-      <DependentUpon>Board.xaml</DependentUpon>
+    <Compile Include="tile\Tile.xaml.cs">
+      <DependentUpon>Tile.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
