@@ -26,13 +26,13 @@ jobs:
         uses: actions/setup-dotnet@v3
 
       - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1.0.2
+        uses: microsoft/setup-msbuild@v1
 
       - name: Setup NuGet
         uses: nuget/setup-nuget@v1
         with:
           nuget-api-key: ${{ secrets.NuGetAPIKey }}
-          nuget-version: "5.x"
+          nuget-version: "6.x"
 
       - name: Restore NuGet Packages
         run: nuget restore

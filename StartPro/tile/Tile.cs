@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace StartPro
 {
-    public partial class Tile
+    [Serializable]
+    public partial class Tile: ISerializable
     {
         public static bool IsDrag { get; set; }
         public static bool[,] TilePos = new bool[64, 64];
@@ -27,6 +29,16 @@ namespace StartPro
             return true;
         }
 
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("AppName", AppName);
+            info.AddValue("AppIcon", AppIcon);
+            info.AddValue("AppPath", AppPath);
+            info.AddValue("TileSize", TileSize);
+            info.AddValue("TileColor", TileColor);
+            info.AddValue("TileFontSize", TileFontSize);
+        }
+
         #region DependencyProperties
         public static readonly DependencyProperty AppNameProperty;
         public static readonly DependencyProperty AppIconProperty;
@@ -39,13 +51,13 @@ namespace StartPro
         {
             Type thisType = typeof(Tile);
             PropertyMetadata appNameMeta = new PropertyMetadata("Application");
-            PropertyMetadata appIconMeta = new PropertyMetadata(new BitmapImage( ));
+            PropertyMetadata appIconMeta = new PropertyMetadata(AppIconChanged);
             PropertyMetadata appPathMeta = new PropertyMetadata(Default.AppName, AppPathChanged);
             PropertyMetadata TileSizeMeta = new PropertyMetadata(TileType.Medium);
             PropertyMetadata TileColorMeta = new PropertyMetadata(Default.Background);
             PropertyMetadata TileFontSizeMeta = new PropertyMetadata(Default.FontSize);
             AppNameProperty = DependencyProperty.Register("AppName", typeof(string), thisType, appNameMeta);
-            AppIconProperty = DependencyProperty.Register("AppIcon", typeof(ImageSource), thisType, appIconMeta);
+            AppIconProperty = DependencyProperty.Register("AppIcon", typeof(string), thisType, appIconMeta);
             AppPathProperty = DependencyProperty.Register("AppPath", typeof(string), thisType, appPathMeta);
             TileSizeProperty = DependencyProperty.Register("TileSize", typeof(TileType), thisType, TileSizeMeta);
             TileColorProperty = DependencyProperty.Register("TileColor", typeof(SolidColorBrush), thisType, TileColorMeta);
@@ -73,9 +85,9 @@ namespace StartPro
             get => (string) GetValue(AppNameProperty);
             set => SetValue(AppNameProperty, value);
         }
-        public ImageSource AppIcon
+        public string AppIcon
         {
-            get => (ImageSource) GetValue(AppIconProperty);
+            get => (string) GetValue(AppIconProperty);
             set => SetValue(AppIconProperty, value);
         }
         public string AppPath

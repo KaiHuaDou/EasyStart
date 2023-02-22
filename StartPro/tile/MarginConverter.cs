@@ -31,9 +31,7 @@ namespace StartPro
             return Default.ImageMargin;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotSupportedException( );
-        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) 
+            => throw new NotSupportedException( );
     }
 }

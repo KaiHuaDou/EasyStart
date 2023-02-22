@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Xml.Serialization;
 
 namespace StartPro
 {
@@ -14,6 +17,9 @@ namespace StartPro
         public MainWindow( )
         {
             InitializeComponent( );
+            HashSet<Tile> tiles = TilesConfig.Load( );
+            foreach (Tile tile in tiles)
+                mainGrid.Children.Add(tile);
         }
 
         private void SetGrid(object o, SizeChangedEventArgs e)
@@ -22,21 +28,17 @@ namespace StartPro
             int WidthCnt = (int) Math.Floor(this.ActualWidth / Default.SmallSize);
             while (true)
             {
-                if (mainGrid.RowDefinitions.Count == HeightCnt)
-                    break;
+                if (mainGrid.RowDefinitions.Count == HeightCnt) break;
                 else if (mainGrid.RowDefinitions.Count < HeightCnt)
                     mainGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(Default.SmallSize + Default.Margin) });
-                else
-                    mainGrid.RowDefinitions.RemoveAt(0);
+                else mainGrid.RowDefinitions.RemoveAt(0);
             }
             while (true)
             {
-                if (mainGrid.ColumnDefinitions.Count == WidthCnt)
-                    break;
+                if (mainGrid.ColumnDefinitions.Count == WidthCnt) break;
                 else if (mainGrid.ColumnDefinitions.Count < WidthCnt)
                     mainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(Default.SmallSize + Default.Margin) });
-                else
-                    mainGrid.ColumnDefinitions.RemoveAt(0);
+                else mainGrid.ColumnDefinitions.RemoveAt(0);
             }
         }
 
@@ -52,8 +54,7 @@ namespace StartPro
         }
         private void TileDragging(object o, MouseEventArgs e)
         {
-            if (!Tile.IsDrag)
-                return;
+            if (!Tile.IsDrag) return;
             var pos = e.GetPosition(this);
             var dp = pos - dragPos;
             Tile c = o as Tile;
@@ -66,8 +67,7 @@ namespace StartPro
             c.Margin = new Thickness(0);
             c.ReleaseMouseCapture( );
             TileGrid pos = PtrPos;
-            if (!Tile.IsPosEmpty(pos, c.TileSize))
-                return;
+            if (!Tile.IsPosEmpty(pos, c.TileSize)) return;
             Grid.SetRow(c, pos.Row);
             Grid.SetColumn(c, pos.Col);
             Tile.SetTilePos(pos, c.TileSize, true);
@@ -90,7 +90,7 @@ namespace StartPro
         {
             Add window = new Add( );
             window.ShowDialog( );
-            if (window.tile.IsEnabled == true)
+            if (window.tile.IsEnabled)
             {
                 Tile tile = window.tile;
                 TileGrid grid = Tile.GetSize(tile.TileSize);
@@ -104,6 +104,13 @@ namespace StartPro
                 tile.Margin = new Thickness(0);
                 mainGrid.Children.Add(tile);
             }
+        }
+
+        private void SaveTiles(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            foreach (Tile tile in mainGrid.Children)
+                TilesConfig.Add(tile);
+            TilesConfig.Save( );
         }
     }
 }

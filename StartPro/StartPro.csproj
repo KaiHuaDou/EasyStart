@@ -56,6 +56,7 @@
     <Compile Include="Add.xaml.cs">
       <DependentUpon>Add.xaml</DependentUpon>
     </Compile>
+    <Compile Include="tile\TilesConfig.cs" />
     <Compile Include="tile\Tile.cs" />
     <Compile Include="tile\TileType.cs" />
     <Compile Include="tile\Default.cs" />

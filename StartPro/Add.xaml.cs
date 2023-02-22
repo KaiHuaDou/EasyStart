@@ -58,7 +58,7 @@ namespace StartPro
         {
             try
             {
-                tile.AppIcon = new BitmapImage(new Uri(iconBox.Text));
+                tile.AppIcon = new Uri(iconBox.Text).LocalPath;
             }
             catch { }
         }
@@ -66,7 +66,7 @@ namespace StartPro
         private void NameChanged(object o, TextChangedEventArgs e)
             => tile.AppName = nameBox.Text;
 
-        private void fontBox_TextChanged(object o, TextChangedEventArgs e)
+        private void FontChanged(object o, TextChangedEventArgs e)
         {
             try
             {

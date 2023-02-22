@@ -15,25 +15,18 @@ namespace StartPro
                 return clipType == TileType.Small ? Visibility.Collapsed : Visibility.Visible;
             switch (clipType)
             {
-                case TileType.Small:
-                    return Default.SmallSize;
-                case TileType.Medium:
-                    return Default.MediumSize;
+                case TileType.Small: return Default.SmallSize;
+                case TileType.Medium: return Default.MediumSize;
                 case TileType.Wide:
-                    if (mode == "Height")
-                        return Default.WideSize / Default.Zoom;
-                    else if (mode == "Width")
-                        return Default.WideSize;
+                    if (mode == "Height") return Default.WideSize / Default.Zoom;
+                    else if (mode == "Width") return Default.WideSize;
                     break;
-                case TileType.Large:
-                    return Default.LargeSize;
+                case TileType.Large: return Default.LargeSize;
             }
             return Default.MediumSize;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotSupportedException( );
-        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) 
+            => throw new NotSupportedException( );
     }
 }
