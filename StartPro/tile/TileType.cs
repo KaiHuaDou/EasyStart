@@ -1,4 +1,6 @@
-﻿namespace StartPro
+﻿using System.Windows.Controls;
+
+namespace StartPro
 {
     public enum TileType
     {
@@ -13,6 +15,8 @@
 
     public partial class Tile
     {
+        public TileGrid GetSize( ) => GetSize(TileSize);
+
         public static TileGrid GetSize(TileType type)
         {
             switch (type)
@@ -24,5 +28,7 @@
                 default: return new TileGrid { Row = 1, Col = 1 };
             }
         }
+
+        public TileGrid Pos => new TileGrid { Col = Grid.GetColumn(this), Row = Grid.GetRow(this) };
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -11,7 +9,7 @@ namespace StartPro
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-           return new SolidColorBrush(((SolidColorBrush) value).Color + Default.ColorAdj);
+            return new SolidColorBrush(((SolidColorBrush) value).Color + Default.ColorAdj);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

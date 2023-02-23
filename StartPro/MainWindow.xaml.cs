@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Xml.Serialization;
 
 namespace StartPro
 {
@@ -19,7 +17,10 @@ namespace StartPro
             InitializeComponent( );
             HashSet<Tile> tiles = TilesConfig.Load( );
             foreach (Tile tile in tiles)
+            {
+                InitTile(tile);
                 mainGrid.Children.Add(tile);
+            }
         }
 
         private void SetGrid(object o, SizeChangedEventArgs e)
@@ -72,6 +73,15 @@ namespace StartPro
             Grid.SetColumn(c, pos.Col);
             Tile.SetTilePos(pos, c.TileSize, true);
         }
+
+        private void InitTile(Tile tile)
+        {
+            Tile.SetTilePos(tile.Pos, tile.TileSize, true);
+            tile.MouseRightButtonDown += TileDragStart;
+            tile.MouseMove += TileDragging;
+            tile.MouseRightButtonUp += TileDragStop;
+        }
+
         private TileGrid PtrPos
         {
             get
@@ -90,20 +100,10 @@ namespace StartPro
         {
             Add window = new Add( );
             window.ShowDialog( );
-            if (window.tile.IsEnabled)
-            {
-                Tile tile = window.tile;
-                TileGrid grid = Tile.GetSize(tile.TileSize);
-                while (!Tile.IsPosEmpty(grid, tile.TileSize))
-                    grid.Col += 1;
-                Grid.SetRowSpan(tile, grid.Row);
-                Grid.SetColumnSpan(tile, grid.Col);
-                tile.MouseRightButtonDown += TileDragStart;
-                tile.MouseMove += TileDragging;
-                tile.MouseRightButtonUp += TileDragStop;
-                tile.Margin = new Thickness(0);
-                mainGrid.Children.Add(tile);
-            }
+            Tile tile = window.tile;
+            if (!tile.IsEnabled) return;
+            InitTile(tile);
+            mainGrid.Children.Add(tile);
         }
 
         private void SaveTiles(object sender, System.ComponentModel.CancelEventArgs e)

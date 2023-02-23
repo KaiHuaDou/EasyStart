@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 
 namespace StartPro
@@ -10,7 +9,7 @@ namespace StartPro
     {
         public Add( ) => InitializeComponent( );
 
-        private void TileSizeChanged(object o, SelectionChangedEventArgs e) 
+        private void TileSizeChanged(object o, SelectionChangedEventArgs e)
             => tile.TileSize = (TileType) sizeBox.SelectedIndex;
 
         private void SelectExe(object o, RoutedEventArgs e)
@@ -47,7 +46,7 @@ namespace StartPro
             {
                 tile.AppPath = pathBox.Text;
                 nameBox.Text = tile.AppName;
-                iconBox.Text = "";
+                iconBox.Text = tile.AppIcon;
                 OkButton.IsEnabled = true;
             }
             catch { OkButton.IsEnabled = false; }
@@ -80,8 +79,14 @@ namespace StartPro
 
         private void TaskOk(object sender, RoutedEventArgs e)
         {
-            tile.IsEnabled = true;
             mainPanel.Children.Remove(tile);
+            tile.IsEnabled = true;
+            tile.Margin = new Thickness(0);
+            TileGrid grid = tile.GetSize( );
+            while (!Tile.IsPosEmpty(grid, tile.TileSize))
+                grid.Col += 1;
+            Grid.SetRowSpan(tile, grid.Row);
+            Grid.SetColumnSpan(tile, grid.Col);
             this.Close( );
         }
     }

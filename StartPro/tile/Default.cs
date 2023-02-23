@@ -15,7 +15,7 @@ namespace StartPro
         public static int Margin => 10;
         public static int ImageMargin => 15;
         public static double FontSize => 22;
-        public static SolidColorBrush Background => new SolidColorBrush(Color.FromArgb(255, 0x4F,  0x4F,  0x4F ));
+        public static SolidColorBrush Background => new SolidColorBrush(Color.FromArgb(255, 0x4F, 0x4F, 0x4F));
         public static Color ColorAdj => Color.FromRgb(60, 60, 60);
 
     }

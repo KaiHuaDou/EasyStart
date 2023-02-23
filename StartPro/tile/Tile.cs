@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace StartPro
 {
-    [Serializable]
-    public partial class Tile: ISerializable
+    public partial class Tile
     {
         public static bool IsDrag { get; set; }
         public static bool[,] TilePos = new bool[64, 64];
@@ -19,6 +16,7 @@ namespace StartPro
                 for (int j = 0; j < size.Col; j++)
                     TilePos[pos.Row + i, pos.Col + j] = mark;
         }
+
         public static bool IsPosEmpty(TileGrid pos, TileType type)
         {
             TileGrid size = Tile.GetSize(type);
@@ -27,16 +25,6 @@ namespace StartPro
                     if (TilePos[pos.Row + i, pos.Col + j])
                         return false;
             return true;
-        }
-
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("AppName", AppName);
-            info.AddValue("AppIcon", AppIcon);
-            info.AddValue("AppPath", AppPath);
-            info.AddValue("TileSize", TileSize);
-            info.AddValue("TileColor", TileColor);
-            info.AddValue("TileFontSize", TileFontSize);
         }
 
         #region DependencyProperties
@@ -59,7 +47,7 @@ namespace StartPro
             AppNameProperty = DependencyProperty.Register("AppName", typeof(string), thisType, appNameMeta);
             AppIconProperty = DependencyProperty.Register("AppIcon", typeof(string), thisType, appIconMeta);
             AppPathProperty = DependencyProperty.Register("AppPath", typeof(string), thisType, appPathMeta);
-            TileSizeProperty = DependencyProperty.Register("TileSize", typeof(TileType), thisType, TileSizeMeta);
+            TileSizeProperty = DependencyProperty.Register("TileType", typeof(TileType), thisType, TileSizeMeta);
             TileColorProperty = DependencyProperty.Register("TileColor", typeof(SolidColorBrush), thisType, TileColorMeta);
             TileFontSizeProperty = DependencyProperty.Register("TileFontSize", typeof(double), thisType, TileFontSizeMeta);
         }
