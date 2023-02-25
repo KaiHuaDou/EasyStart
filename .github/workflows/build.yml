@@ -2,10 +2,10 @@ name: .NET Build
 
 on:
   push:
-    branches: ["master"]
+    branches: [master]
 
   pull_request:
-    branches: ["master"]
+    branches: [master]
 
 jobs:
   build:
@@ -37,7 +37,7 @@ jobs:
       - name: Restore NuGet Packages
         run: nuget restore
 
-      - name: Navigate to Workspace
+      - name: Go to Workspace
         run: cd $GITHUB_WORKSPACE
 
       - name: Build Solution

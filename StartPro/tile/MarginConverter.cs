@@ -12,8 +12,7 @@ namespace StartPro
             TileType clipType = (TileType) value;
             switch (clipType)
             {
-                case TileType.Small:
-                    return new Thickness(Default.ImageMargin / Default.Zoom);
+                case TileType.Small: return new Thickness(Default.ImageMargin / Default.Zoom);
                 case TileType.Medium:
                 case TileType.Wide:
                     return new Thickness(

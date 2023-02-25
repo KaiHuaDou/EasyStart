@@ -17,8 +17,8 @@ namespace StartPro
             InitializeComponent( );
             border.DataContext = this;
             TileGrid grid = GetSize( );
-            GetSize( ).SetRowSpan(this, grid.Row);
-            GetSize( ).SetColumnSpan(this, grid.Col);
+            Grid.SetRowSpan(this, grid.Row);
+            Grid.SetColumnSpan(this, grid.Col);
         }
 
         public static void AppPathChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
@@ -38,7 +38,7 @@ namespace StartPro
             string newValue = e.NewValue as string;
             if (tile.AppIcon == tile.AppName)
             {
-                tile.image.Source = StdApi.GetIcon(newValue);
+                tile.image.Source = IconMgr.Get(newValue);
                 return;
             }
             try
@@ -46,7 +46,7 @@ namespace StartPro
                 tile.image.Source = new BitmapImage(new Uri(newValue));
                 return;
             }
-            catch { tile.image.Source = StdApi.GetIcon(newValue); }
+            catch { tile.image.Source = IconMgr.Get(newValue); }
         }
 
 

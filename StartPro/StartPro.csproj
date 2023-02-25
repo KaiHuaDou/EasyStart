@@ -64,7 +64,7 @@
     <Compile Include="tile\RadiusConverter.cs" />
     <Compile Include="tile\ColorConverter.cs" />
     <Compile Include="tile\SizeConverter.cs" />
-    <Compile Include="StdApi.cs" />
+    <Compile Include="IconMgr.cs" />
     <Page Include="Add.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -1,33 +1,23 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace StartPro
 {
     public partial class Tile
     {
-        public static bool IsDrag { get; set; }
-        public static bool[,] TilePos = new bool[64, 64];
-
-        public static void SetTilePos(TileGrid pos, TileType type, bool mark = true)
+        public void Init( )
         {
-            TileGrid size = Tile.GetSize(type);
-            for (int i = 0; i < size.Row; i++)
-                for (int j = 0; j < size.Col; j++)
-                    TilePos[pos.Row + i, pos.Col + j] = mark;
+            SetTilePos(Pos, TileSize, true);
+            TileGrid grid = GetSize( );
+            Grid.SetRowSpan(this, grid.Row);
+            Grid.SetColumnSpan(this, grid.Col);
+            MouseRightButtonDown += TileDragStart;
+            MouseMove += TileDragging;
+            MouseRightButtonUp += TileDragStop;
         }
 
-        public static bool IsPosEmpty(TileGrid pos, TileType type)
-        {
-            TileGrid size = Tile.GetSize(type);
-            for (int i = 0; i < size.Row; i++)
-                for (int j = 0; j < size.Col; j++)
-                    if (TilePos[pos.Row + i, pos.Col + j])
-                        return false;
-            return true;
-        }
-
-        #region DependencyProperties
         public static readonly DependencyProperty AppNameProperty;
         public static readonly DependencyProperty AppIconProperty;
         public static readonly DependencyProperty AppPathProperty;
@@ -47,7 +37,7 @@ namespace StartPro
             AppNameProperty = DependencyProperty.Register("AppName", typeof(string), thisType, appNameMeta);
             AppIconProperty = DependencyProperty.Register("AppIcon", typeof(string), thisType, appIconMeta);
             AppPathProperty = DependencyProperty.Register("AppPath", typeof(string), thisType, appPathMeta);
-            TileSizeProperty = DependencyProperty.Register("TileType", typeof(TileType), thisType, TileSizeMeta);
+            TileSizeProperty = DependencyProperty.Register("TileSize", typeof(TileType), thisType, TileSizeMeta);
             TileColorProperty = DependencyProperty.Register("TileColor", typeof(SolidColorBrush), thisType, TileColorMeta);
             TileFontSizeProperty = DependencyProperty.Register("TileFontSize", typeof(double), thisType, TileFontSizeMeta);
         }
@@ -83,7 +73,5 @@ namespace StartPro
             get => (string) GetValue(AppPathProperty);
             set => SetValue(AppPathProperty, value);
         }
-        #endregion
-
     }
 }
