@@ -7,53 +7,53 @@ namespace StartPro
 {
     public partial class Tile
     {
-        private Point dragPos;
-        private Thickness dragMargin;
-        private Grid mainGrid = (App.Current.MainWindow as MainWindow).mainGrid;
+        private static Point dPoint;
+        private static Thickness dPos;
+        private static Grid dGrid = (App.Current.MainWindow as MainWindow).mainGrid;
 
         private TileGrid PtrPos
         {
             get
             {
-                Point point = Mouse.GetPosition(mainGrid);
+                Point point = Mouse.GetPosition(dGrid);
                 int cellSize = Default.SmallSize + Default.Margin;
                 return new TileGrid
                 {
-                    Row = (int) (uint) Math.Floor(point.Y / cellSize),
-                    Col = (int) (uint) Math.Floor(point.X / cellSize)
+                    Row = (int) Math.Abs(Math.Floor(point.Y / cellSize)),
+                    Col = (int) Math.Abs(Math.Floor(point.X / cellSize))
                 };
             }
         }
 
         private void TileDragStart(object o, MouseButtonEventArgs e)
         {
-            Tile c = o as Tile;
+            Tile t = o as Tile;
             TileGrid pos = PtrPos;
-            Tile.SetTilePos(pos, c.TileSize, false);
-            Tile.IsDrag = true;
-            dragPos = e.GetPosition(this);
-            dragMargin = c.Margin;
-            c.CaptureMouse( );
+            Tile.SetTilePos(pos, t.TileSize, false);
+            t.IsDrag = true;
+            dPoint = e.GetPosition(this);
+            dPos = t.Margin;
+            t.CaptureMouse( );
         }
         private void TileDragging(object o, MouseEventArgs e)
         {
-            if (!Tile.IsDrag) return;
+            Tile t = o as Tile;
+            if (!t.IsDrag) return;
             var pos = e.GetPosition(this);
-            var dp = pos - dragPos;
-            Tile c = o as Tile;
-            c.Margin = new Thickness(dragMargin.Left + dp.X, dragMargin.Top + dp.Y, dragMargin.Right - dp.X, dragMargin.Bottom - dp.Y);
+            var dp = pos - dPoint;
+            t.Margin = new Thickness(dPos.Left + dp.X, dPos.Top + dp.Y, dPos.Right - dp.X, dPos.Bottom - dp.Y);
         }
         private void TileDragStop(object o, MouseButtonEventArgs e)
         {
-            Tile.IsDrag = false;
-            Tile c = o as Tile;
-            c.Margin = new Thickness(0);
-            c.ReleaseMouseCapture( );
+            Tile t = o as Tile;
+            t.IsDrag = false;
+            t.Margin = new Thickness(0);
+            t.ReleaseMouseCapture( );
             TileGrid pos = PtrPos;
-            if (!Tile.IsPosEmpty(pos, c.TileSize)) return;
-            Grid.SetRow(c, pos.Row);
-            Grid.SetColumn(c, pos.Col);
-            Tile.SetTilePos(pos, c.TileSize, true);
+            if (!Tile.IsPosEmpty(pos, t.TileSize)) return;
+            Grid.SetRow(t, pos.Row);
+            Grid.SetColumn(t, pos.Col);
+            Tile.SetTilePos(pos, t.TileSize, true);
         }
     }
 }

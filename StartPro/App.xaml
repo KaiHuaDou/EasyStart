@@ -8,6 +8,8 @@
             <local:SizeConverter x:Key="SizeConverter" />
             <local:MarginConverter x:Key="MarginConverter" />
             <local:ColorConverter x:Key="ColorConverter" />
+            <SolidColorBrush x:Key="Background" Color="#E5E5E5"/>
+            <SolidColorBrush x:Key="Foreground" Color="#020202" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -44,9 +44,11 @@ namespace StartPro
             try
             {
                 tile.image.Source = new BitmapImage(new Uri(newValue));
-                return;
             }
-            catch { tile.image.Source = IconMgr.Get(newValue); }
+            catch
+            {
+                tile.image.Source = IconMgr.Get(newValue);
+            }
         }
 
 

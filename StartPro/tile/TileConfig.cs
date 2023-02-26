@@ -15,12 +15,12 @@ namespace StartPro
         public static void Add(Tile tile)
         {
             XmlElement element = document.CreateElement("App");
-            element.SetAttribute("AppName", tile.AppName);
-            element.SetAttribute("AppPath", tile.AppPath);
-            element.SetAttribute("AppIcon", tile.AppIcon);
-            element.SetAttribute("TileSize", ((int) tile.TileSize).ToString( ));
-            element.SetAttribute("TileColor", tile.TileColor.ToString( ));
-            element.SetAttribute("TileFontSize", tile.TileFontSize.ToString( ));
+            element.SetAttribute("Name", tile.AppName);
+            element.SetAttribute("Path", tile.AppPath);
+            element.SetAttribute("Icon", tile.AppIcon);
+            element.SetAttribute("Size", ((int) tile.TileSize).ToString( ));
+            element.SetAttribute("Color", tile.TileColor.ToString( ));
+            element.SetAttribute("FontSize", tile.FontSize.ToString( ));
             element.SetAttribute("Row", Grid.GetRow(tile).ToString( ));
             element.SetAttribute("Column", Grid.GetColumn(tile).ToString( ));
             Apps.AppendChild(element);
@@ -35,18 +35,18 @@ namespace StartPro
         public static HashSet<Tile> Load( )
         {
             HashSet<Tile> result = new HashSet<Tile>( );
-            document.Load(cfgPath);
+            try { document.Load(cfgPath); } catch { return result; }
             Apps = document.ChildNodes[0];
             foreach (XmlNode node in Apps.ChildNodes)
             {
                 Tile item = new Tile
                 {
-                    AppPath = GetAttribute(node, "AppPath"),
-                    AppName = GetAttribute(node, "AppName"),
-                    AppIcon = GetAttribute(node, "AppIcon"),
-                    TileSize = (TileType) int.Parse(GetAttribute(node, "TileSize")),
-                    TileColor = new BrushConverter( ).ConvertFrom(GetAttribute(node, "TileColor")) as SolidColorBrush,
-                    TileFontSize = double.Parse(GetAttribute(node, "TileFontSize")),
+                    AppPath = GetAttribute(node, "Path"),
+                    AppName = GetAttribute(node, "Name"),
+                    AppIcon = GetAttribute(node, "Icon"),
+                    TileSize = (TileType) int.Parse(GetAttribute(node, "Size")),
+                    TileColor = new BrushConverter( ).ConvertFrom(GetAttribute(node, "Color")) as SolidColorBrush,
+                    FontSize = double.Parse(GetAttribute(node, "FontSize")),
                 };
                 Grid.SetRow(item, int.Parse(GetAttribute(node, "Row")));
                 Grid.SetColumn(item, int.Parse(GetAttribute(node, "Column")));

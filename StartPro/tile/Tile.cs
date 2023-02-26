@@ -23,7 +23,7 @@ namespace StartPro
         public static readonly DependencyProperty AppPathProperty;
         public static readonly DependencyProperty TileSizeProperty;
         public static readonly DependencyProperty TileColorProperty;
-        public static readonly DependencyProperty TileFontSizeProperty;
+        //public static readonly DependencyProperty TileFontSizeProperty;
 
         static Tile( )
         {
@@ -33,13 +33,13 @@ namespace StartPro
             PropertyMetadata appPathMeta = new PropertyMetadata(Default.AppName, AppPathChanged);
             PropertyMetadata TileSizeMeta = new PropertyMetadata(TileType.Medium);
             PropertyMetadata TileColorMeta = new PropertyMetadata(Default.Background);
-            PropertyMetadata TileFontSizeMeta = new PropertyMetadata(Default.FontSize);
+            //PropertyMetadata TileFontSizeMeta = new PropertyMetadata(Default.FontSize);
             AppNameProperty = DependencyProperty.Register("AppName", typeof(string), thisType, appNameMeta);
             AppIconProperty = DependencyProperty.Register("AppIcon", typeof(string), thisType, appIconMeta);
             AppPathProperty = DependencyProperty.Register("AppPath", typeof(string), thisType, appPathMeta);
             TileSizeProperty = DependencyProperty.Register("TileSize", typeof(TileType), thisType, TileSizeMeta);
             TileColorProperty = DependencyProperty.Register("TileColor", typeof(SolidColorBrush), thisType, TileColorMeta);
-            TileFontSizeProperty = DependencyProperty.Register("TileFontSize", typeof(double), thisType, TileFontSizeMeta);
+            //TileFontSizeProperty = DependencyProperty.Register("TileFontSize", typeof(double), thisType, TileFontSizeMeta);
         }
 
         public TileType TileSize
@@ -52,11 +52,11 @@ namespace StartPro
             get => (SolidColorBrush) GetValue(TileColorProperty);
             set => SetValue(TileColorProperty, value);
         }
-        public double TileFontSize
-        {
-            get => (double) GetValue(TileFontSizeProperty);
-            set => SetValue(TileFontSizeProperty, value);
-        }
+        //public double TileFontSize
+        //{
+        //    get => (double) GetValue(TileFontSizeProperty);
+        //    set => SetValue(TileFontSizeProperty, value);
+        //}
 
         public string AppName
         {

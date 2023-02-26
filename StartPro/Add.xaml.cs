@@ -67,11 +67,8 @@ namespace StartPro
 
         private void FontChanged(object o, TextChangedEventArgs e)
         {
-            try
-            {
-                tile.TileFontSize = int.Parse(fontBox.Text);
-            }
-            catch { }
+            try { tile.FontSize = int.Parse(fontBox.Text); }
+            catch { tile.FontSize = Default.FontSize; }
         }
 
         private void TaskCancel(object o, RoutedEventArgs e)
