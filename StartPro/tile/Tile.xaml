@@ -1,18 +1,17 @@
-﻿<UserControl x:Name="userControl" x:Class="StartPro.Tile"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        MouseLeftButtonUp="Execute">
+﻿<UserControl x:Name="userControl"
+             x:Class="StartPro.Tile"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             MouseLeftButtonUp="Execute">
     <Border x:Name="border">
         <DockPanel>
-            <Label x:Name="label" DockPanel.Dock="Bottom"
-                    HorizontalAlignment="Center" Content="{Binding AppName}"
-                    FontSize="{Binding FontSize, ElementName=userControl}"
-                    Foreground="Black"
-                    Visibility="{Binding TileSize, Converter={StaticResource SizeConverter}, ConverterParameter=Label}"
-                    Margin="0,0,0,10" />
-            <Image x:Name="image"
-                    Margin="{Binding TileSize, Converter={StaticResource MarginConverter}}"
-                    Source="{Binding AppIcon}">
+            <Label x:Name="label" Margin="0,0,0,10" DockPanel.Dock="Bottom" Content="{Binding AppName}"
+                   HorizontalAlignment="Center"
+                   FontSize="{Binding FontSize, ElementName=userControl}"
+                   Foreground="Black"
+                   Visibility="{Binding TileSize, Converter={StaticResource SizeConverter}, ConverterParameter=Label}" />
+            <Image x:Name="image" Margin="{Binding TileSize, Converter={StaticResource MarginConverter}}"
+                   Source="{Binding AppIcon}">
                 <Image.Effect>
                     <DropShadowEffect Color="#888888" />
                 </Image.Effect>
@@ -26,23 +25,21 @@
                 <Setter Property="Height">
                     <Setter.Value>
                         <Binding Path="TileSize"
-                                Converter="{StaticResource SizeConverter}"
-                                ConverterParameter="Height" />
+                                 Converter="{StaticResource SizeConverter}"
+                                 ConverterParameter="Height" />
                     </Setter.Value>
                 </Setter>
                 <Setter Property="Width">
                     <Setter.Value>
                         <Binding Path="TileSize"
-                                Converter="{StaticResource SizeConverter}"
-                                ConverterParameter="Width" />
+                                 Converter="{StaticResource SizeConverter}"
+                                 ConverterParameter="Width" />
                     </Setter.Value>
                 </Setter>
-                <Setter Property="CornerRadius"
-                        Value="{Binding TileSize,Converter={StaticResource RadiusConverter}}" />
+                <Setter Property="CornerRadius" Value="{Binding TileSize, Converter={StaticResource RadiusConverter}}" />
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background"
-                                Value="{Binding TileColor, Converter= {StaticResource ColorConverter}}" />
+                        <Setter Property="Background" Value="{Binding TileColor, Converter={StaticResource ColorConverter}}" />
                         <Setter Property="BorderThickness" Value="1" />
                     </Trigger>
                 </Style.Triggers>

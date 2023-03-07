@@ -10,18 +10,13 @@ namespace StartPro
 {
     public static class IconMgr
     {
-        [DllImport("User32.dll")]
-        public static extern int PrivateExtractIcons(
-            string lpszFile,
-            int nIconIndex,
-            int cxIcon,
-            int cyIcon,
-            IntPtr[] phicon,
-            int[] piconid,
-            int nIcons,
-            int flags);
 
-        [DllImport("User32.dll")]
+        [DllImport("user32.dll")]
+        public static extern int PrivateExtractIcons(
+            string lpszFile, int nIconIndex, int cxIcon, int cyIcon,
+                IntPtr[] phicon, int[] piconid, int nIcons, int flags);
+
+        [DllImport("user32.dll")]
         public static extern bool DestroyIcon(IntPtr hIcon);
         public static ImageSource Get(string path)
         {
