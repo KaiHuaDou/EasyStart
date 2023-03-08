@@ -9,8 +9,8 @@ namespace StartPro
 
     public struct TileGrid
     {
-        public int Row;
-        public int Col;
+        public int Row { get; set; }
+        public int Col { get; set; }
     }
 
     public partial class Tile
@@ -28,7 +28,5 @@ namespace StartPro
                 default: return new TileGrid { Row = 1, Col = 1 };
             }
         }
-
-        public TileGrid Pos => new TileGrid { Col = Grid.GetColumn(this), Row = Grid.GetRow(this) };
     }
 }

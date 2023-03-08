@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,6 +13,8 @@ namespace StartPro
         public MainWindow( )
         {
             InitializeComponent( );
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US"); ;
             HashSet<Tile> tiles = Tile.Load( );
             foreach (Tile tile in tiles)
             {
@@ -41,11 +45,10 @@ namespace StartPro
 
         private void AddTile(object sender, RoutedEventArgs e)
         {
-            Add window = new Add( );
+            Creat window = new Creat( );
             window.ShowDialog( );
             Tile tile = window.tile;
             if (!tile.IsEnabled) return;
-            tile.Init( );
             mainGrid.Children.Add(tile);
         }
 

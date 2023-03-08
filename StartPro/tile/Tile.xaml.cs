@@ -12,15 +12,6 @@ namespace StartPro
     {
         private ProcessStartInfo exec = new ProcessStartInfo(Default.AppName);
 
-        public Tile( )
-        {
-            InitializeComponent( );
-            border.DataContext = this;
-            TileGrid grid = GetSize( );
-            Grid.SetRowSpan(this, grid.Row);
-            Grid.SetColumnSpan(this, grid.Col);
-        }
-
         public static void AppPathChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             Tile tile = o as Tile;

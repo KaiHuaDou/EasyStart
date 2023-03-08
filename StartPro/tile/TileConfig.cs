@@ -21,8 +21,8 @@ namespace StartPro
             element.SetAttribute("Size", ((int) tile.TileSize).ToString( ));
             element.SetAttribute("Color", tile.TileColor.ToString( ));
             element.SetAttribute("FontSize", tile.FontSize.ToString( ));
-            element.SetAttribute("Row", Grid.GetRow(tile).ToString( ));
-            element.SetAttribute("Column", Grid.GetColumn(tile).ToString( ));
+            element.SetAttribute("Row", tile.Row.ToString( ));
+            element.SetAttribute("Column", tile.Column.ToString( ));
             Apps.AppendChild(element);
         }
 
@@ -47,9 +47,10 @@ namespace StartPro
                     TileSize = (TileType) int.Parse(GetAttribute(node, "Size")),
                     TileColor = new BrushConverter( ).ConvertFrom(GetAttribute(node, "Color")) as SolidColorBrush,
                     FontSize = double.Parse(GetAttribute(node, "FontSize")),
+                    Row = int.Parse(GetAttribute(node, "Row")),
+                    Column = int.Parse(GetAttribute(node, "Column")),
                 };
-                Grid.SetRow(item, int.Parse(GetAttribute(node, "Row")));
-                Grid.SetColumn(item, int.Parse(GetAttribute(node, "Column")));
+                item.Init( );
                 result.Add(item);
             }
             Apps = document.CreateElement("Apps");

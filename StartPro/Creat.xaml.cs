@@ -5,9 +5,9 @@ using Microsoft.Win32;
 
 namespace StartPro
 {
-    public partial class Add : Window
+    public partial class Creat : Window
     {
-        public Add( ) => InitializeComponent( );
+        public Creat( ) => InitializeComponent( );
 
         private void TileSizeChanged(object o, SelectionChangedEventArgs e)
             => tile.TileSize = (TileType) sizeBox.SelectedIndex;

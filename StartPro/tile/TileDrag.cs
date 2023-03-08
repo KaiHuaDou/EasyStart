@@ -7,9 +7,10 @@ namespace StartPro
 {
     public partial class Tile
     {
-        private static Point dPoint;
-        private static Thickness dPos;
-        private static Grid dGrid = (App.Current.MainWindow as MainWindow).mainGrid;
+        public bool IsDrag { get; set; }
+
+        private static Point dStart;
+        private static readonly Grid dGrid = (App.Current.MainWindow as MainWindow).mainGrid;
 
         private TileGrid PtrPos
         {
@@ -28,32 +29,32 @@ namespace StartPro
         private void TileDragStart(object o, MouseButtonEventArgs e)
         {
             Tile t = o as Tile;
-            TileGrid pos = PtrPos;
-            Tile.SetTilePos(pos, t.TileSize, false);
+            SetTilePos(PtrPos, t.TileSize, false);
             t.IsDrag = true;
-            dPoint = e.GetPosition(this);
-            dPos = t.Margin;
+            dStart = e.GetPosition(this);
             t.CaptureMouse( );
         }
         private void TileDragging(object o, MouseEventArgs e)
         {
             Tile t = o as Tile;
             if (!t.IsDrag) return;
-            var pos = e.GetPosition(this);
-            var dp = pos - dPoint;
-            t.Margin = new Thickness(dPos.Left + dp.X, dPos.Top + dp.Y, dPos.Right - dp.X, dPos.Bottom - dp.Y);
+            Vector move = e.GetPosition(this) - dStart;
+            t.Margin = new Thickness(t.Margin.Left + move.X,
+                                     t.Margin.Top + move.Y,
+                                     t.Margin.Right - move.X,
+                                     t.Margin.Bottom - move.Y);
         }
         private void TileDragStop(object o, MouseButtonEventArgs e)
         {
             Tile t = o as Tile;
+            t.ReleaseMouseCapture( );
             t.IsDrag = false;
             t.Margin = new Thickness(0);
-            t.ReleaseMouseCapture( );
             TileGrid pos = PtrPos;
-            if (!Tile.IsPosEmpty(pos, t.TileSize)) return;
-            Grid.SetRow(t, pos.Row);
-            Grid.SetColumn(t, pos.Col);
-            Tile.SetTilePos(pos, t.TileSize, true);
+            if (!IsPosEmpty(pos, t.TileSize)) return;
+            t.Row = pos.Row;
+            t.Column = pos.Col;
+            SetTilePos(pos, t.TileSize, true);
         }
     }
 }

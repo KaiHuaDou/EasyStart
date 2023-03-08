@@ -2,7 +2,6 @@
 {
     public partial class Tile
     {
-        public bool IsDrag { get; set; }
         public static bool[,] TilePos = new bool[64, 64];
 
         public static void SetTilePos(TileGrid pos, TileType type, bool mark = true)
