@@ -1,0 +1,16 @@
+﻿<Application x:Class="StartPro.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:StartPro"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <local:RadiusConverter x:Key="RadiusConverter" />
+            <local:SizeConverter x:Key="SizeConverter" />
+            <local:MarginConverter x:Key="MarginConverter" />
+            <local:ColorConverter x:Key="ColorConverter" />
+            <SolidColorBrush x:Key="Background" Color="#E5E5E5" />
+            <SolidColorBrush x:Key="Foreground" Color="#020202" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,67 @@
+﻿<Window x:Class="StartPro.Create"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:StartPro"
+        xmlns:text="clr-namespace:StartPro.Resources"
+        Title="{x:Static text:Main.CreateTitle}"
+        Width="500"
+        ResizeMode="CanMinimize"
+        SizeToContent="Height">
+    <DockPanel x:Name="mainPanel" Background="{StaticResource Background}">
+        <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Margin="5,5,5,10" Padding="20,3"
+                    Click="TaskCancel"
+                    Content="{x:Static text:Main.CancelText}" />
+            <Button x:Name="OkButton"
+                    Margin="5,5,10,10" Padding="20,3"
+                    Click="TaskOk"
+                    Content="{x:Static text:Main.OkText}"
+                    IsEnabled="False" />
+        </StackPanel>
+        <local:Tile x:Name="tile"
+                    DockPanel.Dock="Right"
+                    Margin="5,10,10,5"
+                    IsEnabled="False" />
+        <StackPanel DockPanel.Dock="Top" Margin="10,10,10,5">
+            <DockPanel Margin="0,5,0,5">
+                <Label Content="{x:Static text:Main.TileSizeText}" />
+                <ComboBox x:Name="sizeBox" SelectedIndex="0" SelectionChanged="TileSizeChanged">
+                    <ComboBoxItem Content="{x:Static text:Main.SizeSmall}" />
+                    <ComboBoxItem Content="{x:Static text:Main.SizeMid}" />
+                    <ComboBoxItem Content="{x:Static text:Main.SizeWide}" />
+                    <ComboBoxItem Content="{x:Static text:Main.SizeLarge}" />
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="0,5,0,5">
+                <Label Content="{x:Static text:Main.TilePathText}" />
+                <DockPanel>
+                    <Button DockPanel.Dock="Right"
+                            Background="{x:Null}"
+                            BorderBrush="{StaticResource {x:Static SystemColors.ActiveBorderBrushKey}}"
+                            BorderThickness="0,1,1,1"
+                            Click="SelectExe" Content="..." />
+                    <TextBox x:Name="pathBox" BorderThickness="1,1,0,1" LostFocus="PathChanged" />
+                </DockPanel>
+            </DockPanel>
+            <DockPanel Margin="0,5,0,5">
+                <Label Content="{x:Static text:Main.TileNameText}" />
+                <TextBox x:Name="nameBox" TextChanged="NameChanged" />
+            </DockPanel>
+            <DockPanel Margin="0,5,0,5">
+                <Label Content="{x:Static text:Main.TileIconText}" />
+                <DockPanel>
+                    <Button DockPanel.Dock="Right"
+                            Background="{x:Null}"
+                            BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
+                            BorderThickness="0,1,1,1"
+                            Click="SelectIcon" Content="..." />
+                    <TextBox x:Name="iconBox" BorderThickness="1,1,0,1" TextChanged="IconChanged" />
+                </DockPanel>
+            </DockPanel>
+            <DockPanel Margin="0,5,0,5">
+                <Label Content="{x:Static text:Main.TileFontSizeText}" />
+                <TextBox x:Name="fontBox" TextChanged="FontChanged" />
+            </DockPanel>
+        </StackPanel>
+    </DockPanel>
+</Window>

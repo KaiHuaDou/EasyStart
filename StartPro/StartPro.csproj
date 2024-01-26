@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net462</TargetFramework>
+        <UseWPF>true</UseWPF>
+        <LangVersion>12.0</LangVersion>
+    </PropertyGroup>
+    <PropertyGroup>
+        <StartupObject>StartPro.App.Program</StartupObject>
+        <AnalysisLevel>latest-recommended</AnalysisLevel>
+        <DebugType>full</DebugType>
+        <WarningLevel>7</WarningLevel>
+    </PropertyGroup>
+    <ItemGroup>
+        <Folder Include="Properties\" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Update="Resources\Main.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Main.resx</DependentUpon>
+        </Compile>
+        <EmbeddedResource Update="Resources\Main.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Main.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+</Project>
