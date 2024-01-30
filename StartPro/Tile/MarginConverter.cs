@@ -9,20 +9,16 @@ internal sealed class MarginConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        TileType clipType = (TileType) value;
-        return clipType switch
+        TileType tileType = (TileType) value;
+        return tileType switch
         {
-            TileType.Small => new Thickness(Defaults.ImageMargin / Defaults.Zoom),
+            TileType.Small => new Thickness(Defaults.ImageMargin / 2),
             TileType.Medium or TileType.Wide => new Thickness(
-                                    Defaults.ImageMargin,
-                                    Defaults.ImageMargin,
-                                    Defaults.ImageMargin,
-                                    Defaults.ImageMargin / Defaults.Zoom),
+                Defaults.ImageMargin, Defaults.ImageMargin,
+                Defaults.ImageMargin, Defaults.ImageMargin / 2),
             TileType.Large => new Thickness(
-                                    Defaults.ImageMargin * Defaults.Zoom,
-                                    Defaults.ImageMargin * Defaults.Zoom,
-                                    Defaults.ImageMargin * Defaults.Zoom,
-                                    Defaults.ImageMargin / Defaults.Zoom),
+                Defaults.ImageMargin * 2, Defaults.ImageMargin * 2,
+                Defaults.ImageMargin * 2, Defaults.ImageMargin / 2),
             _ => Defaults.ImageMargin,
         };
     }

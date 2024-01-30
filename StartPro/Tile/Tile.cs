@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -14,68 +15,66 @@ public partial class Tile
     }
 
     public void Init( )
-    {
-        border.DataContext = this;
-        SetTilePos(new TileGrid { Col = Column, Row = Row }, TileSize, true);
-        TileGrid grid = GetSize( );
-        Grid.SetRowSpan(this, grid.Row);
-        Grid.SetColumnSpan(this, grid.Col);
-    }
+        => border.DataContext = this;
 
-    public static readonly DependencyProperty AppNameProperty;
-    public static readonly DependencyProperty AppIconProperty;
-    public static readonly DependencyProperty AppPathProperty;
-    public static readonly DependencyProperty TileSizeProperty;
-    public static readonly DependencyProperty TileColorProperty;
+    private static readonly PropertyMetadata appNameMeta = new("Application");
+    private static readonly PropertyMetadata appIconMeta = new(AppIconChanged);
+    private static readonly PropertyMetadata appPathMeta = new(Defaults.AppName, AppPathChanged);
+    private static readonly PropertyMetadata TileSizeMeta = new(TileType.Medium);
+    private static readonly PropertyMetadata TileColorMeta = new(Defaults.Background);
+    public static readonly DependencyProperty AppNameProperty = DependencyProperty.Register("AppName", typeof(string), typeof(Tile), appNameMeta);
+    public static readonly DependencyProperty AppIconProperty = DependencyProperty.Register("AppIcon", typeof(string), typeof(Tile), appIconMeta);
+    public static readonly DependencyProperty AppPathProperty = DependencyProperty.Register("AppPath", typeof(string), typeof(Tile), appPathMeta);
+    public static readonly DependencyProperty TileSizeProperty = DependencyProperty.Register("TileSize", typeof(TileType), typeof(Tile), TileSizeMeta);
+    public static readonly DependencyProperty TileColorProperty = DependencyProperty.Register("TileColor", typeof(SolidColorBrush), typeof(Tile), TileColorMeta);
 
-    static Tile( )
-    {
-        Type thisType = typeof(Tile);
-        PropertyMetadata appNameMeta = new("Application");
-        PropertyMetadata appIconMeta = new(AppIconChanged);
-        PropertyMetadata appPathMeta = new(Defaults.AppName, AppPathChanged);
-        PropertyMetadata TileSizeMeta = new(TileType.Medium);
-        PropertyMetadata TileColorMeta = new(Defaults.Background);
-        AppNameProperty = DependencyProperty.Register("AppName", typeof(string), thisType, appNameMeta);
-        AppIconProperty = DependencyProperty.Register("AppIcon", typeof(string), thisType, appIconMeta);
-        AppPathProperty = DependencyProperty.Register("AppPath", typeof(string), thisType, appPathMeta);
-        TileSizeProperty = DependencyProperty.Register("TileSize", typeof(TileType), thisType, TileSizeMeta);
-        TileColorProperty = DependencyProperty.Register("TileColor", typeof(SolidColorBrush), thisType, TileColorMeta);
-    }
-
+    [DefaultValue(TileType.Medium)]
     public TileType TileSize
     {
         get => (TileType) GetValue(TileSizeProperty);
-        set => SetValue(TileSizeProperty, value);
+        set
+        {
+            SetValue(TileSizeProperty, value);
+            Height = Convert.ToDouble(new SizeConverter( ).Convert(value, null, "Height", null));
+            Width = Convert.ToDouble(new SizeConverter( ).Convert(value, null, "Width", null));
+            Margin = new Thickness(Defaults.Margin);
+            border.CornerRadius = (CornerRadius) new RadiusConverter( ).Convert(value, null, null, null);
+        }
     }
+
     public SolidColorBrush TileColor
     {
         get => (SolidColorBrush) GetValue(TileColorProperty);
         set => SetValue(TileColorProperty, value);
     }
+
     public string AppName
     {
         get => (string) GetValue(AppNameProperty);
         set => SetValue(AppNameProperty, value);
     }
+
     public string AppIcon
     {
         get => (string) GetValue(AppIconProperty);
         set => SetValue(AppIconProperty, value);
     }
+
     public string AppPath
     {
         get => (string) GetValue(AppPathProperty);
         set => SetValue(AppPathProperty, value);
     }
+
     public int Row
     {
-        get => Grid.GetRow(this);
-        set => Grid.SetRow(this, value);
+        get => (int) Canvas.GetTop(this) / Defaults.BlockSize;
+        set => Canvas.SetTop(this, value * Defaults.BlockSize);
     }
+
     public int Column
     {
-        get => Grid.GetColumn(this);
-        set => Grid.SetColumn(this, value);
+        get => (int) Canvas.GetLeft(this) / Defaults.BlockSize;
+        set => Canvas.SetLeft(this, value * Defaults.BlockSize);
     }
 }

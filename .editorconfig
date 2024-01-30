@@ -1,10 +1,10 @@
 root = true
 
 end_of_line = lf
-indent_size = 4
-indent_style = space
 insert_final_newline = true
 tab_width = 4
+indent_size = 4
+indent_style = space
 
 #### .NET 编码约定 ####
 
@@ -86,24 +86,24 @@ dotnet_naming_rule.types_should_be_bigstart.symbols = types
 # 符号规范
 dotnet_naming_symbols.interface.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
 dotnet_naming_symbols.interface.applicable_kinds = interface
-dotnet_naming_symbols.interface.required_modifiers = 
+dotnet_naming_symbols.interface.required_modifiers =
 dotnet_naming_symbols.non_field_members.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
 dotnet_naming_symbols.non_field_members.applicable_kinds = property, event, method
-dotnet_naming_symbols.non_field_members.required_modifiers = 
+dotnet_naming_symbols.non_field_members.required_modifiers =
 dotnet_naming_symbols.types.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
 dotnet_naming_symbols.types.applicable_kinds = class, struct, interface, enum
-dotnet_naming_symbols.types.required_modifiers = 
+dotnet_naming_symbols.types.required_modifiers =
 
 # 命名样式
 dotnet_naming_style.bigstart.capitalization = pascal_case
-dotnet_naming_style.bigstart.required_prefix = 
-dotnet_naming_style.bigstart.required_suffix = 
-dotnet_naming_style.bigstart.word_separator = 
+dotnet_naming_style.bigstart.required_prefix =
+dotnet_naming_style.bigstart.required_suffix =
+dotnet_naming_style.bigstart.word_separator =
 dotnet_naming_style.interface.capitalization = pascal_case
 dotnet_naming_style.interface.required_prefix = I
-dotnet_naming_style.interface.required_suffix = 
-dotnet_naming_style.interface.word_separator = 
-dotnet_diagnostic.CA1862.severity = none
+dotnet_naming_style.interface.required_suffix =
+dotnet_naming_style.interface.word_separator =
+dotnet_style_prefer_collection_expression = when_types_loosely_match:suggestion
 
 ## C# 首选项
 
@@ -133,7 +133,7 @@ csharp_style_prefer_pattern_matching = true:suggestion
 csharp_style_prefer_switch_expression = true:suggestion
 
 # Null 检查首选项
-csharp_style_conditional_delegate_call = true:suggestion
+csharp_style_conditional_delegate_call = false:suggestion
 csharp_prefer_static_local_function = true:suggestion
 csharp_preferred_modifier_order = public,private,protected,internal,file,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,required,volatile,async
 csharp_style_prefer_readonly_struct = true:suggestion
@@ -219,6 +219,7 @@ dotnet_diagnostic.IDE0005.severity = warning
 dotnet_diagnostic.IDE0010.severity = none
 dotnet_diagnostic.IDE0011.severity = suggestion
 dotnet_diagnostic.IDE0021.severity = none
+dotnet_diagnostic.IDE0022.severity = none
 dotnet_diagnostic.IDE0027.severity = suggestion
 dotnet_diagnostic.IDE0044.severity = none
 dotnet_diagnostic.IDE0058.severity = none
@@ -812,3 +813,4 @@ dotnet_diagnostic.CA2241.severity = warning
 dotnet_diagnostic.CA2242.severity = warning
 dotnet_diagnostic.CA2243.severity = warning
 dotnet_diagnostic.CA5122.severity = warning
+csharp_style_prefer_primary_constructors = true:suggestion

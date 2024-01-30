@@ -11,9 +11,9 @@ internal sealed class RadiusConverter : IValueConverter
     {
         return (TileType) value switch
         {
-            TileType.Small => new CornerRadius(Defaults.Radius / Defaults.Zoom),
+            TileType.Small => new CornerRadius(Defaults.Radius / 2),
             TileType.Medium or TileType.Wide => new CornerRadius(Defaults.Radius),
-            TileType.Large => new CornerRadius(Defaults.Radius * Defaults.Zoom),
+            TileType.Large => new CornerRadius(Defaults.Radius * 2),
             _ => (object) new CornerRadius(Defaults.Radius),
         };
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -7,53 +6,54 @@ namespace StartPro;
 
 public partial class Tile
 {
-    public bool IsDrag { get; set; }
+    private static readonly Canvas dGrid = (Application.Current.MainWindow as MainWindow).mainGrid;
+    private Point startMousePoint, startTilePoint;
 
-    private static Point dStart;
-    private static readonly Grid dGrid = (Application.Current.MainWindow as MainWindow).mainGrid;
+    public static readonly DependencyProperty IsDragProperty =
+    DependencyProperty.Register("IsDrag", typeof(bool), typeof(Tile), new PropertyMetadata(false));
 
-    private static TileGrid PtrPos
+    public bool IsDrag
     {
-        get
-        {
-            Point point = Mouse.GetPosition(dGrid);
-            int cellSize = Defaults.SmallSize + Defaults.Margin;
-            return new TileGrid
-            {
-                Row = (int) Math.Abs(Math.Floor(point.Y / cellSize)),
-                Col = (int) Math.Abs(Math.Floor(point.X / cellSize))
-            };
-        }
+        get => (bool) GetValue(IsDragProperty);
+        set => SetValue(IsDragProperty, value);
     }
 
     private void TileDragStart(object o, MouseButtonEventArgs e)
     {
-        Tile t = o as Tile;
-        SetTilePos(PtrPos, t.TileSize, false);
-        t.IsDrag = true;
-        dStart = e.GetPosition(this);
-        t.CaptureMouse( );
+        Tile tile = o as Tile;
+        tile?.CaptureMouse( );
+        startMousePoint = e.GetPosition(dGrid);
+        startTilePoint = new Point(Canvas.GetLeft(tile), Canvas.GetTop(tile));
+        IsDrag = true;
     }
-    private void TileDragging(object o, MouseEventArgs e)
-    {
-        Tile t = o as Tile;
-        if (!t.IsDrag) return;
-        Vector move = e.GetPosition(this) - dStart;
-        t.Margin = new Thickness(t.Margin.Left + move.X,
-                                 t.Margin.Top + move.Y,
-                                 t.Margin.Right - move.X,
-                                 t.Margin.Bottom - move.Y);
-    }
+
     private void TileDragStop(object o, MouseButtonEventArgs e)
     {
-        Tile t = o as Tile;
-        t.ReleaseMouseCapture( );
-        t.IsDrag = false;
-        t.Margin = new Thickness(0);
-        TileGrid pos = PtrPos;
-        if (!IsPosEmpty(pos, t.TileSize)) return;
-        t.Row = pos.Row;
-        t.Column = pos.Col;
-        SetTilePos(pos, t.TileSize, true);
+        IsDrag = false;
+        Tile tile = o as Tile;
+        tile?.ReleaseMouseCapture( );
+
+        Point mousePoint = e.GetPosition(dGrid);
+        Point offset = new(mousePoint.X - startMousePoint.X, mousePoint.Y - startMousePoint.Y);
+        Point tilePoint = new(startTilePoint.X + offset.X, startTilePoint.Y + offset.Y);
+
+        tile.Column = (int) tilePoint.X / Defaults.BlockSize;
+        tile.Row = (int) tilePoint.Y / Defaults.BlockSize;
+
+        for (int i = 0; i < dGrid.Children.Count; i++)
+            Panel.SetZIndex(dGrid.Children[i], i);
+        Panel.SetZIndex(tile, dGrid.Children.Count);
+    }
+
+    private void TileDragging(object o, MouseEventArgs e)
+    {
+        if (!IsDrag || e.RightButton == MouseButtonState.Released)
+            return;
+        Tile tile = o as Tile;
+        Panel.SetZIndex(tile, int.MaxValue);
+        Point mousePoint = e.GetPosition(dGrid);
+        Point offset = new(mousePoint.X - startMousePoint.X, mousePoint.Y - startMousePoint.Y);
+        Canvas.SetLeft(tile, startTilePoint.X + offset.X);
+        Canvas.SetTop(tile, startTilePoint.Y + offset.Y);
     }
 }

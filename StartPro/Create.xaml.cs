@@ -80,12 +80,6 @@ public partial class Create : Window
     {
         mainPanel.Children.Remove(tile);
         tile.IsEnabled = true;
-        tile.Margin = new Thickness(0);
-        TileGrid grid = tile.GetSize( );
-        while (!Tile.IsPosEmpty(grid, tile.TileSize))
-            grid.Col += 1;
-        Grid.SetRowSpan(tile, grid.Row);
-        Grid.SetColumnSpan(tile, grid.Col);
         Close( );
     }
 }

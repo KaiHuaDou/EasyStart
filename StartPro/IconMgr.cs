@@ -1,23 +1,15 @@
 ﻿using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using static StartPro.NativeMethods;
 
 namespace StartPro;
 
 public static class IconMgr
 {
-
-    [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-    private static extern int PrivateExtractIcons(
-        string lpszFile, int nIconIndex, int cxIcon, int cyIcon,
-            IntPtr[] phicon, int[] piconid, int nIcons, int flags);
-
-    [DllImport("user32.dll")]
-    private static extern bool DestroyIcon(IntPtr hIcon);
     public static ImageSource Get(string path)
     {
         int iconCnt = PrivateExtractIcons(path, 0, 0, 0, null, null, 0, 0);
