@@ -2,5 +2,5 @@
 
 public enum TileType
 {
-    Small, Medium, Wide, Large
+    Small, Medium, Wide, High, Large
 }

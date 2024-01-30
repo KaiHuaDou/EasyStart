@@ -29,6 +29,7 @@
                     <ComboBoxItem Content="{x:Static text:Main.SizeSmall}" />
                     <ComboBoxItem Content="{x:Static text:Main.SizeMid}" />
                     <ComboBoxItem Content="{x:Static text:Main.SizeWide}" />
+                    <ComboBoxItem Content="{x:Static text:Main.SizeHigh}" />
                     <ComboBoxItem Content="{x:Static text:Main.SizeLarge}" />
                 </ComboBox>
             </DockPanel>

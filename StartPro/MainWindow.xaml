@@ -6,21 +6,23 @@
         Height="512"
         Closing="SaveTiles">
     <Window.Resources>
-        <Style x:Key="IconButton" TargetType="Button">
+        <Style x:Key="IconButton" BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="FontFamily" Value="Segoe Fluent Icons" />
             <Setter Property="FontSize" Value="24" />
             <Setter Property="Height" Value="32" />
-            <Setter Property="Margin" Value="0" />
+            <Setter Property="Margin" Value="5,5,10,10" />
             <Setter Property="Width" Value="32" />
         </Style>
     </Window.Resources>
     <DockPanel>
-        <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button Style="{StaticResource IconButton}" Click="AddTile" Content="+" />
-            <Button Style="{StaticResource IconButton}" Content="@" />
+        <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Style="{StaticResource IconButton}" Click="AddTile" Content="&#xE710;" />
+            <Button Style="{StaticResource IconButton}" Content="&#xE74D;" />
         </StackPanel>
-        <Canvas x:Name="mainGrid" Background="{StaticResource Background}" />
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Canvas x:Name="mainGrid" Background="{StaticResource Background}" />
+        </ScrollViewer>
     </DockPanel>
 </Window>

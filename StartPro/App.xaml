@@ -5,12 +5,16 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <local:RadiusConverter x:Key="RadiusConverter" />
-            <local:SizeConverter x:Key="SizeConverter" />
-            <local:MarginConverter x:Key="MarginConverter" />
-            <local:ColorConverter x:Key="ColorConverter" />
-            <SolidColorBrush x:Key="Background" Color="White" />
-            <SolidColorBrush x:Key="Foreground" Color="#020202" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <local:RadiusConverter x:Key="RadiusConverter" />
+                    <local:SizeConverter x:Key="SizeConverter" />
+                    <local:MarginConverter x:Key="MarginConverter" />
+                    <SolidColorBrush x:Key="Background" Color="White" />
+                    <SolidColorBrush x:Key="Foreground" Color="#020202" />
+                </ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Aero,Version=6.0.2.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Aero.NormalColor.xaml" />
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -126,6 +126,9 @@
   <data name="OkText" xml:space="preserve">
     <value>确定</value>
   </data>
+  <data name="SizeHigh" xml:space="preserve">
+    <value>高</value>
+  </data>
   <data name="SizeLarge" xml:space="preserve">
     <value>大</value>
   </data>

@@ -23,6 +23,7 @@ public partial class MainWindow : Window
         Tile tile = window.tile;
         if (!tile.IsEnabled) return;
         mainGrid.Children.Add(tile);
+        tile.MoveToSpace(false);
     }
 
     private void SaveTiles(object sender, System.ComponentModel.CancelEventArgs e)

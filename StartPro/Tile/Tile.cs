@@ -69,12 +69,12 @@ public partial class Tile
     public int Row
     {
         get => (int) Canvas.GetTop(this) / Defaults.BlockSize;
-        set => Canvas.SetTop(this, value * Defaults.BlockSize);
+        set => Canvas.SetTop(this, (value < 0 ? 0 : value) * Defaults.BlockSize);
     }
 
     public int Column
     {
         get => (int) Canvas.GetLeft(this) / Defaults.BlockSize;
-        set => Canvas.SetLeft(this, value * Defaults.BlockSize);
+        set => Canvas.SetLeft(this, (value < 0 ? 0 : value) * Defaults.BlockSize);
     }
 }

@@ -13,7 +13,7 @@ internal sealed class MarginConverter : IValueConverter
         return tileType switch
         {
             TileType.Small => new Thickness(Defaults.ImageMargin / 2),
-            TileType.Medium or TileType.Wide => new Thickness(
+            TileType.Medium or TileType.Wide or TileType.High => new Thickness(
                 Defaults.ImageMargin, Defaults.ImageMargin,
                 Defaults.ImageMargin, Defaults.ImageMargin / 2),
             TileType.Large => new Thickness(

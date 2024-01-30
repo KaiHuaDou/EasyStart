@@ -38,8 +38,10 @@ public partial class Tile : UserControl
         tile.image.Source = new BitmapImage( );
     }
 
-    private void Execute(object o, MouseButtonEventArgs e)
+    private void TileLeftButtonUp(object o, MouseButtonEventArgs e)
     {
-        if (!IsDrag && IsEnabled) Process.Start(exec);
+        if (!IsDragged && IsEnabled)
+            Process.Start(exec);
+        TileDragStop(o, e);
     }
 }

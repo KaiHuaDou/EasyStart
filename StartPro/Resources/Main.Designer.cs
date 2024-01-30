@@ -88,6 +88,15 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
+        ///   查找类似 High 的本地化字符串。
+        /// </summary>
+        public static string SizeHigh {
+            get {
+                return ResourceManager.GetString("SizeHigh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Large 的本地化字符串。
         /// </summary>
         public static string SizeLarge {
