@@ -126,6 +126,9 @@
   <data name="OkText" xml:space="preserve">
     <value>确定</value>
   </data>
+  <data name="SelectColorText" xml:space="preserve">
+    <value>选择颜色</value>
+  </data>
   <data name="SizeHigh" xml:space="preserve">
     <value>高</value>
   </data>
@@ -141,17 +144,26 @@
   <data name="SizeWide" xml:space="preserve">
     <value>宽</value>
   </data>
+  <data name="TileColorText" xml:space="preserve">
+    <value>颜色:</value>
+  </data>
   <data name="TileFontSizeText" xml:space="preserve">
-    <value>字号: </value>
+    <value>字号:</value>
   </data>
   <data name="TileIconText" xml:space="preserve">
     <value>图标: </value>
+  </data>
+  <data name="TileImageShadowText" xml:space="preserve">
+    <value>图像阴影</value>
   </data>
   <data name="TileNameText" xml:space="preserve">
     <value>名称: </value>
   </data>
   <data name="TilePathText" xml:space="preserve">
     <value>路径:</value>
+  </data>
+  <data name="TileShadowText" xml:space="preserve">
+    <value>磁铁阴影</value>
   </data>
   <data name="TileSizeText" xml:space="preserve">
     <value>尺寸:</value>

@@ -88,6 +88,15 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Select Color 的本地化字符串。
+        /// </summary>
+        public static string SelectColorText {
+            get {
+                return ResourceManager.GetString("SelectColorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 High 的本地化字符串。
         /// </summary>
         public static string SizeHigh {
@@ -133,7 +142,16 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 FontSize:  的本地化字符串。
+        ///   查找类似 Color: 的本地化字符串。
+        /// </summary>
+        public static string TileColorText {
+            get {
+                return ResourceManager.GetString("TileColorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 FontSize: 的本地化字符串。
         /// </summary>
         public static string TileFontSizeText {
             get {
@@ -147,6 +165,15 @@ namespace StartPro.Resources {
         public static string TileIconText {
             get {
                 return ResourceManager.GetString("TileIconText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Image Shadow 的本地化字符串。
+        /// </summary>
+        public static string TileImageShadowText {
+            get {
+                return ResourceManager.GetString("TileImageShadowText", resourceCulture);
             }
         }
         
@@ -165,6 +192,15 @@ namespace StartPro.Resources {
         public static string TilePathText {
             get {
                 return ResourceManager.GetString("TilePathText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Tile Shadow 的本地化字符串。
+        /// </summary>
+        public static string TileShadowText {
+            get {
+                return ResourceManager.GetString("TileShadowText", resourceCulture);
             }
         }
         

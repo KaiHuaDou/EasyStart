@@ -9,10 +9,6 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        configuration: [Debug, Release]
-
     runs-on: windows-latest
 
     steps:
@@ -23,12 +19,10 @@ jobs:
         uses: actions/setup-dotnet@v4
 
       - name: Build Solution
-        run: dotnet build --configuration $env:Configuration
-        env:
-          Configuration: ${{ matrix.configuration }}
+        run: dotnet build --configuration Release
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.configuration }}
-          path: ./StartPro/bin/${{ matrix.configuration }}/net452/*
+          name: App
+          path: ./StartPro/bin/Release/net6.0-windows/*

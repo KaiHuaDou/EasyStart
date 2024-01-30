@@ -19,7 +19,6 @@
     <DockPanel>
         <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Style="{StaticResource IconButton}" Click="AddTile" Content="&#xE710;" />
-            <Button Style="{StaticResource IconButton}" Content="&#xE74D;" />
         </StackPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Canvas x:Name="mainGrid" Background="{StaticResource Background}" />

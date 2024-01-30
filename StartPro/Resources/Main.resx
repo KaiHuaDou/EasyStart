@@ -126,6 +126,9 @@
   <data name="OkText" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="SelectColorText" xml:space="preserve">
+    <value>Select Color</value>
+  </data>
   <data name="SizeHigh" xml:space="preserve">
     <value>High</value>
   </data>
@@ -141,17 +144,26 @@
   <data name="SizeWide" xml:space="preserve">
     <value>Wide</value>
   </data>
+  <data name="TileColorText" xml:space="preserve">
+    <value>Color:</value>
+  </data>
   <data name="TileFontSizeText" xml:space="preserve">
-    <value>FontSize: </value>
+    <value>FontSize:</value>
   </data>
   <data name="TileIconText" xml:space="preserve">
     <value>Icon: </value>
+  </data>
+  <data name="TileImageShadowText" xml:space="preserve">
+    <value>Image Shadow</value>
   </data>
   <data name="TileNameText" xml:space="preserve">
     <value>Name: </value>
   </data>
   <data name="TilePathText" xml:space="preserve">
     <value>Path:</value>
+  </data>
+  <data name="TileShadowText" xml:space="preserve">
+    <value>Tile Shadow</value>
   </data>
   <data name="TileSizeText" xml:space="preserve">
     <value>Size:</value>

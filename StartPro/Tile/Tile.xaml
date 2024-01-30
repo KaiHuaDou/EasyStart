@@ -6,6 +6,14 @@
              MouseLeftButtonDown="TileDragStart"
              MouseLeftButtonUp="TileLeftButtonUp"
              MouseMove="TileDragging">
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="打开文件位置" Click="OpenTileLocation" />
+            <MenuItem Header="以管理身份运行" />
+            <MenuItem Header="编辑" Click="EditTile" />
+            <MenuItem Header="删除" Click="RemoveTile" />
+        </ContextMenu>
+    </UserControl.ContextMenu>
     <Grid>
         <Border x:Name="maskBorder" Panel.ZIndex="2" CornerRadius="{Binding TileSize, Converter={StaticResource RadiusConverter}}">
             <Border.Style>
@@ -50,6 +58,9 @@
             <Border.Width>
                 <Binding Converter="{StaticResource SizeConverter}" ConverterParameter="Width" Path="TileSize" />
             </Border.Width>
+            <Border.Effect>
+                <DropShadowEffect x:Name="TileShadow" Opacity="0.4" Color="#888888" />
+            </Border.Effect>
             <DockPanel>
                 <Label x:Name="label"
                        DockPanel.Dock="Bottom"
@@ -60,7 +71,7 @@
                        Visibility="{Binding TileSize, Converter={StaticResource SizeConverter}, ConverterParameter=Label}" />
                 <Image x:Name="image" Margin="{Binding TileSize, Converter={StaticResource MarginConverter}}" Source="{Binding AppIcon}">
                     <Image.Effect>
-                        <DropShadowEffect Opacity="0.6" Color="#888888" />
+                        <DropShadowEffect x:Name="TileImageShadow" Opacity="0.4" Color="#888888" />
                     </Image.Effect>
                 </Image>
             </DockPanel>

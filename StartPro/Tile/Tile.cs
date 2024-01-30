@@ -22,11 +22,15 @@ public partial class Tile
     private static readonly PropertyMetadata appPathMeta = new(Defaults.AppName, AppPathChanged);
     private static readonly PropertyMetadata TileSizeMeta = new(TileType.Medium);
     private static readonly PropertyMetadata TileColorMeta = new(Defaults.Background);
+    private static readonly PropertyMetadata ImageShadowMeta = new(true);
+    private static readonly PropertyMetadata ShadowMeta = new(true);
     public static readonly DependencyProperty AppNameProperty = DependencyProperty.Register("AppName", typeof(string), typeof(Tile), appNameMeta);
     public static readonly DependencyProperty AppIconProperty = DependencyProperty.Register("AppIcon", typeof(string), typeof(Tile), appIconMeta);
     public static readonly DependencyProperty AppPathProperty = DependencyProperty.Register("AppPath", typeof(string), typeof(Tile), appPathMeta);
     public static readonly DependencyProperty TileSizeProperty = DependencyProperty.Register("TileSize", typeof(TileType), typeof(Tile), TileSizeMeta);
     public static readonly DependencyProperty TileColorProperty = DependencyProperty.Register("TileColor", typeof(SolidColorBrush), typeof(Tile), TileColorMeta);
+    public static readonly DependencyProperty ImageShadowProperty = DependencyProperty.Register("TileImageShadow", typeof(bool), typeof(Tile), ImageShadowMeta);
+    public static readonly DependencyProperty ShadowProperty = DependencyProperty.Register("TileShadow", typeof(bool), typeof(Tile), ShadowMeta);
 
     [DefaultValue(TileType.Medium)]
     public TileType TileSize
@@ -64,6 +68,26 @@ public partial class Tile
     {
         get => (string) GetValue(AppPathProperty);
         set => SetValue(AppPathProperty, value);
+    }
+
+    public bool ImageShadow
+    {
+        get => (bool) GetValue(ImageShadowProperty);
+        set
+        {
+            SetValue(ImageShadowProperty, value);
+            TileImageShadow.Opacity = value ? 0.4 : 0;
+        }
+    }
+
+    public bool Shadow
+    {
+        get => (bool) GetValue(ShadowProperty);
+        set
+        {
+            SetValue(ShadowProperty, value);
+            TileShadow.Opacity = value ? 0.4 : 0;
+        }
     }
 
     public int Row
