@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -16,31 +17,31 @@ public partial class Create : Window
         if (t is not null)
         {
             tile = t;
-            iconBox.Text = tile.AppIcon /*= t.AppIcon*/;
-            nameBox.Text = tile.AppName /*= t.AppName*/;
-            pathBox.Text = tile.AppPath /*= t.AppPath*/;
-
-            // 更改 IsChecked 的同时会触发 Checked 或 Unchecked
-            ShadowBox.IsChecked = tile.Shadow;
-            ImageShadowBox.IsChecked = tile.ImageShadow;
-
-            //tile.TileSize = t.TileSize;
-            //tile.TileColor = t.TileColor;
-            //tile.Shadow = t.Shadow;
-            //tile.ImageShadow = t.ImageShadow;
-
-            sizeBox.SelectedIndex = (int) tile.TileSize;
+            tile.IsEnabled = true;
             OkButton.IsEnabled = true;
-            mainPanel.Children.Add(tile);
+
+            iconBox.Text = tile.AppIcon;
+            nameBox.Text = tile.AppName;
+            pathBox.Text = tile.AppPath;
         }
         else
         {
-            tile = new Tile( );
-            tile.Row = tile.Column = 0;
+            tile = new Tile
+            {
+                IsEnabled = false,
+                Row = 0,
+                Column = 0
+            };
         }
+
+        sizeBox.SelectedIndex = (int) tile.TileSize;
+        fontBox.Text = tile.FontSize.ToString( );
+        ShadowBox.IsChecked = tile.Shadow;
+        ImageShadowBox.IsChecked = tile.ImageShadow;
+
         DockPanel.SetDock(tile, Dock.Right);
         tile.Margin = new Thickness(5, 10, 10, 5);
-        tile.IsEnabled = false;
+        mainPanel.Children.Insert(1, tile);
     }
 
     private void TileSizeChanged(object o, SelectionChangedEventArgs e)
@@ -113,19 +114,23 @@ public partial class Create : Window
     }
 
     private void ShadowBoxChecked(object o, RoutedEventArgs e)
-        => tile.Shadow = !tile.Shadow;
+        => tile.Shadow = (bool) ShadowBox.IsChecked;
 
     private void ImageShadowBoxChecked(object o, RoutedEventArgs e)
-        => tile.ImageShadow = !tile.ImageShadow;
+        => tile.ImageShadow = (bool) ImageShadowBox.IsChecked;
 
     private void TaskCancel(object o, RoutedEventArgs e)
         => Close( );
 
     private void TaskOk(object o, RoutedEventArgs e)
     {
-        mainPanel.Children.Remove(tile);
         tile.IsEnabled = true;
-        tile.Margin = new Thickness(Defaults.Margin);
         Close( );
+    }
+
+    private void WindowClosing(object o, CancelEventArgs e)
+    {
+        mainPanel.Children.Remove(tile);
+        tile.Margin = new Thickness(Defaults.Margin);
     }
 }

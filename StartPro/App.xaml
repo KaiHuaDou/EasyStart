@@ -10,8 +10,12 @@
                     <local:RadiusConverter x:Key="RadiusConverter" />
                     <local:SizeConverter x:Key="SizeConverter" />
                     <local:MarginConverter x:Key="MarginConverter" />
-                    <SolidColorBrush x:Key="Background" Color="White" />
-                    <SolidColorBrush x:Key="Foreground" Color="#020202" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Name="Theme">
+                    <SolidColorBrush x:Key="BackgroundBrush" Color="{DynamicResource BackgroundColor}" />
+                    <SolidColorBrush x:Key="ForegroundBrush" Color="{DynamicResource ForegroundColor}" />
+                    <Color x:Key="ForegroundColor" R="10" G="10" B="10" A="0xFF" />
+                    <Color x:Key="BackgroundColor" R="250" G="250" B="250" A="0xFF" />
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Aero,Version=6.0.2.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Aero.NormalColor.xaml" />
             </ResourceDictionary.MergedDictionaries>

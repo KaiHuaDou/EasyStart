@@ -4,8 +4,23 @@
         xmlns:local="clr-namespace:StartPro"
         xmlns:text="clr-namespace:StartPro.Resources"
         Title="{x:Static text:Main.CreateTitle}"
+        Closing="WindowClosing"
         SizeToContent="WidthAndHeight">
-    <DockPanel x:Name="mainPanel" Background="{StaticResource Background}">
+    <Window.Foreground>
+        <SolidColorBrush Color="{DynamicResource ForegroundColor}" />
+    </Window.Foreground>
+    <Window.Background>
+        <SolidColorBrush Color="{DynamicResource BackgroundColor}" />
+    </Window.Background>
+    <Window.Resources>
+        <Style BasedOn="{StaticResource {x:Type Label}}" TargetType="Label">
+            <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
+        </Style>
+        <Style BasedOn="{StaticResource {x:Type CheckBox}}" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
+        </Style>
+    </Window.Resources>
+    <DockPanel x:Name="mainPanel">
         <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button x:Name="OkButton"
                     Margin="5,5,10,10" Padding="20,3"

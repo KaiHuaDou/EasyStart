@@ -147,17 +147,29 @@
   <data name="TileColorText" xml:space="preserve">
     <value>Color:</value>
   </data>
+  <data name="TileContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="TileContextEdit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="TileContextOpen" xml:space="preserve">
+    <value>Open file location</value>
+  </data>
+  <data name="TileContextRunAs" xml:space="preserve">
+    <value>Run as Administrator</value>
+  </data>
   <data name="TileFontSizeText" xml:space="preserve">
-    <value>FontSize:</value>
+    <value>Font Size:</value>
   </data>
   <data name="TileIconText" xml:space="preserve">
-    <value>Icon: </value>
+    <value>Icon:</value>
   </data>
   <data name="TileImageShadowText" xml:space="preserve">
     <value>Image Shadow</value>
   </data>
   <data name="TileNameText" xml:space="preserve">
-    <value>Name: </value>
+    <value>Name:</value>
   </data>
   <data name="TilePathText" xml:space="preserve">
     <value>Path:</value>

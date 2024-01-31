@@ -43,11 +43,18 @@ public partial class Tile
         tile.Row = (int) Math.Round(tilePoint.Y / Defaults.BlockSize);
 
         MoveToSpace(offset.X > offset.Y);
+        double xmax = 0, ymax = 0;
         for (int i = 0; i < dGrid.Children.Count; i++)
         {
+            Tile t = dGrid.Children[i] as Tile;
+            double txmax = t.Row * Defaults.BlockSize + t.ActualWidth;
+            double tymax = t.Column * Defaults.BlockSize + t.ActualHeight;
+            xmax = txmax > xmax ? txmax : xmax;
+            ymax = tymax > ymax ? tymax : ymax;
             Panel.SetZIndex(dGrid.Children[i], i);
             Panel.SetZIndex(tile, dGrid.Children.Count);
         }
+        (dGrid.Width, dGrid.Height) = (xmax + Defaults.Margin * 2, ymax + Defaults.Margin * 2);
     }
 
     private void TileDragging(object o, MouseEventArgs e)

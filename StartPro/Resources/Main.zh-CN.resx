@@ -147,23 +147,35 @@
   <data name="TileColorText" xml:space="preserve">
     <value>颜色:</value>
   </data>
+  <data name="TileContextDelete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="TileContextEdit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="TileContextOpen" xml:space="preserve">
+    <value>打开文件位置</value>
+  </data>
+  <data name="TileContextRunAs" xml:space="preserve">
+    <value>以管理员身份运行</value>
+  </data>
   <data name="TileFontSizeText" xml:space="preserve">
     <value>字号:</value>
   </data>
   <data name="TileIconText" xml:space="preserve">
-    <value>图标: </value>
+    <value>图标:</value>
   </data>
   <data name="TileImageShadowText" xml:space="preserve">
     <value>图像阴影</value>
   </data>
   <data name="TileNameText" xml:space="preserve">
-    <value>名称: </value>
+    <value>名称:</value>
   </data>
   <data name="TilePathText" xml:space="preserve">
     <value>路径:</value>
   </data>
   <data name="TileShadowText" xml:space="preserve">
-    <value>磁铁阴影</value>
+    <value>磁贴阴影</value>
   </data>
   <data name="TileSizeText" xml:space="preserve">
     <value>尺寸:</value>

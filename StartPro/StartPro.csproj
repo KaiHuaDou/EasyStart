@@ -11,6 +11,7 @@
         <AnalysisLevel>latest-recommended</AnalysisLevel>
         <DebugType>full</DebugType>
         <WarningLevel>7</WarningLevel>
+        <NeutralLanguage>en-US</NeutralLanguage>
     </PropertyGroup>
     <ItemGroup>
         <Folder Include="Properties\" />

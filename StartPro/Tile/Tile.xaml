@@ -3,15 +3,16 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:StartPro"
+             xmlns:text="clr-namespace:StartPro.Resources"
              MouseLeftButtonDown="TileDragStart"
              MouseLeftButtonUp="TileLeftButtonUp"
              MouseMove="TileDragging">
     <UserControl.ContextMenu>
         <ContextMenu>
-            <MenuItem Header="打开文件位置" Click="OpenTileLocation" />
-            <MenuItem Header="以管理身份运行" />
-            <MenuItem Header="编辑" Click="EditTile" />
-            <MenuItem Header="删除" Click="RemoveTile" />
+            <MenuItem Header="{x:Static text:Main.TileContextOpen}" Click="OpenTileLocation" />
+            <MenuItem Header="{x:Static text:Main.TileContextRunAs}" Click="RunAsAdmin" />
+            <MenuItem Header="{x:Static text:Main.TileContextEdit}" Click="EditTile" />
+            <MenuItem Header="{x:Static text:Main.TileContextDelete}" Click="RemoveTile" />
         </ContextMenu>
     </UserControl.ContextMenu>
     <Grid>
@@ -59,7 +60,7 @@
                 <Binding Converter="{StaticResource SizeConverter}" ConverterParameter="Width" Path="TileSize" />
             </Border.Width>
             <Border.Effect>
-                <DropShadowEffect x:Name="TileShadow" Opacity="0.4" Color="#888888" />
+                <DropShadowEffect x:Name="TileShadow" Opacity="0.4" Color="{StaticResource ForegroundColor}" />
             </Border.Effect>
             <DockPanel>
                 <Label x:Name="label"
@@ -71,7 +72,7 @@
                        Visibility="{Binding TileSize, Converter={StaticResource SizeConverter}, ConverterParameter=Label}" />
                 <Image x:Name="image" Margin="{Binding TileSize, Converter={StaticResource MarginConverter}}" Source="{Binding AppIcon}">
                     <Image.Effect>
-                        <DropShadowEffect x:Name="TileImageShadow" Opacity="0.4" Color="#888888" />
+                        <DropShadowEffect x:Name="TileImageShadow" Opacity="0.4" Color="{StaticResource ForegroundColor}" />
                     </Image.Effect>
                 </Image>
             </DockPanel>

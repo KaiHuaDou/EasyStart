@@ -151,7 +151,43 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 FontSize: 的本地化字符串。
+        ///   查找类似 Delete 的本地化字符串。
+        /// </summary>
+        public static string TileContextDelete {
+            get {
+                return ResourceManager.GetString("TileContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Edit 的本地化字符串。
+        /// </summary>
+        public static string TileContextEdit {
+            get {
+                return ResourceManager.GetString("TileContextEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Open file location 的本地化字符串。
+        /// </summary>
+        public static string TileContextOpen {
+            get {
+                return ResourceManager.GetString("TileContextOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Run as Administrator 的本地化字符串。
+        /// </summary>
+        public static string TileContextRunAs {
+            get {
+                return ResourceManager.GetString("TileContextRunAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Font Size: 的本地化字符串。
         /// </summary>
         public static string TileFontSizeText {
             get {
@@ -160,7 +196,7 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Icon:  的本地化字符串。
+        ///   查找类似 Icon: 的本地化字符串。
         /// </summary>
         public static string TileIconText {
             get {
@@ -178,7 +214,7 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Name:  的本地化字符串。
+        ///   查找类似 Name: 的本地化字符串。
         /// </summary>
         public static string TileNameText {
             get {

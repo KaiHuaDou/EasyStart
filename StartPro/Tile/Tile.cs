@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -21,7 +19,7 @@ public partial class Tile
     private static readonly PropertyMetadata appIconMeta = new(AppIconChanged);
     private static readonly PropertyMetadata appPathMeta = new(Defaults.AppName, AppPathChanged);
     private static readonly PropertyMetadata TileSizeMeta = new(TileType.Medium);
-    private static readonly PropertyMetadata TileColorMeta = new(Defaults.Background);
+    private static readonly PropertyMetadata TileColorMeta = new(Defaults.Background, TileColorChanged);
     private static readonly PropertyMetadata ImageShadowMeta = new(true);
     private static readonly PropertyMetadata ShadowMeta = new(true);
     public static readonly DependencyProperty AppNameProperty = DependencyProperty.Register("AppName", typeof(string), typeof(Tile), appNameMeta);
@@ -32,17 +30,13 @@ public partial class Tile
     public static readonly DependencyProperty ImageShadowProperty = DependencyProperty.Register("TileImageShadow", typeof(bool), typeof(Tile), ImageShadowMeta);
     public static readonly DependencyProperty ShadowProperty = DependencyProperty.Register("TileShadow", typeof(bool), typeof(Tile), ShadowMeta);
 
-    [DefaultValue(TileType.Medium)]
     public TileType TileSize
     {
         get => (TileType) GetValue(TileSizeProperty);
         set
         {
             SetValue(TileSizeProperty, value);
-            Height = Convert.ToDouble(new SizeConverter( ).Convert(value, null, "Height", null));
-            Width = Convert.ToDouble(new SizeConverter( ).Convert(value, null, "Width", null));
-            Margin = new Thickness(Defaults.Margin);
-            border.CornerRadius = (CornerRadius) new RadiusConverter( ).Convert(value, null, null, null);
+            TileSizeChanged(this, value);
         }
     }
 
