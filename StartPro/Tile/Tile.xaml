@@ -60,7 +60,7 @@
                 <Binding Converter="{StaticResource SizeConverter}" ConverterParameter="Width" Path="TileSize" />
             </Border.Width>
             <Border.Effect>
-                <DropShadowEffect x:Name="TileShadow" Opacity="0.4" Color="{StaticResource ForegroundColor}" />
+                <DropShadowEffect x:Name="TileShadow" Opacity="0.4" Color="#020202" />
             </Border.Effect>
             <DockPanel>
                 <Label x:Name="label"
@@ -72,7 +72,7 @@
                        Visibility="{Binding TileSize, Converter={StaticResource SizeConverter}, ConverterParameter=Label}" />
                 <Image x:Name="image" Margin="{Binding TileSize, Converter={StaticResource MarginConverter}}" Source="{Binding AppIcon}">
                     <Image.Effect>
-                        <DropShadowEffect x:Name="TileImageShadow" Opacity="0.4" Color="{StaticResource ForegroundColor}" />
+                        <DropShadowEffect x:Name="TileImageShadow" Opacity="0.4" Color="#020202" />
                     </Image.Effect>
                 </Image>
             </DockPanel>

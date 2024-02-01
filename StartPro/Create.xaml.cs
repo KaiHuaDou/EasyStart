@@ -130,7 +130,7 @@ public partial class Create : Window
 
     private void WindowClosing(object o, CancelEventArgs e)
     {
-        mainPanel.Children.Remove(tile);
         tile.Margin = new Thickness(Defaults.Margin);
+        mainPanel.Children.Remove(tile);
     }
 }

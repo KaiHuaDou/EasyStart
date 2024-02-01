@@ -2,33 +2,57 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:StartPro"
-        Width="512"
-        Height="512"
-        Closing="SaveTiles">
-    <Window.Foreground>
-        <SolidColorBrush Color="{DynamicResource ForegroundColor}" />
-    </Window.Foreground>
-    <Window.Background>
-        <SolidColorBrush Color="{DynamicResource BackgroundColor}" />
-    </Window.Background>
+        xmlns:notify="clr-namespace:H.NotifyIcon;assembly=H.NotifyIcon.Wpf"
+        Closing="WindowClosing"
+        Deactivated="WindowDeactivated"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Topmost="True"
+        WindowStyle="None">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="-1" />
+    </WindowChrome.WindowChrome>
+    <Window.Template>
+        <ControlTemplate TargetType="Window">
+            <Border Padding="32,32,32,0" Background="Transparent">
+                <Border CornerRadius="24,24,0,0">
+                    <Border.Background>
+                        <SolidColorBrush Color="{StaticResource BackgroundColor}" />
+                    </Border.Background>
+                    <Border.Effect>
+                        <DropShadowEffect Opacity="0.4" BlurRadius="32" Direction="90" />
+                    </Border.Effect>
+                    <ContentPresenter ClipToBounds="True" />
+                </Border>
+            </Border>
+        </ControlTemplate>
+    </Window.Template>
     <Window.Resources>
         <Style x:Key="IconButton" BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0" />
             <Setter Property="FontFamily" Value="Segoe Fluent Icons" />
             <Setter Property="FontSize" Value="24" />
-            <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
             <Setter Property="Margin" Value="5,5,10,10" />
         </Style>
     </Window.Resources>
-    <DockPanel>
-        <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button Style="{StaticResource IconButton}" Click="AddTile" Content="&#xE710;" />
-        </StackPanel>
+    <Grid>
+        <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Panel.ZIndex="64"
+                Style="{StaticResource IconButton}"
+                Click="AddTile" Content="&#xE710;" />
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <Canvas x:Name="mainGrid"
-                    HorizontalAlignment="Left" VerticalAlignment="Top"
+            <Canvas x:Name="TilePanel"
+                    Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top"
                     Background="{StaticResource BackgroundBrush}" />
         </ScrollViewer>
-    </DockPanel>
+        <notify:TaskbarIcon MenuActivation="LeftOrRightClick">
+            <notify:TaskbarIcon.IconSource>
+                <notify:GeneratedIconSource Foreground="White" Text="⚙" />
+            </notify:TaskbarIcon.IconSource>
+            <notify:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="显示/隐藏" Click="TaskbarMenuShow" />
+                    <MenuItem Header="退出" Click="TaskbarMenuExit" />
+                </ContextMenu>
+            </notify:TaskbarIcon.ContextMenu>
+        </notify:TaskbarIcon>
+    </Grid>
 </Window>

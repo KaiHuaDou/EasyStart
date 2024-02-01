@@ -15,6 +15,7 @@
     </PropertyGroup>
     <ItemGroup>
         <Folder Include="Properties\" />
+        <PackageReference Include="H.NotifyIcon.Wpf" Version="2.0.124" />
         <PackageReference Include="System.Drawing.Common" Version="8.0.1" />
         <Reference Include="PresentationFramework.Aero">
             <HintPath>C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\6.0.25\PresentationFramework.Aero.dll</HintPath>

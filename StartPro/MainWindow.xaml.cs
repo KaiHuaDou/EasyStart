@@ -1,35 +1,100 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Interop;
+using static StartPro.NativeMethods;
 
 namespace StartPro;
 
 public partial class MainWindow : Window
 {
+    private IntPtr handle;
+    private HwndSource hwndSource;
+    private const int HOTKEY_ID = 9527;
+    private const int MOD_CONTROL = 0x2;
+    private const int KEY_F3 = 0x72;
+
     public MainWindow( )
     {
         InitializeComponent( );
-        HashSet<Tile> tiles = Tile.Load( );
-        foreach (Tile tile in tiles)
+        Height = Defaults.SizeRate * SystemParameters.PrimaryScreenHeight;
+        Width = Defaults.SizeRate * SystemParameters.PrimaryScreenWidth;
+        Top = SystemParameters.WorkArea.Height - Height;
+        Left = (SystemParameters.WorkArea.Width - Width) / 2;
+        foreach (Tile tile in App.Tiles)
         {
-            tile.Init( );
-            mainGrid.Children.Add(tile);
+            TilePanel.Children.Add(tile);
+        }
+        Tile.ResizeCanvas(TilePanel);
+    }
+
+    protected override void OnSourceInitialized(EventArgs e)
+    {
+        base.OnSourceInitialized(e);
+        handle = new WindowInteropHelper(this).Handle;
+        hwndSource = HwndSource.FromHwnd(handle);
+        hwndSource.AddHook(HwndHook);
+        RegisterHotKey(handle, HOTKEY_ID, MOD_CONTROL, KEY_F3);
+
+    }
+
+    protected override void OnClosed(EventArgs e)
+    {
+        base.OnClosed(e);
+        hwndSource.RemoveHook(HwndHook);
+        UnregisterHotKey(handle, HOTKEY_ID);
+    }
+
+    public IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+    {
+        const int WM_HOTKEY = 0x0312;
+        if (msg == WM_HOTKEY && wParam.ToInt32( ) == HOTKEY_ID)
+            SwitchState( );
+        return IntPtr.Zero;
+    }
+
+    public void SwitchState( )
+    {
+        if (Visibility == Visibility.Hidden)
+        {
+            Show( );
+            SetForegroundWindow(handle);
+        }
+        else
+        {
+            Hide( );
         }
     }
 
-    private void AddTile(object sender, RoutedEventArgs e)
+    private void AddTile(object o, RoutedEventArgs e)
     {
         Create window = new( );
         window.ShowDialog( );
         Tile tile = window.tile;
         if (!tile.IsEnabled) return;
-        mainGrid.Children.Add(tile);
-        tile.MoveToSpace(false);
+        TilePanel.Children.Add(tile);
+        tile.MoveToSpace(TilePanel, false);
+        Show( );
     }
 
-    private void SaveTiles(object sender, System.ComponentModel.CancelEventArgs e)
+    private void WindowClosing(object o, CancelEventArgs e)
     {
-        foreach (Tile tile in mainGrid.Children)
-            Tile.Add(tile);
-        Tile.Save( );
+        Hide( );
+        App.Tiles.Clear( );
+        foreach (Tile tile in TilePanel.Children)
+        {
+            tile.Init( );
+            App.Tiles.Add(tile);
+        }
+        e.Cancel = true;
     }
+
+    private void WindowDeactivated(object o, EventArgs e)
+        => SwitchState( );
+
+    private void TaskbarMenuShow(object o, RoutedEventArgs e)
+        => SwitchState( );
+
+    private void TaskbarMenuExit(object o, RoutedEventArgs e)
+        => Application.Current.Shutdown( );
 }

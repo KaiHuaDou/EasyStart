@@ -5,9 +5,9 @@ using System.Xml;
 
 namespace StartPro;
 
-public partial class Tile
+public static class TileConfig
 {
-    private const string cfgPath = "tiles.xml";
+    private const string xmlPath = "tiles.xml";
     private static readonly XmlDocument document = new( );
     private static XmlNode Apps = document.CreateElement("Apps");
 
@@ -26,7 +26,7 @@ public partial class Tile
     }
 
     public static void Save( )
-        => File.WriteAllText(cfgPath, Apps.OuterXml);
+        => File.WriteAllText(xmlPath, Apps.OuterXml);
 
     private static string GetAttribute(XmlNode node, string name)
         => (node.Attributes.GetNamedItem(name) as XmlAttribute).Value;
@@ -34,7 +34,7 @@ public partial class Tile
     public static HashSet<Tile> Load( )
     {
         HashSet<Tile> result = [];
-        try { document.Load(cfgPath); } catch { return result; }
+        try { document.Load(xmlPath); } catch { return result; }
         Apps = document.ChildNodes[0];
         foreach (XmlNode node in Apps.ChildNodes)
         {

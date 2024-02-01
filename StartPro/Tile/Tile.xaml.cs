@@ -97,7 +97,7 @@ public partial class Tile : UserControl
         Create c = new(this);
         c.ShowDialog( );
         parent.Children.Add(this);
-        MoveToSpace(false);
+        MoveToSpace(Parent as Panel, false);
     }
 
     private void RunAsAdmin(object o, RoutedEventArgs e)
