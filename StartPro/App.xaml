@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:StartPro"
              Exit="AppExit"
-             StartupUri="MainWindow.xaml">
+             Startup="AppStartup">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -11,9 +11,6 @@
                     <local:RadiusConverter x:Key="RadiusConverter" />
                     <local:SizeConverter x:Key="SizeConverter" />
                     <local:MarginConverter x:Key="MarginConverter" />
-                </ResourceDictionary>
-                <ResourceDictionary x:Name="Theme">
-                    <SolidColorBrush x:Key="BackgroundBrush" Color="{DynamicResource BackgroundColor}" />
                     <Color x:Key="BackgroundColor" R="250" G="250" B="250" A="0xFF" />
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Aero,Version=6.0.2.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Aero.NormalColor.xaml" />

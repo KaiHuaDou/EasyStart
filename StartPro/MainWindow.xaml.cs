@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Interop;
+using System.Windows.Media.Animation;
 using static StartPro.NativeMethods;
 
 namespace StartPro;
@@ -53,16 +54,34 @@ public partial class MainWindow : Window
         return IntPtr.Zero;
     }
 
-    public void SwitchState( )
+    public void SwitchState(bool? mode = null)
     {
-        if (Visibility == Visibility.Hidden)
+        switch (mode)
         {
-            Show( );
-            SetForegroundWindow(handle);
-        }
-        else
-        {
-            Hide( );
+            case null:
+            {
+                SwitchState(Visibility == Visibility.Hidden);
+                break;
+            }
+            case true:
+            {
+                if (Resources["ShowWindow"] is Storyboard showAnimation)
+                {
+                    Show( );
+                    showAnimation.Begin(this);
+                }
+                SetForegroundWindow(handle);
+                break;
+            }
+            case false:
+            {
+                if (Resources["HideWindow"] is Storyboard hideAnimation)
+                {
+                    hideAnimation.Completed += (o, e) => Hide( );
+                    hideAnimation.Begin(this);
+                }
+                break;
+            }
         }
     }
 

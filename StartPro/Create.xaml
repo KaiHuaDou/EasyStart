@@ -10,6 +10,11 @@
     <Window.Background>
         <SolidColorBrush Color="{DynamicResource BackgroundColor}" />
     </Window.Background>
+    <Window.Resources>
+        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
+            <Setter Property="Padding" Value="5" />
+        </Style>
+    </Window.Resources>
     <DockPanel x:Name="mainPanel">
         <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button x:Name="OkButton"
@@ -23,7 +28,7 @@
         </StackPanel>
         <StackPanel Margin="10,10,10,5">
             <DockPanel Margin="0,5">
-                <Label Content="{x:Static text:Main.TileSizeText}" />
+                <TextBlock Text="{x:Static text:Main.TileSizeText}" />
                 <ComboBox x:Name="sizeBox" SelectedIndex="0" SelectionChanged="TileSizeChanged">
                     <ComboBoxItem Content="{x:Static text:Main.SizeSmall}" />
                     <ComboBoxItem Content="{x:Static text:Main.SizeMid}" />
@@ -33,25 +38,25 @@
                 </ComboBox>
             </DockPanel>
             <DockPanel Margin="0,5">
-                <Label Content="{x:Static text:Main.TilePathText}" />
+                <TextBlock Text="{x:Static text:Main.TilePathText}" />
                 <Button DockPanel.Dock="Right" Click="SelectExe" Content="..." />
                 <TextBox x:Name="pathBox" LostFocus="PathChanged" />
             </DockPanel>
             <DockPanel Margin="0,5">
-                <Label Content="{x:Static text:Main.TileNameText}" />
+                <TextBlock Text="{x:Static text:Main.TileNameText}" />
                 <TextBox x:Name="nameBox" TextChanged="NameChanged" />
             </DockPanel>
             <DockPanel Margin="0,5">
-                <Label Content="{x:Static text:Main.TileIconText}" />
+                <TextBlock Text="{x:Static text:Main.TileIconText}" />
                 <Button DockPanel.Dock="Right" Click="SelectIcon" Content="..." />
                 <TextBox x:Name="iconBox" TextChanged="IconChanged" />
             </DockPanel>
             <DockPanel Margin="0,5">
-                <Label Content="{x:Static text:Main.TileFontSizeText}" />
+                <TextBlock Text="{x:Static text:Main.TileFontSizeText}" />
                 <TextBox x:Name="fontBox" TextChanged="FontChanged" />
             </DockPanel>
             <DockPanel Margin="0,5">
-                <Label Content="{x:Static text:Main.TileColorText}" />
+                <TextBlock Text="{x:Static text:Main.TileColorText}" />
                 <Button Click="SelectColor" Content="{x:Static text:Main.SelectColorText}" />
             </DockPanel>
             <StackPanel Margin="0,5" Orientation="Horizontal">

@@ -68,6 +68,7 @@ public partial class Tile : UserControl
                     UseShellExecute = true,
                     FileName = AppPath,
                 });
+                (Application.Current.MainWindow as MainWindow).SwitchState(false);
             }
             catch { }
         }
@@ -79,6 +80,7 @@ public partial class Tile : UserControl
         try
         {
             Process.Start(Directory.GetParent(AppPath).FullName);
+            (Application.Current.MainWindow as MainWindow).SwitchState(false);
         }
         catch (Win32Exception ex)
         {
@@ -113,6 +115,7 @@ public partial class Tile : UserControl
                 FileName = AppPath,
                 Verb = isAdmin ? "" : "runas"
             });
+            (Application.Current.MainWindow as MainWindow).SwitchState(false);
         }
         catch { }
     }
