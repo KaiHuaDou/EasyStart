@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace StartPro;
+namespace StartPro.External;
 internal static class NativeMethods
 {
     public const int WM_HOTKEY = 0x312;

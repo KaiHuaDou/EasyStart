@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BackgroundText" xml:space="preserve">
+    <value>背景:</value>
+  </data>
   <data name="CancelText" xml:space="preserve">
     <value>取消</value>
   </data>
-  <data name="CreateTitle" xml:space="preserve">
-    <value>添加新的磁贴</value>
+  <data name="CreateTileTitle" xml:space="preserve">
+    <value>添加磁贴</value>
+  </data>
+  <data name="EditTileTitle" xml:space="preserve">
+    <value>编辑磁贴</value>
   </data>
   <data name="OkText" xml:space="preserve">
     <value>确定</value>
@@ -138,7 +144,28 @@
   <data name="SizeMid" xml:space="preserve">
     <value>中</value>
   </data>
-  <data name="SizeSmall" xml:space="preserve">
+    <data name="UITheme.Aero.NormalColor" xml:space="preserve">
+    <value>Windows Vista/7 的默认主题</value>
+  </data>
+    <data name="UITheme.Aero2.NormalColor" xml:space="preserve">
+    <value>Windows 8/8.1/10 的默认主题</value>
+  </data>
+    <data name="UITheme.Classic" xml:space="preserve">
+    <value>Windows 9x 系列的默认主题</value>
+  </data>
+    <data name="UITheme.Luna.Homestead" xml:space="preserve">
+    <value>Windows XP 的橄榄色主题</value>
+  </data>
+    <data name="UITheme.Luna.Metallic" xml:space="preserve">
+    <value>Windows XP 的银色主题</value>
+  </data>
+    <data name="UITheme.Luna.NormalColor" xml:space="preserve">
+    <value>Windows XP 的默认蓝色主题</value>
+  </data>
+    <data name="UITheme.Royale.NormalColor" xml:space="preserve">
+    <value>Windows XP 的 Media Center 主题</value>
+  </data>
+    <data name="SizeSmall" xml:space="preserve">
     <value>小</value>
   </data>
   <data name="SizeWide" xml:space="preserve">
@@ -179,5 +206,14 @@
   </data>
   <data name="TileSizeText" xml:space="preserve">
     <value>尺寸:</value>
+  </data>
+  <data name="TrayExit" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="TrayShowHide" xml:space="preserve">
+    <value>显示/隐藏</value>
+  </data>
+  <data name="UIThemeText" xml:space="preserve">
+    <value>界面主题:</value>
   </data>
 </root>

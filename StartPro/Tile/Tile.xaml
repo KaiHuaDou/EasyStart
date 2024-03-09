@@ -38,8 +38,8 @@
                                 <Setter.Value>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                         <LinearGradientBrush.GradientStops>
-                                            <GradientStop Offset="0" Color="#34C5EBFF" />
-                                            <GradientStop Offset="1" Color="#3481D8FF" />
+                                            <GradientStop Offset="0" Color="#34D9F4FF" />
+                                            <GradientStop Offset="1" Color="#349BDDFB" />
                                         </LinearGradientBrush.GradientStops>
                                     </LinearGradientBrush>
                                 </Setter.Value>

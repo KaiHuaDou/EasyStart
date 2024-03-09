@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using static StartPro.NativeMethods;
+using static StartPro.External.NativeMethods;
 
 namespace StartPro;
 

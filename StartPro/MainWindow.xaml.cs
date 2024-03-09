@@ -1,19 +1,17 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows;
-using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
-using static StartPro.NativeMethods;
+using System.Windows.Media.Imaging;
+using StartPro.External;
+using static StartPro.External.NativeMethods;
 
 namespace StartPro;
 
 public partial class MainWindow : Window
 {
-    private IntPtr handle;
-    private HwndSource hwndSource;
-    private const int HOTKEY_ID = 9527;
-    private const int MOD_CONTROL = 0x2;
-    private const int KEY_F3 = 0x72;
+    public CustomCommand SwitchStateCommand => new(( ) => SwitchState( ));
 
     public MainWindow( )
     {
@@ -22,6 +20,7 @@ public partial class MainWindow : Window
         Width = Defaults.SizeRate * SystemParameters.PrimaryScreenWidth;
         Top = SystemParameters.WorkArea.Height - Height;
         Left = (SystemParameters.WorkArea.Width - Width) / 2;
+        ApplyBackground( );
         foreach (Tile tile in App.Tiles)
         {
             TilePanel.Children.Add(tile);
@@ -29,71 +28,74 @@ public partial class MainWindow : Window
         Tile.ResizeCanvas(TilePanel);
     }
 
-    protected override void OnSourceInitialized(EventArgs e)
-    {
-        base.OnSourceInitialized(e);
-        handle = new WindowInteropHelper(this).Handle;
-        hwndSource = HwndSource.FromHwnd(handle);
-        hwndSource.AddHook(HwndHook);
-        RegisterHotKey(handle, HOTKEY_ID, MOD_CONTROL, KEY_F3);
-
-    }
-
-    protected override void OnClosed(EventArgs e)
-    {
-        base.OnClosed(e);
-        hwndSource.RemoveHook(HwndHook);
-        UnregisterHotKey(handle, HOTKEY_ID);
-    }
-
-    public IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-    {
-        const int WM_HOTKEY = 0x0312;
-        if (msg == WM_HOTKEY && wParam.ToInt32( ) == HOTKEY_ID)
-            SwitchState( );
-        return IntPtr.Zero;
-    }
-
     public void SwitchState(bool? mode = null)
     {
         switch (mode)
         {
-            case null:
-            {
-                SwitchState(Visibility == Visibility.Hidden);
-                break;
-            }
-            case true:
-            {
-                if (Resources["ShowWindow"] is Storyboard showAnimation)
-                {
-                    Show( );
-                    showAnimation.Begin(this);
-                }
-                SetForegroundWindow(handle);
-                break;
-            }
-            case false:
-            {
-                if (Resources["HideWindow"] is Storyboard hideAnimation)
-                {
-                    hideAnimation.Completed += (o, e) => Hide( );
-                    hideAnimation.Begin(this);
-                }
-                break;
-            }
+            case null: SwitchState(Visibility == Visibility.Hidden); break;
+            case true: Show( ); break;
+            case false: Hide( ); break;
         }
     }
 
     private void AddTile(object o, RoutedEventArgs e)
     {
+        Hide( );
         Create window = new( );
         window.ShowDialog( );
-        Tile tile = window.tile;
-        if (!tile.IsEnabled) return;
+        Show( );
+        Tile tile = window.Item;
+        if (!tile.IsEnabled)
+            return;
         TilePanel.Children.Add(tile);
         tile.MoveToSpace(TilePanel, false);
+    }
+
+    private void ShowSetting(object o, RoutedEventArgs e)
+    {
+        Hide( );
+        new Setting( ).ShowDialog( );
+        ApplyBackground( );
         Show( );
+    }
+
+    private void ApplyBackground( )
+    {
+        try
+        {
+            if (char.IsLetter(App.Setting.Content.Background[0]))
+            {
+                MainBorder.Background = new ImageBrush(new BitmapImage(new Uri(App.Setting.Content.Background)));
+            }
+            else
+            {
+                int rgb = Convert.ToInt32(App.Setting.Content.Background.Replace("#", ""), 16);
+                byte R = (byte) ((rgb >> 16) & 0xFF);
+                byte G = (byte) ((rgb >> 8) & 0xFF);
+                byte B = (byte) (rgb & 0xFF);
+                MainBorder.Background = new SolidColorBrush(Color.FromRgb(R, G, B));
+            }
+        }
+        catch { }
+    }
+
+    public new void Show( )
+    {
+        if (Resources["ShowWindow"] is Storyboard showAnimation)
+        {
+            base.Show( );
+            showAnimation.Begin(this);
+        }
+        SetForegroundWindow(handle);
+    }
+
+    public new void Hide( )
+    {
+        if (Resources["HideWindow"] is Storyboard hideAnimation)
+        {
+            hideAnimation.Completed += (o, e) => base.Hide( );
+            hideAnimation.Begin(this);
+        }
     }
 
     private void WindowClosing(object o, CancelEventArgs e)

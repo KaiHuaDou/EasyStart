@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:StartPro"
         xmlns:notify="clr-namespace:H.NotifyIcon;assembly=H.NotifyIcon.Wpf"
+        xmlns:text="clr-namespace:StartPro.Resources"
         Closing="WindowClosing"
         Deactivated="WindowDeactivated"
         ResizeMode="NoResize"
@@ -22,9 +23,6 @@
     </Window.Resources>
     <Border Padding="32,32,32,0" Background="Transparent">
         <Border x:Name="MainBorder" CornerRadius="24,24,0,0" RenderTransformOrigin="0.5,1">
-            <Border.Background>
-                <SolidColorBrush Color="{StaticResource BackgroundColor}" />
-            </Border.Background>
             <Border.Effect>
                 <DropShadowEffect Opacity="0.4" BlurRadius="32" Direction="90" />
             </Border.Effect>
@@ -34,21 +32,23 @@
                 </TransformGroup>
             </Border.RenderTransform>
             <Grid>
-                <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Panel.ZIndex="64"
-                        Style="{StaticResource IconButton}"
-                        Click="AddTile" Content="&#xE710;" />
+                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Panel.ZIndex="64"
+                            Orientation="Horizontal">
+                    <Button Style="{StaticResource IconButton}" Click="AddTile" Content="&#xE710;" />
+                    <Button Style="{StaticResource IconButton}" Click="ShowSetting" Content="&#xE713;" />
+                </StackPanel>
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <Canvas x:Name="TilePanel"
                             Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" />
                 </ScrollViewer>
-                <notify:TaskbarIcon MenuActivation="LeftOrRightClick">
+                <notify:TaskbarIcon MenuActivation="RightClick">
                     <notify:TaskbarIcon.IconSource>
-                        <notify:GeneratedIconSource Foreground="White" Text="⚙" />
+                        <notify:GeneratedIconSource Foreground="White" Text="O" />
                     </notify:TaskbarIcon.IconSource>
                     <notify:TaskbarIcon.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="显示/隐藏" Click="TaskbarMenuShow" />
-                            <MenuItem Header="退出" Click="TaskbarMenuExit" />
+                            <MenuItem Header="{x:Static text:Main.TrayShowHide}" Click="TaskbarMenuShow" />
+                            <MenuItem Header="{x:Static text:Main.TrayExit}" Click="TaskbarMenuExit" />
                         </ContextMenu>
                     </notify:TaskbarIcon.ContextMenu>
                 </notify:TaskbarIcon>

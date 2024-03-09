@@ -61,6 +61,15 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Background: 的本地化字符串。
+        /// </summary>
+        public static string BackgroundText {
+            get {
+                return ResourceManager.GetString("BackgroundText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Cancel 的本地化字符串。
         /// </summary>
         public static string CancelText {
@@ -70,11 +79,20 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Add New Tile 的本地化字符串。
+        ///   查找类似 Add Tile 的本地化字符串。
         /// </summary>
-        public static string CreateTitle {
+        public static string CreateTileTitle {
             get {
-                return ResourceManager.GetString("CreateTitle", resourceCulture);
+                return ResourceManager.GetString("CreateTileTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Edit Tile 的本地化字符串。
+        /// </summary>
+        public static string EditTileTitle {
+            get {
+                return ResourceManager.GetString("EditTileTitle", resourceCulture);
             }
         }
         
@@ -246,6 +264,96 @@ namespace StartPro.Resources {
         public static string TileSizeText {
             get {
                 return ResourceManager.GetString("TileSizeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Exit 的本地化字符串。
+        /// </summary>
+        public static string TrayExit {
+            get {
+                return ResourceManager.GetString("TrayExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Show/Hide 的本地化字符串。
+        /// </summary>
+        public static string TrayShowHide {
+            get {
+                return ResourceManager.GetString("TrayShowHide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Default theme for Windows Vista/7 的本地化字符串。
+        /// </summary>
+        public static string UITheme_Aero_NormalColor {
+            get {
+                return ResourceManager.GetString("UITheme.Aero.NormalColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Default theme for Windows 8/8.1/10 的本地化字符串。
+        /// </summary>
+        public static string UITheme_Aero2_NormalColor {
+            get {
+                return ResourceManager.GetString("UITheme.Aero2.NormalColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Default theme for Windows 9x series 的本地化字符串。
+        /// </summary>
+        public static string UITheme_Classic {
+            get {
+                return ResourceManager.GetString("UITheme.Classic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Olive theme for Windows XP 的本地化字符串。
+        /// </summary>
+        public static string UITheme_Luna_Homestead {
+            get {
+                return ResourceManager.GetString("UITheme.Luna.Homestead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Silver theme for Windows XP 的本地化字符串。
+        /// </summary>
+        public static string UITheme_Luna_Metallic {
+            get {
+                return ResourceManager.GetString("UITheme.Luna.Metallic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Default blue theme for Windows XP 的本地化字符串。
+        /// </summary>
+        public static string UITheme_Luna_NormalColor {
+            get {
+                return ResourceManager.GetString("UITheme.Luna.NormalColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Media Center theme for Windows XP 的本地化字符串。
+        /// </summary>
+        public static string UITheme_Royale_NormalColor {
+            get {
+                return ResourceManager.GetString("UITheme.Royale.NormalColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 UI Theme: 的本地化字符串。
+        /// </summary>
+        public static string UIThemeText {
+            get {
+                return ResourceManager.GetString("UIThemeText", resourceCulture);
             }
         }
     }

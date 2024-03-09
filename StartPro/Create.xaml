@@ -3,63 +3,72 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:StartPro"
         xmlns:text="clr-namespace:StartPro.Resources"
-        Title="{x:Static text:Main.CreateTitle}"
         Closing="WindowClosing"
         SizeToContent="WidthAndHeight"
         Topmost="True">
-    <Window.Background>
-        <SolidColorBrush Color="{DynamicResource BackgroundColor}" />
-    </Window.Background>
-    <Window.Resources>
-        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
-            <Setter Property="Padding" Value="5" />
-        </Style>
-    </Window.Resources>
     <DockPanel x:Name="mainPanel">
-        <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button x:Name="OkButton"
-                    Margin="5,5,10,10" Padding="20,3"
-                    Click="TaskOk"
-                    Content="{x:Static text:Main.OkText}"
-                    IsEnabled="False" />
-            <Button Margin="5,5,5,10" Padding="20,3"
-                    Click="TaskCancel"
-                    Content="{x:Static text:Main.CancelText}" />
-        </StackPanel>
-        <StackPanel Margin="10,10,10,5">
-            <DockPanel Margin="0,5">
-                <TextBlock Text="{x:Static text:Main.TileSizeText}" />
-                <ComboBox x:Name="sizeBox" SelectedIndex="0" SelectionChanged="TileSizeChanged">
-                    <ComboBoxItem Content="{x:Static text:Main.SizeSmall}" />
-                    <ComboBoxItem Content="{x:Static text:Main.SizeMid}" />
-                    <ComboBoxItem Content="{x:Static text:Main.SizeWide}" />
-                    <ComboBoxItem Content="{x:Static text:Main.SizeHigh}" />
-                    <ComboBoxItem Content="{x:Static text:Main.SizeLarge}" />
-                </ComboBox>
-            </DockPanel>
-            <DockPanel Margin="0,5">
-                <TextBlock Text="{x:Static text:Main.TilePathText}" />
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.Resources>
+                <Style TargetType="DockPanel">
+                    <Setter Property="Margin" Value="0,0,0,10" />
+                </Style>
+                <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
+                    <Setter Property="Margin" Value="0,5,5,10" />
+                </Style>
+            </Grid.Resources>
+            <TextBlock Text="{x:Static text:Main.TileSizeText}" />
+            <ComboBox x:Name="sizeBox"
+                      Grid.Column="1"
+                      Margin="0,0,0,10"
+                      SelectedIndex="0" SelectionChanged="TileSizeChanged">
+                <ComboBoxItem Content="{x:Static text:Main.SizeSmall}" />
+                <ComboBoxItem Content="{x:Static text:Main.SizeMid}" />
+                <ComboBoxItem Content="{x:Static text:Main.SizeWide}" />
+                <ComboBoxItem Content="{x:Static text:Main.SizeHigh}" />
+                <ComboBoxItem Content="{x:Static text:Main.SizeLarge}" />
+            </ComboBox>
+            <TextBlock Grid.Row="1" Text="{x:Static text:Main.TilePathText}" />
+            <DockPanel Grid.Row="1" Grid.Column="1">
                 <Button DockPanel.Dock="Right" Click="SelectExe" Content="..." />
                 <TextBox x:Name="pathBox" LostFocus="PathChanged" />
             </DockPanel>
-            <DockPanel Margin="0,5">
-                <TextBlock Text="{x:Static text:Main.TileNameText}" />
-                <TextBox x:Name="nameBox" TextChanged="NameChanged" />
-            </DockPanel>
-            <DockPanel Margin="0,5">
-                <TextBlock Text="{x:Static text:Main.TileIconText}" />
+            <TextBlock Grid.Row="2" Text="{x:Static text:Main.TileNameText}" />
+            <TextBox x:Name="nameBox"
+                     Grid.Row="2" Grid.Column="1"
+                     Margin="0,0,0,10"
+                     TextChanged="NameChanged" />
+            <TextBlock Grid.Row="3" Text="{x:Static text:Main.TileIconText}" />
+            <DockPanel Grid.Row="3" Grid.Column="1">
                 <Button DockPanel.Dock="Right" Click="SelectIcon" Content="..." />
                 <TextBox x:Name="iconBox" TextChanged="IconChanged" />
             </DockPanel>
-            <DockPanel Margin="0,5">
-                <TextBlock Text="{x:Static text:Main.TileFontSizeText}" />
-                <TextBox x:Name="fontBox" TextChanged="FontChanged" />
-            </DockPanel>
-            <DockPanel Margin="0,5">
-                <TextBlock Text="{x:Static text:Main.TileColorText}" />
-                <Button Click="SelectColor" Content="{x:Static text:Main.SelectColorText}" />
-            </DockPanel>
-            <StackPanel Margin="0,5" Orientation="Horizontal">
+            <TextBlock Grid.Row="4" Text="{x:Static text:Main.TileFontSizeText}" />
+            <TextBox x:Name="fontBox"
+                     Grid.Row="4" Grid.Column="1"
+                     Margin="0,0,0,10"
+                     TextChanged="FontChanged" />
+            <TextBlock Grid.Row="5" Text="{x:Static text:Main.TileColorText}" />
+            <Button Grid.Row="5" Grid.Column="1"
+                    Margin="0,0,0,10" Padding="20,3"
+                    Click="SelectColor"
+                    Content="{x:Static text:Main.SelectColorText}" />
+            <StackPanel Grid.Row="6" Grid.ColumnSpan="2"
+                        Margin="0,0,0,10"
+                        Orientation="Horizontal">
                 <CheckBox x:Name="ImageShadowBox"
                           Margin="10,0,0,0"
                           Checked="ImageShadowBoxChecked"
@@ -71,6 +80,17 @@
                           Content="{x:Static text:Main.TileShadowText}"
                           Unchecked="ShadowBoxChecked" />
             </StackPanel>
-        </StackPanel>
+            <StackPanel Grid.Row="7" Grid.ColumnSpan="2"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                <Button x:Name="OkButton"
+                        Margin="0,0,5,0" Padding="20,3"
+                        Click="TaskOk"
+                        Content="{x:Static text:Main.OkText}" />
+                <Button Margin="5,0,0,0" Padding="20,3"
+                        Click="TaskCancel"
+                        Content="{x:Static text:Main.CancelText}" />
+            </StackPanel>
+        </Grid>
     </DockPanel>
 </Window>

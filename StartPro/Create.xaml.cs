@@ -4,84 +4,62 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.Win32;
+using StartPro.Api;
+using StartPro.Resources;
 
 namespace StartPro;
 
 public partial class Create : Window
 {
-    public Tile tile = new( );
+    public Tile Item { get; set; } = new( );
 
     public Create(Tile t = null)
     {
         InitializeComponent( );
-        if (t is not null)
-        {
-            tile = t;
-            tile.IsEnabled = true;
-            OkButton.IsEnabled = true;
 
-            iconBox.Text = tile.AppIcon;
-            nameBox.Text = tile.AppName;
-            pathBox.Text = tile.AppPath;
-        }
-        else
-        {
-            tile = new Tile
-            {
-                IsEnabled = false,
-                Row = 0,
-                Column = 0
-            };
-        }
+        Item = t is null ? new Tile { Row = 0, Column = 0 } : t;
+        Item.IsEnabled = false;
+        OkButton.IsEnabled = t is not null;
+        Title = t is null ? Main.CreateTileTitle : Main.EditTileTitle;
 
-        sizeBox.SelectedIndex = (int) tile.TileSize;
-        fontBox.Text = tile.FontSize.ToString( );
-        ShadowBox.IsChecked = tile.Shadow;
-        ImageShadowBox.IsChecked = tile.ImageShadow;
+        sizeBox.SelectedIndex = (int) Item.TileSize;
+        iconBox.Text = Item.AppIcon;
+        nameBox.Text = Item.AppName;
+        pathBox.Text = Item.AppPath;
+        fontBox.Text = Item.FontSize.ToString( );
+        ShadowBox.IsChecked = Item.Shadow;
+        ImageShadowBox.IsChecked = Item.ImageShadow;
 
-        DockPanel.SetDock(tile, Dock.Right);
-        tile.Margin = new Thickness(5, 10, 10, 5);
-        mainPanel.Children.Insert(1, tile);
+        DockPanel.SetDock(Item, Dock.Right);
+        Item.Margin = new Thickness(5, 10, 10, 5);
+        mainPanel.Children.Insert(0, Item);
     }
 
     private void TileSizeChanged(object o, SelectionChangedEventArgs e)
-        => tile.TileSize = (TileType) sizeBox.SelectedIndex;
+        => Item.TileSize = (TileType) sizeBox.SelectedIndex;
 
     private void SelectExe(object o, RoutedEventArgs e)
     {
-        OpenFileDialog dialog = new( )
+        if (Utils.TrySelectExe(out string fileName))
         {
-            CheckFileExists = true,
-            DefaultExt = ".exe",
-            Filter = "*.exe *.com *.bat *.cmd|*.exe;*.com;*.bat;*.cmd|*.*|*.*",
-            Title = "选择程序"
-        };
-        if (dialog.ShowDialog( ) == true)
-        {
-            pathBox.Text = dialog.FileName;
+            pathBox.Text = fileName;
             PathChanged(o, e);
         }
     }
 
     private void SelectIcon(object o, RoutedEventArgs e)
     {
-        OpenFileDialog dialog = new( )
-        {
-            CheckFileExists = true,
-            Filter = "*.jpg *.jpeg *.png *.bmp *.tif *.tiff *.gif *.ico|*.jpg;*.jpeg;*.png;*.bmp;*.tif;*.tiff;*.gif;*.ico|*.*|*.*",
-            Title = "选择图标"
-        };
-        if (dialog.ShowDialog( ) == true)
-            iconBox.Text = dialog.FileName;
+        if (Utils.TrySelectImage(out string fileName))
+            iconBox.Text = fileName;
     }
 
     private void PathChanged(object o, RoutedEventArgs e)
     {
         try
         {
-            tile.AppPath = pathBox.Text;
-            nameBox.Text = tile.AppName;
-            iconBox.Text = tile.AppIcon;
+            Item.AppPath = pathBox.Text;
+            nameBox.Text = Item.AppName;
+            iconBox.Text = Item.AppIcon;
             OkButton.IsEnabled = true;
         }
         catch { OkButton.IsEnabled = false; }
@@ -89,48 +67,39 @@ public partial class Create : Window
 
     private void IconChanged(object o, TextChangedEventArgs e)
     {
-        try { tile.AppIcon = new Uri(iconBox.Text).LocalPath; } catch { }
+        try { Item.AppIcon = new Uri(iconBox.Text).LocalPath; } catch { }
     }
 
     private void NameChanged(object o, TextChangedEventArgs e)
-        => tile.AppName = nameBox.Text;
+        => Item.AppName = nameBox.Text;
 
     private void FontChanged(object o, TextChangedEventArgs e)
-        => tile.FontSize = double.TryParse(fontBox.Text, out double result) ? result : Defaults.FontSize;
+        => Item.FontSize = double.TryParse(fontBox.Text, out double result) ? result : Defaults.FontSize;
 
     private void SelectColor(object o, RoutedEventArgs e)
     {
-        System.Windows.Forms.ColorDialog dialog = new( )
-        {
-            AllowFullOpen = true,
-            AnyColor = true,
-        };
-        if (dialog.ShowDialog( ) == System.Windows.Forms.DialogResult.OK)
-        {
-            tile.TileColor = new SolidColorBrush(
-                Color.FromArgb(dialog.Color.A, dialog.Color.R,
-                               dialog.Color.G, dialog.Color.B));
-        }
+        if (Utils.TrySelectColor(out Color color))
+            Item.TileColor = new SolidColorBrush(color);
     }
 
     private void ShadowBoxChecked(object o, RoutedEventArgs e)
-        => tile.Shadow = (bool) ShadowBox.IsChecked;
+        => Item.Shadow = (bool) ShadowBox.IsChecked;
 
     private void ImageShadowBoxChecked(object o, RoutedEventArgs e)
-        => tile.ImageShadow = (bool) ImageShadowBox.IsChecked;
+        => Item.ImageShadow = (bool) ImageShadowBox.IsChecked;
 
     private void TaskCancel(object o, RoutedEventArgs e)
         => Close( );
 
     private void TaskOk(object o, RoutedEventArgs e)
     {
-        tile.IsEnabled = true;
+        Item.IsEnabled = true;
         Close( );
     }
 
     private void WindowClosing(object o, CancelEventArgs e)
     {
-        tile.Margin = new Thickness(Defaults.Margin);
-        mainPanel.Children.Remove(tile);
+        Item.Margin = new Thickness(Defaults.Margin);
+        mainPanel.Children.Remove(Item);
     }
 }

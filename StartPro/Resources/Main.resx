@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BackgroundText" xml:space="preserve">
+    <value>Background:</value>
+  </data>
   <data name="CancelText" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="CreateTitle" xml:space="preserve">
-    <value>Add New Tile</value>
+  <data name="CreateTileTitle" xml:space="preserve">
+    <value>Add Tile</value>
+  </data>
+  <data name="EditTileTitle" xml:space="preserve">
+    <value>Edit Tile</value>
   </data>
   <data name="OkText" xml:space="preserve">
     <value>OK</value>
@@ -179,5 +185,35 @@
   </data>
   <data name="TileSizeText" xml:space="preserve">
     <value>Size:</value>
+  </data>
+  <data name="TrayExit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="TrayShowHide" xml:space="preserve">
+    <value>Show/Hide</value>
+  </data>
+  <data name="UITheme.Aero.NormalColor" xml:space="preserve">
+    <value>Default theme for Windows Vista/7</value>
+  </data>
+  <data name="UITheme.Aero2.NormalColor" xml:space="preserve">
+    <value>Default theme for Windows 8/8.1/10</value>
+  </data>
+  <data name="UITheme.Classic" xml:space="preserve">
+    <value>Default theme for Windows 9x series</value>
+  </data>
+  <data name="UITheme.Luna.Homestead" xml:space="preserve">
+    <value>Olive theme for Windows XP</value>
+  </data>
+  <data name="UITheme.Luna.Metallic" xml:space="preserve">
+    <value>Silver theme for Windows XP</value>
+  </data>
+  <data name="UITheme.Luna.NormalColor" xml:space="preserve">
+    <value>Default blue theme for Windows XP</value>
+  </data>
+  <data name="UITheme.Royale.NormalColor" xml:space="preserve">
+    <value>Media Center theme for Windows XP</value>
+  </data>
+  <data name="UIThemeText" xml:space="preserve">
+    <value>UI Theme:</value>
   </data>
 </root>
