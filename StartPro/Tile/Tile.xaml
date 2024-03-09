@@ -9,14 +9,37 @@
              MouseMove="TileDragging">
     <UserControl.ContextMenu>
         <ContextMenu>
-            <MenuItem Header="{x:Static text:Main.TileContextOpen}" Click="OpenTileLocation" />
-            <MenuItem Header="{x:Static text:Main.TileContextRunAs}" Click="RunAsAdmin" />
-            <MenuItem Header="{x:Static text:Main.TileContextEdit}" Click="EditTile" />
-            <MenuItem Header="{x:Static text:Main.TileContextDelete}" Click="RemoveTile" />
+            <MenuItem Header="{x:Static text:Main.TileContextOpen}" Click="OpenTileLocation">
+                <MenuItem.Icon>
+                    <TextBlock Margin="3" FontFamily="Segoe Fluent Icons" Text="&#xE8DA;" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="{x:Static text:Main.TileContextRunAs}" Click="RunAsAdmin">
+                <MenuItem.Icon>
+                    <TextBlock Margin="3" FontFamily="Segoe Fluent Icons" Text="&#xE7EF;" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="快速更改大小">
+                <MenuItem Header="小" Click="ToSmallClick" />
+                <MenuItem Header="中" Click="ToMediumClick" />
+                <MenuItem Header="宽" Click="ToWideClick" />
+                <MenuItem Header="高" Click="ToHighClick" />
+                <MenuItem Header="大" Click="ToLargeClick" />
+            </MenuItem>
+            <MenuItem Header="{x:Static text:Main.TileContextEdit}" Click="EditTile">
+                <MenuItem.Icon>
+                    <TextBlock Margin="3" FontFamily="Segoe Fluent Icons" Text="&#xE70F;" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="{x:Static text:Main.TileContextDelete}" Click="RemoveTile">
+                <MenuItem.Icon>
+                    <TextBlock Margin="3" FontFamily="Segoe Fluent Icons" Text="&#xE74D;" />
+                </MenuItem.Icon>
+            </MenuItem>
         </ContextMenu>
     </UserControl.ContextMenu>
     <Grid>
-        <Border x:Name="maskBorder" Panel.ZIndex="2" CornerRadius="{Binding TileSize, Converter={StaticResource RadiusConverter}}">
+        <Border x:Name="maskBorder" Panel.ZIndex="2">
             <Border.Style>
                 <Style TargetType="Border">
                     <Setter Property="Background" Value="Transparent" />
@@ -51,14 +74,7 @@
         </Border>
         <Border x:Name="border"
                 Background="{Binding TileColor}"
-                BorderBrush="#CDD3E6" BorderThickness="1"
-                CornerRadius="{Binding TileSize, Converter={StaticResource RadiusConverter}}">
-            <Border.Height>
-                <Binding Converter="{StaticResource SizeConverter}" ConverterParameter="Height" Path="TileSize" />
-            </Border.Height>
-            <Border.Width>
-                <Binding Converter="{StaticResource SizeConverter}" ConverterParameter="Width" Path="TileSize" />
-            </Border.Width>
+                BorderBrush="#CDD3E6" BorderThickness="1">
             <Border.Effect>
                 <DropShadowEffect x:Name="TileShadow" Opacity="0.4" Color="#020202" />
             </Border.Effect>

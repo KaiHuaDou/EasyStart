@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using StartPro.Api;
 using StartPro.External;
 using static StartPro.External.NativeMethods;
 
@@ -11,7 +12,7 @@ namespace StartPro;
 
 public partial class MainWindow : Window
 {
-    public CustomCommand SwitchStateCommand => new(( ) => SwitchState( ));
+    public CustomCommand SwitchStateCommand => new(( ) => ShowHide( ));
 
     public MainWindow( )
     {
@@ -28,14 +29,10 @@ public partial class MainWindow : Window
         Tile.ResizeCanvas(TilePanel);
     }
 
-    public void SwitchState(bool? mode = null)
+    public void ShowHide( )
     {
-        switch (mode)
-        {
-            case null: SwitchState(Visibility == Visibility.Hidden); break;
-            case true: Show( ); break;
-            case false: Hide( ); break;
-        }
+        if (Visibility == Visibility.Hidden) Show( );
+        else Hide( );
     }
 
     private void AddTile(object o, RoutedEventArgs e)
@@ -48,7 +45,7 @@ public partial class MainWindow : Window
         if (!tile.IsEnabled)
             return;
         TilePanel.Children.Add(tile);
-        tile.MoveToSpace(TilePanel, false);
+        tile.MoveToSpace(TilePanel, true);
     }
 
     private void ShowSetting(object o, RoutedEventArgs e)
@@ -63,9 +60,13 @@ public partial class MainWindow : Window
     {
         try
         {
-            if (char.IsLetter(App.Setting.Content.Background[0]))
+            if (App.Setting.Content.Background.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
             {
-                MainBorder.Background = new ImageBrush(new BitmapImage(new Uri(App.Setting.Content.Background)));
+                MainBorder.Background = new ImageBrush(IconMgr.Get(App.Setting.Content.Background)) { Stretch = Stretch.UniformToFill };
+            }
+            else if (char.IsLetter(App.Setting.Content.Background[0]))
+            {
+                MainBorder.Background = new ImageBrush(new BitmapImage(new Uri(App.Setting.Content.Background))) { Stretch = Stretch.UniformToFill };
             }
             else
             {
@@ -111,10 +112,10 @@ public partial class MainWindow : Window
     }
 
     private void WindowDeactivated(object o, EventArgs e)
-        => SwitchState( );
+        => ShowHide( );
 
     private void TaskbarMenuShow(object o, RoutedEventArgs e)
-        => SwitchState( );
+        => ShowHide( );
 
     private void TaskbarMenuExit(object o, RoutedEventArgs e)
         => Application.Current.Shutdown( );

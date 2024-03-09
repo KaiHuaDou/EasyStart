@@ -1,4 +1,6 @@
-﻿using System.Windows.Media;
+﻿using System.Diagnostics;
+using System.Security.Principal;
+using System.Windows.Media;
 using Microsoft.Win32;
 
 namespace StartPro.Api;
@@ -42,5 +44,22 @@ public static class Utils
         bool result = dialog.ShowDialog( ) == true;
         fileName = dialog.FileName;
         return result;
+    }
+
+    public static void ExecuteAsAdmin(string executable)
+    {
+        WindowsIdentity identity = WindowsIdentity.GetCurrent( );
+        WindowsPrincipal principal = new(identity);
+        bool isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
+        try
+        {
+            Process.Start(new ProcessStartInfo( )
+            {
+                UseShellExecute = true,
+                FileName = executable,
+                Verb = isAdmin ? "" : "runas"
+            });
+        }
+        catch { }
     }
 }

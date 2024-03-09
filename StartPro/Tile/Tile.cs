@@ -13,12 +13,15 @@ public partial class Tile
     }
 
     public void Init( )
-        => border.DataContext = this;
+    {
+        border.DataContext = this;
+        TileSizeChanged(this, new DependencyPropertyChangedEventArgs(TileSizeProperty, null, TileSize));
+    }
 
     private static readonly PropertyMetadata appNameMeta = new("Application");
     private static readonly PropertyMetadata appIconMeta = new(AppIconChanged);
     private static readonly PropertyMetadata appPathMeta = new(Defaults.AppName, AppPathChanged);
-    private static readonly PropertyMetadata TileSizeMeta = new(TileType.Medium);
+    private static readonly PropertyMetadata TileSizeMeta = new(TileType.Medium, TileSizeChanged);
     private static readonly PropertyMetadata TileColorMeta = new(Defaults.Background, TileColorChanged);
     private static readonly PropertyMetadata ImageShadowMeta = new(true);
     private static readonly PropertyMetadata ShadowMeta = new(true);
@@ -30,14 +33,12 @@ public partial class Tile
     public static readonly DependencyProperty ImageShadowProperty = DependencyProperty.Register("TileImageShadow", typeof(bool), typeof(Tile), ImageShadowMeta);
     public static readonly DependencyProperty ShadowProperty = DependencyProperty.Register("TileShadow", typeof(bool), typeof(Tile), ShadowMeta);
 
+    public Panel Owner => Parent as Panel;
+
     public TileType TileSize
     {
         get => (TileType) GetValue(TileSizeProperty);
-        set
-        {
-            SetValue(TileSizeProperty, value);
-            TileSizeChanged(this, value);
-        }
+        set => SetValue(TileSizeProperty, value);
     }
 
     public SolidColorBrush TileColor

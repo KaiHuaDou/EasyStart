@@ -1,0 +1,28 @@
+﻿<Window x:Class="StartPro.QuickStart"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        Title="QuickStart"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        SizeToContent="WidthAndHeight"
+        Topmost="True"
+        WindowStyle="None">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="-1" />
+    </WindowChrome.WindowChrome>
+    <Window.Template>
+        <ControlTemplate TargetType="Window">
+            <ContentPresenter ClipToBounds="True" />
+        </ControlTemplate>
+    </Window.Template>
+    <Border Padding="32,32,32,0" Background="Transparent">
+        <Border x:Name="MainBorder" CornerRadius="24,24,0,0" RenderTransformOrigin="0.5,1">
+            <Border.Effect>
+                <DropShadowEffect Opacity="0.4" BlurRadius="32" Direction="90" />
+            </Border.Effect>
+
+            <Button FontFamily="Segoe Fluent Icons" Click="Button_Click" Content="&#xE8AD;" />
+        </Border>
+    </Border>
+</Window>

@@ -6,7 +6,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static StartPro.External.NativeMethods;
 
-namespace StartPro;
+namespace StartPro.Api;
 
 public static class IconMgr
 {

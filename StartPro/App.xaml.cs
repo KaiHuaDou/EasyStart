@@ -23,11 +23,6 @@ public partial class App : Application, ISingleInstance
         }
     }
 
-    protected override void OnStartup(StartupEventArgs e)
-    {
-        base.OnStartup(e);
-    }
-
     private void AppExit(object o, ExitEventArgs e)
     {
         foreach (Tile tile in Tiles)
@@ -58,8 +53,10 @@ public partial class App : Application, ISingleInstance
         });
 
         MainWindow mainWindow = new( );
-        mainWindow.SwitchState(true);
+        Current.MainWindow = mainWindow;
+        //mainWindow.Show( );
+        new QuickStart( ).Show( );
     }
 
-    public void OnInstanceInvoked(string[] args) { }
+    public void OnInstanceInvoked(string[] args) => (Current.MainWindow as MainWindow)?.Show( );
 }

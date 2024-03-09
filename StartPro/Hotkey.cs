@@ -32,7 +32,7 @@ public partial class MainWindow : Window
     {
         const int WM_HOTKEY = 0x0312;
         if (msg == WM_HOTKEY && wParam.ToInt32( ) == HOTKEY_ID)
-            SwitchState( );
+            ShowHide( );
         return IntPtr.Zero;
     }
 }

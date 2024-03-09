@@ -2,12 +2,12 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Security.Principal;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using StartPro.Api;
 
 namespace StartPro;
 
@@ -31,30 +31,43 @@ public partial class Tile : UserControl
         tile.label.Foreground = new SolidColorBrush(brightness > 128 ? Colors.Black : Colors.White);
     }
 
-    public static void TileSizeChanged(DependencyObject o, object value)
+    public static void TileSizeChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
         Tile tile = o as Tile;
-        tile.MinHeight = tile.Height = Convert.ToDouble(new SizeConverter( ).Convert(value, null, "Height", null));
-        tile.MinWidth = tile.Width = Convert.ToDouble(new SizeConverter( ).Convert(value, null, "Width", null));
+        TileType tileType = (TileType) e.NewValue;
+        tile.MinHeight = tile.Height = Convert.ToDouble(new SizeConverter( ).Convert(tileType, null, "Height", null));
+        tile.MinWidth = tile.Width = Convert.ToDouble(new SizeConverter( ).Convert(tileType, null, "Width", null));
+        tile.border.CornerRadius = tile.maskBorder.CornerRadius = (CornerRadius) new RadiusConverter( ).Convert(tileType, null, null, null);
         tile.Margin = new Thickness(Defaults.Margin);
-        tile.border.CornerRadius = (CornerRadius) new RadiusConverter( ).Convert(value, null, null, null);
+        if (Application.Current.MainWindow is MainWindow window)
+        {
+            // 重新测量并布局确保 ActualWidth 和 ActualHeight 及时更新，以便移动磁贴至适宜位置
+            tile.Measure(new Size(window.Width, window.Height));
+            tile.Arrange(new Rect(0, 0, window.DesiredSize.Width, window.DesiredSize.Height));
+            if (tile.Owner is not null)
+                tile.MoveToSpace(tile.Owner, true);
+        }
     }
 
     private static void AppIconChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
         Tile tile = o as Tile;
         string path = e.NewValue as string;
-        if (tile.AppIcon == tile.AppName)
+        try
         {
-            tile.image.Source = IconMgr.Get(path);
+            if (tile.AppIcon.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
+            {
+                tile.image.Source = IconMgr.Get(path);
+            }
+            else if (File.Exists(path))
+            {
+                tile.image.Source = new BitmapImage(new Uri(path));
+            }
         }
-        else if (File.Exists(path))
+        catch
         {
-            try { tile.image.Source = new BitmapImage(new Uri(path)); }
-            catch { tile.image.Source = IconMgr.Get(path); }
-            return;
+            tile.image.Source = new BitmapImage( );
         }
-        tile.image.Source = new BitmapImage( );
     }
 
     private void TileLeftButtonUp(object o, MouseButtonEventArgs e)
@@ -68,7 +81,7 @@ public partial class Tile : UserControl
                     UseShellExecute = true,
                     FileName = AppPath,
                 });
-                (Application.Current.MainWindow as MainWindow).SwitchState(false);
+                (Application.Current.MainWindow as MainWindow).Hide( );
             }
             catch { }
         }
@@ -79,8 +92,8 @@ public partial class Tile : UserControl
     {
         try
         {
-            Process.Start(Directory.GetParent(AppPath).FullName);
-            (Application.Current.MainWindow as MainWindow).SwitchState(false);
+            Utils.ExecuteAsAdmin(Directory.GetParent(AppPath).FullName);
+            (Application.Current.MainWindow as MainWindow).Hide( );
         }
         catch (Win32Exception ex)
         {
@@ -99,24 +112,19 @@ public partial class Tile : UserControl
         Create c = new(this);
         c.ShowDialog( );
         parent.Children.Add(this);
-        MoveToSpace(Parent as Panel, false);
+        MoveToSpace(Parent as Panel, true);
     }
 
     private void RunAsAdmin(object o, RoutedEventArgs e)
     {
-        WindowsIdentity identity = WindowsIdentity.GetCurrent( );
-        WindowsPrincipal principal = new(identity);
-        bool isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
-        try
-        {
-            Process.Start(new ProcessStartInfo( )
-            {
-                UseShellExecute = true,
-                FileName = AppPath,
-                Verb = isAdmin ? "" : "runas"
-            });
-            (Application.Current.MainWindow as MainWindow).SwitchState(false);
-        }
-        catch { }
+        Utils.ExecuteAsAdmin(AppPath);
+        (Application.Current.MainWindow as MainWindow).Hide( );
+
     }
+
+    private void ToSmallClick(object sender, RoutedEventArgs e) => TileSize = TileType.Small;
+    private void ToMediumClick(object sender, RoutedEventArgs e) => TileSize = TileType.Medium;
+    private void ToWideClick(object sender, RoutedEventArgs e) => TileSize = TileType.Wide;
+    private void ToHighClick(object sender, RoutedEventArgs e) => TileSize = TileType.High;
+    private void ToLargeClick(object sender, RoutedEventArgs e) => TileSize = TileType.Large;
 }

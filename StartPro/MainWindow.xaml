@@ -8,7 +8,6 @@
         Deactivated="WindowDeactivated"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
-        Topmost="True"
         WindowStyle="None">
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="-1" />

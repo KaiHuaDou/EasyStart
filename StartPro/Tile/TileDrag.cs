@@ -41,7 +41,7 @@ public partial class Tile
         tile.Column = (int) Math.Round(tilePoint.X / Defaults.BlockSize);
         tile.Row = (int) Math.Round(tilePoint.Y / Defaults.BlockSize);
 
-        MoveToSpace(Parent as Panel, offset.X > offset.Y);
+        MoveToSpace(Parent as Panel, false);
         ReindexTiles(Parent as Panel);
     }
 
@@ -68,18 +68,19 @@ public partial class Tile
         return r1.IntersectsWith(r2);
     }
 
-    public void MoveToSpace(Panel parent, bool moveByRow)
+    public void MoveToSpace(Panel parent, bool moveSelf)
     {
-        bool flag = true;
-        while (flag)
+        bool isIntersect = true;
+        while (isIntersect)
         {
-            flag = false;
+            isIntersect = false;
             for (int i = 0; i < parent.Children.Count; i++)
             {
-                if (IntersectsWith(parent.Children[i] as Tile))
+                Tile target = parent.Children[i] as Tile;
+                if (IntersectsWith(target))
                 {
-                    _ = moveByRow ? Row++ : Column++;
-                    flag = true;
+                    Row++;
+                    isIntersect = true;
                     break;
                 }
             }
