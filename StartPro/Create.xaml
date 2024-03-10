@@ -36,7 +36,7 @@
                       Margin="0,0,0,10"
                       SelectedIndex="0" SelectionChanged="TileSizeChanged">
                 <ComboBoxItem Content="{x:Static text:Main.SizeSmall}" />
-                <ComboBoxItem Content="{x:Static text:Main.SizeMid}" />
+                <ComboBoxItem Content="{x:Static text:Main.SizeMedium}" />
                 <ComboBoxItem Content="{x:Static text:Main.SizeWide}" />
                 <ComboBoxItem Content="{x:Static text:Main.SizeHigh}" />
                 <ComboBoxItem Content="{x:Static text:Main.SizeLarge}" />

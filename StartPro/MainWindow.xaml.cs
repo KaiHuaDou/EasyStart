@@ -60,17 +60,17 @@ public partial class MainWindow : Window
     {
         try
         {
-            if (App.Setting.Content.Background.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
+            if (App.Program.Settings.Content.Background.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
             {
-                MainBorder.Background = new ImageBrush(IconMgr.Get(App.Setting.Content.Background)) { Stretch = Stretch.UniformToFill };
+                MainBorder.Background = new ImageBrush(IconMgr.Get(App.Program.Settings.Content.Background)) { Stretch = Stretch.UniformToFill };
             }
-            else if (char.IsLetter(App.Setting.Content.Background[0]))
+            else if (char.IsLetter(App.Program.Settings.Content.Background[0]))
             {
-                MainBorder.Background = new ImageBrush(new BitmapImage(new Uri(App.Setting.Content.Background))) { Stretch = Stretch.UniformToFill };
+                MainBorder.Background = new ImageBrush(new BitmapImage(new Uri(App.Program.Settings.Content.Background))) { Stretch = Stretch.UniformToFill };
             }
             else
             {
-                int rgb = Convert.ToInt32(App.Setting.Content.Background.Replace("#", ""), 16);
+                int rgb = Convert.ToInt32(App.Program.Settings.Content.Background.Replace("#", ""), 16);
                 byte R = (byte) ((rgb >> 16) & 0xFF);
                 byte G = (byte) ((rgb >> 8) & 0xFF);
                 byte B = (byte) (rgb & 0xFF);
@@ -104,10 +104,7 @@ public partial class MainWindow : Window
         Hide( );
         App.Tiles.Clear( );
         foreach (Tile tile in TilePanel.Children)
-        {
-            tile.Init( );
             App.Tiles.Add(tile);
-        }
         e.Cancel = true;
     }
 

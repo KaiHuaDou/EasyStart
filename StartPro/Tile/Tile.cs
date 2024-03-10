@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -9,13 +10,24 @@ public partial class Tile
     public Tile( )
     {
         InitializeComponent( );
-        Init( );
+        Refresh( );
     }
 
-    public void Init( )
+    public void Refresh( )
     {
         border.DataContext = this;
-        TileSizeChanged(this, new DependencyPropertyChangedEventArgs(TileSizeProperty, null, TileSize));
+        MinHeight = Height = Convert.ToDouble(new SizeConverter( ).Convert(TileSize, null, "Height", null));
+        MinWidth = Width = Convert.ToDouble(new SizeConverter( ).Convert(TileSize, null, "Width", null));
+        border.CornerRadius = maskBorder.CornerRadius = (CornerRadius) new RadiusConverter( ).Convert(TileSize, null, null, null);
+        Margin = new Thickness(Defaults.Margin);
+        if (Parent is Canvas && Application.Current.MainWindow is MainWindow window)
+        {
+            // 重新测量并布局确保 ActualWidth 和 ActualHeight 及时更新，以便移动磁贴至适宜位置
+            Measure(new Size(window.Width, window.Height));
+            Arrange(new Rect(0, 0, window.DesiredSize.Width, window.DesiredSize.Height));
+            if (Owner is not null)
+                MoveToSpace(Owner, true);
+        }
     }
 
     private static readonly PropertyMetadata appNameMeta = new("Application");
@@ -71,7 +83,7 @@ public partial class Tile
         set
         {
             SetValue(ImageShadowProperty, value);
-            TileImageShadow.Opacity = value ? 0.4 : 0;
+            TileImageShadow.Opacity = (!App.Program.Settings.Content.UIFlat && value) ? 0.4 : 0;
         }
     }
 
@@ -81,7 +93,7 @@ public partial class Tile
         set
         {
             SetValue(ShadowProperty, value);
-            TileShadow.Opacity = value ? 0.4 : 0;
+            TileShadow.Opacity = (!App.Program.Settings.Content.UIFlat && value) ? 0.4 : 0;
         }
     }
 

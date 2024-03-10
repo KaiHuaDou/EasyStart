@@ -8,6 +8,7 @@
         Deactivated="WindowDeactivated"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
+        Topmost="True"
         WindowStyle="None">
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="-1" />
@@ -21,7 +22,7 @@
         <ResourceDictionary Source="/Theme.xaml" />
     </Window.Resources>
     <Border Padding="32,32,32,0" Background="Transparent">
-        <Border x:Name="MainBorder" CornerRadius="24,24,0,0" RenderTransformOrigin="0.5,1">
+        <Border x:Name="MainBorder" CornerRadius="{Binding Tag, ConverterParameter=MainWindow, Converter={StaticResource RadiusConverter}}" RenderTransformOrigin="0.5,1">
             <Border.Effect>
                 <DropShadowEffect Opacity="0.4" BlurRadius="32" Direction="90" />
             </Border.Effect>

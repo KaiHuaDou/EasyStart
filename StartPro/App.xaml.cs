@@ -9,10 +9,12 @@ namespace StartPro;
 public partial class App : Application, ISingleInstance
 {
     public static HashSet<Tile> Tiles { get; } = TileConfig.Load( );
-    public static DataStore<Config> Setting { get; set; }
+    public static MainWindow TileWindow => Current.MainWindow as MainWindow;
 
     public static class Program
     {
+        public static DataStore<Config> Settings { get; set; } = new("settings.xml");
+
         [STAThread]
         public static void Main( )
         {
@@ -28,7 +30,7 @@ public partial class App : Application, ISingleInstance
         foreach (Tile tile in Tiles)
             TileConfig.Add(tile);
         TileConfig.Save( );
-        Setting.Save( );
+        Program.Settings.Save( );
     }
 
     private void AppStartup(object o, StartupEventArgs e)
@@ -36,10 +38,9 @@ public partial class App : Application, ISingleInstance
         if (!this.InitializeAsFirstInstance("KaiHuaDou_StartPro"))
             Current.Shutdown( );
 
-        Setting = new("settings.xml");
         Resources.MergedDictionaries.Add(new ResourceDictionary( )
         {
-            Source = new Uri(Setting.Content.UITheme switch
+            Source = new Uri(Program.Settings.Content.UITheme switch
             {
                 0 => "pack://application:,,,/PresentationFramework.Aero,Version=6.0.2.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Aero.NormalColor.xaml",
                 1 => "pack://application:,,,/PresentationFramework.Aero2,Version=6.0.2.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Aero2.NormalColor.xaml",
@@ -53,10 +54,11 @@ public partial class App : Application, ISingleInstance
         });
 
         MainWindow mainWindow = new( );
+        QuickStart quickStart = new( );
         Current.MainWindow = mainWindow;
-        //mainWindow.Show( );
-        new QuickStart( ).Show( );
+        quickStart.Show( );
+        mainWindow.Show( );
     }
 
-    public void OnInstanceInvoked(string[] args) => (Current.MainWindow as MainWindow)?.Show( );
+    public void OnInstanceInvoked(string[] args) => TileWindow?.Show( );
 }

@@ -123,17 +123,17 @@
   <data name="CancelText" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="CreateTileTitle" xml:space="preserve">
-    <value>Add Tile</value>
-  </data>
-  <data name="EditTileTitle" xml:space="preserve">
-    <value>Edit Tile</value>
-  </data>
   <data name="OkText" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="SelectColorText" xml:space="preserve">
     <value>Select Color</value>
+  </data>
+  <data name="SelectExeText" xml:space="preserve">
+    <value>Select Executable</value>
+  </data>
+  <data name="SelectImageText" xml:space="preserve">
+    <value>Select Image</value>
   </data>
   <data name="SizeHigh" xml:space="preserve">
     <value>High</value>
@@ -141,7 +141,7 @@
   <data name="SizeLarge" xml:space="preserve">
     <value>Large</value>
   </data>
-  <data name="SizeMid" xml:space="preserve">
+  <data name="SizeMedium" xml:space="preserve">
     <value>Medium</value>
   </data>
   <data name="SizeSmall" xml:space="preserve">
@@ -158,6 +158,9 @@
   </data>
   <data name="TileContextEdit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="TileContextFastChange" xml:space="preserve">
+    <value>Change Size</value>
   </data>
   <data name="TileContextOpen" xml:space="preserve">
     <value>Open file location</value>
@@ -186,6 +189,15 @@
   <data name="TileSizeText" xml:space="preserve">
     <value>Size:</value>
   </data>
+  <data name="TitleCreateTile" xml:space="preserve">
+    <value>Add Tile</value>
+  </data>
+  <data name="TitleEditTile" xml:space="preserve">
+    <value>Edit Tile</value>
+  </data>
+  <data name="TitleSetting" xml:space="preserve">
+    <value>Setting</value>
+  </data>
   <data name="TrayExit" xml:space="preserve">
     <value>Exit</value>
   </data>
@@ -212,6 +224,9 @@
   </data>
   <data name="UITheme.Royale.NormalColor" xml:space="preserve">
     <value>Media Center theme for Windows XP</value>
+  </data>
+  <data name="UIThemeFlat" xml:space="preserve">
+    <value>Flat UI</value>
   </data>
   <data name="UIThemeText" xml:space="preserve">
     <value>UI Theme:</value>

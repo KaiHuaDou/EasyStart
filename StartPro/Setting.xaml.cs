@@ -10,8 +10,9 @@ public partial class Setting : Window
     public Setting( )
     {
         InitializeComponent( );
-        backgroundBox.Text = App.Setting.Content.Background;
-        UIThemeBox.SelectedIndex = App.Setting.Content.UITheme;
+        backgroundBox.Text = App.Program.Settings.Content.Background;
+        UIThemeBox.SelectedIndex = App.Program.Settings.Content.UITheme;
+        UIFlatBox.IsChecked = App.Program.Settings.Content.UIFlat;
     }
 
     private void CancelClick(object o, RoutedEventArgs e)
@@ -19,12 +20,13 @@ public partial class Setting : Window
 
     private void OkClick(object o, RoutedEventArgs e)
     {
-        App.Setting.Content = new Config
+        App.Program.Settings.Content = new Config
         {
             Background = backgroundBox.Text,
-            UITheme = UIThemeBox.SelectedIndex
+            UITheme = UIThemeBox.SelectedIndex,
+            UIFlat = UIFlatBox.IsChecked == true
         };
-        App.Setting.Save( );
+        App.Program.Settings.Save( );
         Close( );
     }
 

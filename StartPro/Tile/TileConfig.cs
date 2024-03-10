@@ -22,6 +22,8 @@ public static class TileConfig
         element.SetAttribute("FontSize", tile.FontSize.ToString( ));
         element.SetAttribute("Row", tile.Row.ToString( ));
         element.SetAttribute("Column", tile.Column.ToString( ));
+        element.SetAttribute("Shadow", tile.Shadow.ToString( ));
+        element.SetAttribute("ImageShadow", tile.ImageShadow.ToString( ));
         Apps.AppendChild(element);
     }
 
@@ -48,8 +50,9 @@ public static class TileConfig
                 FontSize = double.Parse(GetAttribute(node, "FontSize")),
                 Row = int.Parse(GetAttribute(node, "Row")),
                 Column = int.Parse(GetAttribute(node, "Column")),
+                Shadow = bool.Parse(GetAttribute(node, "Shadow")),
+                ImageShadow = bool.Parse(GetAttribute(node, "ImageShadow")),
             };
-            item.Init( );
             result.Add(item);
         }
         Apps = document.CreateElement("Apps");

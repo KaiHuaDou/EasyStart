@@ -9,11 +9,11 @@ internal sealed class SizeConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        TileType clipType = (TileType) value;
+        TileType tileType = (TileType) value;
         string mode = (string) parameter;
         if (mode == "Label")
-            return clipType == TileType.Small ? Visibility.Collapsed : Visibility.Visible;
-        (int, int) size = clipType switch
+            return tileType == TileType.Small ? Visibility.Collapsed : Visibility.Visible;
+        (int, int) size = tileType switch
         {
             TileType.Small => Defaults.SmallSize,
             TileType.Medium => Defaults.MediumSize,

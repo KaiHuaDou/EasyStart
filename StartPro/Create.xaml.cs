@@ -19,7 +19,7 @@ public partial class Create : Window
         Item = t is null ? new Tile { Row = 0, Column = 0 } : t;
         Item.IsEnabled = false;
         OkButton.IsEnabled = t is not null;
-        Title = t is null ? Main.CreateTileTitle : Main.EditTileTitle;
+        Title = t is null ? Main.TitleCreateTile : Main.TitleEditTile;
 
         sizeBox.SelectedIndex = (int) Item.TileSize;
         iconBox.Text = Item.AppIcon;

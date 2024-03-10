@@ -12,7 +12,7 @@ public static class Defaults
     public static (int, int) HighSize => (2 * SmallSize.Item1 + 1 * Margin, 4 * SmallSize.Item2 + 3 * Margin);
     public static (int, int) LargeSize => (4 * SmallSize.Item1 + 3 * Margin, 4 * SmallSize.Item2 + 3 * Margin);
     public static int BlockSize => SmallSize.Item1 + Margin;
-    public static int Radius => 10;
+    public static int Radius => App.Program.Settings.Content.UIFlat ? 0 : 10;
     public static int Margin => 10;
     public static int ImageMargin => 15;
     public static double FontSize => 22;

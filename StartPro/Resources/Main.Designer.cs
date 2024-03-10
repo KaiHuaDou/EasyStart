@@ -79,24 +79,6 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Add Tile 的本地化字符串。
-        /// </summary>
-        public static string CreateTileTitle {
-            get {
-                return ResourceManager.GetString("CreateTileTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Edit Tile 的本地化字符串。
-        /// </summary>
-        public static string EditTileTitle {
-            get {
-                return ResourceManager.GetString("EditTileTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 OK 的本地化字符串。
         /// </summary>
         public static string OkText {
@@ -111,6 +93,24 @@ namespace StartPro.Resources {
         public static string SelectColorText {
             get {
                 return ResourceManager.GetString("SelectColorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Select Executable 的本地化字符串。
+        /// </summary>
+        public static string SelectExeText {
+            get {
+                return ResourceManager.GetString("SelectExeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Select Image 的本地化字符串。
+        /// </summary>
+        public static string SelectImageText {
+            get {
+                return ResourceManager.GetString("SelectImageText", resourceCulture);
             }
         }
         
@@ -135,9 +135,9 @@ namespace StartPro.Resources {
         /// <summary>
         ///   查找类似 Medium 的本地化字符串。
         /// </summary>
-        public static string SizeMid {
+        public static string SizeMedium {
             get {
-                return ResourceManager.GetString("SizeMid", resourceCulture);
+                return ResourceManager.GetString("SizeMedium", resourceCulture);
             }
         }
         
@@ -183,6 +183,15 @@ namespace StartPro.Resources {
         public static string TileContextEdit {
             get {
                 return ResourceManager.GetString("TileContextEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Change Size 的本地化字符串。
+        /// </summary>
+        public static string TileContextFastChange {
+            get {
+                return ResourceManager.GetString("TileContextFastChange", resourceCulture);
             }
         }
         
@@ -268,6 +277,33 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Add Tile 的本地化字符串。
+        /// </summary>
+        public static string TitleCreateTile {
+            get {
+                return ResourceManager.GetString("TitleCreateTile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Edit Tile 的本地化字符串。
+        /// </summary>
+        public static string TitleEditTile {
+            get {
+                return ResourceManager.GetString("TitleEditTile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Setting 的本地化字符串。
+        /// </summary>
+        public static string TitleSetting {
+            get {
+                return ResourceManager.GetString("TitleSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Exit 的本地化字符串。
         /// </summary>
         public static string TrayExit {
@@ -345,6 +381,15 @@ namespace StartPro.Resources {
         public static string UITheme_Royale_NormalColor {
             get {
                 return ResourceManager.GetString("UITheme.Royale.NormalColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Flat UI 的本地化字符串。
+        /// </summary>
+        public static string UIThemeFlat {
+            get {
+                return ResourceManager.GetString("UIThemeFlat", resourceCulture);
             }
         }
         

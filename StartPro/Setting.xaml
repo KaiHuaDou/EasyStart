@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:text="clr-namespace:StartPro.Resources"
-        Title="设置"
+        Title="{x:Static text:Main.TitleSetting}"
         Loaded="WindowLoaded"
         SizeToContent="WidthAndHeight">
     <Grid Margin="10">
@@ -12,6 +12,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -47,7 +48,8 @@
             </ComboBox>
             <Label x:Name="UIThemeText" />
         </StackPanel>
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2"
+        <CheckBox x:Name="UIFlatBox" Grid.Row="2" Content="{x:Static text:Main.UIThemeFlat}" />
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="2"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
             <Button x:Name="OkButton"

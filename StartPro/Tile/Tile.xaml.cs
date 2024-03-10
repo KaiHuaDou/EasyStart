@@ -34,19 +34,7 @@ public partial class Tile : UserControl
     public static void TileSizeChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
         Tile tile = o as Tile;
-        TileType tileType = (TileType) e.NewValue;
-        tile.MinHeight = tile.Height = Convert.ToDouble(new SizeConverter( ).Convert(tileType, null, "Height", null));
-        tile.MinWidth = tile.Width = Convert.ToDouble(new SizeConverter( ).Convert(tileType, null, "Width", null));
-        tile.border.CornerRadius = tile.maskBorder.CornerRadius = (CornerRadius) new RadiusConverter( ).Convert(tileType, null, null, null);
-        tile.Margin = new Thickness(Defaults.Margin);
-        if (Application.Current.MainWindow is MainWindow window)
-        {
-            // 重新测量并布局确保 ActualWidth 和 ActualHeight 及时更新，以便移动磁贴至适宜位置
-            tile.Measure(new Size(window.Width, window.Height));
-            tile.Arrange(new Rect(0, 0, window.DesiredSize.Width, window.DesiredSize.Height));
-            if (tile.Owner is not null)
-                tile.MoveToSpace(tile.Owner, true);
-        }
+        tile.Refresh( );
     }
 
     private static void AppIconChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
@@ -81,7 +69,7 @@ public partial class Tile : UserControl
                     UseShellExecute = true,
                     FileName = AppPath,
                 });
-                (Application.Current.MainWindow as MainWindow).Hide( );
+                App.TileWindow.Hide( );
             }
             catch { }
         }
@@ -93,7 +81,7 @@ public partial class Tile : UserControl
         try
         {
             Utils.ExecuteAsAdmin(Directory.GetParent(AppPath).FullName);
-            (Application.Current.MainWindow as MainWindow).Hide( );
+            App.TileWindow.Hide( );
         }
         catch (Win32Exception ex)
         {
@@ -118,7 +106,7 @@ public partial class Tile : UserControl
     private void RunAsAdmin(object o, RoutedEventArgs e)
     {
         Utils.ExecuteAsAdmin(AppPath);
-        (Application.Current.MainWindow as MainWindow).Hide( );
+        App.TileWindow.Hide( );
 
     }
 

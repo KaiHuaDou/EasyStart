@@ -2,7 +2,6 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        Title="QuickStart"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         SizeToContent="WidthAndHeight"
@@ -21,8 +20,10 @@
             <Border.Effect>
                 <DropShadowEffect Opacity="0.4" BlurRadius="32" Direction="90" />
             </Border.Effect>
-
-            <Button FontFamily="Segoe Fluent Icons" Click="Button_Click" Content="&#xE8AD;" />
+            <Button x:Name="button"
+                    Width="{Binding ActualHeight, ElementName=button, Mode=OneWay}"
+                    FontFamily="Segoe Fluent Icons" FontSize="26"
+                    Click="ShowMainwindow" Content="&#xE8AD;" />
         </Border>
     </Border>
 </Window>

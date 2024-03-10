@@ -2,6 +2,7 @@
 using System.Security.Principal;
 using System.Windows.Media;
 using Microsoft.Win32;
+using StartPro.Resources;
 
 namespace StartPro.Api;
 
@@ -13,7 +14,7 @@ public static class Utils
         {
             CheckFileExists = true,
             Filter = "*.exe *.jpg *.jpeg *.png *.bmp *.tif *.tiff *.gif *.ico|*.exe;*.jpg;*.jpeg;*.png;*.bmp;*.tif;*.tiff;*.gif;*.ico|*.*|*.*",
-            Title = "选择图标"
+            Title = Main.SelectImageText
         };
         bool result = dialog.ShowDialog( ) == true;
         fileName = dialog.FileName;
@@ -39,7 +40,7 @@ public static class Utils
             CheckFileExists = true,
             DefaultExt = ".exe",
             Filter = "*.exe *.com *.bat *.cmd|*.exe;*.com;*.bat;*.cmd|*.*|*.*",
-            Title = "选择程序"
+            Title = Main.SelectExeText
         };
         bool result = dialog.ShowDialog( ) == true;
         fileName = dialog.FileName;

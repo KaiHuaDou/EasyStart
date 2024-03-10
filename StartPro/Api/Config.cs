@@ -16,4 +16,7 @@ public class Config
 
     [DefaultValue((int) UIThemes.AeroNormalColor)]
     public int UITheme { get; set; }
+
+    [DefaultValue(false)]
+    public bool UIFlat { get; set; }
 }

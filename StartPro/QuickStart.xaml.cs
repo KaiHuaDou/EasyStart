@@ -11,6 +11,6 @@ public partial class QuickStart : Window
         InitializeComponent( );
     }
 
-    private void Button_Click(object o, RoutedEventArgs e)
-        => (Application.Current.MainWindow as MainWindow).Show( );
+    private void ShowMainwindow(object o, RoutedEventArgs e)
+        => App.TileWindow?.Show( );
 }
