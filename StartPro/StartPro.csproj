@@ -5,6 +5,7 @@
         <UseWPF>true</UseWPF>
         <UseWindowsForms>true</UseWindowsForms>
         <LangVersion>12.0</LangVersion>
+        <PublishReadyToRun>true</PublishReadyToRun>
     </PropertyGroup>
     <PropertyGroup>
         <StartupObject>StartPro.App.Program</StartupObject>

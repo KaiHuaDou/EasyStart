@@ -5,12 +5,14 @@ using System.Windows.Data;
 
 namespace StartPro;
 
-internal sealed class RadiusConverter : IValueConverter
+public class RadiusConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if ((string) parameter == "MainWindow")
         {
+            if (Defaults.Radius == 0)
+                return new CornerRadius(0);
             int MainRadius = Defaults.Radius + Defaults.Margin;
             return new CornerRadius(MainRadius, MainRadius, 0, 0);
         }

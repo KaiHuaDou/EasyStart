@@ -123,6 +123,9 @@
   <data name="CancelText" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="ImportText" xml:space="preserve">
+    <value>Import</value>
+  </data>
   <data name="OkText" xml:space="preserve">
     <value>OK</value>
   </data>

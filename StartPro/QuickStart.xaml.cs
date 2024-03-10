@@ -12,5 +12,5 @@ public partial class QuickStart : Window
     }
 
     private void ShowMainwindow(object o, RoutedEventArgs e)
-        => App.TileWindow?.Show( );
+        => App.TileWindow?.ShowHide( );
 }

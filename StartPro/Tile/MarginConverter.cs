@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace StartPro;
 
-internal sealed class MarginConverter : IValueConverter
+public class MarginConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

@@ -12,7 +12,7 @@ namespace StartPro;
 
 public partial class MainWindow : Window
 {
-    public CustomCommand SwitchStateCommand => new(( ) => ShowHide( ));
+    public CustomCommand SwitchStateCommand => new(ShowHide);
 
     public MainWindow( )
     {
@@ -54,6 +54,18 @@ public partial class MainWindow : Window
         new Setting( ).ShowDialog( );
         ApplyBackground( );
         Show( );
+    }
+
+    private void ImportTile(object o, RoutedEventArgs e)
+    {
+        Import window = new( );
+        window.ShowDialog( );
+        foreach (Tile tile in window.Tiles)
+        {
+            TilePanel.Children.Add(tile);
+            tile.IsEnabled = true;
+            tile.MoveToSpace(TilePanel, true);
+        }
     }
 
     private void ApplyBackground( )
@@ -109,7 +121,7 @@ public partial class MainWindow : Window
     }
 
     private void WindowDeactivated(object o, EventArgs e)
-        => ShowHide( );
+            => ShowHide( );
 
     private void TaskbarMenuShow(object o, RoutedEventArgs e)
         => ShowHide( );

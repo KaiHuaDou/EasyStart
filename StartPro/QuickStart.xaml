@@ -16,14 +16,17 @@
         </ControlTemplate>
     </Window.Template>
     <Border Padding="32,32,32,0" Background="Transparent">
-        <Border x:Name="MainBorder" CornerRadius="24,24,0,0" RenderTransformOrigin="0.5,1">
+        <Border x:Name="MainBorder"
+                Width="48" Height="48"
+                Background="White"
+                CornerRadius="12,0,12,12" MouseLeftButtonDown="ShowMainwindow"
+                RenderTransformOrigin="0.5,1">
             <Border.Effect>
                 <DropShadowEffect Opacity="0.4" BlurRadius="32" Direction="90" />
             </Border.Effect>
-            <Button x:Name="button"
-                    Width="{Binding ActualHeight, ElementName=button, Mode=OneWay}"
-                    FontFamily="Segoe Fluent Icons" FontSize="26"
-                    Click="ShowMainwindow" Content="&#xE8AD;" />
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontFamily="Segoe Fluent Icons" FontSize="36"
+                       Text="&#xE8A7;" />
         </Border>
     </Border>
 </Window>

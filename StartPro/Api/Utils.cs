@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Security.Principal;
 using System.Windows.Media;
 using Microsoft.Win32;
@@ -13,7 +14,7 @@ public static class Utils
         OpenFileDialog dialog = new( )
         {
             CheckFileExists = true,
-            Filter = "*.exe *.jpg *.jpeg *.png *.bmp *.tif *.tiff *.gif *.ico|*.exe;*.jpg;*.jpeg;*.png;*.bmp;*.tif;*.tiff;*.gif;*.ico|*.*|*.*",
+            Filter = "*.exe *.dll *.jpg *.jpeg *.png *.bmp *.tif *.tiff *.gif *.ico|*.exe;*.dll;*.jpg;*.jpeg;*.png;*.bmp;*.tif;*.tiff;*.gif;*.ico|*.*|*.*",
             Title = Main.SelectImageText
         };
         bool result = dialog.ShowDialog( ) == true;
@@ -33,14 +34,15 @@ public static class Utils
         return result;
     }
 
-    public static bool TrySelectExe(out string fileName)
+    public static bool TrySelectExe(out string fileName, bool multiSelect = false)
     {
         OpenFileDialog dialog = new( )
         {
             CheckFileExists = true,
             DefaultExt = ".exe",
             Filter = "*.exe *.com *.bat *.cmd|*.exe;*.com;*.bat;*.cmd|*.*|*.*",
-            Title = Main.SelectExeText
+            Title = Main.SelectExeText,
+            Multiselect = multiSelect
         };
         bool result = dialog.ShowDialog( ) == true;
         fileName = dialog.FileName;
@@ -62,5 +64,12 @@ public static class Utils
             });
         }
         catch { }
+    }
+    public static string ReadShortcut(string lnk)
+    {
+        Type shellType = Type.GetTypeFromProgID("WScript.Shell");
+        dynamic shell = Activator.CreateInstance(shellType);
+        dynamic shortcut = shell.CreateShortcut(lnk);
+        return shortcut.TargetPath;
     }
 }

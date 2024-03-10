@@ -22,7 +22,7 @@
         <ResourceDictionary Source="/Theme.xaml" />
     </Window.Resources>
     <Border Padding="32,32,32,0" Background="Transparent">
-        <Border x:Name="MainBorder" CornerRadius="{Binding Tag, ConverterParameter=MainWindow, Converter={StaticResource RadiusConverter}}" RenderTransformOrigin="0.5,1">
+        <Border x:Name="MainBorder" CornerRadius="{Binding Margin, ConverterParameter=MainWindow, Converter={StaticResource RadiusConverter}, ElementName=MainBorder}" RenderTransformOrigin="0.5,1">
             <Border.Effect>
                 <DropShadowEffect Opacity="0.4" BlurRadius="32" Direction="90" />
             </Border.Effect>
@@ -36,6 +36,7 @@
                             Orientation="Horizontal">
                     <Button Style="{StaticResource IconButton}" Click="AddTile" Content="&#xE710;" />
                     <Button Style="{StaticResource IconButton}" Click="ShowSetting" Content="&#xE713;" />
+                    <Button Style="{StaticResource IconButton}" Click="ImportTile" Content="&#xE8B5;" />
                 </StackPanel>
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <Canvas x:Name="TilePanel"

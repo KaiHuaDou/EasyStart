@@ -1,0 +1,23 @@
+﻿<Window x:Class="StartPro.Import"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:text="clr-namespace:StartPro.Resources"
+        Title="Import"
+        AllowDrop="True"
+        PreviewDrop="DropTile"
+        SizeToContent="WidthAndHeight">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Right" Margin="5">
+            <StackPanel.Resources>
+                <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+                    <Setter Property="Margin" Value="5" />
+                    <Setter Property="Padding" Value="20,3" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Click="ImportClick" Content="{x:Static text:Main.ImportText}" />
+            <Button Click="OkClick" Content="{x:Static text:Main.OkText}" />
+            <Button Click="CancelClick" Content="{x:Static text:Main.CancelText}" />
+        </StackPanel>
+        <ListBox x:Name="TileList" Margin="10,10,5,10" />
+    </DockPanel>
+</Window>

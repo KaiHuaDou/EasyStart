@@ -123,6 +123,9 @@
   <data name="CancelText" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="ImportText" xml:space="preserve">
+    <value>导入</value>
+  </data>
   <data name="OkText" xml:space="preserve">
     <value>确定</value>
   </data>

@@ -79,6 +79,15 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Import 的本地化字符串。
+        /// </summary>
+        public static string ImportText {
+            get {
+                return ResourceManager.GetString("ImportText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 OK 的本地化字符串。
         /// </summary>
         public static string OkText {

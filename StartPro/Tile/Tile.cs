@@ -30,6 +30,8 @@ public partial class Tile
         }
     }
 
+    public override string ToString( ) => $"{AppName} - {TileSize}";
+
     private static readonly PropertyMetadata appNameMeta = new("Application");
     private static readonly PropertyMetadata appIconMeta = new(AppIconChanged);
     private static readonly PropertyMetadata appPathMeta = new(Defaults.AppName, AppPathChanged);
