@@ -8,7 +8,7 @@ namespace StartPro;
 
 public partial class App : Application, ISingleInstance
 {
-    public static HashSet<Tile> Tiles { get; } = TileConfig.Load( );
+    public static HashSet<TileBase> Tiles { get; } = TileConfig.Load( );
     public static MainWindow TileWindow => Current.MainWindow as MainWindow;
 
     public static class Program
@@ -27,7 +27,7 @@ public partial class App : Application, ISingleInstance
 
     private void AppExit(object o, ExitEventArgs e)
     {
-        foreach (Tile tile in Tiles)
+        foreach (TileBase tile in Tiles)
             TileConfig.Add(tile);
         TileConfig.Save( );
         Program.Settings.Save( );

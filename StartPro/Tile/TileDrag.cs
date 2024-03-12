@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace StartPro;
 
-public partial class Tile
+public partial class TileBase
 {
     private Point startMousePoint, startTilePoint;
 
@@ -18,9 +18,9 @@ public partial class Tile
         set => SetValue(IsDragProperty, value);
     }
 
-    private bool IsDragged;
+    protected bool IsDragged;
 
-    private void TileDragStart(object o, MouseButtonEventArgs e)
+    protected  void TileDragStart(object o, MouseButtonEventArgs e)
     {
         Tile tile = o as Tile;
         tile?.CaptureMouse( );
@@ -29,7 +29,7 @@ public partial class Tile
         IsDrag = true;
     }
 
-    private void TileDragStop(object o, MouseButtonEventArgs e)
+    protected void TileDragStop(object o, MouseButtonEventArgs e)
     {
         IsDrag = IsDragged = false;
         Tile tile = o as Tile;
@@ -45,7 +45,7 @@ public partial class Tile
         ReindexTiles(Parent as Panel);
     }
 
-    private void TileDragging(object o, MouseEventArgs e)
+    protected void TileDragging(object o, MouseEventArgs e)
     {
         if (!IsDrag || e.LeftButton == MouseButtonState.Released)
             return;
@@ -59,7 +59,7 @@ public partial class Tile
         Canvas.SetTop(tile, startTilePoint.Y + offset.Y);
     }
 
-    public bool IntersectsWith(Tile t)
+    private bool IntersectsWith(Tile t)
     {
         if (this == t)
             return false;
@@ -88,7 +88,7 @@ public partial class Tile
         ResizeCanvas(parent);
     }
 
-    public void ReindexTiles(Panel parent)
+    private void ReindexTiles(Panel parent)
     {
         for (int i = 0; i < parent.Children.Count; i++)
         {

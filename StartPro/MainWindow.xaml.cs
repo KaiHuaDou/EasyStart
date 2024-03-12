@@ -22,11 +22,11 @@ public partial class MainWindow : Window
         Top = SystemParameters.WorkArea.Height - Height;
         Left = (SystemParameters.WorkArea.Width - Width) / 2;
         ApplyBackground( );
-        foreach (Tile tile in App.Tiles)
+        foreach (TileBase tile in App.Tiles)
         {
             TilePanel.Children.Add(tile);
         }
-        Tile.ResizeCanvas(TilePanel);
+        TileBase.ResizeCanvas(TilePanel);
     }
 
     public void ShowHide( )
@@ -58,6 +58,7 @@ public partial class MainWindow : Window
 
     private void ImportTile(object o, RoutedEventArgs e)
     {
+        Hide( );
         Import window = new( );
         window.ShowDialog( );
         foreach (Tile tile in window.Tiles)
@@ -66,6 +67,7 @@ public partial class MainWindow : Window
             tile.IsEnabled = true;
             tile.MoveToSpace(TilePanel, true);
         }
+        Show( );
     }
 
     private void ApplyBackground( )

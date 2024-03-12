@@ -33,18 +33,25 @@ public partial class Import : Window
 
     private void ImportClick(object o, RoutedEventArgs e)
     {
-        if (Utils.TrySelectExe(out string fileName, multiSelect: true))
-        {
-            AddNewTile(fileName);
-        }
+        if (Utils.TrySelectExe(out string[] fileName))
+            AddNewTiles(fileName);
+        RefreshTileList( );
+    }
+    private void DropTile(object o, DragEventArgs e)
+    {
+        IDataObject data = e.Data;
+        if (!data.GetDataPresent(DataFormats.FileDrop))
+            return;
+        Array files = e.Data.GetData(DataFormats.FileDrop) as Array;
+        AddNewTiles(files);
         RefreshTileList( );
     }
 
-    private void AddNewTile(string fileName)
+    private void AddNewTile(string displayName, string fileName)
     {
         Tiles.Add(new Tile
         {
-            AppName = Path.GetFileNameWithoutExtension(fileName),
+            AppName = Path.GetFileNameWithoutExtension(displayName),
             AppPath = fileName,
             AppIcon = fileName,
             TileSize = TileType.Medium,
@@ -56,20 +63,21 @@ public partial class Import : Window
         });
     }
 
-    private void DropTile(object o, DragEventArgs e)
+
+    private void AddNewTiles(Array files)
     {
-        IDataObject data = e.Data;
-        if (!data.GetDataPresent(DataFormats.FileDrop))
-            return;
-        Array files = e.Data.GetData(DataFormats.FileDrop) as Array;
         foreach (object file in files)
         {
             string fileName = file.ToString( );
             if (fileName.EndsWith(".lnk", StringComparison.OrdinalIgnoreCase))
-                fileName = Utils.ReadShortcut(fileName);
-            AddNewTile(fileName);
+            {
+                AddNewTile(fileName, Utils.ReadShortcut(fileName));
+            }
+            else
+            {
+                AddNewTile(fileName, fileName);
+            }
         }
-        RefreshTileList( );
     }
 
     private void RefreshTileList( )

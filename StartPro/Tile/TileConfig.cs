@@ -11,8 +11,9 @@ public static class TileConfig
     private static readonly XmlDocument document = new( );
     private static XmlNode Apps = document.CreateElement("Apps");
 
-    public static void Add(Tile tile)
+    public static void Add(TileBase _tile)
     {
+        Tile tile = _tile as Tile;
         XmlElement element = document.CreateElement("App");
         element.SetAttribute("Name", tile.AppName);
         element.SetAttribute("Path", tile.AppPath);
@@ -33,9 +34,9 @@ public static class TileConfig
     private static string GetAttribute(XmlNode node, string name)
         => (node.Attributes.GetNamedItem(name) as XmlAttribute).Value;
 
-    public static HashSet<Tile> Load( )
+    public static HashSet<TileBase> Load( )
     {
-        HashSet<Tile> result = [];
+        HashSet<TileBase> result = [];
         try { document.Load(xmlPath); } catch { return result; }
         Apps = document.ChildNodes[0];
         foreach (XmlNode node in Apps.ChildNodes)

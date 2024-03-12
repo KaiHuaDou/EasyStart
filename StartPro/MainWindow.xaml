@@ -32,12 +32,23 @@
                 </TransformGroup>
             </Border.RenderTransform>
             <Grid>
-                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Panel.ZIndex="64"
-                            Orientation="Horizontal">
-                    <Button Style="{StaticResource IconButton}" Click="AddTile" Content="&#xE710;" />
-                    <Button Style="{StaticResource IconButton}" Click="ShowSetting" Content="&#xE713;" />
-                    <Button Style="{StaticResource IconButton}" Click="ImportTile" Content="&#xE8B5;" />
-                </StackPanel>
+                <Border VerticalAlignment="Bottom" Panel.ZIndex="64" Background="{Binding Background, ElementName=MainBorder}">
+                    <Border.Effect>
+                        <DropShadowEffect Opacity="0.2" Direction="90" Color="#ACACAC" />
+                    </Border.Effect>
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                        <StackPanel.Resources>
+                            <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+                                <Setter Property="FontFamily" Value="Segoe Fluent Icons" />
+                                <Setter Property="FontSize" Value="24" />
+                                <Setter Property="Margin" Value="5,5,5,10" />
+                            </Style>
+                        </StackPanel.Resources>
+                        <Button Click="AddTile" Content="&#xE710;" />
+                        <Button Click="ShowSetting" Content="&#xE713;" />
+                        <Button Click="ImportTile" Content="&#xE8B5;" />
+                    </StackPanel>
+                </Border>
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <Canvas x:Name="TilePanel"
                             Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" />

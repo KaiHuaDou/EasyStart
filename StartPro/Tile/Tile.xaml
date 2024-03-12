@@ -1,20 +1,19 @@
-﻿<UserControl x:Name="userControl"
-             x:Class="StartPro.Tile"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:StartPro"
-             xmlns:text="clr-namespace:StartPro.Resources"
-             MouseLeftButtonDown="TileDragStart"
-             MouseLeftButtonUp="TileLeftButtonUp"
-             MouseMove="TileDragging">
-    <UserControl.Resources>
+﻿<local:TileBase x:Class="StartPro.Tile"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:local="clr-namespace:StartPro"
+                xmlns:text="clr-namespace:StartPro.Resources"
+                MouseLeftButtonDown="TileDragStart"
+                MouseLeftButtonUp="TileLeftButtonUp"
+                MouseMove="TileDragging">
+    <local:TileBase.Resources>
         <ResourceDictionary>
             <local:RadiusConverter x:Key="RadiusConverter" />
             <local:SizeConverter x:Key="SizeConverter" />
             <local:MarginConverter x:Key="MarginConverter" />
         </ResourceDictionary>
-    </UserControl.Resources>
-    <UserControl.ContextMenu>
+    </local:TileBase.Resources>
+    <local:TileBase.ContextMenu>
         <ContextMenu>
             <MenuItem Header="{x:Static text:Main.TileContextOpen}" Click="OpenTileLocation">
                 <MenuItem.Icon>
@@ -44,7 +43,7 @@
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>
-    </UserControl.ContextMenu>
+    </local:TileBase.ContextMenu>
     <Grid>
         <Border x:Name="maskBorder" Panel.ZIndex="2">
             <Border.Style>
@@ -101,4 +100,4 @@
             </DockPanel>
         </Border>
     </Grid>
-</UserControl>
+</local:TileBase>

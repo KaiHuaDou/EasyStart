@@ -34,7 +34,7 @@ public static class Utils
         return result;
     }
 
-    public static bool TrySelectExe(out string fileName, bool multiSelect = false)
+    public static bool TrySelectExe(out string fileName)
     {
         OpenFileDialog dialog = new( )
         {
@@ -42,10 +42,24 @@ public static class Utils
             DefaultExt = ".exe",
             Filter = "*.exe *.com *.bat *.cmd|*.exe;*.com;*.bat;*.cmd|*.*|*.*",
             Title = Main.SelectExeText,
-            Multiselect = multiSelect
         };
         bool result = dialog.ShowDialog( ) == true;
         fileName = dialog.FileName;
+        return result;
+    }
+
+    public static bool TrySelectExe(out string[] fileName)
+    {
+        OpenFileDialog dialog = new( )
+        {
+            CheckFileExists = true,
+            DefaultExt = ".exe",
+            Filter = "*.exe *.com *.bat *.cmd|*.exe;*.com;*.bat;*.cmd|*.*|*.*",
+            Title = Main.SelectExeText,
+            Multiselect = true,
+        };
+        bool result = dialog.ShowDialog( ) == true;
+        fileName = dialog.FileNames;
         return result;
     }
 

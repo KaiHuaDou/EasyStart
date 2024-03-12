@@ -11,7 +11,7 @@ using StartPro.Api;
 
 namespace StartPro;
 
-public partial class Tile : UserControl
+public partial class Tile : TileBase
 {
     public static void AppPathChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
@@ -23,18 +23,12 @@ public partial class Tile : UserControl
 
     }
 
-    public static void TileColorChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+    public static new void TileColorChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
         Tile tile = o as Tile;
         Color color = tile.TileColor.Color;
         int brightness = (int) (color.R * 0.299) + (int) (color.G * 0.587) + (int) (color.B * 0.114);
         tile.label.Foreground = new SolidColorBrush(brightness > 128 ? Colors.Black : Colors.White);
-    }
-
-    public static void TileSizeChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-    {
-        Tile tile = o as Tile;
-        tile.Refresh( );
     }
 
     private static void AppIconChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
@@ -58,7 +52,7 @@ public partial class Tile : UserControl
         }
     }
 
-    private void TileLeftButtonUp(object o, MouseButtonEventArgs e)
+    private new void TileLeftButtonUp(object o, MouseButtonEventArgs e)
     {
         if (!IsDragged && IsEnabled)
         {
@@ -73,7 +67,7 @@ public partial class Tile : UserControl
             }
             catch { }
         }
-        TileDragStop(o, e);
+        base.TileLeftButtonUp(o, e);
     }
 
     private void OpenTileLocation(object o, RoutedEventArgs e)
