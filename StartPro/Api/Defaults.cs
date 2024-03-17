@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media;
 
-namespace StartPro;
+namespace StartPro.Api;
 
 public static class Defaults
 {

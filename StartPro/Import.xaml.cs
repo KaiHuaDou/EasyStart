@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using StartPro.Api;
+using StartPro.Tile;
 
 namespace StartPro;
 public partial class Import : Window
 {
-    public HashSet<Tile> Tiles { get; } = [];
+    public HashSet<AppTile> Tiles { get; } = [];
 
-    private HashSet<string> ConvertTileSet(HashSet<Tile> x)
+    private HashSet<string> ConvertTileSet(HashSet<AppTile> x)
     {
         HashSet<string> result = [];
-        foreach (Tile tile in x)
+        foreach (AppTile tile in x)
             result.Add(tile.ToString( ));
         return result;
     }
@@ -49,7 +50,7 @@ public partial class Import : Window
 
     private void AddNewTile(string displayName, string fileName)
     {
-        Tiles.Add(new Tile
+        Tiles.Add(new AppTile
         {
             AppName = Path.GetFileNameWithoutExtension(displayName),
             AppPath = fileName,

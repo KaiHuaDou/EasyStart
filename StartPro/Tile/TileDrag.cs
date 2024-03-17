@@ -2,15 +2,16 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using StartPro.Api;
 
-namespace StartPro;
+namespace StartPro.Tile;
 
 public partial class TileBase
 {
     private Point startMousePoint, startTilePoint;
 
     public static readonly DependencyProperty IsDragProperty =
-        DependencyProperty.Register("IsDrag", typeof(bool), typeof(Tile), new PropertyMetadata(false));
+        DependencyProperty.Register("IsDrag", typeof(bool), typeof(AppTile), new PropertyMetadata(false));
 
     public bool IsDrag
     {
@@ -18,11 +19,11 @@ public partial class TileBase
         set => SetValue(IsDragProperty, value);
     }
 
-    protected bool IsDragged;
+    protected bool IsDragged { get; set; }
 
-    protected  void TileDragStart(object o, MouseButtonEventArgs e)
+    protected void TileDragStart(object o, MouseButtonEventArgs e)
     {
-        Tile tile = o as Tile;
+        AppTile tile = o as AppTile;
         tile?.CaptureMouse( );
         startMousePoint = e.GetPosition(Parent as Panel);
         startTilePoint = new Point(Canvas.GetLeft(tile), Canvas.GetTop(tile));
@@ -32,7 +33,7 @@ public partial class TileBase
     protected void TileDragStop(object o, MouseButtonEventArgs e)
     {
         IsDrag = IsDragged = false;
-        Tile tile = o as Tile;
+        AppTile tile = o as AppTile;
         tile?.ReleaseMouseCapture( );
 
         Point mousePoint = e.GetPosition(Parent as Panel);
@@ -49,7 +50,7 @@ public partial class TileBase
     {
         if (!IsDrag || e.LeftButton == MouseButtonState.Released)
             return;
-        Tile tile = o as Tile;
+        AppTile tile = o as AppTile;
         Panel.SetZIndex(tile, int.MaxValue);
         Point mousePoint = e.GetPosition(Parent as Panel);
         Point offset = new(mousePoint.X - startMousePoint.X, mousePoint.Y - startMousePoint.Y);
@@ -59,7 +60,7 @@ public partial class TileBase
         Canvas.SetTop(tile, startTilePoint.Y + offset.Y);
     }
 
-    private bool IntersectsWith(Tile t)
+    private bool IntersectsWith(AppTile t)
     {
         if (this == t)
             return false;
@@ -76,7 +77,7 @@ public partial class TileBase
             isIntersect = false;
             for (int i = 0; i < parent.Children.Count; i++)
             {
-                Tile target = parent.Children[i] as Tile;
+                AppTile target = parent.Children[i] as AppTile;
                 if (IntersectsWith(target))
                 {
                     Row++;
@@ -100,7 +101,7 @@ public partial class TileBase
     public static void ResizeCanvas(Panel parent)
     {
         double xmax = 0, ymax = 0;
-        foreach (Tile t in parent.Children)
+        foreach (AppTile t in parent.Children)
         {
             double txmax = t.Column * Defaults.BlockSize + t.ActualWidth;
             double tymax = t.Row * Defaults.BlockSize + t.ActualHeight;

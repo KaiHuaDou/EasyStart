@@ -1,4 +1,4 @@
-﻿namespace StartPro;
+﻿namespace StartPro.Tile;
 
 public enum TileType
 {

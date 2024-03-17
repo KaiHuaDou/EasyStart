@@ -9,13 +9,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using StartPro.Api;
 
-namespace StartPro;
+namespace StartPro.Tile;
 
-public partial class Tile : TileBase
+public partial class AppTile : TileBase
 {
     public static void AppPathChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
-        Tile tile = o as Tile;
+        AppTile tile = o as AppTile;
         string value = e.NewValue as string;
         FileInfo app = new(value);
         tile.AppName = app.Name.Replace(app.Extension, "");
@@ -25,7 +25,7 @@ public partial class Tile : TileBase
 
     public static new void TileColorChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
-        Tile tile = o as Tile;
+        AppTile tile = o as AppTile;
         Color color = tile.TileColor.Color;
         int brightness = (int) (color.R * 0.299) + (int) (color.G * 0.587) + (int) (color.B * 0.114);
         tile.label.Foreground = new SolidColorBrush(brightness > 128 ? Colors.Black : Colors.White);
@@ -33,7 +33,7 @@ public partial class Tile : TileBase
 
     private static void AppIconChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
-        Tile tile = o as Tile;
+        AppTile tile = o as AppTile;
         string path = e.NewValue as string;
         try
         {
@@ -91,7 +91,7 @@ public partial class Tile : TileBase
     {
         Panel parent = (Panel) Parent;
         parent.Children.Remove(this);
-        Create c = new(this);
+        CreateApp c = new(this);
         c.ShowDialog( );
         parent.Children.Add(this);
         MoveToSpace(Parent as Panel, true);

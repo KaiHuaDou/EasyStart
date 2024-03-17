@@ -1,12 +1,27 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using StartPro.Api;
 
-namespace StartPro;
+namespace StartPro.Tile;
 
 public partial class TileBase : UserControl
 {
-    public virtual void Refresh( ) { }
+    public virtual void Refresh( )
+    {
+        MinHeight = Height = Convert.ToDouble(new SizeConverter( ).Convert(TileSize, null, "Height", null));
+        MinWidth = Width = Convert.ToDouble(new SizeConverter( ).Convert(TileSize, null, "Width", null));
+        Margin = new Thickness(Defaults.Margin);
+        if (Parent is Canvas && Application.Current.MainWindow is MainWindow window)
+        {
+            // 重新测量并布局确保 ActualWidth 和 ActualHeight 及时更新，以便移动磁贴至适宜位置
+            Measure(new Size(window.Width, window.Height));
+            Arrange(new Rect(0, 0, window.DesiredSize.Width, window.DesiredSize.Height));
+            if (Owner is not null)
+                MoveToSpace(Owner, true);
+        }
+    }
 
     private static readonly PropertyMetadata TileSizeMeta = new(TileType.Medium, TileSizeChanged);
     private static readonly PropertyMetadata TileColorMeta = new(Defaults.Background, TileColorChanged);
@@ -26,6 +41,7 @@ public partial class TileBase : UserControl
         get => (SolidColorBrush) GetValue(TileColorProperty);
         set => SetValue(TileColorProperty, value);
     }
+
     public int Row
     {
         get => (int) Canvas.GetTop(this) / Defaults.BlockSize;

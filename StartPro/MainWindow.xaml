@@ -8,42 +8,68 @@
         Deactivated="WindowDeactivated"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
-        Topmost="True"
         WindowStyle="None">
+    <Window.Resources>
+        <ResourceDictionary Source="/Theme.xaml" />
+    </Window.Resources>
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="-1" />
     </WindowChrome.WindowChrome>
     <Window.Template>
-        <ControlTemplate TargetType="Window">
+        <ControlTemplate TargetType="{x:Type Window}">
             <ContentPresenter ClipToBounds="True" />
         </ControlTemplate>
     </Window.Template>
-    <Window.Resources>
-        <ResourceDictionary Source="/Theme.xaml" />
-    </Window.Resources>
     <Border Padding="32,32,32,0" Background="Transparent">
         <Border x:Name="MainBorder" CornerRadius="{Binding Margin, ConverterParameter=MainWindow, Converter={StaticResource RadiusConverter}, ElementName=MainBorder}" RenderTransformOrigin="0.5,1">
             <Border.Effect>
                 <DropShadowEffect Opacity="0.4" BlurRadius="32" Direction="90" />
             </Border.Effect>
             <Border.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="1" ScaleY="1" />
-                </TransformGroup>
+                <ScaleTransform ScaleX="1" ScaleY="1" />
             </Border.RenderTransform>
             <Grid>
+                <Border x:Name="AppListBorder"
+                        Padding="10" HorizontalAlignment="Left" Panel.ZIndex="65"
+                        Background="{Binding Background, ElementName=MainBorder}"
+                        CornerRadius="32,0,0,0">
+                    <Border.Effect>
+                        <DropShadowEffect Opacity="0.2" Direction="0" Color="#ACACAC" />
+                    </Border.Effect>
+                    <Border.RenderTransform>
+                        <TranslateTransform X="0" />
+                    </Border.RenderTransform>
+                    <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+                        <ListBox x:Name="AppList" Background="Transparent" BorderThickness="0">
+                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
+                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
+                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
+                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
+                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
+                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
+                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
+                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
+                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
+                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
+                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
+                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
+                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
+                        </ListBox>
+                    </ScrollViewer>
+                </Border>
                 <Border VerticalAlignment="Bottom" Panel.ZIndex="64" Background="{Binding Background, ElementName=MainBorder}">
                     <Border.Effect>
                         <DropShadowEffect Opacity="0.2" Direction="90" Color="#ACACAC" />
                     </Border.Effect>
                     <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                         <StackPanel.Resources>
-                            <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+                            <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
                                 <Setter Property="FontFamily" Value="Segoe Fluent Icons" />
                                 <Setter Property="FontSize" Value="24" />
                                 <Setter Property="Margin" Value="5,5,5,10" />
                             </Style>
                         </StackPanel.Resources>
+                        <Button Click="SwitchAppList" Content="&#xE700;" />
                         <Button Click="AddTile" Content="&#xE710;" />
                         <Button Click="ShowSetting" Content="&#xE713;" />
                         <Button Click="ImportTile" Content="&#xE8B5;" />

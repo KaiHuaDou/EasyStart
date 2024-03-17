@@ -14,7 +14,7 @@
                     <Setter Property="Padding" Value="20,3" />
                 </Style>
             </StackPanel.Resources>
-            <Button Click="ImportClick" Content="{x:Static text:Main.ImportText}" />
+            <Button Click="ImportClick" Content="{x:Static text:AppTile.ImportText}" />
             <Button Click="OkClick" Content="{x:Static text:Main.OkText}" />
             <Button Click="CancelClick" Content="{x:Static text:Main.CancelText}" />
         </StackPanel>

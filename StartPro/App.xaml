@@ -1,16 +1,18 @@
 ﻿<Application x:Class="StartPro.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:StartPro"
+             xmlns:api="clr-namespace:StartPro.Api"
+             xmlns:tile="clr-namespace:StartPro.Tile"
              Exit="AppExit"
              Startup="AppStartup">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <local:RadiusConverter x:Key="RadiusConverter" />
-                    <local:SizeConverter x:Key="SizeConverter" />
-                    <local:MarginConverter x:Key="MarginConverter" />
+                    <tile:RadiusConverter x:Key="RadiusConverter" />
+                    <tile:SizeConverter x:Key="SizeConverter" />
+                    <tile:MarginConverter x:Key="MarginConverter" />
+                    <api:NegativeConverter x:Key="NegativeConverter" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

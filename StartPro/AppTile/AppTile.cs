@@ -1,12 +1,11 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
+using StartPro.Api;
 
-namespace StartPro;
+namespace StartPro.Tile;
 
-public partial class Tile
+public partial class AppTile
 {
-    public Tile( )
+    public AppTile( )
     {
         InitializeComponent( );
         Refresh( );
@@ -14,19 +13,9 @@ public partial class Tile
 
     public override void Refresh( )
     {
+        base.Refresh( );
         border.DataContext = this;
         border.CornerRadius = maskBorder.CornerRadius = (CornerRadius) new RadiusConverter( ).Convert(TileSize, null, null, null);
-        MinHeight = Height = Convert.ToDouble(new SizeConverter( ).Convert(TileSize, null, "Height", null));
-        MinWidth = Width = Convert.ToDouble(new SizeConverter( ).Convert(TileSize, null, "Width", null));
-        Margin = new Thickness(Defaults.Margin);
-        if (Parent is Canvas && Application.Current.MainWindow is MainWindow window)
-        {
-            // 重新测量并布局确保 ActualWidth 和 ActualHeight 及时更新，以便移动磁贴至适宜位置
-            Measure(new Size(window.Width, window.Height));
-            Arrange(new Rect(0, 0, window.DesiredSize.Width, window.DesiredSize.Height));
-            if (Owner is not null)
-                MoveToSpace(Owner, true);
-        }
     }
 
     public override string ToString( ) => $"{AppName} - {TileSize}";
@@ -36,11 +25,11 @@ public partial class Tile
     private static readonly PropertyMetadata appPathMeta = new(Defaults.AppName, AppPathChanged);
     private static readonly PropertyMetadata ImageShadowMeta = new(true);
     private static readonly PropertyMetadata ShadowMeta = new(true);
-    public static readonly DependencyProperty AppNameProperty = DependencyProperty.Register("AppName", typeof(string), typeof(Tile), appNameMeta);
-    public static readonly DependencyProperty AppIconProperty = DependencyProperty.Register("AppIcon", typeof(string), typeof(Tile), appIconMeta);
-    public static readonly DependencyProperty AppPathProperty = DependencyProperty.Register("AppPath", typeof(string), typeof(Tile), appPathMeta);
-    public static readonly DependencyProperty ImageShadowProperty = DependencyProperty.Register("TileImageShadow", typeof(bool), typeof(Tile), ImageShadowMeta);
-    public static readonly DependencyProperty ShadowProperty = DependencyProperty.Register("TileShadow", typeof(bool), typeof(Tile), ShadowMeta);
+    public static readonly DependencyProperty AppNameProperty = DependencyProperty.Register("AppName", typeof(string), typeof(AppTile), appNameMeta);
+    public static readonly DependencyProperty AppIconProperty = DependencyProperty.Register("AppIcon", typeof(string), typeof(AppTile), appIconMeta);
+    public static readonly DependencyProperty AppPathProperty = DependencyProperty.Register("AppPath", typeof(string), typeof(AppTile), appPathMeta);
+    public static readonly DependencyProperty ImageShadowProperty = DependencyProperty.Register("TileImageShadow", typeof(bool), typeof(AppTile), ImageShadowMeta);
+    public static readonly DependencyProperty ShadowProperty = DependencyProperty.Register("TileShadow", typeof(bool), typeof(AppTile), ShadowMeta);
 
     public string AppName
     {

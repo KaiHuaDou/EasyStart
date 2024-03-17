@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace StartPro;
+namespace StartPro.Tile;
 
 public partial class TileBase : UserControl
 {

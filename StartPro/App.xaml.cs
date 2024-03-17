@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using SingleInstanceCore;
 using StartPro.Api;
+using StartPro.Tile;
 
 namespace StartPro;
 

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,73 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BackgroundText" xml:space="preserve">
-    <value>Background:</value>
+  <data name="ColorText" xml:space="preserve">
+    <value>颜色:</value>
   </data>
-  <data name="CancelText" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="ContextDelete" xml:space="preserve">
+    <value>删除</value>
   </data>
-  <data name="OkText" xml:space="preserve">
-    <value>OK</value>
+  <data name="ContextEdit" xml:space="preserve">
+    <value>编辑</value>
   </data>
-  <data name="SelectColorText" xml:space="preserve">
-    <value>Select Color</value>
+  <data name="ContextFastChange" xml:space="preserve">
+    <value>更改大小</value>
   </data>
-  <data name="SelectExeText" xml:space="preserve">
-    <value>Select Executable</value>
-  </data>
-  <data name="SelectImageText" xml:space="preserve">
-    <value>Select Image</value>
-  </data>
-  <data name="SizeHigh" xml:space="preserve">
-    <value>High</value>
-  </data>
-  <data name="SizeLarge" xml:space="preserve">
-    <value>Large</value>
-  </data>
-  <data name="SizeMedium" xml:space="preserve">
-    <value>Medium</value>
-  </data>
-  <data name="SizeSmall" xml:space="preserve">
-    <value>Small</value>
-  </data>
-  <data name="SizeWide" xml:space="preserve">
-    <value>Wide</value>
-  </data>
-  <data name="TitleSetting" xml:space="preserve">
-    <value>Setting</value>
-  </data>
-  <data name="TrayExit" xml:space="preserve">
-    <value>Exit</value>
-  </data>
-  <data name="TrayShowHide" xml:space="preserve">
-    <value>Show/Hide</value>
-  </data>
-  <data name="UITheme.Aero.NormalColor" xml:space="preserve">
-    <value>Default theme for Windows Vista/7</value>
-  </data>
-  <data name="UITheme.Aero2.NormalColor" xml:space="preserve">
-    <value>Default theme for Windows 8/8.1/10</value>
-  </data>
-  <data name="UITheme.Classic" xml:space="preserve">
-    <value>Default theme for Windows 9x series</value>
-  </data>
-  <data name="UITheme.Luna.Homestead" xml:space="preserve">
-    <value>Olive theme for Windows XP</value>
-  </data>
-  <data name="UITheme.Luna.Metallic" xml:space="preserve">
-    <value>Silver theme for Windows XP</value>
-  </data>
-  <data name="UITheme.Luna.NormalColor" xml:space="preserve">
-    <value>Default blue theme for Windows XP</value>
-  </data>
-  <data name="UITheme.Royale.NormalColor" xml:space="preserve">
-    <value>Media Center theme for Windows XP</value>
-  </data>
-  <data name="UIThemeFlat" xml:space="preserve">
-    <value>Flat UI</value>
-  </data>
-  <data name="UIThemeText" xml:space="preserve">
-    <value>UI Theme:</value>
+  <data name="SizeText" xml:space="preserve">
+    <value>尺寸:</value>
   </data>
 </root>

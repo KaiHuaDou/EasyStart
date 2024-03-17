@@ -4,22 +4,22 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using StartPro.Api;
-using StartPro.Resources;
+using StartPro.Tile;
 
 namespace StartPro;
 
-public partial class Create : Window
+public partial class CreateApp : Window
 {
-    public Tile Item { get; set; } = new( );
+    public AppTile Item { get; set; } = new( );
 
-    public Create(Tile t = null)
+    public CreateApp(AppTile t = null)
     {
         InitializeComponent( );
 
-        Item = t is null ? new Tile { Row = 0, Column = 0 } : t;
+        Item = t is null ? new AppTile { Row = 0, Column = 0 } : t;
         Item.IsEnabled = false;
         OkButton.IsEnabled = t is not null;
-        Title = t is null ? Main.TitleCreateTile : Main.TitleEditTile;
+        Title = t is null ? StartPro.Resources.AppTile.TitleCreateApp : StartPro.Resources.AppTile.TitleEditApp;
 
         sizeBox.SelectedIndex = (int) Item.TileSize;
         iconBox.Text = Item.AppIcon;

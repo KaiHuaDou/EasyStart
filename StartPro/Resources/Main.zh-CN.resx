@@ -123,9 +123,6 @@
   <data name="CancelText" xml:space="preserve">
     <value>取消</value>
   </data>
-  <data name="ImportText" xml:space="preserve">
-    <value>导入</value>
-  </data>
   <data name="OkText" xml:space="preserve">
     <value>确定</value>
   </data>
@@ -152,51 +149,6 @@
   </data>
   <data name="SizeWide" xml:space="preserve">
     <value>宽</value>
-  </data>
-  <data name="TileColorText" xml:space="preserve">
-    <value>颜色:</value>
-  </data>
-  <data name="TileContextDelete" xml:space="preserve">
-    <value>删除</value>
-  </data>
-  <data name="TileContextEdit" xml:space="preserve">
-    <value>编辑</value>
-  </data>
-  <data name="TileContextFastChange" xml:space="preserve">
-    <value>更改大小</value>
-  </data>
-  <data name="TileContextOpen" xml:space="preserve">
-    <value>打开文件位置</value>
-  </data>
-  <data name="TileContextRunAs" xml:space="preserve">
-    <value>以管理员身份运行</value>
-  </data>
-  <data name="TileFontSizeText" xml:space="preserve">
-    <value>字号:</value>
-  </data>
-  <data name="TileIconText" xml:space="preserve">
-    <value>图标:</value>
-  </data>
-  <data name="TileImageShadowText" xml:space="preserve">
-    <value>图像阴影</value>
-  </data>
-  <data name="TileNameText" xml:space="preserve">
-    <value>名称:</value>
-  </data>
-  <data name="TilePathText" xml:space="preserve">
-    <value>路径:</value>
-  </data>
-  <data name="TileShadowText" xml:space="preserve">
-    <value>磁贴阴影</value>
-  </data>
-  <data name="TileSizeText" xml:space="preserve">
-    <value>尺寸:</value>
-  </data>
-  <data name="TitleCreateTile" xml:space="preserve">
-    <value>添加磁贴</value>
-  </data>
-  <data name="TitleEditTile" xml:space="preserve">
-    <value>编辑磁贴</value>
   </data>
   <data name="TitleSetting" xml:space="preserve">
     <value>设置</value>

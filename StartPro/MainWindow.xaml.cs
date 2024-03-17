@@ -6,6 +6,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using StartPro.Api;
 using StartPro.External;
+using StartPro.Tile;
 using static StartPro.External.NativeMethods;
 
 namespace StartPro;
@@ -38,10 +39,10 @@ public partial class MainWindow : Window
     private void AddTile(object o, RoutedEventArgs e)
     {
         Hide( );
-        Create window = new( );
+        CreateApp window = new( );
         window.ShowDialog( );
         Show( );
-        Tile tile = window.Item;
+        AppTile tile = window.Item;
         if (!tile.IsEnabled)
             return;
         TilePanel.Children.Add(tile);
@@ -61,13 +62,27 @@ public partial class MainWindow : Window
         Hide( );
         Import window = new( );
         window.ShowDialog( );
-        foreach (Tile tile in window.Tiles)
+        foreach (AppTile tile in window.Tiles)
         {
             TilePanel.Children.Add(tile);
             tile.IsEnabled = true;
             tile.MoveToSpace(TilePanel, true);
         }
         Show( );
+    }
+
+    private void SwitchAppList(object o, RoutedEventArgs e)
+    {
+        if ((AppListBorder.RenderTransform as TranslateTransform).X != 0 && Resources["ShowAppList"] is Storyboard showAnimation)
+        {
+            //AppListBorder.Visibility = Visibility.Visible;
+            showAnimation.Begin(AppListBorder);
+        }
+        else if ((AppListBorder.RenderTransform as TranslateTransform).X == 0 && Resources["HideAppList"] is Storyboard hideAnimation)
+        {
+            //hideAnimation.Completed += (o, e) => AppListBorder.Visibility = Visibility.Collapsed;
+            hideAnimation.Begin(AppListBorder);
+        }
     }
 
     private void ApplyBackground( )
@@ -99,7 +114,7 @@ public partial class MainWindow : Window
         if (Resources["ShowWindow"] is Storyboard showAnimation)
         {
             base.Show( );
-            showAnimation.Begin(this);
+            showAnimation.Begin(MainBorder);
         }
         SetForegroundWindow(handle);
     }
@@ -109,7 +124,7 @@ public partial class MainWindow : Window
         if (Resources["HideWindow"] is Storyboard hideAnimation)
         {
             hideAnimation.Completed += (o, e) => base.Hide( );
-            hideAnimation.Begin(this);
+            hideAnimation.Begin(MainBorder);
         }
     }
 
@@ -117,7 +132,7 @@ public partial class MainWindow : Window
     {
         Hide( );
         App.Tiles.Clear( );
-        foreach (Tile tile in TilePanel.Children)
+        foreach (AppTile tile in TilePanel.Children)
             App.Tiles.Add(tile);
         e.Cancel = true;
     }
