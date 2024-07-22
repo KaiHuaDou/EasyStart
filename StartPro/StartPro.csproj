@@ -16,10 +16,7 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
     <ItemGroup>
-      <None Remove="Tile\TileBase.UI.cs.bak" />
-    </ItemGroup>
-    <ItemGroup>
-      <Compile Include="Properties\TileBase.UI.cs.bak" />
+        <None Remove="Tile\TileBase.UI.cs.bak" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="H.NotifyIcon.Wpf" Version="2.1.0" />
@@ -35,6 +32,11 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>Main.resx</DependentUpon>
         </Compile>
+        <Compile Update="Resources\TextTile.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>TextTile.resx</DependentUpon>
+        </Compile>
         <Compile Update="Resources\Tile.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
@@ -47,6 +49,10 @@
         <EmbeddedResource Update="Resources\Main.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
             <LastGenOutput>Main.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\TextTile.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+          <LastGenOutput>TextTile.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\Tile.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>

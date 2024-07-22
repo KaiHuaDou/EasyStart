@@ -22,14 +22,14 @@ namespace StartPro.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Tile {
+    public class TextTile {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Tile() {
+        internal TextTile() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace StartPro.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("StartPro.Resources.Tile", typeof(Tile).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("StartPro.Resources.TextTile", typeof(TextTile).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,83 +61,20 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Color: 的本地化字符串。
+        ///   查找类似 Content: 的本地化字符串。
         /// </summary>
-        public static string ColorText {
+        public static string ContentText {
             get {
-                return ResourceManager.GetString("ColorText", resourceCulture);
+                return ResourceManager.GetString("ContentText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Delete 的本地化字符串。
+        ///   查找类似 Text Shadow 的本地化字符串。
         /// </summary>
-        public static string ContextDelete {
+        public static string TextShadowText {
             get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Edit 的本地化字符串。
-        /// </summary>
-        public static string ContextEdit {
-            get {
-                return ResourceManager.GetString("ContextEdit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Change Size 的本地化字符串。
-        /// </summary>
-        public static string ContextFastChange {
-            get {
-                return ResourceManager.GetString("ContextFastChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Font Size: 的本地化字符串。
-        /// </summary>
-        public static string FontSizeText {
-            get {
-                return ResourceManager.GetString("FontSizeText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Tile Shadow 的本地化字符串。
-        /// </summary>
-        public static string ShadowText {
-            get {
-                return ResourceManager.GetString("ShadowText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Size: 的本地化字符串。
-        /// </summary>
-        public static string SizeText {
-            get {
-                return ResourceManager.GetString("SizeText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Add Tile 的本地化字符串。
-        /// </summary>
-        public static string TitleCreate {
-            get {
-                return ResourceManager.GetString("TitleCreate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Edit Tile 的本地化字符串。
-        /// </summary>
-        public static string TitleEdit {
-            get {
-                return ResourceManager.GetString("TitleEdit", resourceCulture);
+                return ResourceManager.GetString("TextShadowText", resourceCulture);
             }
         }
     }

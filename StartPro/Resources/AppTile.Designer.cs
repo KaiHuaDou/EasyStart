@@ -79,15 +79,6 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Font Size: 的本地化字符串。
-        /// </summary>
-        public static string FontSizeText {
-            get {
-                return ResourceManager.GetString("FontSizeText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Icon: 的本地化字符串。
         /// </summary>
         public static string IconText {
@@ -129,33 +120,6 @@ namespace StartPro.Resources {
         public static string PathText {
             get {
                 return ResourceManager.GetString("PathText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Tile Shadow 的本地化字符串。
-        /// </summary>
-        public static string ShadowText {
-            get {
-                return ResourceManager.GetString("ShadowText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Add Tile 的本地化字符串。
-        /// </summary>
-        public static string TitleCreateApp {
-            get {
-                return ResourceManager.GetString("TitleCreateApp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Edit Tile 的本地化字符串。
-        /// </summary>
-        public static string TitleEditApp {
-            get {
-                return ResourceManager.GetString("TitleEditApp", resourceCulture);
             }
         }
     }

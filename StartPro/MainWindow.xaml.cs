@@ -25,9 +25,9 @@ public partial class MainWindow : Window
         Left = (SystemParameters.WorkArea.Width - Width) / 2;
         ApplyBackground( );
 
-        ShowHideAppList(null, null);
         StartMenuApp.SearchAll( );
         AppList.ItemsSource = StartMenuApp.AllApps;
+        ShowHideAppList(null, null);
 
         foreach (TileBase tile in App.Tiles)
         {
@@ -42,17 +42,17 @@ public partial class MainWindow : Window
         else Hide( );
     }
 
-    private void AddTile(object o, RoutedEventArgs e)
+    private void AddAppTile(object o, RoutedEventArgs e)
     {
         Hide( );
         CreateApp window = new( );
         window.ShowDialog( );
         Show( );
         AppTile tile = window.Item;
-        if (!tile.IsEnabled)
+        if (tile is null || !tile.IsEnabled)
             return;
         TilePanel.Children.Add(tile);
-        tile.MoveToSpace(TilePanel, true);
+        tile.MoveToSpace(TilePanel);
     }
 
     private void ShowSetting(object o, RoutedEventArgs e)
@@ -63,16 +63,16 @@ public partial class MainWindow : Window
         Show( );
     }
 
-    private void ImportTile(object o, RoutedEventArgs e)
+    private void ImportAppTile(object o, RoutedEventArgs e)
     {
         Hide( );
-        Import window = new( );
+        ImportApp window = new( );
         window.ShowDialog( );
         foreach (AppTile tile in window.Tiles)
         {
             TilePanel.Children.Add(tile);
             tile.IsEnabled = true;
-            tile.MoveToSpace(TilePanel, true);
+            tile.MoveToSpace(TilePanel);
         }
         Show( );
     }
@@ -81,14 +81,26 @@ public partial class MainWindow : Window
     {
         if ((AppListBorder.RenderTransform as TranslateTransform).X != 0 && Resources["ShowAppList"] is Storyboard showAnimation)
         {
-            //AppListBorder.Visibility = Visibility.Visible;
+            AppListBorder.Visibility = Visibility.Visible;
             showAnimation.Begin(AppListBorder);
         }
         else if ((AppListBorder.RenderTransform as TranslateTransform).X == 0 && Resources["HideAppList"] is Storyboard hideAnimation)
         {
-            //hideAnimation.Completed += (o, e) => AppListBorder.Visibility = Visibility.Collapsed;
+            hideAnimation.Completed += (o, e) => AppListBorder.Visibility = Visibility.Collapsed;
             hideAnimation.Begin(AppListBorder);
         }
+    }
+    private void AddTextTile(object o, RoutedEventArgs e)
+    {
+        Hide( );
+        CreateText window = new( );
+        window.ShowDialog( );
+        Show( );
+        TextTile tile = window.Item;
+        if (tile is null || !tile.IsEnabled)
+            return;
+        TilePanel.Children.Add(tile);
+        tile.MoveToSpace(TilePanel);
     }
 
     private void ApplyBackground( )

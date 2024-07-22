@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using StartPro.Api;
-using StartPro.Tile;
 
-namespace StartPro;
-public partial class Import : Window
+namespace StartPro.Tile;
+public partial class ImportApp : Window
 {
     public HashSet<AppTile> Tiles { get; } = [];
 
@@ -18,7 +17,7 @@ public partial class Import : Window
         return result;
     }
 
-    public Import( )
+    public ImportApp( )
     {
         InitializeComponent( );
         TileList.ItemsSource = ConvertTileSet(Tiles);

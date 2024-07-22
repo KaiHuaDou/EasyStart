@@ -1,8 +1,9 @@
-﻿<Window x:Class="StartPro.Import"
+﻿<Window x:Class="StartPro.Tile.ImportApp"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:text="clr-namespace:StartPro.Resources"
         Title="Import"
+        MinWidth="200"
         AllowDrop="True"
         PreviewDrop="DropTile"
         SizeToContent="WidthAndHeight">

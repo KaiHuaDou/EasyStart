@@ -13,6 +13,18 @@
                     <tile:SizeConverter x:Key="SizeConverter" />
                     <tile:MarginConverter x:Key="MarginConverter" />
                     <api:NegativeConverter x:Key="NegativeConverter" />
+                    <LinearGradientBrush x:Key="MaskDeepBrush" StartPoint="0,0" EndPoint="0,1">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Offset="0" Color="#34D9F4FF" />
+                            <GradientStop Offset="1" Color="#349BDDFB" />
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                    <LinearGradientBrush x:Key="MaskLightBrush" StartPoint="0,0" EndPoint="0,1">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Offset="0" Color="#34C5EBFF" />
+                            <GradientStop Offset="1" Color="#3481D8FF" />
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

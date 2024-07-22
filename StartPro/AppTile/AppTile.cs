@@ -13,7 +13,7 @@ public partial class AppTile : TileBase
         userControl.Content = null;
         border.Child = RootPanel;
 
-        Utils.MoveItems(ContextMenu, contextMenu);
+        Utils.AppendContexts(ContextMenu, contextMenu);
         Content = root;
     }
 
@@ -23,12 +23,10 @@ public partial class AppTile : TileBase
     private static readonly PropertyMetadata appIconMeta = new(AppIconChanged);
     private static readonly PropertyMetadata appPathMeta = new(Defaults.AppName, AppPathChanged);
     private static readonly PropertyMetadata ImageShadowMeta = new(true);
-    private static readonly PropertyMetadata ShadowMeta = new(true);
     public static readonly DependencyProperty AppNameProperty = DependencyProperty.Register("AppName", typeof(string), typeof(AppTile), appNameMeta);
     public static readonly DependencyProperty AppIconProperty = DependencyProperty.Register("AppIcon", typeof(string), typeof(AppTile), appIconMeta);
     public static readonly DependencyProperty AppPathProperty = DependencyProperty.Register("AppPath", typeof(string), typeof(AppTile), appPathMeta);
     public static readonly DependencyProperty ImageShadowProperty = DependencyProperty.Register("TileImageShadow", typeof(bool), typeof(AppTile), ImageShadowMeta);
-    public static readonly DependencyProperty ShadowProperty = DependencyProperty.Register("TileShadow", typeof(bool), typeof(AppTile), ShadowMeta);
 
     public string AppName
     {
@@ -55,17 +53,6 @@ public partial class AppTile : TileBase
         {
             SetValue(ImageShadowProperty, value);
             TileImageShadow.Opacity = (!App.Program.Settings.Content.UIFlat && value) ? 0.4 : 0;
-        }
-    }
-
-    public bool Shadow
-    {
-        get => (bool) GetValue(ShadowProperty);
-        set
-        {
-            SetValue(ShadowProperty, value);
-            if (TileShadow is not null)
-                TileShadow.Opacity = (!App.Program.Settings.Content.UIFlat && value) ? 0.4 : 0;
         }
     }
 }

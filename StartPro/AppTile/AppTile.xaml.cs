@@ -93,7 +93,7 @@ public partial class AppTile : TileBase
         c.ShowDialog( );
         c.Item.IsEnabled = true;
         parent.Children.Add(c.Item);
-        c.Item.MoveToSpace(parent, true);
+        c.Item.MoveToSpace(parent);
     }
 
     private void RunAsAdmin(object o, RoutedEventArgs e)

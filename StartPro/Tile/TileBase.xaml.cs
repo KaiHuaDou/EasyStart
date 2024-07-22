@@ -38,7 +38,7 @@ public partial class TileBase : UserControl
 
         maskBorder = root.FindName("maskBorder") as Border;
         border = root.FindName("border") as Border;
-        TileShadow = root.FindName("TileShadowEffect") as DropShadowEffect;
+        TileShadow = root.FindName("TileShadow") as DropShadowEffect;
         contextMenu = root.FindName("contextMenu") as ContextMenu;
         SizeSmallMenu = root.FindName("SizeSmallMenu") as MenuItem;
         SizeMediumMenu = root.FindName("SizeMediumMenu") as MenuItem;

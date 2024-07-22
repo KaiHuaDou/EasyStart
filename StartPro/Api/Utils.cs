@@ -30,7 +30,7 @@ public static class Utils
         catch { }
     }
 
-    public static void MoveItems(ContextMenu from, ContextMenu to)
+    public static void AppendContexts(ContextMenu from, ContextMenu to)
     {
         int count = from.Items.Count;
         for (int i = 0; i < count; i++)

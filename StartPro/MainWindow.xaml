@@ -59,23 +59,37 @@
                     </Border.Effect>
                     <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                         <StackPanel.Resources>
+                            <Style BasedOn="{StaticResource {x:Type GroupBox}}" TargetType="{x:Type GroupBox}">
+                                <Setter Property="Margin" Value="5,5,5,5" />
+                            </Style>
                             <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
                                 <Setter Property="FontFamily" Value="Segoe Fluent Icons" />
                                 <Setter Property="FontSize" Value="24" />
-                                <Setter Property="Margin" Value="5,5,5,10" />
+                                <Setter Property="Margin" Value="5,5,5,0" />
                             </Style>
                         </StackPanel.Resources>
-                        <Button Click="ShowHideAppList" Content="&#xE700;" />
-                        <Button Click="AddTile" Content="&#xE710;" />
-                        <Button Click="ShowSetting" Content="&#xE713;" />
-                        <Button Click="ImportTile" Content="&#xE8B5;" />
+                        <GroupBox Header="默认">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Click="ShowSetting" Content="&#xE713;" />
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="应用磁贴">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Click="ShowHideAppList" Content="&#xE700;" />
+                                <Button Click="AddAppTile" Content="&#xE710;" />
+                                <Button Click="ImportAppTile" Content="&#xE8B5;" />
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="文本磁贴">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Click="AddTextTile" Content="&#xE710;" />
+                            </StackPanel>
+                        </GroupBox>
                     </StackPanel>
                 </Border>
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <Canvas x:Name="TilePanel"
-                            Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <tile:AppTile AppIcon="D:\tools\CleanWeChatX.exe" AppName="CleanWechatX" AppPath="D:\tools\CleanWeChatX.exe" />
-                    </Canvas>
+                            Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" />
                 </ScrollViewer>
                 <notify:TaskbarIcon MenuActivation="RightClick">
                     <notify:TaskbarIcon.IconSource>

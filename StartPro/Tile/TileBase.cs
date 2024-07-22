@@ -21,14 +21,16 @@ public partial class TileBase : UserControl
             Measure(new Size(window.Width, window.Height));
             Arrange(new Rect(0, 0, window.DesiredSize.Width, window.DesiredSize.Height));
             if (Owner is not null)
-                MoveToSpace(Owner, true);
+                MoveToSpace(Owner);
         }
     }
 
     private static readonly PropertyMetadata TileSizeMeta = new(TileType.Medium, TileSizeChanged);
     private static readonly PropertyMetadata TileColorMeta = new(Defaults.Background, TileColorChanged);
+    private static readonly PropertyMetadata ShadowMeta = new(true);
     public static readonly DependencyProperty TileSizeProperty = DependencyProperty.Register("TileSize", typeof(TileType), typeof(TileBase), TileSizeMeta);
     public static readonly DependencyProperty TileColorProperty = DependencyProperty.Register("TileColor", typeof(SolidColorBrush), typeof(TileBase), TileColorMeta);
+    public static readonly DependencyProperty ShadowProperty = DependencyProperty.Register("TileShadow", typeof(bool), typeof(AppTile), ShadowMeta);
 
     public Panel Owner => Parent as Panel;
 
@@ -54,5 +56,16 @@ public partial class TileBase : UserControl
     {
         get => (int) Canvas.GetLeft(this) / Defaults.BlockSize;
         set => Canvas.SetLeft(this, (value < 0 ? 0 : value) * Defaults.BlockSize);
+    }
+
+    public bool Shadow
+    {
+        get => (bool) GetValue(ShadowProperty);
+        set
+        {
+            SetValue(ShadowProperty, value);
+            if (TileShadow is not null)
+                TileShadow.Opacity = (!App.Program.Settings.Content.UIFlat && value) ? 0.4 : 0;
+        }
     }
 }

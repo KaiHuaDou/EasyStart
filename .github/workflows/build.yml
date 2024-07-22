@@ -2,10 +2,10 @@ name: .NET Build
 
 on:
   push:
-    branches: ["master"]
+    branches: ['main']
 
   pull_request:
-    branches: ["master"]
+    branches: ['main']
 
 jobs:
   build:
@@ -25,4 +25,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: App
-          path: ./StartPro/bin/Release/net6.0-windows/*
+          path: ./StartPro/bin/Release/net8.0-windows/*

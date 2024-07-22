@@ -97,25 +97,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ContextOpen" xml:space="preserve">
-    <value>Open file location</value>
+  <data name="ContentText" xml:space="preserve">
+    <value>Content:</value>
   </data>
-  <data name="ContextRunAs" xml:space="preserve">
-    <value>Run as Administrator</value>
-  </data>
-  <data name="IconText" xml:space="preserve">
-    <value>Icon:</value>
-  </data>
-  <data name="ImageShadowText" xml:space="preserve">
-    <value>Image Shadow</value>
-  </data>
-  <data name="ImportText" xml:space="preserve">
-    <value>Import</value>
-  </data>
-  <data name="NameText" xml:space="preserve">
-    <value>Name:</value>
-  </data>
-  <data name="PathText" xml:space="preserve">
-    <value>Path:</value>
+  <data name="TextShadowText" xml:space="preserve">
+    <value>Text Shadow</value>
   </data>
 </root>

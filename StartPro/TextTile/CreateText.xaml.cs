@@ -1,28 +1,30 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using StartPro.Api;
 
 namespace StartPro.Tile;
-
-public partial class CreateApp : Window
+/// <summary>
+/// CreateText.xaml 的交互逻辑
+/// </summary>
+public partial class CreateText : Window
 {
-    public AppTile Item { get; set; } = new( );
-    public AppTile Original { get; set; }
-    public CreateApp(AppTile t = null)
+    public TextTile Item { get; set; } = new( );
+    public TextTile Original { get; set; }
+
+    public CreateText(TextTile t = null)
     {
         InitializeComponent( );
 
         if (t is null)
         {
-            Item = new AppTile { Row = 0, Column = 0 };
+            Item = new TextTile { Row = 0, Column = 0 };
         }
         else
         {
             Item = t;
-            Original = FastCopy<AppTile>.Copy(Item);
+            Original = FastCopy<TextTile>.Copy(Item);
         }
 
         Item.IsEnabled = false;
@@ -30,59 +32,24 @@ public partial class CreateApp : Window
         Title = t is null ? StartPro.Resources.Tile.TitleCreate : StartPro.Resources.Tile.TitleEdit;
 
         sizeBox.SelectedIndex = (int) Item.TileSize;
-        iconBox.Text = Item.AppIcon;
-        nameBox.Text = Item.AppName;
-        pathBox.Text = Item.AppPath;
-        fontBox.Text = Item.FontSize.ToString( );
+        contentBox.Text = Item.Text;
+        fontSizeBox.Text = Item.FontSize.ToString( );
         ShadowBox.IsChecked = Item.Shadow;
-        ImageShadowBox.IsChecked = Item.ImageShadow;
+        TextShadowBox.IsChecked = Item.TextShadow;
 
         DockPanel.SetDock(Item, Dock.Right);
         Item.Margin = new Thickness(5, 10, 10, 5);
         mainPanel.Children.Insert(0, Item);
     }
-
     private void TileSizeChanged(object o, SelectionChangedEventArgs e)
         => Item.TileSize = (TileType) sizeBox.SelectedIndex;
 
-    private void SelectExe(object o, RoutedEventArgs e)
-    {
-        if (Utils.TrySelectExe(out string fileName))
-        {
-            pathBox.Text = fileName;
-            PathChanged(o, e);
-        }
-    }
-
-    private void SelectIcon(object o, RoutedEventArgs e)
-    {
-        if (Utils.TrySelectImage(out string fileName))
-            iconBox.Text = fileName;
-    }
-
-    private void PathChanged(object o, RoutedEventArgs e)
-    {
-        try
-        {
-            Item.AppPath = pathBox.Text;
-            nameBox.Text = Item.AppName;
-            iconBox.Text = Item.AppIcon;
-            OkButton.IsEnabled = true;
-        }
-        catch { OkButton.IsEnabled = false; }
-    }
-
-    private void IconChanged(object o, TextChangedEventArgs e)
-    {
-        try { Item.AppIcon = new Uri(iconBox.Text).LocalPath; } catch { }
-    }
-
-    private void NameChanged(object o, TextChangedEventArgs e)
-        => Item.AppName = nameBox.Text;
-
+    private void ContentChanged(object sender, RoutedEventArgs e)
+        => Item.Text = contentBox.Text;
+    
     private void FontChanged(object o, TextChangedEventArgs e)
     {
-        Item.FontSize = double.TryParse(fontBox.Text, out double result)
+        Item.FontSize = double.TryParse(fontSizeBox.Text, out double result)
             ? (result > 0 ? result : Defaults.FontSize)
             : Defaults.FontSize;
     }
@@ -96,8 +63,8 @@ public partial class CreateApp : Window
     private void ShadowBoxChecked(object o, RoutedEventArgs e)
         => Item.Shadow = (bool) ShadowBox.IsChecked;
 
-    private void ImageShadowBoxChecked(object o, RoutedEventArgs e)
-        => Item.ImageShadow = (bool) ImageShadowBox.IsChecked;
+    private void TextShadowBoxChecked(object o, RoutedEventArgs e)
+        => Item.TextShadow = (bool) TextShadowBox.IsChecked;
 
     private void TaskCancel(object o, RoutedEventArgs e)
     {

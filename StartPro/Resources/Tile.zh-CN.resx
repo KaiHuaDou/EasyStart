@@ -129,7 +129,19 @@
   <data name="ContextFastChange" xml:space="preserve">
     <value>更改大小</value>
   </data>
+  <data name="FontSizeText" xml:space="preserve">
+    <value>字号:</value>
+  </data>
+  <data name="ShadowText" xml:space="preserve">
+    <value>磁贴阴影</value>
+  </data>
   <data name="SizeText" xml:space="preserve">
     <value>尺寸:</value>
+  </data>
+  <data name="TitleCreate" xml:space="preserve">
+    <value>添加磁贴</value>
+  </data>
+  <data name="TitleEdit" xml:space="preserve">
+    <value>编辑磁贴</value>
   </data>
 </root>

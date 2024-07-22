@@ -16,9 +16,13 @@ public class DataStore<T> : IDisposable where T : class, new()
     public DataStore(string xmlFile)
     {
         File = new FileInfo(xmlFile).FullName;
-        Stream = new(File, FileMode.OpenOrCreate);
-        Reader = XmlReader.Create(Stream);
-        Read( );
+        try
+        {
+            Stream = new(File, FileMode.OpenOrCreate);
+            Reader = XmlReader.Create(Stream);
+            Read( );
+        }
+        catch (IOException) { }
     }
 
     public void Read( )

@@ -48,7 +48,7 @@ public partial class TileBase
      *     maskBorderStyle.Triggers.Add(mouseOverTrigger);
      *     DataTrigger isDragTrigger = new( )
      *     {
-     *         Binding = new Binding("IsDrag") { ElementName = "userControl" },
+     *         Binding = new Binding("IsDrag") { ElementName = "baseControl" },
      *         Value = true
      *     };
      *     isDragTrigger.Setters.Add(new Setter( )

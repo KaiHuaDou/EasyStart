@@ -117,25 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ContextOpen" xml:space="preserve">
-    <value>打开文件位置</value>
+  <data name="ContentText" xml:space="preserve">
+    <value>内容:</value>
   </data>
-  <data name="ContextRunAs" xml:space="preserve">
-    <value>以管理员身份运行</value>
-  </data>
-  <data name="IconText" xml:space="preserve">
-    <value>图标:</value>
-  </data>
-  <data name="ImageShadowText" xml:space="preserve">
-    <value>图像阴影</value>
-  </data>
-  <data name="ImportText" xml:space="preserve">
-    <value>导入</value>
-  </data>
-  <data name="NameText" xml:space="preserve">
-    <value>名称:</value>
-  </data>
-  <data name="PathText" xml:space="preserve">
-    <value>路径:</value>
+  <data name="TextShadowText" xml:space="preserve">
+    <value>文本阴影</value>
   </data>
 </root>
