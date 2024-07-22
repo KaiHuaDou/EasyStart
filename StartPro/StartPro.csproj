@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net6.0-windows</TargetFramework>
+        <TargetFramework>net8.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
         <UseWindowsForms>true</UseWindowsForms>
-        <LangVersion>12.0</LangVersion>
+        <LangVersion>latest</LangVersion>
         <PublishReadyToRun>true</PublishReadyToRun>
     </PropertyGroup>
     <PropertyGroup>
@@ -13,16 +13,22 @@
         <DebugType>full</DebugType>
         <WarningLevel>7</WarningLevel>
         <NeutralLanguage>en-US</NeutralLanguage>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
     <ItemGroup>
-        <Folder Include="Properties\" />
-        <PackageReference Include="H.NotifyIcon.Wpf" Version="2.0.124" />
+      <None Remove="Tile\TileBase.UI.cs.bak" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Include="Properties\TileBase.UI.cs.bak" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="H.NotifyIcon.Wpf" Version="2.1.0" />
         <PackageReference Include="SingleInstanceCore" Version="2.2.2" />
-        <PackageReference Include="System.Drawing.Common" Version="8.0.1" />
+        <PackageReference Include="System.Drawing.Common" Version="8.0.7" />
         <Compile Update="Resources\AppTile.Designer.cs">
-          <DesignTime>True</DesignTime>
-          <AutoGen>True</AutoGen>
-          <DependentUpon>AppTile.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>AppTile.resx</DependentUpon>
         </Compile>
         <Compile Update="Resources\Main.Designer.cs">
             <DesignTime>True</DesignTime>
@@ -30,24 +36,24 @@
             <DependentUpon>Main.resx</DependentUpon>
         </Compile>
         <Compile Update="Resources\Tile.Designer.cs">
-          <DesignTime>True</DesignTime>
-          <AutoGen>True</AutoGen>
-          <DependentUpon>Tile.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Tile.resx</DependentUpon>
         </Compile>
         <EmbeddedResource Update="Resources\AppTile.resx">
-          <Generator>PublicResXFileCodeGenerator</Generator>
-          <LastGenOutput>AppTile.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>AppTile.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\Main.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
             <LastGenOutput>Main.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\Tile.resx">
-          <Generator>PublicResXFileCodeGenerator</Generator>
-          <LastGenOutput>Tile.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Tile.Designer.cs</LastGenOutput>
         </EmbeddedResource>
     </ItemGroup>
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-        <Exec Command="taskkill /f /im startPro.exe 2&gt;&amp;1 || exit /B 0 " ContinueOnError="true" />
+        <Exec Command="taskkill /f /im StartPro.exe 2&gt;&amp;1 || exit /B 0 " ContinueOnError="true" />
     </Target>
 </Project>

@@ -5,7 +5,6 @@ using System.Xml;
 
 namespace StartPro.Tile;
 
-
 public partial class TileBase
 {
     public virtual void WriteAttributes(ref XmlElement element)
@@ -55,19 +54,19 @@ public static class TileConfig
     private const string xmlPath = "tiles.xml";
     private static readonly XmlDocument document = new( );
     private static XmlNode Apps = document.CreateElement("Tiles");
-
-    public static void Add(TileBase tileBase)
-    {
-        XmlElement element = document.CreateElement("Tile");
-        tileBase.WriteAttributes(ref element);
-        Apps.AppendChild(element);
-    }
-
-    public static void Save( )
-        => File.WriteAllText(xmlPath, Apps.OuterXml);
-
     public static string GetAttribute(XmlNode node, string name)
         => (node.Attributes.GetNamedItem(name) as XmlAttribute).Value;
+
+    public static void Save(HashSet<TileBase> tiles)
+    {
+        foreach (TileBase tile in tiles)
+        {
+            XmlElement element = document.CreateElement("Tile");
+            tile.WriteAttributes(ref element);
+            Apps.AppendChild(element);
+        }
+        File.WriteAllText(xmlPath, Apps.OuterXml);
+    }
 
     public static HashSet<TileBase> Load( )
     {

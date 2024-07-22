@@ -45,6 +45,12 @@
         </DoubleAnimation>
     </Storyboard>
     <Storyboard x:Key="ShowAppList">
+        <DoubleAnimation Duration="0:0:0.2" FillBehavior="HoldEnd" From="0"
+                         Storyboard.TargetProperty="Opacity" To="1">
+            <DoubleAnimation.EasingFunction>
+                <SineEase EasingMode="EaseOut" />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
         <DoubleAnimation Duration="0:0:0.1" FillBehavior="HoldEnd"
                          From="{Binding ElementName=AppListBorder, Path=ActualWidth, Converter={StaticResource NegativeConverter}}"
                          Storyboard.TargetProperty="RenderTransform.X" To="0">
@@ -54,6 +60,12 @@
         </DoubleAnimation>
     </Storyboard>
     <Storyboard x:Key="HideAppList">
+        <DoubleAnimation Duration="0:0:0.2" FillBehavior="HoldEnd" From="1"
+                         Storyboard.TargetProperty="Opacity" To="0">
+            <DoubleAnimation.EasingFunction>
+                <SineEase EasingMode="EaseIn" />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
         <DoubleAnimation Duration="0:0:0.1" FillBehavior="HoldEnd" From="0"
                          Storyboard.TargetProperty="RenderTransform.X"
                          To="{Binding ElementName=AppListBorder, Path=ActualWidth, Converter={StaticResource NegativeConverter}}">

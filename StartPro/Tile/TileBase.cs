@@ -8,11 +8,13 @@ namespace StartPro.Tile;
 
 public partial class TileBase : UserControl
 {
-    public virtual void Refresh( )
+    public void Refresh( )
     {
         MinHeight = Height = Convert.ToDouble(new SizeConverter( ).Convert(TileSize, null, "Height", null));
         MinWidth = Width = Convert.ToDouble(new SizeConverter( ).Convert(TileSize, null, "Width", null));
         Margin = new Thickness(Defaults.Margin);
+        border.DataContext = this;
+        border.CornerRadius = maskBorder.CornerRadius = (CornerRadius) new RadiusConverter( ).Convert(TileSize, null, null, null);
         if (Parent is Canvas && Application.Current.MainWindow is MainWindow window)
         {
             // 重新测量并布局确保 ActualWidth 和 ActualHeight 及时更新，以便移动磁贴至适宜位置

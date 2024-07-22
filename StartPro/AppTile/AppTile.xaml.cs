@@ -84,17 +84,16 @@ public partial class AppTile : TileBase
         }
     }
 
-    private void RemoveTile(object o, RoutedEventArgs e)
-        => ((Panel) Parent).Children.Remove(this);
 
     private void EditTile(object o, RoutedEventArgs e)
     {
-        Panel parent = (Panel) Parent;
+        Panel parent = Parent as Panel;
         parent.Children.Remove(this);
         CreateApp c = new(this);
         c.ShowDialog( );
-        parent.Children.Add(this);
-        MoveToSpace(Parent as Panel, true);
+        c.Item.IsEnabled = true;
+        parent.Children.Add(c.Item);
+        c.Item.MoveToSpace(parent, true);
     }
 
     private void RunAsAdmin(object o, RoutedEventArgs e)
@@ -103,10 +102,4 @@ public partial class AppTile : TileBase
         App.TileWindow.Hide( );
 
     }
-
-    private void ToSmallClick(object sender, RoutedEventArgs e) => TileSize = TileType.Small;
-    private void ToMediumClick(object sender, RoutedEventArgs e) => TileSize = TileType.Medium;
-    private void ToWideClick(object sender, RoutedEventArgs e) => TileSize = TileType.Wide;
-    private void ToHighClick(object sender, RoutedEventArgs e) => TileSize = TileType.High;
-    private void ToLargeClick(object sender, RoutedEventArgs e) => TileSize = TileType.Large;
 }

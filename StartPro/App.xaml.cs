@@ -28,9 +28,7 @@ public partial class App : Application, ISingleInstance
 
     private void AppExit(object o, ExitEventArgs e)
     {
-        foreach (TileBase tile in Tiles)
-            TileConfig.Add(tile);
-        TileConfig.Save( );
+        TileConfig.Save(Tiles);
         Program.Settings.Save( );
     }
 

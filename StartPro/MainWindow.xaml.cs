@@ -18,11 +18,17 @@ public partial class MainWindow : Window
     public MainWindow( )
     {
         InitializeComponent( );
+
         Height = Defaults.SizeRate * SystemParameters.PrimaryScreenHeight;
         Width = Defaults.SizeRate * SystemParameters.PrimaryScreenWidth;
         Top = SystemParameters.WorkArea.Height - Height;
         Left = (SystemParameters.WorkArea.Width - Width) / 2;
         ApplyBackground( );
+
+        ShowHideAppList(null, null);
+        StartMenuApp.SearchAll( );
+        AppList.ItemsSource = StartMenuApp.AllApps;
+
         foreach (TileBase tile in App.Tiles)
         {
             TilePanel.Children.Add(tile);
@@ -71,7 +77,7 @@ public partial class MainWindow : Window
         Show( );
     }
 
-    private void SwitchAppList(object o, RoutedEventArgs e)
+    private void ShowHideAppList(object o, RoutedEventArgs e)
     {
         if ((AppListBorder.RenderTransform as TranslateTransform).X != 0 && Resources["ShowAppList"] is Storyboard showAnimation)
         {

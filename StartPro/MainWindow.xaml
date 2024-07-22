@@ -4,6 +4,7 @@
         xmlns:local="clr-namespace:StartPro"
         xmlns:notify="clr-namespace:H.NotifyIcon;assembly=H.NotifyIcon.Wpf"
         xmlns:text="clr-namespace:StartPro.Resources"
+        xmlns:tile="clr-namespace:StartPro.Tile"
         Closing="WindowClosing"
         Deactivated="WindowDeactivated"
         ResizeMode="NoResize"
@@ -41,19 +42,14 @@
                     </Border.RenderTransform>
                     <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
                         <ListBox x:Name="AppList" Background="Transparent" BorderThickness="0">
-                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
-                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
-                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
-                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
-                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
-                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
-                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
-                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
-                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
-                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
-                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
-                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
-                            <ListBoxItem>A very long text to test the animation</ListBoxItem>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <DockPanel>
+                                        <Image Height="32" Source="{Binding AppIcon}" Stretch="Uniform" />
+                                        <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="{Binding AppName}" />
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
                         </ListBox>
                     </ScrollViewer>
                 </Border>
@@ -69,7 +65,7 @@
                                 <Setter Property="Margin" Value="5,5,5,10" />
                             </Style>
                         </StackPanel.Resources>
-                        <Button Click="SwitchAppList" Content="&#xE700;" />
+                        <Button Click="ShowHideAppList" Content="&#xE700;" />
                         <Button Click="AddTile" Content="&#xE710;" />
                         <Button Click="ShowSetting" Content="&#xE713;" />
                         <Button Click="ImportTile" Content="&#xE8B5;" />
@@ -77,11 +73,13 @@
                 </Border>
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <Canvas x:Name="TilePanel"
-                            Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                            Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <tile:AppTile AppIcon="D:\tools\CleanWeChatX.exe" AppName="CleanWechatX" AppPath="D:\tools\CleanWeChatX.exe" />
+                    </Canvas>
                 </ScrollViewer>
                 <notify:TaskbarIcon MenuActivation="RightClick">
                     <notify:TaskbarIcon.IconSource>
-                        <notify:GeneratedIconSource Foreground="White" Text="O" />
+                        <notify:GeneratedIconSource Foreground="Black" Text="O" />
                     </notify:TaskbarIcon.IconSource>
                     <notify:TaskbarIcon.ContextMenu>
                         <ContextMenu>

@@ -1,21 +1,20 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using StartPro.Api;
 
 namespace StartPro.Tile;
 
-public partial class AppTile
+public partial class AppTile : TileBase
 {
-    public AppTile( )
+    public AppTile( ) : base( )
     {
+        Grid root = Content as Grid;
         InitializeComponent( );
-        Refresh( );
-    }
+        userControl.Content = null;
+        border.Child = RootPanel;
 
-    public override void Refresh( )
-    {
-        base.Refresh( );
-        border.DataContext = this;
-        border.CornerRadius = maskBorder.CornerRadius = (CornerRadius) new RadiusConverter( ).Convert(TileSize, null, null, null);
+        Utils.MoveItems(ContextMenu, contextMenu);
+        Content = root;
     }
 
     public override string ToString( ) => $"{AppName} - {TileSize}";
@@ -65,7 +64,8 @@ public partial class AppTile
         set
         {
             SetValue(ShadowProperty, value);
-            TileShadow.Opacity = (!App.Program.Settings.Content.UIFlat && value) ? 0.4 : 0;
+            if (TileShadow is not null)
+                TileShadow.Opacity = (!App.Program.Settings.Content.UIFlat && value) ? 0.4 : 0;
         }
     }
 }

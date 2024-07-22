@@ -1,4 +1,4 @@
-﻿<Window x:Class="StartPro.CreateApp"
+﻿<Window x:Class="StartPro.Tile.CreateApp"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:StartPro"
@@ -50,7 +50,7 @@
             <TextBox x:Name="nameBox"
                      Grid.Row="2" Grid.Column="1"
                      Margin="0,0,0,10"
-                     TextChanged="NameChanged" />
+                     AcceptsReturn="True" TextChanged="NameChanged" />
             <TextBlock Grid.Row="3" Text="{x:Static text:AppTile.IconText}" />
             <DockPanel Grid.Row="3" Grid.Column="1">
                 <Button DockPanel.Dock="Right" Click="SelectIcon" Content="..." />

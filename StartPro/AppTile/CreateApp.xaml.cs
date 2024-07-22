@@ -4,19 +4,27 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using StartPro.Api;
-using StartPro.Tile;
 
-namespace StartPro;
+namespace StartPro.Tile;
 
 public partial class CreateApp : Window
 {
     public AppTile Item { get; set; } = new( );
-
+    public AppTile Original { get; set; }
     public CreateApp(AppTile t = null)
     {
         InitializeComponent( );
 
-        Item = t is null ? new AppTile { Row = 0, Column = 0 } : t;
+        if (t is null)
+        {
+            Item = new AppTile { Row = 0, Column = 0 };
+        }
+        else
+        {
+            Item = t;
+            Original = FastCopy<AppTile>.Copy(Item);
+        }
+
         Item.IsEnabled = false;
         OkButton.IsEnabled = t is not null;
         Title = t is null ? StartPro.Resources.AppTile.TitleCreateApp : StartPro.Resources.AppTile.TitleEditApp;
@@ -88,7 +96,10 @@ public partial class CreateApp : Window
         => Item.ImageShadow = (bool) ImageShadowBox.IsChecked;
 
     private void TaskCancel(object o, RoutedEventArgs e)
-        => Close( );
+    {
+        Item = Original;
+        Close( );
+    }
 
     private void TaskOk(object o, RoutedEventArgs e)
     {
