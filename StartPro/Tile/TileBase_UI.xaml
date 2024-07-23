@@ -54,7 +54,7 @@
                             </Setter.Value>
                         </Setter>
                     </Trigger>
-                    <DataTrigger Binding="{Binding IsDrag, ElementName=userControl}" Value="True">
+                    <DataTrigger Binding="{Binding IsDrag}" Value="True">
                         <Setter Property="Background">
                             <Setter.Value>
                                 <StaticResource ResourceKey="MaskDeepBrush" />

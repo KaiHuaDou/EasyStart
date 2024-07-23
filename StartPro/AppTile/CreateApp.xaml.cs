@@ -43,7 +43,7 @@ public partial class CreateApp : Window
     }
 
     private void TileSizeChanged(object o, SelectionChangedEventArgs e)
-        => Item.TileSize = (TileType) sizeBox.SelectedIndex;
+        => Item.TileSize = (TileSize) sizeBox.SelectedIndex;
 
     private void SelectExe(object o, RoutedEventArgs e)
     {
@@ -83,7 +83,7 @@ public partial class CreateApp : Window
     private void FontChanged(object o, TextChangedEventArgs e)
     {
         Item.FontSize = double.TryParse(fontBox.Text, out double result)
-            ? (result > 0 ? result : Defaults.FontSize)
+            ? (result is >= 0.1 and <= 256 ? result : Defaults.FontSize)
             : Defaults.FontSize;
     }
 

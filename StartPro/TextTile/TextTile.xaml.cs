@@ -1,6 +1,5 @@
 ﻿using System.Windows.Controls;
 using StartPro.Api;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace StartPro.Tile;
 

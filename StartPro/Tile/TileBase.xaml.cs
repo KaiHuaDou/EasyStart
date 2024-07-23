@@ -68,9 +68,9 @@ public partial class TileBase : UserControl
 
     private void RemoveTile(object o, RoutedEventArgs e)
         => (Parent as Panel).Children.Remove(this);
-    private void ToSmallClick(object sender, RoutedEventArgs e) => TileSize = TileType.Small;
-    private void ToMediumClick(object sender, RoutedEventArgs e) => TileSize = TileType.Medium;
-    private void ToWideClick(object sender, RoutedEventArgs e) => TileSize = TileType.Wide;
-    private void ToHighClick(object sender, RoutedEventArgs e) => TileSize = TileType.High;
-    private void ToLargeClick(object sender, RoutedEventArgs e) => TileSize = TileType.Large;
+    private void ToSmallClick(object o, RoutedEventArgs e) => TileSize = TileSize.Small;
+    private void ToMediumClick(object o, RoutedEventArgs e) => TileSize = TileSize.Medium;
+    private void ToWideClick(object o, RoutedEventArgs e) => TileSize = TileSize.Wide;
+    private void ToHighClick(object o, RoutedEventArgs e) => TileSize = TileSize.High;
+    private void ToLargeClick(object o, RoutedEventArgs e) => TileSize = TileSize.Large;
 }

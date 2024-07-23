@@ -7,8 +7,16 @@ public partial class TextTile
 
     private static readonly PropertyMetadata textMeta = new("Text");
     private static readonly PropertyMetadata textShadowMeta = new(true);
-    public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(TextTile), textMeta);
-    public static readonly DependencyProperty TextShadowProperty = DependencyProperty.Register("TextShadow", typeof(bool), typeof(TextTile), textShadowMeta);
+    private static readonly PropertyMetadata textVerticalAlignmentMeta = new(VerticalAlignment.Center);
+    private static readonly PropertyMetadata textHorizontalAlignmentMeta = new(HorizontalAlignment.Center);
+    public static readonly DependencyProperty TextProperty
+        = DependencyProperty.Register("Text", typeof(string), typeof(TextTile), textMeta);
+    public static readonly DependencyProperty TextShadowProperty
+        = DependencyProperty.Register("TextShadow", typeof(bool), typeof(TextTile), textShadowMeta);
+    public static readonly DependencyProperty TextVerticalAlignmentProperty
+        = DependencyProperty.Register("TextVerticalAlignment", typeof(VerticalAlignment), typeof(TextTile), textVerticalAlignmentMeta);
+    public static readonly DependencyProperty TextHorizontalAlignmentProperty
+        = DependencyProperty.Register("TextHorizontalAlignment", typeof(HorizontalAlignment), typeof(TextTile), textHorizontalAlignmentMeta);
 
     public string Text
     {
@@ -24,5 +32,18 @@ public partial class TextTile
             SetValue(TextShadowProperty, value);
             TileTextShadow.Opacity = (!App.Program.Settings.Content.UIFlat && value) ? 0.4 : 0;
         }
+    }
+
+    public VerticalAlignment TextVerticalAlignment
+    {
+        get => (VerticalAlignment) GetValue(TextVerticalAlignmentProperty);
+        set => SetValue(TextVerticalAlignmentProperty, value);
+
+    }
+
+    public HorizontalAlignment TextHorizontalAlignment
+    {
+        get => (HorizontalAlignment) GetValue(TextHorizontalAlignmentProperty);
+        set => SetValue(TextHorizontalAlignmentProperty, value);
     }
 }

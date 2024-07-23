@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using StartPro.Api;
@@ -8,13 +7,29 @@ namespace StartPro.Tile;
 
 public partial class TileBase : UserControl
 {
-    public void Refresh( )
+    public virtual void Refresh( )
     {
-        MinHeight = Height = Convert.ToDouble(new SizeConverter( ).Convert(TileSize, null, "Height", null));
-        MinWidth = Width = Convert.ToDouble(new SizeConverter( ).Convert(TileSize, null, "Width", null));
+        (int, int) tileSize = TileSize switch
+        {
+            TileSize.Small => Defaults.SmallSize,
+            TileSize.Medium => Defaults.MediumSize,
+            TileSize.Wide => Defaults.WideSize,
+            TileSize.Large => Defaults.LargeSize,
+            TileSize.High => Defaults.HighSize,
+            _ => Defaults.MediumSize,
+        };
+        MinWidth = Width = tileSize.Item1;
+        MinHeight = Height = tileSize.Item2;
         Margin = new Thickness(Defaults.Margin);
         border.DataContext = this;
-        border.CornerRadius = maskBorder.CornerRadius = (CornerRadius) new RadiusConverter( ).Convert(TileSize, null, null, null);
+        border.CornerRadius = maskBorder.CornerRadius = TileSize switch
+        {
+            TileSize.Small => new CornerRadius(Defaults.Radius / 2),
+            TileSize.Medium or TileSize.Wide or TileSize.High => new CornerRadius(Defaults.Radius),
+            TileSize.Large => new CornerRadius(Defaults.Radius * 2),
+            _ => new CornerRadius(Defaults.Radius),
+        };
+
         if (Parent is Canvas && Application.Current.MainWindow is MainWindow window)
         {
             // 重新测量并布局确保 ActualWidth 和 ActualHeight 及时更新，以便移动磁贴至适宜位置
@@ -25,18 +40,21 @@ public partial class TileBase : UserControl
         }
     }
 
-    private static readonly PropertyMetadata TileSizeMeta = new(TileType.Medium, TileSizeChanged);
+    private static readonly PropertyMetadata TileSizeMeta = new(TileSize.Medium, TileSizeChanged);
     private static readonly PropertyMetadata TileColorMeta = new(Defaults.Background, TileColorChanged);
     private static readonly PropertyMetadata ShadowMeta = new(true);
-    public static readonly DependencyProperty TileSizeProperty = DependencyProperty.Register("TileSize", typeof(TileType), typeof(TileBase), TileSizeMeta);
-    public static readonly DependencyProperty TileColorProperty = DependencyProperty.Register("TileColor", typeof(SolidColorBrush), typeof(TileBase), TileColorMeta);
-    public static readonly DependencyProperty ShadowProperty = DependencyProperty.Register("TileShadow", typeof(bool), typeof(AppTile), ShadowMeta);
+    public static readonly DependencyProperty TileSizeProperty
+        = DependencyProperty.Register("TileSize", typeof(TileSize), typeof(TileBase), TileSizeMeta);
+    public static readonly DependencyProperty TileColorProperty
+        = DependencyProperty.Register("TileColor", typeof(SolidColorBrush), typeof(TileBase), TileColorMeta);
+    public static readonly DependencyProperty ShadowProperty
+        = DependencyProperty.Register("TileShadow", typeof(bool), typeof(AppTile), ShadowMeta);
 
     public Panel Owner => Parent as Panel;
 
-    public TileType TileSize
+    public TileSize TileSize
     {
-        get => (TileType) GetValue(TileSizeProperty);
+        get => (TileSize) GetValue(TileSizeProperty);
         set => SetValue(TileSizeProperty, value);
     }
 

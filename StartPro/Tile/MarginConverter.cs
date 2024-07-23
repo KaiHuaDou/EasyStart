@@ -10,17 +10,17 @@ public class MarginConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        TileType tileType = (TileType) value;
+        TileSize tileType = (TileSize) value;
         return tileType switch
         {
-            TileType.Small => new Thickness(Defaults.ImageMargin / 2),
-            TileType.Medium or TileType.Wide or TileType.High => new Thickness(
+            TileSize.Small => new Thickness(Defaults.ImageMargin / 2),
+            TileSize.Medium or TileSize.Wide or TileSize.High => new Thickness(
                 Defaults.ImageMargin, Defaults.ImageMargin,
                 Defaults.ImageMargin, Defaults.ImageMargin / 2),
-            TileType.Large => new Thickness(
+            TileSize.Large => new Thickness(
                 Defaults.ImageMargin * 2, Defaults.ImageMargin * 2,
                 Defaults.ImageMargin * 2, Defaults.ImageMargin / 2),
-            _ => Defaults.ImageMargin,
+            _ => new Thickness(Defaults.ImageMargin),
         };
     }
 

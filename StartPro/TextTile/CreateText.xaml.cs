@@ -28,7 +28,6 @@ public partial class CreateText : Window
         }
 
         Item.IsEnabled = false;
-        OkButton.IsEnabled = t is not null;
         Title = t is null ? StartPro.Resources.Tile.TitleCreate : StartPro.Resources.Tile.TitleEdit;
 
         sizeBox.SelectedIndex = (int) Item.TileSize;
@@ -42,11 +41,11 @@ public partial class CreateText : Window
         mainPanel.Children.Insert(0, Item);
     }
     private void TileSizeChanged(object o, SelectionChangedEventArgs e)
-        => Item.TileSize = (TileType) sizeBox.SelectedIndex;
+        => Item.TileSize = (TileSize) sizeBox.SelectedIndex;
 
-    private void ContentChanged(object sender, RoutedEventArgs e)
+    private void ContentChanged(object o, RoutedEventArgs e)
         => Item.Text = contentBox.Text;
-    
+
     private void FontChanged(object o, TextChangedEventArgs e)
     {
         Item.FontSize = double.TryParse(fontSizeBox.Text, out double result)
@@ -83,5 +82,27 @@ public partial class CreateText : Window
         if (Item is not null)
             Item.Margin = new Thickness(Defaults.Margin);
         mainPanel.Children.Remove(Item);
+    }
+
+    private void VerticalAlignmentChanged(object o, SelectionChangedEventArgs e)
+    {
+        Item.TextVerticalAlignment = VerticalAlignmentBox.SelectedIndex switch
+        {
+            0 => VerticalAlignment.Center,
+            1 => VerticalAlignment.Top,
+            2 => VerticalAlignment.Bottom,
+            _ => VerticalAlignment.Center
+        };
+    }
+
+    private void HorizontalAlignmentChanged(object o, SelectionChangedEventArgs e)
+    {
+        Item.TextHorizontalAlignment = HorizontalAlignmentBox.SelectedIndex switch
+        {
+            0 => HorizontalAlignment.Center,
+            1 => HorizontalAlignment.Left,
+            2 => HorizontalAlignment.Right,
+            _ => HorizontalAlignment.Center
+        };
     }
 }

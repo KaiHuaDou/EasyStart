@@ -31,7 +31,7 @@
                    FontSize="{Binding FontSize, ElementName=userControl}"
                    Text="{Binding AppName}"
                    TextWrapping="WrapWithOverflow"
-                   Visibility="{Binding TileSize, Converter={StaticResource SizeConverter}, ConverterParameter=Label}" />
+                   Visibility="{Binding TileSize, Converter={StaticResource AppTileTextVisible}}" />
         <Image x:Name="image" Margin="{Binding TileSize, Converter={StaticResource MarginConverter}}" Source="{Binding AppIcon}">
             <Image.Effect>
                 <DropShadowEffect x:Name="TileImageShadow" Opacity="0.4" Color="#020202" />

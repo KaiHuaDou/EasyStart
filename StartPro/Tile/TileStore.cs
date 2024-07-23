@@ -18,36 +18,11 @@ public partial class TileBase
 
     public virtual void ReadAttributes(XmlNode node)
     {
-        TileSize = (TileType) int.Parse(node.GetAttribute("Size"));
+        TileSize = (TileSize) int.Parse(node.GetAttribute("Size"));
         TileColor = new BrushConverter( ).ConvertFrom(node.GetAttribute("Color")) as SolidColorBrush;
         FontSize = double.Parse(node.GetAttribute("FontSize"));
         Row = int.Parse(node.GetAttribute("Row"));
         Column = int.Parse(node.GetAttribute("Column"));
-    }
-}
-
-public partial class AppTile
-{
-    public override void WriteAttributes(ref XmlElement element)
-    {
-        base.WriteAttributes(ref element);
-        element.SetAttribute("Type", "AppTile");
-        element.SetAttribute("Name", AppName);
-        element.SetAttribute("Path", AppPath);
-        element.SetAttribute("Icon", AppIcon);
-        element.SetAttribute("Shadow", Shadow.ToString( ));
-        element.SetAttribute("ImageShadow", ImageShadow.ToString( ));
-        element.SetAttribute("FontSize", FontSize.ToString( ));
-    }
-
-    public override void ReadAttributes(XmlNode node)
-    {
-        base.ReadAttributes(node);
-        AppPath = node.GetAttribute("Path");
-        AppName = node.GetAttribute("Name");
-        AppIcon = node.GetAttribute("Icon");
-        Shadow = bool.Parse(node.GetAttribute("Shadow"));
-        ImageShadow = bool.Parse(node.GetAttribute("ImageShadow"));
     }
 }
 
@@ -82,6 +57,7 @@ public static class TileStore
                 TileBase item = node.GetAttribute("Type") switch
                 {
                     "AppTile" => new AppTile( ),
+                    "TextTile" => new TextTile( ),
                     _ => new TileBase( ),
                 };
                 item.ReadAttributes(node);
