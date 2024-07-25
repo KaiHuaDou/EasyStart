@@ -135,21 +135,6 @@
   <data name="SelectImageText" xml:space="preserve">
     <value>选择图像</value>
   </data>
-  <data name="SizeHigh" xml:space="preserve">
-    <value>高</value>
-  </data>
-  <data name="SizeLarge" xml:space="preserve">
-    <value>大</value>
-  </data>
-  <data name="SizeMedium" xml:space="preserve">
-    <value>中</value>
-  </data>
-  <data name="SizeSmall" xml:space="preserve">
-    <value>小</value>
-  </data>
-  <data name="SizeWide" xml:space="preserve">
-    <value>宽</value>
-  </data>
   <data name="TitleSetting" xml:space="preserve">
     <value>设置</value>
   </data>

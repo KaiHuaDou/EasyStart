@@ -11,14 +11,14 @@ public enum UIThemes
 
 public class Config
 {
-    public const string backgroundDefault = "#EEEEEEE";
+    public const string backgroundDefault = "#FFEEEEEE";
     private string background;
 
     [DefaultValue(backgroundDefault)]
     public string Background
     {
         get => background;
-        set => background = string.IsNullOrWhiteSpace(value) ? background : value;
+        set => background = string.IsNullOrWhiteSpace(value) ? backgroundDefault : value;
     }
 
     [DefaultValue((int) UIThemes.AeroNormalColor)]

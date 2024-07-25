@@ -114,7 +114,7 @@ public partial class CreateApp : Window
     private void WindowClosing(object o, CancelEventArgs e)
     {
         if (Item is not null)
-            Item.Margin = new Thickness(Defaults.Margin);
+            Item.Margin = new Thickness(TileDatas.BaseMargin);
         mainPanel.Children.Remove(Item);
     }
 }

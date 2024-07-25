@@ -2,21 +2,24 @@
 using System.Runtime.InteropServices;
 
 namespace StartPro.External;
-internal static class NativeMethods
+internal static partial class NativeMethods
 {
-    public const int WM_HOTKEY = 0x312;
+    internal const int WM_HOTKEY = 0x312;
 
-    [DllImport("user32.dll", EntryPoint = "SetForegroundWindow")]
-    public static extern bool SetForegroundWindow(IntPtr hWnd);
+    [LibraryImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    internal static partial bool SetForegroundWindow(IntPtr hWnd);
 
-    [DllImport("user32.dll", SetLastError = true)]
-    public static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifuers, uint vk);
+    [LibraryImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    internal static partial bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifuers, uint vk);
 
-    [DllImport("user32.dll", SetLastError = true)]
-    public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+    [LibraryImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    internal static partial bool UnregisterHotKey(IntPtr hWnd, int id);
 
-    [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-    public static extern int PrivateExtractIcons(
+    [LibraryImport("user32.dll", EntryPoint = "PrivateExtractIconsW", StringMarshalling = StringMarshalling.Utf16)]
+    internal static partial int PrivateExtractIcons(
         string lpszFile, int nIconIndex, int cxIcon, int cyIcon,
-            IntPtr[] phicon, int[] piconid, int nIcons, int flags);
+        IntPtr[] phicon, int[] piconid, int nIcons, int flags);
 }

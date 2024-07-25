@@ -35,11 +35,13 @@
                       Grid.Column="1"
                       Margin="0,0,0,10"
                       SelectedIndex="0" SelectionChanged="TileSizeChanged">
-                <ComboBoxItem Content="{x:Static text:Main.SizeSmall}" />
-                <ComboBoxItem Content="{x:Static text:Main.SizeMedium}" />
-                <ComboBoxItem Content="{x:Static text:Main.SizeWide}" />
-                <ComboBoxItem Content="{x:Static text:Main.SizeHigh}" />
-                <ComboBoxItem Content="{x:Static text:Main.SizeLarge}" />
+                <ComboBoxItem Content="{x:Static text:Tile.SizeSmall}" />
+                <ComboBoxItem Content="{x:Static text:Tile.SizeMedium}" />
+                <ComboBoxItem Content="{x:Static text:Tile.SizeWide}" />
+                <ComboBoxItem Content="{x:Static text:Tile.SizeThin}" />
+                <ComboBoxItem Content="{x:Static text:Tile.SizeHigh}" />
+                <ComboBoxItem Content="{x:Static text:Tile.SizeTall}" />
+                <ComboBoxItem Content="{x:Static text:Tile.SizeLarge}" />
             </ComboBox>
             <TextBlock Grid.Row="1" Text="{x:Static text:AppTile.PathText}" />
             <DockPanel Grid.Row="1" Grid.Column="1">

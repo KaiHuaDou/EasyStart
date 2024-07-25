@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using StartPro.Api;
 
 namespace StartPro.Tile;
 
@@ -39,8 +38,8 @@ public partial class TileBase
         Point mousePoint = e.GetPosition(Parent as Panel);
         Point offset = new(mousePoint.X - startMousePoint.X, mousePoint.Y - startMousePoint.Y);
         Point tilePoint = new(startTilePoint.X + offset.X, startTilePoint.Y + offset.Y);
-        tile.Column = (int) Math.Round(tilePoint.X / Defaults.BlockSize);
-        tile.Row = (int) Math.Round(tilePoint.Y / Defaults.BlockSize);
+        tile.Column = (int) Math.Round(tilePoint.X / TileDatas.BlockSize);
+        tile.Row = (int) Math.Round(tilePoint.Y / TileDatas.BlockSize);
 
         MoveToSpace(Parent as Panel);
         ReindexTiles(Parent as Panel);
@@ -101,11 +100,11 @@ public partial class TileBase
         double xmax = 0, ymax = 0;
         foreach (TileBase t in parent.Children)
         {
-            double txmax = t.Column * Defaults.BlockSize + t.ActualWidth;
-            double tymax = t.Row * Defaults.BlockSize + t.ActualHeight;
+            double txmax = t.Column * TileDatas.BlockSize + t.ActualWidth;
+            double tymax = t.Row * TileDatas.BlockSize + t.ActualHeight;
             xmax = txmax > xmax ? txmax : xmax;
             ymax = tymax > ymax ? tymax : ymax;
         }
-        (parent.Width, parent.Height) = (xmax + Defaults.Margin * 2, ymax + Defaults.Margin * 2);
+        (parent.Width, parent.Height) = (xmax + TileDatas.BaseMargin * 2, ymax + TileDatas.BaseMargin * 2 * 2);
     }
 }

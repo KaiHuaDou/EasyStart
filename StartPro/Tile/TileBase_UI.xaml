@@ -9,27 +9,27 @@
                 <MenuItem.Icon>
                     <TextBlock Margin="3" FontFamily="Segoe Fluent Icons" Text="&#xE740;" />
                 </MenuItem.Icon>
-                <MenuItem x:Name="SizeSmallMenu" Header="{x:Static text:Main.SizeSmall}">
+                <MenuItem x:Name="SizeSmallMenu" Header="{x:Static text:Tile.SizeSmall}">
                     <MenuItem.Icon>
                         <TextBlock Margin="3" FontFamily="Segoe Fluent Icons" Text="&#xE743;" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name="SizeMediumMenu" Header="{x:Static text:Main.SizeMedium}">
+                <MenuItem x:Name="SizeMediumMenu" Header="{x:Static text:Tile.SizeMedium}">
                     <MenuItem.Icon>
                         <TextBlock Margin="3" FontFamily="Segoe Fluent Icons" Text="&#xE744;" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name="SizeWideMenu" Header="{x:Static text:Main.SizeWide}">
+                <MenuItem x:Name="SizeWideMenu" Header="{x:Static text:Tile.SizeWide}">
                     <MenuItem.Icon>
                         <TextBlock Margin="3" FontFamily="Segoe Fluent Icons" Text="&#xE745;" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name="SizeHighMenu" Header="{x:Static text:Main.SizeHigh}">
+                <MenuItem x:Name="SizeHighMenu" Header="{x:Static text:Tile.SizeHigh}">
                     <MenuItem.Icon>
                         <TextBlock Margin="3" FontFamily="Segoe Fluent Icons" Text="&#xE746;" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name="SizeLargeMenu" Header="{x:Static text:Main.SizeLarge}">
+                <MenuItem x:Name="SizeLargeMenu" Header="{x:Static text:Tile.SizeLarge}">
                     <MenuItem.Icon>
                         <TextBlock Margin="3" FontFamily="Segoe Fluent Icons" Text="&#xE747;" />
                     </MenuItem.Icon>

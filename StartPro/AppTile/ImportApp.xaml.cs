@@ -62,8 +62,6 @@ public partial class ImportApp : Window
             IsEnabled = false
         });
     }
-
-
     private void AddNewTiles(Array files)
     {
         foreach (object file in files)

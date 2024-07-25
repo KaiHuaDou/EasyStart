@@ -70,6 +70,15 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Location: 的本地化字符串。
+        /// </summary>
+        public static string LocationText {
+            get {
+                return ResourceManager.GetString("LocationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Text Shadow 的本地化字符串。
         /// </summary>
         public static string TextShadowText {

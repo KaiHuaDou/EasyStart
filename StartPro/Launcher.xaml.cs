@@ -1,12 +1,10 @@
 ﻿using System.Windows;
 
 namespace StartPro;
-/// <summary>
-/// QuickStart.xaml 的交互逻辑
-/// </summary>
-public partial class QuickStart : Window
+
+public partial class Launcher : Window
 {
-    public QuickStart( )
+    public Launcher( )
     {
         InitializeComponent( );
     }

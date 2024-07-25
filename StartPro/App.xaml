@@ -11,8 +11,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <local:RadiusConverter x:Key="RadiusConverter" />
-                    <tile:AppTileTextVisible x:Key="AppTileTextVisible" />
-                    <tile:MarginConverter x:Key="MarginConverter" />
                     <api:NegativeConverter x:Key="NegativeConverter" />
                     <LinearGradientBrush x:Key="MaskDeepBrush" StartPoint="0,0" EndPoint="0,1">
                         <LinearGradientBrush.GradientStops>

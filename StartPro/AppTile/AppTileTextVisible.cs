@@ -8,7 +8,8 @@ namespace StartPro.Tile;
 public class AppTileTextVisible : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        => (TileSize) value == TileSize.Small ? Visibility.Collapsed : Visibility.Visible;
+        => (TileSize) value is TileSize.Small or TileSize.Thin or TileSize.Tall
+            ? Visibility.Collapsed : Visibility.Visible;
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         => throw new NotSupportedException( );

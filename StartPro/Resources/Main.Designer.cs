@@ -115,51 +115,6 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 High 的本地化字符串。
-        /// </summary>
-        public static string SizeHigh {
-            get {
-                return ResourceManager.GetString("SizeHigh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Large 的本地化字符串。
-        /// </summary>
-        public static string SizeLarge {
-            get {
-                return ResourceManager.GetString("SizeLarge", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Medium 的本地化字符串。
-        /// </summary>
-        public static string SizeMedium {
-            get {
-                return ResourceManager.GetString("SizeMedium", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Small 的本地化字符串。
-        /// </summary>
-        public static string SizeSmall {
-            get {
-                return ResourceManager.GetString("SizeSmall", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Wide 的本地化字符串。
-        /// </summary>
-        public static string SizeWide {
-            get {
-                return ResourceManager.GetString("SizeWide", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Setting 的本地化字符串。
         /// </summary>
         public static string TitleSetting {

@@ -7,29 +7,14 @@ namespace StartPro.Tile;
 
 public partial class TileBase : UserControl
 {
-    public virtual void Refresh( )
+    public void Refresh( )
     {
-        (int, int) tileSize = TileSize switch
-        {
-            TileSize.Small => Defaults.SmallSize,
-            TileSize.Medium => Defaults.MediumSize,
-            TileSize.Wide => Defaults.WideSize,
-            TileSize.Large => Defaults.LargeSize,
-            TileSize.High => Defaults.HighSize,
-            _ => Defaults.MediumSize,
-        };
+        (int, int) tileSize = TileDatas.TileSizes[TileSize];
         MinWidth = Width = tileSize.Item1;
         MinHeight = Height = tileSize.Item2;
-        Margin = new Thickness(Defaults.Margin);
+        Margin = new Thickness(TileDatas.BaseMargin);
         border.DataContext = this;
-        border.CornerRadius = maskBorder.CornerRadius = TileSize switch
-        {
-            TileSize.Small => new CornerRadius(Defaults.Radius / 2),
-            TileSize.Medium or TileSize.Wide or TileSize.High => new CornerRadius(Defaults.Radius),
-            TileSize.Large => new CornerRadius(Defaults.Radius * 2),
-            _ => new CornerRadius(Defaults.Radius),
-        };
-
+        border.CornerRadius = maskBorder.CornerRadius = new CornerRadius(TileDatas.TileRadius[TileSize]);
         if (Parent is Canvas && Application.Current.MainWindow is MainWindow window)
         {
             // 重新测量并布局确保 ActualWidth 和 ActualHeight 及时更新，以便移动磁贴至适宜位置
@@ -66,14 +51,14 @@ public partial class TileBase : UserControl
 
     public int Row
     {
-        get => (int) Canvas.GetTop(this) / Defaults.BlockSize;
-        set => Canvas.SetTop(this, (value < 0 ? 0 : value) * Defaults.BlockSize);
+        get => (int) Canvas.GetTop(this) / TileDatas.BlockSize;
+        set => Canvas.SetTop(this, (value < 0 ? 0 : value) * TileDatas.BlockSize);
     }
 
     public int Column
     {
-        get => (int) Canvas.GetLeft(this) / Defaults.BlockSize;
-        set => Canvas.SetLeft(this, (value < 0 ? 0 : value) * Defaults.BlockSize);
+        get => (int) Canvas.GetLeft(this) / TileDatas.BlockSize;
+        set => Canvas.SetLeft(this, (value < 0 ? 0 : value) * TileDatas.BlockSize);
     }
 
     public bool Shadow

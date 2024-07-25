@@ -17,7 +17,6 @@ public partial class AppTile : TileBase
         Utils.AppendContexts(ContextMenu, contextMenu);
         Content = root;
     }
-
     public override string ToString( ) => $"{AppName} - {TileSize}";
 
     private static readonly PropertyMetadata appNameMeta = new("Application");

@@ -1,8 +1,23 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Xml;
+using StartPro.Api;
 
 namespace StartPro.Tile;
 public partial class TextTile
 {
+    public TextTile( ) : base( )
+    {
+        Grid root = Content as Grid;
+        InitializeComponent( );
+        userControl.Content = null;
+        border.Child = TextField;
+
+        Utils.AppendContexts(ContextMenu, contextMenu);
+        Content = root;
+    }
+
     public override string ToString( ) => $"{Text} - {TileSize}";
 
     private static readonly PropertyMetadata textMeta = new("Text");
@@ -45,5 +60,32 @@ public partial class TextTile
     {
         get => (HorizontalAlignment) GetValue(TextHorizontalAlignmentProperty);
         set => SetValue(TextHorizontalAlignmentProperty, value);
+    }
+
+    public override void WriteAttributes(ref XmlElement element)
+    {
+        base.WriteAttributes(ref element);
+        element.SetAttribute("Type", "TextTile");
+        element.SetAttribute("Text", Text);
+        element.SetAttribute("TextShadow", TextShadow.ToString( ));
+        element.SetAttribute("TextVerticalAlignment", ((int) TextVerticalAlignment).ToString( ));
+        element.SetAttribute("TextHorizontalAlignment", ((int) TextHorizontalAlignment).ToString( ));
+        element.SetAttribute("FontStyle", (this.FontStyle == FontStyles.Italic).ToString( ));
+        element.SetAttribute("FontWeight", (this.FontWeight == FontWeights.Bold).ToString( ));
+        element.SetAttribute("FontFamily", base.FontFamily.ToString( ));
+        element.SetAttribute("FontSize", FontSize.ToString( ));
+    }
+
+    public override void ReadAttributes(XmlNode node)
+    {
+        base.ReadAttributes(node);
+        Text = node.GetAttribute("Text");
+        TextShadow = bool.Parse(node.GetAttribute("TextShadow"));
+        TextVerticalAlignment = (VerticalAlignment) int.Parse(node.GetAttribute("TextVerticalAlignment"));
+        TextHorizontalAlignment = (HorizontalAlignment) int.Parse(node.GetAttribute("TextHorizontalAlignment"));
+        this.FontStyle = bool.Parse(node.GetAttribute("FontStyle")) ? FontStyles.Italic : FontStyles.Normal;
+        this.FontWeight = bool.Parse(node.GetAttribute("FontWeight")) ? FontWeights.Bold : FontWeights.Normal;
+        this.FontFamily = new FontFamily(node.GetAttribute("FontFamily"));
+        FontSize = double.Parse(node.GetAttribute("FontSize"));
     }
 }

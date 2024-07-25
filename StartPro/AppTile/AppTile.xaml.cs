@@ -35,20 +35,13 @@ public partial class AppTile : TileBase
     {
         AppTile tile = o as AppTile;
         string path = e.NewValue as string;
-        try
+        if (tile.AppIcon.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
         {
-            if (tile.AppIcon.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
-            {
-                tile.image.Source = IconMgr.Get(path);
-            }
-            else if (File.Exists(path))
-            {
-                tile.image.Source = new BitmapImage(new Uri(path));
-            }
+            tile.image.Source = IconMgr.Get(path);
         }
-        catch
+        else if (File.Exists(path))
         {
-            tile.image.Source = new BitmapImage( );
+            tile.image.Source = new BitmapImage(new Uri(path));
         }
     }
 

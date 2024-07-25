@@ -124,7 +124,7 @@ public partial class MainWindow : Window
                 MainBorder.Background = new SolidColorBrush(Color.FromRgb(R, G, B));
             }
         }
-        catch { }
+        catch { MainBorder.Background = Brushes.White; }
     }
 
     public new void Show( )
@@ -150,7 +150,7 @@ public partial class MainWindow : Window
     {
         Hide( );
         App.Tiles.Clear( );
-        foreach (AppTile tile in TilePanel.Children)
+        foreach (TileBase tile in TilePanel.Children)
             App.Tiles.Add(tile);
         e.Cancel = true;
     }

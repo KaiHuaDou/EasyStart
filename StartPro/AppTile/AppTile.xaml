@@ -4,6 +4,10 @@
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:text="clr-namespace:StartPro.Resources"
                xmlns:tile="clr-namespace:StartPro.Tile">
+    <tile:TileBase.Resources>
+        <tile:AppTileTextVisible x:Key="AppTileTextVisible" />
+        <tile:MarginConverter x:Key="MarginConverter" />
+    </tile:TileBase.Resources>
     <tile:TileBase.ContextMenu>
         <ContextMenu>
             <MenuItem Header="{x:Static text:AppTile.ContextOpen}" Click="OpenTileLocation">

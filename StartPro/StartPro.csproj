@@ -12,6 +12,7 @@
         <AnalysisLevel>latest-recommended</AnalysisLevel>
         <DebugType>full</DebugType>
         <WarningLevel>7</WarningLevel>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <NeutralLanguage>en-US</NeutralLanguage>
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>

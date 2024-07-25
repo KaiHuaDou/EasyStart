@@ -53,7 +53,7 @@ public partial class App : Application, ISingleInstance
         });
 
         MainWindow mainWindow = new( );
-        QuickStart quickStart = new( );
+        Launcher quickStart = new( );
         Current.MainWindow = mainWindow;
         quickStart.Show( );
         mainWindow.Show( );
