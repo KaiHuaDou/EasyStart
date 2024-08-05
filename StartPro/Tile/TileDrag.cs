@@ -7,8 +7,6 @@ namespace StartPro.Tile;
 
 public partial class TileBase
 {
-    private Point startMousePoint, startTilePoint;
-
     public static readonly DependencyProperty IsDragProperty =
         DependencyProperty.Register("IsDrag", typeof(bool), typeof(TileBase), new PropertyMetadata(false));
 
@@ -19,6 +17,42 @@ public partial class TileBase
     }
 
     protected bool IsDragged { get; set; }
+
+    public void MoveToSpace( )
+    {
+        bool isIntersect = true;
+        while (isIntersect)
+        {
+            isIntersect = false;
+            for (int i = 0; i < Owner.Children.Count; i++)
+            {
+                TileBase target = Owner.Children[i] as TileBase;
+                if (IntersectsWith(target))
+                {
+                    Row++;
+                    isIntersect = true;
+                    break;
+                }
+            }
+        }
+        Owner.ResizeToFit( );
+    }
+
+    private Point startMousePoint, startTilePoint;
+
+    protected void TileDragging(object o, MouseEventArgs e)
+    {
+        if (!IsDrag || e.LeftButton == MouseButtonState.Released)
+            return;
+        TileBase tile = o as TileBase;
+        Panel.SetZIndex(tile, int.MaxValue);
+        Point mousePoint = e.GetPosition(Parent as Panel);
+        Point offset = new(mousePoint.X - startMousePoint.X, mousePoint.Y - startMousePoint.Y);
+        if (offset.X != 0 || offset.Y != 0)
+            IsDragged = true;
+        Canvas.SetLeft(tile, startTilePoint.X + offset.X);
+        Canvas.SetTop(tile, startTilePoint.Y + offset.Y);
+    }
 
     protected void TileDragStart(object o, MouseButtonEventArgs e)
     {
@@ -41,24 +75,9 @@ public partial class TileBase
         tile.Column = (int) Math.Round(tilePoint.X / TileDatas.BlockSize);
         tile.Row = (int) Math.Round(tilePoint.Y / TileDatas.BlockSize);
 
-        MoveToSpace(Parent as Panel);
-        ReindexTiles(Parent as Panel);
+        Refresh( );
+        ToTopmost( );
     }
-
-    protected void TileDragging(object o, MouseEventArgs e)
-    {
-        if (!IsDrag || e.LeftButton == MouseButtonState.Released)
-            return;
-        TileBase tile = o as TileBase;
-        Panel.SetZIndex(tile, int.MaxValue);
-        Point mousePoint = e.GetPosition(Parent as Panel);
-        Point offset = new(mousePoint.X - startMousePoint.X, mousePoint.Y - startMousePoint.Y);
-        if (offset.X != 0 || offset.Y != 0)
-            IsDragged = true;
-        Canvas.SetLeft(tile, startTilePoint.X + offset.X);
-        Canvas.SetTop(tile, startTilePoint.Y + offset.Y);
-    }
-
     private bool IntersectsWith(TileBase t)
     {
         if (this == t)
@@ -67,35 +86,17 @@ public partial class TileBase
         Rect r2 = new((double) Canvas.GetLeft(t), (double) Canvas.GetTop(t), t.ActualWidth, t.ActualHeight);
         return r1.IntersectsWith(r2);
     }
-
-    public void MoveToSpace(Panel parent)
+    private void ToTopmost( )
     {
-        bool isIntersect = true;
-        while (isIntersect)
-        {
-            isIntersect = false;
-            for (int i = 0; i < parent.Children.Count; i++)
-            {
-                TileBase target = parent.Children[i] as TileBase;
-                if (IntersectsWith(target))
-                {
-                    Row++;
-                    isIntersect = true;
-                    break;
-                }
-            }
-        }
-        ResizeCanvas(parent);
+        for (int i = 0; i < Owner.Children.Count; i++)
+            Panel.SetZIndex(Owner.Children[i], i);
+        Panel.SetZIndex(this, Owner.Children.Count);
     }
+}
 
-    private void ReindexTiles(Panel parent)
-    {
-        for (int i = 0; i < parent.Children.Count; i++)
-            Panel.SetZIndex(parent.Children[i], i);
-        Panel.SetZIndex(this, parent.Children.Count);
-    }
-
-    public static void ResizeCanvas(Panel parent)
+public static class PanelExtension
+{
+    public static void ResizeToFit(this Panel parent)
     {
         double xmax = 0, ymax = 0;
         foreach (TileBase t in parent.Children)

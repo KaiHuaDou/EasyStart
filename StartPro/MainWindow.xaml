@@ -7,6 +7,7 @@
         xmlns:tile="clr-namespace:StartPro.Tile"
         Closing="WindowClosing"
         Deactivated="WindowDeactivated"
+        Loaded="WindowLoaded"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         WindowStyle="None">
@@ -29,31 +30,10 @@
             <Border.RenderTransform>
                 <ScaleTransform ScaleX="1" ScaleY="1" />
             </Border.RenderTransform>
-            <Grid>
-                <Border x:Name="AppListBorder"
-                        Padding="10" HorizontalAlignment="Left" Panel.ZIndex="65"
-                        Background="{Binding Background, ElementName=MainBorder}"
-                        CornerRadius="32,0,0,0">
-                    <Border.Effect>
-                        <DropShadowEffect Opacity="0.2" Direction="0" Color="#ACACAC" />
-                    </Border.Effect>
-                    <Border.RenderTransform>
-                        <TranslateTransform X="0" />
-                    </Border.RenderTransform>
-                    <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
-                        <ListBox x:Name="AppList" Background="Transparent" BorderThickness="0">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <DockPanel>
-                                        <Image Height="32" Source="{Binding AppIcon}" Stretch="Uniform" />
-                                        <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="{Binding AppName}" />
-                                    </DockPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </ScrollViewer>
-                </Border>
-                <Border VerticalAlignment="Bottom" Panel.ZIndex="64" Background="{Binding Background, ElementName=MainBorder}">
+            <DockPanel>
+                <Border DockPanel.Dock="Bottom"
+                        VerticalAlignment="Bottom" Panel.ZIndex="64"
+                        Background="#99FFFFFF">
                     <Border.Effect>
                         <DropShadowEffect Opacity="0.2" Direction="90" Color="#ACACAC" />
                     </Border.Effect>
@@ -61,6 +41,9 @@
                         <StackPanel.Resources>
                             <Style BasedOn="{StaticResource {x:Type GroupBox}}" TargetType="{x:Type GroupBox}">
                                 <Setter Property="Margin" Value="5,5,5,5" />
+                            </Style>
+                            <Style TargetType="{x:Type StackPanel}">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                             <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
                                 <Setter Property="FontFamily" Value="Segoe Fluent Icons" />
@@ -87,13 +70,44 @@
                         </GroupBox>
                     </StackPanel>
                 </Border>
+                <Border x:Name="AppListBorder"
+                        DockPanel.Dock="Left"
+                        Padding="10" HorizontalAlignment="Left" Panel.ZIndex="65"
+                        Background="#99FFFFFF"
+                        CornerRadius="32,0,0,0">
+                    <Border.Effect>
+                        <DropShadowEffect Opacity="0.2" Direction="0" Color="#ACACAC" />
+                    </Border.Effect>
+                    <Border.RenderTransform>
+                        <TranslateTransform X="0" />
+                    </Border.RenderTransform>
+                    <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+                        <ListBox x:Name="AppList" Background="Transparent" BorderThickness="0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <DockPanel>
+                                        <DockPanel.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="固定磁贴" Click="PinApp" />
+                                            </ContextMenu>
+                                        </DockPanel.ContextMenu>
+                                        <Image Height="32" Source="{Binding AppIcon}" Stretch="Uniform" />
+                                        <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="{Binding AppName}" />
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </ScrollViewer>
+                </Border>
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <Canvas x:Name="TilePanel"
                             Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" />
                 </ScrollViewer>
                 <notify:TaskbarIcon MenuActivation="RightClick">
                     <notify:TaskbarIcon.IconSource>
-                        <notify:GeneratedIconSource Foreground="Black" Text="O" />
+                        <notify:GeneratedIconSource Foreground="White"
+                                                    FontFamily="Segoe Fluent Icons" FontSize="64" FontWeight="ExtraBlack"
+                                                    Text="&#xF71C;" />
                     </notify:TaskbarIcon.IconSource>
                     <notify:TaskbarIcon.ContextMenu>
                         <ContextMenu>
@@ -102,7 +116,7 @@
                         </ContextMenu>
                     </notify:TaskbarIcon.ContextMenu>
                 </notify:TaskbarIcon>
-            </Grid>
+            </DockPanel>
         </Border>
     </Border>
 </Window>

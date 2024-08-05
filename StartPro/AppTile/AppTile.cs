@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Xml;
 using StartPro.Api;
@@ -21,7 +22,7 @@ public partial class AppTile : TileBase
 
     private static readonly PropertyMetadata appNameMeta = new("Application");
     private static readonly PropertyMetadata appIconMeta = new(AppIconChanged);
-    private static readonly PropertyMetadata appPathMeta = new(Defaults.AppName, AppPathChanged);
+    private static readonly PropertyMetadata appPathMeta = new(Environment.ProcessPath, AppPathChanged);
     private static readonly PropertyMetadata ImageShadowMeta = new(true);
     public static readonly DependencyProperty AppNameProperty
         = DependencyProperty.Register("AppName", typeof(string), typeof(AppTile), appNameMeta);

@@ -16,10 +16,10 @@ public class DataStore<T> : IDisposable where T : class, new()
     public DataStore(string xmlFile)
     {
         File = new FileInfo(xmlFile).FullName;
+        Stream = new(File, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+        Reader = XmlReader.Create(Stream);
         try
         {
-            Stream = new(File, FileMode.OpenOrCreate);
-            Reader = XmlReader.Create(Stream);
             Read( );
         }
         catch (IOException) { }
@@ -27,6 +27,7 @@ public class DataStore<T> : IDisposable where T : class, new()
 
     public void Read( )
     {
+        Stream.Seek(0, SeekOrigin.Begin);
         XmlSerializer serializer = new(typeof(T));
         try
         {
@@ -40,15 +41,14 @@ public class DataStore<T> : IDisposable where T : class, new()
 
     public void Save( )
     {
-        Stream.SetLength(0);
-        XmlSerializer serializer = new(typeof(T));
-        serializer.Serialize(Stream, Content);
+        Stream.Seek(0, SeekOrigin.Begin);
+        new XmlSerializer(typeof(T)).Serialize(Stream, Content);
     }
 
     public void Dispose( )
     {
-        Reader.Dispose( );
         Stream.Dispose( );
+        Reader.Dispose( );
         GC.SuppressFinalize(this);
     }
 }

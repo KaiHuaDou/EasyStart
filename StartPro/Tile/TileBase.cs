@@ -21,7 +21,7 @@ public partial class TileBase : UserControl
             Measure(new Size(window.Width, window.Height));
             Arrange(new Rect(0, 0, window.DesiredSize.Width, window.DesiredSize.Height));
             if (Owner is not null)
-                MoveToSpace(Owner);
+                MoveToSpace( );
         }
     }
 

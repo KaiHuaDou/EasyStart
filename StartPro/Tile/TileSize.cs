@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Windows;
 
 namespace StartPro.Tile;
 
@@ -11,12 +10,12 @@ public enum TileSize
 public static class TileDatas
 {
     public static int BaseSize => 64;
-    public static int BaseMargin => 10; 
+    public static int BaseMargin => 10;
     public static int BaseRadius => App.Program.Settings.Content.UIFlat ? 0 : 10;
 
     public static int BlockSize => BaseSize + BaseMargin;
 
-    public static Dictionary<TileSize, (int, int)> TileSizes { get; } = new( )
+    public static Dictionary<TileSize, (int, int)> TileSizes => new( )
     {
         {TileSize.Small,  (1 * BaseSize + 0 * BaseMargin, 1 * BaseSize + 0 * BaseMargin)},
         {TileSize.Medium, (2 * BaseSize + 1 * BaseMargin, 2 * BaseSize + BaseMargin)},
@@ -27,7 +26,7 @@ public static class TileDatas
         {TileSize.Large,  (4 * BaseSize + 3 * BaseMargin, 4 * BaseSize + 3 * BaseMargin) },
     };
 
-    public static Dictionary<TileSize, int> TileRadius { get; } = new( )
+    public static Dictionary<TileSize, int> TileRadius => new( )
     {
         {TileSize.Small  , BaseRadius / 2 },
         {TileSize.Medium , BaseRadius },

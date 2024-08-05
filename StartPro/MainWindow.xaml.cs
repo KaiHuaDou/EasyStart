@@ -13,27 +13,46 @@ namespace StartPro;
 
 public partial class MainWindow : Window
 {
-    public CustomCommand SwitchStateCommand => new(ShowHide);
-
     public MainWindow( )
     {
         InitializeComponent( );
 
         Height = Defaults.SizeRate * SystemParameters.PrimaryScreenHeight;
         Width = Defaults.SizeRate * SystemParameters.PrimaryScreenWidth;
+        TilePanel.MinHeight = Height - 256;
+        TilePanel.MinWidth = Width - 96;
         Top = SystemParameters.WorkArea.Height - Height;
         Left = (SystemParameters.WorkArea.Width - Width) / 2;
         ApplyBackground( );
 
         StartMenuApp.SearchAll( );
-        AppList.ItemsSource = StartMenuApp.AllApps;
-        ShowHideAppList(null, null);
+        AppList.ItemsSource = StartMenuApp.AllApps.Values;
 
         foreach (TileBase tile in App.Tiles)
         {
             TilePanel.Children.Add(tile);
+            tile.Refresh( );
         }
-        TileBase.ResizeCanvas(TilePanel);
+    }
+
+    public CustomCommand SwitchStateCommand => new(ShowHide);
+    public new void Hide( )
+    {
+        if (Resources["HideWindow"] is Storyboard hideAnimation)
+        {
+            hideAnimation.Completed += (o, e) => base.Hide( );
+            hideAnimation.Begin(MainBorder);
+        }
+    }
+
+    public new void Show( )
+    {
+        if (Resources["ShowWindow"] is Storyboard showAnimation)
+        {
+            base.Show( );
+            showAnimation.Begin(MainBorder);
+        }
+        SetForegroundWindow(handle);
     }
 
     public void ShowHide( )
@@ -52,44 +71,9 @@ public partial class MainWindow : Window
         if (tile is null || !tile.IsEnabled)
             return;
         TilePanel.Children.Add(tile);
-        tile.MoveToSpace(TilePanel);
+        tile.Refresh( );
     }
 
-    private void ShowSetting(object o, RoutedEventArgs e)
-    {
-        Hide( );
-        new Setting( ).ShowDialog( );
-        ApplyBackground( );
-        Show( );
-    }
-
-    private void ImportAppTile(object o, RoutedEventArgs e)
-    {
-        Hide( );
-        ImportApp window = new( );
-        window.ShowDialog( );
-        foreach (AppTile tile in window.Tiles)
-        {
-            TilePanel.Children.Add(tile);
-            tile.IsEnabled = true;
-            tile.MoveToSpace(TilePanel);
-        }
-        Show( );
-    }
-
-    private void ShowHideAppList(object o, RoutedEventArgs e)
-    {
-        if ((AppListBorder.RenderTransform as TranslateTransform).X != 0 && Resources["ShowAppList"] is Storyboard showAnimation)
-        {
-            AppListBorder.Visibility = Visibility.Visible;
-            showAnimation.Begin(AppListBorder);
-        }
-        else if ((AppListBorder.RenderTransform as TranslateTransform).X == 0 && Resources["HideAppList"] is Storyboard hideAnimation)
-        {
-            hideAnimation.Completed += (o, e) => AppListBorder.Visibility = Visibility.Collapsed;
-            hideAnimation.Begin(AppListBorder);
-        }
-    }
     private void AddTextTile(object o, RoutedEventArgs e)
     {
         Hide( );
@@ -100,7 +84,7 @@ public partial class MainWindow : Window
         if (tile is null || !tile.IsEnabled)
             return;
         TilePanel.Children.Add(tile);
-        tile.MoveToSpace(TilePanel);
+        tile.Refresh( );
     }
 
     private void ApplyBackground( )
@@ -127,24 +111,53 @@ public partial class MainWindow : Window
         catch { MainBorder.Background = Brushes.White; }
     }
 
-    public new void Show( )
+    private void ImportAppTile(object o, RoutedEventArgs e)
     {
-        if (Resources["ShowWindow"] is Storyboard showAnimation)
+        Hide( );
+        ImportApp window = new( );
+        window.ShowDialog( );
+        foreach (AppTile tile in window.Tiles)
         {
-            base.Show( );
-            showAnimation.Begin(MainBorder);
+            TilePanel.Children.Add(tile);
+            tile.IsEnabled = true;
+            tile.Refresh( );
         }
-        SetForegroundWindow(handle);
+        Show( );
     }
 
-    public new void Hide( )
+    private void PinApp(object o, RoutedEventArgs e)
     {
-        if (Resources["HideWindow"] is Storyboard hideAnimation)
+        AppTile appTile = new( ) { AppPath = StartMenuApp.AllApps[(AppList.SelectedItem as StartMenuApp).AppName].AppPath };
+        TilePanel.Children.Add(appTile);
+        appTile.Refresh( );
+    }
+
+    private void ShowHideAppList(object o, RoutedEventArgs e)
+    {
+        if ((AppListBorder.RenderTransform as TranslateTransform).X != 0 && Resources["ShowAppList"] is Storyboard showAnimation)
         {
-            hideAnimation.Completed += (o, e) => base.Hide( );
-            hideAnimation.Begin(MainBorder);
+            AppListBorder.Visibility = Visibility.Visible;
+            showAnimation.Begin(AppListBorder);
+        }
+        else if ((AppListBorder.RenderTransform as TranslateTransform).X == 0 && Resources["HideAppList"] is Storyboard hideAnimation)
+        {
+            hideAnimation.Completed += (o, e) => AppListBorder.Visibility = Visibility.Collapsed;
+            hideAnimation.Begin(AppListBorder);
         }
     }
+
+    private void ShowSetting(object o, RoutedEventArgs e)
+    {
+        Hide( );
+        new Setting( ).ShowDialog( );
+        ApplyBackground( );
+        Show( );
+    }
+    private void TaskbarMenuExit(object o, RoutedEventArgs e)
+        => Application.Current.Shutdown( );
+
+    private void TaskbarMenuShow(object o, RoutedEventArgs e)
+        => ShowHide( );
 
     private void WindowClosing(object o, CancelEventArgs e)
     {
@@ -157,10 +170,9 @@ public partial class MainWindow : Window
 
     private void WindowDeactivated(object o, EventArgs e)
             => ShowHide( );
-
-    private void TaskbarMenuShow(object o, RoutedEventArgs e)
-        => ShowHide( );
-
-    private void TaskbarMenuExit(object o, RoutedEventArgs e)
-        => Application.Current.Shutdown( );
+    private void WindowLoaded(object o, RoutedEventArgs e)
+    {
+        TilePanel.ResizeToFit( );
+        ShowHideAppList(null, null);
+    }
 }

@@ -8,24 +8,25 @@ namespace StartPro.Tile;
 
 public partial class TileBase : UserControl
 {
-    public TileBase( )
-    {
-        InitializeComponent( );
-        Refresh( );
-    }
+    internal Border border;
+    internal ContextMenu contextMenu;
+    internal Border maskBorder;
+    internal MenuItem SizeHighMenu;
+    internal MenuItem SizeLargeMenu;
+    internal MenuItem SizeThinMenu;
+    internal MenuItem SizeMediumMenu;
+    internal MenuItem SizeSmallMenu;
+    internal MenuItem SizeTallMenu;
+    internal MenuItem SizeWideMenu;
+    internal MenuItem TileDeleteMenu;
+    internal DropShadowEffect TileShadow;
 
     private bool _contentLoaded;
 
-    internal Border maskBorder;
-    internal Border border;
-    internal DropShadowEffect TileShadow;
-    internal ContextMenu contextMenu;
-    internal MenuItem SizeSmallMenu;
-    internal MenuItem SizeMediumMenu;
-    internal MenuItem SizeWideMenu;
-    internal MenuItem SizeHighMenu;
-    internal MenuItem SizeLargeMenu;
-    internal MenuItem TileDeleteMenu;
+    public TileBase( )
+    {
+        InitializeComponent( );
+    }
 
     public void InitializeComponent( )
     {
@@ -42,14 +43,18 @@ public partial class TileBase : UserControl
         contextMenu = root.FindName("contextMenu") as ContextMenu;
         SizeSmallMenu = root.FindName("SizeSmallMenu") as MenuItem;
         SizeMediumMenu = root.FindName("SizeMediumMenu") as MenuItem;
+        SizeThinMenu = root.FindName("SizeThinMenu") as MenuItem;
         SizeWideMenu = root.FindName("SizeWideMenu") as MenuItem;
+        SizeTallMenu = root.FindName("SizeTallMenu") as MenuItem;
         SizeHighMenu = root.FindName("SizeHighMenu") as MenuItem;
         SizeLargeMenu = root.FindName("SizeLargeMenu") as MenuItem;
         TileDeleteMenu = root.FindName("TileDeleteMenu") as MenuItem;
 
         SizeSmallMenu.Click += ToSmallClick;
         SizeMediumMenu.Click += ToMediumClick;
+        SizeThinMenu.Click += ToThinClick;
         SizeWideMenu.Click += ToWideClick;
+        SizeTallMenu.Click += ToTallClick;
         SizeHighMenu.Click += ToHighClick;
         SizeLargeMenu.Click += ToLargeClick;
         TileDeleteMenu.Click += RemoveTile;
@@ -68,9 +73,12 @@ public partial class TileBase : UserControl
 
     private void RemoveTile(object o, RoutedEventArgs e)
         => (Parent as Panel).Children.Remove(this);
+
     private void ToSmallClick(object o, RoutedEventArgs e) => TileSize = TileSize.Small;
     private void ToMediumClick(object o, RoutedEventArgs e) => TileSize = TileSize.Medium;
+    private void ToThinClick(object o, RoutedEventArgs e) => TileSize = TileSize.Thin;
     private void ToWideClick(object o, RoutedEventArgs e) => TileSize = TileSize.Wide;
+    private void ToTallClick(object o, RoutedEventArgs e) => TileSize = TileSize.Tall;
     private void ToHighClick(object o, RoutedEventArgs e) => TileSize = TileSize.High;
     private void ToLargeClick(object o, RoutedEventArgs e) => TileSize = TileSize.Large;
 }

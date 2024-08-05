@@ -14,7 +14,7 @@ public partial class App : Application, ISingleInstance
 
     public static class Program
     {
-        public static DataStore<Config> Settings { get; set; } = new("settings.xml");
+        public static DataStore<Config> Settings { get; } = new("settings.xml");
 
         [STAThread]
         public static void Main( )

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace StartPro.Api;
+﻿namespace StartPro.Api;
 
 public enum UIThemes
 {
@@ -11,19 +9,15 @@ public enum UIThemes
 
 public class Config
 {
-    public const string backgroundDefault = "#FFEEEEEE";
-    private string background;
+    private string background = "#FFEEEEEE";
 
-    [DefaultValue(backgroundDefault)]
     public string Background
     {
         get => background;
-        set => background = string.IsNullOrWhiteSpace(value) ? backgroundDefault : value;
+        set => background = string.IsNullOrWhiteSpace(value) ? "#FFEEEEEE" : value;
     }
 
-    [DefaultValue((int) UIThemes.AeroNormalColor)]
-    public int UITheme { get; set; }
+    public int UITheme { get; set; } = (int) UIThemes.AeroNormalColor;
 
-    [DefaultValue(false)]
     public bool UIFlat { get; set; }
 }

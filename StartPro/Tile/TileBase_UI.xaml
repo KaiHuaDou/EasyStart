@@ -6,27 +6,39 @@
     <Grid.ContextMenu>
         <ContextMenu x:Name="contextMenu">
             <MenuItem Header="{x:Static text:Tile.ContextFastChange}">
+                <MenuItem.Resources>
+                    <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
+                        <Setter Property="FontFamily" Value="Segoe Fluent Icons" />
+                        <Setter Property="Margin" Value="3" />
+                    </Style>
+                </MenuItem.Resources>
                 <MenuItem.Icon>
-                    <TextBlock Margin="3" FontFamily="Segoe Fluent Icons" Text="&#xE740;" />
+                    <TextBlock Text="&#xE740;" />
                 </MenuItem.Icon>
                 <MenuItem x:Name="SizeSmallMenu" Header="{x:Static text:Tile.SizeSmall}">
                     <MenuItem.Icon>
-                        <TextBlock Margin="3" FontFamily="Segoe Fluent Icons" Text="&#xE743;" />
+                        <TextBlock Text="&#xE743;" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem x:Name="SizeMediumMenu" Header="{x:Static text:Tile.SizeMedium}">
                     <MenuItem.Icon>
-                        <TextBlock Margin="3" FontFamily="Segoe Fluent Icons" Text="&#xE744;" />
+                        <TextBlock Text="&#xE744;" />
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem x:Name="SizeThinMenu" Header="{x:Static text:Tile.SizeThin}" />
                 <MenuItem x:Name="SizeWideMenu" Header="{x:Static text:Tile.SizeWide}">
                     <MenuItem.Icon>
-                        <TextBlock Margin="3" FontFamily="Segoe Fluent Icons" Text="&#xE745;" />
+                        <TextBlock Text="&#xE745;" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="SizeTallMenu" Header="{x:Static text:Tile.SizeTall}">
+                    <MenuItem.Icon>
+                        <TextBlock Text="&#xEA61;" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem x:Name="SizeHighMenu" Header="{x:Static text:Tile.SizeHigh}">
                     <MenuItem.Icon>
-                        <TextBlock Margin="3" FontFamily="Segoe Fluent Icons" Text="&#xE746;" />
+                        <TextBlock Text="&#xE746;" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem x:Name="SizeLargeMenu" Header="{x:Static text:Tile.SizeLarge}">

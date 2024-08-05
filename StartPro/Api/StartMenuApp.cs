@@ -6,9 +6,9 @@ using System.Windows.Media;
 namespace StartPro.Api;
 public class StartMenuApp
 {
-    public static HashSet<StartMenuApp> AllApps = [];
-    public static string UserAppsPath => Environment.ExpandEnvironmentVariables("%AppData%\\Microsoft\\Windows\\Start Menu\\Programs");
-    public static string SystemAppsPath => Environment.ExpandEnvironmentVariables("%ProgramData%\\Microsoft\\Windows\\Start Menu\\Programs");
+    public static Dictionary<string, StartMenuApp> AllApps = [];
+    public static string UserAppsPath = Environment.ExpandEnvironmentVariables("%AppData%\\Microsoft\\Windows\\Start Menu\\Programs");
+    public static string SystemAppsPath = Environment.ExpandEnvironmentVariables("%ProgramData%\\Microsoft\\Windows\\Start Menu\\Programs");
 
     public static void SearchAll( )
     {
@@ -16,18 +16,19 @@ public class StartMenuApp
         string[] UserApps = Directory.GetFiles(UserAppsPath, "*.lnk", SearchOption.AllDirectories);
         string[] SystemApps = Directory.GetFiles(SystemAppsPath, "*.lnk", SearchOption.TopDirectoryOnly);
         foreach (string app in UserApps)
-            AllApps.Add(Generate(app));
+            AppendToList(app);
         foreach (string app in SystemApps)
-            AllApps.Add(Generate(app));
+            AppendToList(app);
     }
 
-    public static StartMenuApp Generate(string appPath)
+    private static void AppendToList(string appPath)
     {
-        return new StartMenuApp
+        string appName = Path.GetFileNameWithoutExtension(appPath);
+        AllApps.Add(appName, new StartMenuApp
         {
-            AppName = Path.GetFileNameWithoutExtension(appPath),
+            AppName = appName,
             AppPath = Utils.ReadShortcut(appPath)
-        };
+        });
     }
 
     public string AppName { get; set; }
