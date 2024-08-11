@@ -13,25 +13,20 @@ namespace StartPro.Tile;
 
 public partial class AppTile : TileBase
 {
-    public static void AppPathChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+    static AppTile( )
     {
-        AppTile tile = o as AppTile;
-        string value = e.NewValue as string;
-        FileInfo app = new(value);
-        tile.AppName = app.Name.Replace(app.Extension, "");
-        tile.AppIcon = value;
-
+        TileSizeProperty.OverrideMetadata(typeof(AppTile), new(TileSize.Medium, TileSizeChanged));
     }
 
-    public static new void TileColorChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+    protected static new void TileSizeChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
-        AppTile tile = o as AppTile;
-        Color color = tile.TileColor.Color;
-        int brightness = (int) (color.R * 0.299) + (int) (color.G * 0.587) + (int) (color.B * 0.114);
-        tile.label.Foreground = new SolidColorBrush(brightness > 128 ? Colors.Black : Colors.White);
+        TileBase.TileSizeChanged(o, e);
+        (o as AppTile).TileLabel.Visibility =
+            (o as AppTile).TileSize is TileSize.Small or TileSize.Thin or TileSize.Tall
+            ? Visibility.Collapsed : Visibility.Visible;
     }
 
-    private static void AppIconChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+    protected static void AppIconChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
         AppTile tile = o as AppTile;
         string path = e.NewValue as string;
@@ -43,6 +38,60 @@ public partial class AppTile : TileBase
         {
             tile.image.Source = new BitmapImage(new Uri(path));
         }
+    }
+
+    protected static void AppPathChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+    {
+        AppTile tile = o as AppTile;
+        string value = e.NewValue as string;
+        FileInfo app = new(value);
+        tile.AppName = app.Name.Replace(app.Extension, "");
+        tile.AppIcon = value;
+
+    }
+
+    protected static void ImageShadowChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+    {
+        (o as AppTile).TileImageShadow.Opacity = (!App.Program.Settings.Content.UIFlat && (o as AppTile).ImageShadow) ? 0.4 : 0;
+    }
+
+    protected static new void TileColorChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+    {
+        AppTile tile = o as AppTile;
+        Color color = tile.TileColor.Color;
+        int brightness = (int) (color.R * 0.299) + (int) (color.G * 0.587) + (int) (color.B * 0.114);
+        tile.TileLabel.Foreground = new SolidColorBrush(brightness > 128 ? Colors.Black : Colors.White);
+    }
+
+    private void EditTile(object o, RoutedEventArgs e)
+    {
+        Panel parent = Parent as Panel;
+        parent.Children.Remove(this);
+        CreateApp c = new(this);
+        c.ShowDialog( );
+        c.Item.IsEnabled = true;
+        parent.Children.Add(c.Item);
+        c.Item.Refresh( );
+    }
+
+    private void OpenTileLocation(object o, RoutedEventArgs e)
+    {
+        try
+        {
+            Utils.ExecuteAsAdmin(Directory.GetParent(AppPath).FullName);
+            App.TileWindow.Hide( );
+        }
+        catch (Win32Exception ex)
+        {
+            MessageBox.Show(ex.Message, "StartPro",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    private void RunAsAdmin(object o, RoutedEventArgs e)
+    {
+        Utils.ExecuteAsAdmin(AppPath);
+        App.TileWindow.Hide( );
     }
 
     private new void TileLeftButtonUp(object o, MouseButtonEventArgs e)
@@ -61,38 +110,5 @@ public partial class AppTile : TileBase
             catch { }
         }
         base.TileLeftButtonUp(o, e);
-    }
-
-    private void OpenTileLocation(object o, RoutedEventArgs e)
-    {
-        try
-        {
-            Utils.ExecuteAsAdmin(Directory.GetParent(AppPath).FullName);
-            App.TileWindow.Hide( );
-        }
-        catch (Win32Exception ex)
-        {
-            MessageBox.Show(ex.Message, "StartPro",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-    }
-
-
-    private void EditTile(object o, RoutedEventArgs e)
-    {
-        Panel parent = Parent as Panel;
-        parent.Children.Remove(this);
-        CreateApp c = new(this);
-        c.ShowDialog( );
-        c.Item.IsEnabled = true;
-        parent.Children.Add(c.Item);
-        c.Item.Refresh( );
-    }
-
-    private void RunAsAdmin(object o, RoutedEventArgs e)
-    {
-        Utils.ExecuteAsAdmin(AppPath);
-        App.TileWindow.Hide( );
-
     }
 }

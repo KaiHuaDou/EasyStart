@@ -26,6 +26,7 @@ public partial class TileBase : UserControl
     public TileBase( )
     {
         InitializeComponent( );
+        Refresh( );
     }
 
     public void InitializeComponent( )
@@ -63,16 +64,40 @@ public partial class TileBase : UserControl
         MouseMove += TileDragging;
     }
 
+    public void Refresh( )
+    {
+        border.DataContext = this;
+        TileSizeChanged(this, new DependencyPropertyChangedEventArgs( ));
+        TileShadowChanged(this, new DependencyPropertyChangedEventArgs( ));
+        if (Owner is not null && Application.Current.MainWindow is MainWindow window)
+        {
+            // 重新测量并布局确保 ActualWidth 和 ActualHeight 及时更新，以便移动磁贴至适宜位置
+            Measure(new Size(window.Width, window.Height));
+            Arrange(new Rect(0, 0, window.DesiredSize.Width, window.DesiredSize.Height));
+            MoveToSpace( );
+        }
+    }
+
     protected static void TileColorChanged(DependencyObject o, DependencyPropertyChangedEventArgs e) { }
 
     protected static void TileSizeChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-        => (o as TileBase).Refresh( );
+    {
+        TileBase tile = o as TileBase;
+        (int, int) tileSize = TileDatas.TileSizes[tile.TileSize];
+        tile.MinWidth = tile.Width = tileSize.Item1;
+        tile.MinHeight = tile.Height = tileSize.Item2;
+        tile.Margin = new Thickness(TileDatas.BaseMargin);
+        tile.border.CornerRadius = tile.maskBorder.CornerRadius = new CornerRadius(TileDatas.TileRadius[tile.TileSize]);
+    }
+
+    protected static void TileShadowChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        => (o as TileBase).TileShadow.Opacity = (!App.Program.Settings.Content.UIFlat && (o as TileBase).Shadow) ? 0.4 : 0;
 
     protected void TileLeftButtonUp(object o, MouseButtonEventArgs e)
         => TileDragStop(o, e);
 
     private void RemoveTile(object o, RoutedEventArgs e)
-        => (Parent as Panel).Children.Remove(this);
+        => Owner.Children.Remove(this);
 
     private void ToSmallClick(object o, RoutedEventArgs e) => TileSize = TileSize.Small;
     private void ToMediumClick(object o, RoutedEventArgs e) => TileSize = TileSize.Medium;

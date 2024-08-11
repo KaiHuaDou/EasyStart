@@ -17,13 +17,15 @@ public partial class AppTile : TileBase
 
         Utils.AppendContexts(ContextMenu, contextMenu);
         Content = root;
+
     }
+
     public override string ToString( ) => $"{AppName} - {TileSize}";
 
     private static readonly PropertyMetadata appNameMeta = new("Application");
     private static readonly PropertyMetadata appIconMeta = new(AppIconChanged);
     private static readonly PropertyMetadata appPathMeta = new(Environment.ProcessPath, AppPathChanged);
-    private static readonly PropertyMetadata ImageShadowMeta = new(true);
+    private static readonly PropertyMetadata ImageShadowMeta = new(true, ImageShadowChanged);
     public static readonly DependencyProperty AppNameProperty
         = DependencyProperty.Register("AppName", typeof(string), typeof(AppTile), appNameMeta);
     public static readonly DependencyProperty AppIconProperty
@@ -54,11 +56,7 @@ public partial class AppTile : TileBase
     public bool ImageShadow
     {
         get => (bool) GetValue(ImageShadowProperty);
-        set
-        {
-            SetValue(ImageShadowProperty, value);
-            TileImageShadow.Opacity = (!App.Program.Settings.Content.UIFlat && value) ? 0.4 : 0;
-        }
+        set => SetValue(ImageShadowProperty, value);
     }
 
     public override void WriteAttributes(ref XmlElement element)

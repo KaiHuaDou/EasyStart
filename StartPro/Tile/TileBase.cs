@@ -7,35 +7,17 @@ namespace StartPro.Tile;
 
 public partial class TileBase : UserControl
 {
-    public void Refresh( )
-    {
-        (int, int) tileSize = TileDatas.TileSizes[TileSize];
-        MinWidth = Width = tileSize.Item1;
-        MinHeight = Height = tileSize.Item2;
-        Margin = new Thickness(TileDatas.BaseMargin);
-        border.DataContext = this;
-        border.CornerRadius = maskBorder.CornerRadius = new CornerRadius(TileDatas.TileRadius[TileSize]);
-        if (Parent is Canvas && Application.Current.MainWindow is MainWindow window)
-        {
-            // 重新测量并布局确保 ActualWidth 和 ActualHeight 及时更新，以便移动磁贴至适宜位置
-            Measure(new Size(window.Width, window.Height));
-            Arrange(new Rect(0, 0, window.DesiredSize.Width, window.DesiredSize.Height));
-            if (Owner is not null)
-                MoveToSpace( );
-        }
-    }
-
     private static readonly PropertyMetadata TileSizeMeta = new(TileSize.Medium, TileSizeChanged);
     private static readonly PropertyMetadata TileColorMeta = new(Defaults.Background, TileColorChanged);
-    private static readonly PropertyMetadata ShadowMeta = new(true);
-    public static readonly DependencyProperty TileSizeProperty
+    private static readonly PropertyMetadata ShadowMeta = new(true, TileShadowChanged);
+    public static DependencyProperty TileSizeProperty
         = DependencyProperty.Register("TileSize", typeof(TileSize), typeof(TileBase), TileSizeMeta);
     public static readonly DependencyProperty TileColorProperty
         = DependencyProperty.Register("TileColor", typeof(SolidColorBrush), typeof(TileBase), TileColorMeta);
     public static readonly DependencyProperty ShadowProperty
         = DependencyProperty.Register("TileShadow", typeof(bool), typeof(AppTile), ShadowMeta);
 
-    public Panel Owner => Parent as Panel;
+    public Canvas Owner => Parent as Canvas;
 
     public TileSize TileSize
     {
@@ -64,11 +46,6 @@ public partial class TileBase : UserControl
     public bool Shadow
     {
         get => (bool) GetValue(ShadowProperty);
-        set
-        {
-            SetValue(ShadowProperty, value);
-            if (TileShadow is not null)
-                TileShadow.Opacity = (!App.Program.Settings.Content.UIFlat && value) ? 0.4 : 0;
-        }
+        set => SetValue(ShadowProperty, value);
     }
 }

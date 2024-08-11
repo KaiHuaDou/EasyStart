@@ -5,7 +5,6 @@
                xmlns:text="clr-namespace:StartPro.Resources"
                xmlns:tile="clr-namespace:StartPro.Tile">
     <tile:TileBase.Resources>
-        <tile:AppTileTextVisible x:Key="AppTileTextVisible" />
         <tile:MarginConverter x:Key="MarginConverter" />
     </tile:TileBase.Resources>
     <tile:TileBase.ContextMenu>
@@ -28,14 +27,13 @@
         </ContextMenu>
     </tile:TileBase.ContextMenu>
     <DockPanel x:Name="RootPanel">
-        <TextBlock x:Name="label"
+        <TextBlock x:Name="TileLabel"
                    DockPanel.Dock="Bottom"
                    Margin="0,0,0,10" HorizontalAlignment="Center"
                    Foreground="Black"
                    FontSize="{Binding FontSize, ElementName=userControl}"
                    Text="{Binding AppName}"
-                   TextWrapping="WrapWithOverflow"
-                   Visibility="{Binding TileSize, Converter={StaticResource AppTileTextVisible}}" />
+                   TextWrapping="WrapWithOverflow" />
         <Image x:Name="image" Margin="{Binding TileSize, Converter={StaticResource MarginConverter}}" Source="{Binding AppIcon}">
             <Image.Effect>
                 <DropShadowEffect x:Name="TileImageShadow" Opacity="0.4" Color="#020202" />

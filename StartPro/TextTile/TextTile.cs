@@ -21,7 +21,7 @@ public partial class TextTile
     public override string ToString( ) => $"{Text} - {TileSize}";
 
     private static readonly PropertyMetadata textMeta = new("Text");
-    private static readonly PropertyMetadata textShadowMeta = new(true);
+    private static readonly PropertyMetadata textShadowMeta = new(true, TextShadowChanged);
     private static readonly PropertyMetadata textVerticalAlignmentMeta = new(VerticalAlignment.Center);
     private static readonly PropertyMetadata textHorizontalAlignmentMeta = new(HorizontalAlignment.Center);
     public static readonly DependencyProperty TextProperty
@@ -42,11 +42,7 @@ public partial class TextTile
     public bool TextShadow
     {
         get => (bool) GetValue(TextShadowProperty);
-        set
-        {
-            SetValue(TextShadowProperty, value);
-            TileTextShadow.Opacity = (!App.Program.Settings.Content.UIFlat && value) ? 0.4 : 0;
-        }
+        set => SetValue(TextShadowProperty, value);
     }
 
     public VerticalAlignment TextVerticalAlignment
@@ -70,9 +66,9 @@ public partial class TextTile
         element.SetAttribute("TextShadow", TextShadow.ToString( ));
         element.SetAttribute("TextVerticalAlignment", ((int) TextVerticalAlignment).ToString( ));
         element.SetAttribute("TextHorizontalAlignment", ((int) TextHorizontalAlignment).ToString( ));
-        element.SetAttribute("FontStyle", (this.FontStyle == FontStyles.Italic).ToString( ));
-        element.SetAttribute("FontWeight", (this.FontWeight == FontWeights.Bold).ToString( ));
-        element.SetAttribute("FontFamily", base.FontFamily.ToString( ));
+        element.SetAttribute("FontStyle", (FontStyle == FontStyles.Italic).ToString( ));
+        element.SetAttribute("FontWeight", (FontWeight == FontWeights.Bold).ToString( ));
+        element.SetAttribute("FontFamily", FontFamily.ToString( ));
         element.SetAttribute("FontSize", FontSize.ToString( ));
     }
 
@@ -83,9 +79,9 @@ public partial class TextTile
         TextShadow = bool.Parse(node.GetAttribute("TextShadow"));
         TextVerticalAlignment = (VerticalAlignment) int.Parse(node.GetAttribute("TextVerticalAlignment"));
         TextHorizontalAlignment = (HorizontalAlignment) int.Parse(node.GetAttribute("TextHorizontalAlignment"));
-        this.FontStyle = bool.Parse(node.GetAttribute("FontStyle")) ? FontStyles.Italic : FontStyles.Normal;
-        this.FontWeight = bool.Parse(node.GetAttribute("FontWeight")) ? FontWeights.Bold : FontWeights.Normal;
-        this.FontFamily = new FontFamily(node.GetAttribute("FontFamily"));
+        FontStyle = bool.Parse(node.GetAttribute("FontStyle")) ? FontStyles.Italic : FontStyles.Normal;
+        FontWeight = bool.Parse(node.GetAttribute("FontWeight")) ? FontWeights.Bold : FontWeights.Normal;
+        FontFamily = new FontFamily(node.GetAttribute("FontFamily"));
         FontSize = double.Parse(node.GetAttribute("FontSize"));
     }
 }

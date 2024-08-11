@@ -41,14 +41,14 @@ public partial class App : Application, ISingleInstance
         {
             Source = new Uri(Program.Settings.Content.UITheme switch
             {
-                0 => "pack://application:,,,/PresentationFramework.Aero,Version=6.0.2.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Aero.NormalColor.xaml",
-                1 => "pack://application:,,,/PresentationFramework.Aero2,Version=6.0.2.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Aero2.NormalColor.xaml",
-                2 => "pack://application:,,,/PresentationFramework.Luna,Version=6.0.2.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Luna.NormalColor.xaml",
-                3 => "pack://application:,,,/PresentationFramework.Luna,Version=6.0.2.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Luna.Homestead.xaml",
-                4 => "pack://application:,,,/PresentationFramework.Luna,Version=6.0.2.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Luna.Metallic.xaml",
-                5 => "pack://application:,,,/PresentationFramework.Luna,Version=6.0.2.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Royale.NormalColor.xaml",
-                6 => "pack://application:,,,/PresentationFramework.Classic,Version=6.0.2.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Classic.xaml",
-                _ => "pack://application:,,,/PresentationFramework.Aero,Version=6.0.2.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Aero.NormalColor.xaml",
+                0 => "pack://application:,,,/PresentationFramework.Aero,Version=8.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Aero.NormalColor.xaml",
+                1 => "pack://application:,,,/PresentationFramework.Aero2,Version=8.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Aero2.NormalColor.xaml",
+                2 => "pack://application:,,,/PresentationFramework.Luna,Version=8.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Luna.NormalColor.xaml",
+                3 => "pack://application:,,,/PresentationFramework.Luna,Version=8.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Luna.Homestead.xaml",
+                4 => "pack://application:,,,/PresentationFramework.Luna,Version=8.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Luna.Metallic.xaml",
+                5 => "pack://application:,,,/PresentationFramework.Luna,Version=8.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Royale.NormalColor.xaml",
+                6 => "pack://application:,,,/PresentationFramework.Classic,Version=8.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Classic.xaml",
+                _ => "pack://application:,,,/PresentationFramework.Aero,Version=8.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Aero.NormalColor.xaml",
             })
         });
 

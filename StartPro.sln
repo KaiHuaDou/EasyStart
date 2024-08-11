@@ -32,7 +32,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CA8313EC-90F6-4BC2-9230-D99C2F44E37F}
-		RESX_ResXSortingComparison = CurrentCultureIgnoreCase
+		RESX_CultureCountyOverrides = zh-CHT=zh-MO
 		RESX_SortFileContentOnSave = True
+		RESX_ResXSortingComparison = CurrentCultureIgnoreCase
 	EndGlobalSection
 EndGlobal

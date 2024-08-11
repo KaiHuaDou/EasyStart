@@ -5,9 +5,7 @@ using System.Windows.Media;
 using StartPro.Api;
 
 namespace StartPro.Tile;
-/// <summary>
-/// CreateText.xaml 的交互逻辑
-/// </summary>
+
 public partial class CreateText : Window
 {
     public TextTile Item { get; set; } = new( );
@@ -37,7 +35,6 @@ public partial class CreateText : Window
         TextShadowBox.IsChecked = Item.TextShadow;
 
         DockPanel.SetDock(Item, Dock.Right);
-        Item.Margin = new Thickness(5, 10, 10, 5);
         mainPanel.Children.Insert(0, Item);
     }
     private void TileSizeChanged(object o, SelectionChangedEventArgs e)

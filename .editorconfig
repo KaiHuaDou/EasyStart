@@ -70,7 +70,7 @@ dotnet_remove_unnecessary_suppression_exclusions = 0
 
 # 新行首选项
 dotnet_style_allow_multiple_blank_lines_experimental = false:suggestion
-dotnet_style_allow_statement_immediately_after_block_experimental = true:silent
+dotnet_style_allow_statement_immediately_after_block_experimental = true:suggestion
 
 # 命名规则
 dotnet_naming_rule.interface_should_be_interface.severity = suggestion
@@ -169,9 +169,9 @@ csharp_new_line_before_open_brace = all
 csharp_new_line_between_query_expression_clauses = false
 csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = false:suggestion
 csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = false:suggestion
-csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental = true:suggestion
+csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental = false:suggestion
 csharp_style_allow_blank_lines_between_consecutive_braces_experimental = false:suggestion
-csharp_style_allow_embedded_statements_on_same_line_experimental = true:silent
+csharp_style_allow_embedded_statements_on_same_line_experimental = true:suggestion
 csharp_using_directive_placement = outside_namespace:suggestion
 
 # 缩进首选项
@@ -814,3 +814,4 @@ dotnet_diagnostic.CA2242.severity = warning
 dotnet_diagnostic.CA2243.severity = warning
 dotnet_diagnostic.CA5122.severity = warning
 csharp_style_prefer_primary_constructors = true:suggestion
+csharp_prefer_static_anonymous_function = true:suggestion

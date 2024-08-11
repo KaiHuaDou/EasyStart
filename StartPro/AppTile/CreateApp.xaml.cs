@@ -38,7 +38,6 @@ public partial class CreateApp : Window
         ImageShadowBox.IsChecked = Item.ImageShadow;
 
         DockPanel.SetDock(Item, Dock.Right);
-        Item.Margin = new Thickness(5, 10, 10, 5);
         mainPanel.Children.Insert(0, Item);
     }
 

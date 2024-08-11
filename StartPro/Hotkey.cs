@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Interop;
 using static StartPro.External.NativeMethods;
 
 namespace StartPro;
-public partial class MainWindow : Window
+
+public partial class MainWindow
 {
     private IntPtr handle;
     private HwndSource hwndSource;

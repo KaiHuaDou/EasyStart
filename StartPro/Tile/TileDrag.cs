@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace StartPro.Tile;
 
@@ -17,26 +18,6 @@ public partial class TileBase
     }
 
     protected bool IsDragged { get; set; }
-
-    public void MoveToSpace( )
-    {
-        bool isIntersect = true;
-        while (isIntersect)
-        {
-            isIntersect = false;
-            for (int i = 0; i < Owner.Children.Count; i++)
-            {
-                TileBase target = Owner.Children[i] as TileBase;
-                if (IntersectsWith(target))
-                {
-                    Row++;
-                    isIntersect = true;
-                    break;
-                }
-            }
-        }
-        Owner.ResizeToFit( );
-    }
 
     private Point startMousePoint, startTilePoint;
 
@@ -78,14 +59,40 @@ public partial class TileBase
         Refresh( );
         ToTopmost( );
     }
+
     private bool IntersectsWith(TileBase t)
     {
         if (this == t)
             return false;
-        Rect r1 = new((double) Canvas.GetLeft(this), (double) Canvas.GetTop(this), ActualWidth, ActualHeight);
-        Rect r2 = new((double) Canvas.GetLeft(t), (double) Canvas.GetTop(t), t.ActualWidth, t.ActualHeight);
+        // Vector thisOffset = VisualTreeHelper.GetOffset(this);
+        // Vector tOffset = VisualTreeHelper.GetOffset(t);
+        Vector thisOffset = new((double) Canvas.GetLeft(this), (double) Canvas.GetTop(this));
+        Vector tOffset = new((double) Canvas.GetLeft(t), (double) Canvas.GetTop(t));
+        Rect r1 = new(thisOffset.X, thisOffset.Y, ActualWidth, ActualHeight);
+        Rect r2 = new(tOffset.X, tOffset.Y, t.ActualWidth, t.ActualHeight);
         return r1.IntersectsWith(r2);
     }
+
+    private void MoveToSpace( )
+    {
+        bool isIntersect = true;
+        while (isIntersect)
+        {
+            isIntersect = false;
+            for (int i = 0; i < Owner.Children.Count; i++)
+            {
+                TileBase target = Owner.Children[i] as TileBase;
+                if (IntersectsWith(target))
+                {
+                    Row++;
+                    isIntersect = true;
+                    break;
+                }
+            }
+        }
+        Owner.ResizeToFit( );
+    }
+
     private void ToTopmost( )
     {
         for (int i = 0; i < Owner.Children.Count; i++)
@@ -94,9 +101,9 @@ public partial class TileBase
     }
 }
 
-public static class PanelExtension
+public static class CanvasExtension
 {
-    public static void ResizeToFit(this Panel parent)
+    public static void ResizeToFit(this Canvas parent)
     {
         double xmax = 0, ymax = 0;
         foreach (TileBase t in parent.Children)
