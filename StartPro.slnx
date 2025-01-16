@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/解决方案项/">
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".github/workflows/build.yml" />
+    <File Path=".gitignore" />
+    <File Path="LICENSE" />
+    <File Path="publish.cmd" />
+    <File Path="README.md" />
+    <File Path="Settings.XamlStyler" />
+  </Folder>
+  <Project Path="StartPro/StartPro.csproj" />
+  <Properties Name="ExtensibilityGlobals" Scope="PostLoad">
+    <Property Name="RESX_CultureCountyOverrides" Value="zh-CHT=zh-MO" />
+    <Property Name="RESX_ResXSortingComparison" Value="CurrentCultureIgnoreCase" />
+    <Property Name="RESX_SortFileContentOnSave" Value="True" />
+  </Properties>
+</Solution>

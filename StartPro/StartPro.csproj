@@ -1,11 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net8.0-windows</TargetFramework>
+        <TargetFramework>net9.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
         <UseWindowsForms>true</UseWindowsForms>
         <LangVersion>latest</LangVersion>
-        <PublishReadyToRun>true</PublishReadyToRun>
     </PropertyGroup>
     <PropertyGroup>
         <StartupObject>StartPro.App.Program</StartupObject>
@@ -20,9 +19,9 @@
         <None Remove="Tile\TileBase.UI.cs.bak" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="H.NotifyIcon.Wpf" Version="2.1.0" />
+        <PackageReference Include="H.NotifyIcon.Wpf" Version="2.2.0" />
         <PackageReference Include="SingleInstanceCore" Version="2.2.2" />
-        <PackageReference Include="System.Drawing.Common" Version="8.0.7" />
+        <PackageReference Include="System.Drawing.Common" Version="9.0.0" />
         <Compile Update="Resources\AppTile.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
@@ -34,9 +33,9 @@
             <DependentUpon>Main.resx</DependentUpon>
         </Compile>
         <Compile Update="Resources\TextTile.Designer.cs">
-          <DesignTime>True</DesignTime>
-          <AutoGen>True</AutoGen>
-          <DependentUpon>TextTile.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>TextTile.resx</DependentUpon>
         </Compile>
         <Compile Update="Resources\Tile.Designer.cs">
             <DesignTime>True</DesignTime>
@@ -52,13 +51,16 @@
             <LastGenOutput>Main.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\TextTile.resx">
-          <Generator>PublicResXFileCodeGenerator</Generator>
-          <LastGenOutput>TextTile.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>TextTile.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\Tile.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
             <LastGenOutput>Tile.Designer.cs</LastGenOutput>
         </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Properties\PublishProfiles\" />
     </ItemGroup>
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
         <Exec Command="taskkill /f /im StartPro.exe 2&gt;&amp;1 || exit /B 0 " ContinueOnError="true" />

@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace StartPro.Tile;
 
@@ -17,42 +16,44 @@ public partial class TileBase
         set => SetValue(IsDragProperty, value);
     }
 
-    protected bool IsDragged { get; set; }
+    protected bool OnDrag { get; set; }
 
     private Point startMousePoint, startTilePoint;
-
+    private Point mousePoint => Mouse.GetPosition(Parent as Panel);
+    private Point offset => new(mousePoint.X - startMousePoint.X, mousePoint.Y - startMousePoint.Y);
+    private Point tilePoint => new(startTilePoint.X + offset.X, startTilePoint.Y + offset.Y);
     protected void TileDragging(object o, MouseEventArgs e)
     {
         if (!IsDrag || e.LeftButton == MouseButtonState.Released)
+        {
+            OnDrag = false;
             return;
+        }
         TileBase tile = o as TileBase;
-        Panel.SetZIndex(tile, int.MaxValue);
-        Point mousePoint = e.GetPosition(Parent as Panel);
-        Point offset = new(mousePoint.X - startMousePoint.X, mousePoint.Y - startMousePoint.Y);
+        Panel.SetZIndex(tile, Owner.Children.Count + 1);
         if (offset.X != 0 || offset.Y != 0)
-            IsDragged = true;
-        Canvas.SetLeft(tile, startTilePoint.X + offset.X);
-        Canvas.SetTop(tile, startTilePoint.Y + offset.Y);
+        {
+            OnDrag = true;
+            Canvas.SetLeft(tile, startTilePoint.X + offset.X);
+            Canvas.SetTop(tile, startTilePoint.Y + offset.Y);
+        }
     }
 
     protected void TileDragStart(object o, MouseButtonEventArgs e)
     {
+        IsDrag = true;
         TileBase tile = o as TileBase;
-        tile?.CaptureMouse( );
         startMousePoint = e.GetPosition(Parent as Panel);
         startTilePoint = new Point(Canvas.GetLeft(tile), Canvas.GetTop(tile));
-        IsDrag = true;
     }
 
     protected void TileDragStop(object o, MouseButtonEventArgs e)
     {
-        IsDrag = IsDragged = false;
+        if (!IsDrag || !OnDrag)
+            return;
+        IsDrag = false;
         TileBase tile = o as TileBase;
-        tile?.ReleaseMouseCapture( );
 
-        Point mousePoint = e.GetPosition(Parent as Panel);
-        Point offset = new(mousePoint.X - startMousePoint.X, mousePoint.Y - startMousePoint.Y);
-        Point tilePoint = new(startTilePoint.X + offset.X, startTilePoint.Y + offset.Y);
         tile.Column = (int) Math.Round(tilePoint.X / TileDatas.BlockSize);
         tile.Row = (int) Math.Round(tilePoint.Y / TileDatas.BlockSize);
 
@@ -62,10 +63,6 @@ public partial class TileBase
 
     private bool IntersectsWith(TileBase t)
     {
-        if (this == t)
-            return false;
-        // Vector thisOffset = VisualTreeHelper.GetOffset(this);
-        // Vector tOffset = VisualTreeHelper.GetOffset(t);
         Vector thisOffset = new((double) Canvas.GetLeft(this), (double) Canvas.GetTop(this));
         Vector tOffset = new((double) Canvas.GetLeft(t), (double) Canvas.GetTop(t));
         Rect r1 = new(thisOffset.X, thisOffset.Y, ActualWidth, ActualHeight);
@@ -82,7 +79,7 @@ public partial class TileBase
             for (int i = 0; i < Owner.Children.Count; i++)
             {
                 TileBase target = Owner.Children[i] as TileBase;
-                if (IntersectsWith(target))
+                if (this != target && IntersectsWith(target))
                 {
                     Row++;
                     isIntersect = true;

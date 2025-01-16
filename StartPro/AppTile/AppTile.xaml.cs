@@ -96,7 +96,7 @@ public partial class AppTile : TileBase
 
     private new void TileLeftButtonUp(object o, MouseButtonEventArgs e)
     {
-        if (!IsDragged && IsEnabled)
+        if (!OnDrag && IsEnabled)
         {
             try
             {
@@ -107,7 +107,7 @@ public partial class AppTile : TileBase
                 });
                 App.TileWindow.Hide( );
             }
-            catch { }
+            catch { throw; }
         }
         base.TileLeftButtonUp(o, e);
     }

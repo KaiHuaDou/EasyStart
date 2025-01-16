@@ -12,12 +12,14 @@ public partial class AppTile : TileBase
     {
         Grid root = Content as Grid;
         InitializeComponent( );
+        Utils.AppendContexts(ContextMenu, contextMenu);
+
+        MouseLeftButtonUp -= base.TileLeftButtonUp;
+        MouseLeftButtonUp += TileLeftButtonUp;
+
         userControl.Content = null;
         border.Child = RootPanel;
-
-        Utils.AppendContexts(ContextMenu, contextMenu);
         Content = root;
-
     }
 
     public override string ToString( ) => $"{AppName} - {TileSize}";
