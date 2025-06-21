@@ -7,7 +7,7 @@ using StartPro.Api;
 namespace StartPro.Tile;
 public partial class TextTile
 {
-    public TextTile( ) : base( )
+    public TextTile( )
     {
         Grid root = Content as Grid;
         InitializeComponent( );
@@ -49,7 +49,6 @@ public partial class TextTile
     {
         get => (VerticalAlignment) GetValue(TextVerticalAlignmentProperty);
         set => SetValue(TextVerticalAlignmentProperty, value);
-
     }
 
     public HorizontalAlignment TextHorizontalAlignment

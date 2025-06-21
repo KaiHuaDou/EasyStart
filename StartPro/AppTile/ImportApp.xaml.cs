@@ -23,7 +23,10 @@ public partial class ImportApp : Window
         TileList.ItemsSource = ConvertTileSet(Tiles);
     }
 
-    private void OkClick(object o, RoutedEventArgs e) => Close( );
+    private void OkClick(object o, RoutedEventArgs e)
+    {
+        Close( );
+    }
 
     private void CancelClick(object o, RoutedEventArgs e)
     {
@@ -37,6 +40,7 @@ public partial class ImportApp : Window
             AddNewTiles(fileName);
         RefreshTileList( );
     }
+
     private void DropTile(object o, DragEventArgs e)
     {
         IDataObject data = e.Data;
@@ -55,8 +59,8 @@ public partial class ImportApp : Window
             AppPath = fileName,
             AppIcon = fileName,
             TileSize = TileSize.Medium,
-            Shadow = App.Program.Settings.Content.UIFlat,
-            ImageShadow = App.Program.Settings.Content.UIFlat,
+            Shadow = App.Settings.Content.UIFlat,
+            ImageShadow = App.Settings.Content.UIFlat,
             Row = 0,
             Column = 0,
             IsEnabled = false

@@ -9,9 +9,9 @@ using static StartPro.External.NativeMethods;
 
 namespace StartPro.Api;
 
-public static class IconMgr
+public static class PEIcon
 {
-    public static ImageSource Get(string path)
+    public static BitmapSource Get(string path)
     {
         try
         {
@@ -22,8 +22,10 @@ public static class IconMgr
             {
                 if (icons[i] == IntPtr.Zero) continue;
                 Icon icon = Icon.FromHandle(icons[i]);
-                return Imaging.CreateBitmapSourceFromHIcon(
+                BitmapSource bitmap = Imaging.CreateBitmapSourceFromHIcon(
                     icon.Handle, new Int32Rect( ), BitmapSizeOptions.FromEmptyOptions( ));
+                DestroyIcon(icon.Handle);
+                return bitmap;
             }
         }
         catch (COMException) { }

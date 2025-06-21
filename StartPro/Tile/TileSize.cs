@@ -4,14 +4,14 @@ namespace StartPro.Tile;
 
 public enum TileSize
 {
-    Small, Medium, Wide, Thin, High, Tall, Large
+    Small = 0, Medium = 1, Wide = 2, Thin = 3, High = 4, Tall = 5, Large = 6
 }
 
 public static class TileDatas
 {
     public static int BaseSize => 64;
     public static int BaseMargin => 10;
-    public static int BaseRadius => App.Program.Settings.Content.UIFlat ? 0 : 10;
+    public static int BaseRadius => App.Settings.Content.UIFlat ? 0 : 10;
 
     public static int BlockSize => BaseSize + BaseMargin;
 

@@ -26,6 +26,8 @@ public partial class TileBase : UserControl
     public TileBase( )
     {
         InitializeComponent( );
+        TileSizeChanged(this, new DependencyPropertyChangedEventArgs( ));
+        TileShadowChanged(this, new DependencyPropertyChangedEventArgs( ));
         Refresh( );
     }
 
@@ -67,8 +69,6 @@ public partial class TileBase : UserControl
     public void Refresh( )
     {
         border.DataContext = this;
-        TileSizeChanged(this, new DependencyPropertyChangedEventArgs( ));
-        TileShadowChanged(this, new DependencyPropertyChangedEventArgs( ));
         if (Owner is not null && Application.Current.MainWindow is MainWindow window)
         {
             // 重新测量并布局确保 ActualWidth 和 ActualHeight 及时更新，以便移动磁贴至适宜位置
@@ -88,10 +88,11 @@ public partial class TileBase : UserControl
         tile.MinHeight = tile.Height = tileSize.Item2;
         tile.Margin = new Thickness(TileDatas.BaseMargin);
         tile.border.CornerRadius = tile.maskBorder.CornerRadius = new CornerRadius(TileDatas.TileRadius[tile.TileSize]);
+        tile.Refresh( );
     }
 
     protected static void TileShadowChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-        => (o as TileBase).TileShadow.Opacity = (!App.Program.Settings.Content.UIFlat && (o as TileBase).Shadow) ? 0.4 : 0;
+        => (o as TileBase)?.TileShadow.Opacity = (!App.Settings.Content.UIFlat && (o as TileBase)!.Shadow) ? 0.4 : 0;
 
     protected void TileLeftButtonUp(object o, MouseButtonEventArgs e)
         => TileDragStop(o, e);

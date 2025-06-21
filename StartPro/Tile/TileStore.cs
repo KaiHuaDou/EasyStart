@@ -64,7 +64,7 @@ public static class TileStore
                 item.IsEnabled = true;
                 result.Add(item);
             }
-            catch { continue; }
+            catch { }
         }
         Apps = document.CreateElement("Tiles");
         return result;
@@ -74,5 +74,5 @@ public static class TileStore
 public static class XmlNodeExtend
 {
     public static string GetAttribute(this XmlNode node, string name)
-        => (node.Attributes.GetNamedItem(name) as XmlAttribute).Value;
+        => (node.Attributes.GetNamedItem(name) as XmlAttribute)?.Value;
 }

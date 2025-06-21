@@ -20,6 +20,17 @@ internal static partial class NativeMethods
 
     [LibraryImport("user32.dll", EntryPoint = "PrivateExtractIconsW", StringMarshalling = StringMarshalling.Utf16)]
     internal static partial int PrivateExtractIcons(
-        string lpszFile, int nIconIndex, int cxIcon, int cyIcon,
-        IntPtr[] phicon, int[] piconid, int nIcons, int flags);
+        string lpszFile,
+        int nIconIndex,
+        int cxIcon,
+        int cyIcon,
+        [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 6), In, Out] IntPtr[] phicon,
+        [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 6), In, Out] int[] piconid,
+        int nIcons,
+        int flags
+    );
+
+    [LibraryImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    internal static partial bool DestroyIcon(IntPtr hIcon);
 }

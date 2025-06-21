@@ -5,6 +5,7 @@
              xmlns:local="clr-namespace:StartPro"
              xmlns:tile="clr-namespace:StartPro.Tile"
              Exit="AppExit"
+             ShutdownMode="OnMainWindowClose"
              Startup="AppStartup">
     <Application.Resources>
         <ResourceDictionary>

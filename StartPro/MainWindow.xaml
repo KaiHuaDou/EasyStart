@@ -54,6 +54,7 @@
                         <GroupBox Header="默认">
                             <StackPanel Orientation="Horizontal">
                                 <Button Click="ShowSetting" Content="&#xE713;" />
+                                <Button Click="WindowExit" Content="&#xF3B1;" />
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="应用磁贴">

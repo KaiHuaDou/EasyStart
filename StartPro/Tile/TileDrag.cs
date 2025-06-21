@@ -19,9 +19,9 @@ public partial class TileBase
     protected bool OnDrag { get; set; }
 
     private Point startMousePoint, startTilePoint;
-    private Point mousePoint => Mouse.GetPosition(Parent as Panel);
-    private Point offset => new(mousePoint.X - startMousePoint.X, mousePoint.Y - startMousePoint.Y);
-    private Point tilePoint => new(startTilePoint.X + offset.X, startTilePoint.Y + offset.Y);
+    private Point MousePoint => Mouse.GetPosition(Parent as Panel);
+    private Point Offset => new(MousePoint.X - startMousePoint.X, MousePoint.Y - startMousePoint.Y);
+    private Point TilePoint => new(startTilePoint.X + Offset.X, startTilePoint.Y + Offset.Y);
     protected void TileDragging(object o, MouseEventArgs e)
     {
         if (!IsDrag || e.LeftButton == MouseButtonState.Released)
@@ -31,11 +31,11 @@ public partial class TileBase
         }
         TileBase tile = o as TileBase;
         Panel.SetZIndex(tile, Owner.Children.Count + 1);
-        if (offset.X != 0 || offset.Y != 0)
+        if (Offset.X != 0 || Offset.Y != 0)
         {
             OnDrag = true;
-            Canvas.SetLeft(tile, startTilePoint.X + offset.X);
-            Canvas.SetTop(tile, startTilePoint.Y + offset.Y);
+            Canvas.SetLeft(tile, startTilePoint.X + Offset.X);
+            Canvas.SetTop(tile, startTilePoint.Y + Offset.Y);
         }
     }
 
@@ -54,8 +54,8 @@ public partial class TileBase
         IsDrag = false;
         TileBase tile = o as TileBase;
 
-        tile.Column = (int) Math.Round(tilePoint.X / TileDatas.BlockSize);
-        tile.Row = (int) Math.Round(tilePoint.Y / TileDatas.BlockSize);
+        tile.Column = (int) Math.Round(TilePoint.X / TileDatas.BlockSize);
+        tile.Row = (int) Math.Round(TilePoint.Y / TileDatas.BlockSize);
 
         Refresh( );
         ToTopmost( );

@@ -21,8 +21,9 @@ public partial class AppTile : TileBase
     protected static new void TileSizeChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
         TileBase.TileSizeChanged(o, e);
-        (o as AppTile).TileLabel.Visibility =
-            (o as AppTile).TileSize is TileSize.Small or TileSize.Thin or TileSize.Tall
+        AppTile appTile = o as AppTile;
+        appTile?.TileLabel.Visibility =
+            appTile?.TileSize is TileSize.Small or TileSize.Thin or TileSize.Tall
             ? Visibility.Collapsed : Visibility.Visible;
     }
 
@@ -32,11 +33,18 @@ public partial class AppTile : TileBase
         string path = e.NewValue as string;
         if (tile.AppIcon.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
         {
-            tile.image.Source = IconMgr.Get(path);
+            tile.image.Source = PEIcon.Get(path);
         }
         else if (File.Exists(path))
         {
-            tile.image.Source = new BitmapImage(new Uri(path));
+            try
+            {
+                tile.image.Source = new BitmapImage(new Uri(path));
+            }
+            catch
+            {
+                tile.image.Source = new BitmapImage( );
+            }
         }
     }
 
@@ -47,12 +55,11 @@ public partial class AppTile : TileBase
         FileInfo app = new(value);
         tile.AppName = app.Name.Replace(app.Extension, "");
         tile.AppIcon = value;
-
     }
 
     protected static void ImageShadowChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
-        (o as AppTile).TileImageShadow.Opacity = (!App.Program.Settings.Content.UIFlat && (o as AppTile).ImageShadow) ? 0.4 : 0;
+        (o as AppTile)?.TileImageShadow.Opacity = (!App.Settings.Content.UIFlat && (o as AppTile).ImageShadow) ? 0.4 : 0;
     }
 
     protected static new void TileColorChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
@@ -98,16 +105,12 @@ public partial class AppTile : TileBase
     {
         if (!OnDrag && IsEnabled)
         {
-            try
+            Process.Start(new ProcessStartInfo( )
             {
-                Process.Start(new ProcessStartInfo( )
-                {
-                    UseShellExecute = true,
-                    FileName = AppPath,
-                });
-                App.TileWindow.Hide( );
-            }
-            catch { throw; }
+                UseShellExecute = true,
+                FileName = AppPath,
+            });
+            App.TileWindow.Hide( );
         }
         base.TileLeftButtonUp(o, e);
     }

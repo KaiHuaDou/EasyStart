@@ -8,7 +8,7 @@ namespace StartPro.Tile;
 
 public partial class AppTile : TileBase
 {
-    public AppTile( ) : base( )
+    public AppTile( )
     {
         Grid root = Content as Grid;
         InitializeComponent( );

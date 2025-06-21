@@ -1,37 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace StartPro.Api;
 public class StartMenuApp
 {
-    public static Dictionary<string, StartMenuApp> AllApps = [];
     public static string UserAppsPath = Environment.ExpandEnvironmentVariables("%AppData%\\Microsoft\\Windows\\Start Menu\\Programs");
     public static string SystemAppsPath = Environment.ExpandEnvironmentVariables("%ProgramData%\\Microsoft\\Windows\\Start Menu\\Programs");
 
-    public static void SearchAll( )
+    public static IEnumerable<StartMenuApp> Search( )
     {
-        AllApps.Clear( );
-        string[] UserApps = Directory.GetFiles(UserAppsPath, "*.lnk", SearchOption.AllDirectories);
-        string[] SystemApps = Directory.GetFiles(SystemAppsPath, "*.lnk", SearchOption.TopDirectoryOnly);
-        foreach (string app in UserApps)
-            AppendToList(app);
-        foreach (string app in SystemApps)
-            AppendToList(app);
+        foreach (string app in Directory.GetFiles(UserAppsPath, "*.lnk", SearchOption.AllDirectories))
+            yield return Append(app);
+        foreach (string app in Directory.GetFiles(SystemAppsPath, "*.lnk", SearchOption.AllDirectories))
+            yield return Append(app);
     }
 
-    private static void AppendToList(string appPath)
+    private static StartMenuApp Append(string appPath)
     {
         string appName = Path.GetFileNameWithoutExtension(appPath);
-        AllApps.Add(appName, new StartMenuApp
+        string realPath = Utils.ReadShortcut(appPath);
+        return new StartMenuApp
         {
-            AppName = appName,
-            AppPath = Utils.ReadShortcut(appPath)
-        });
+            AppName = Utils.ShortenStr(appName),
+            AppPath = realPath,
+            AppIcon = PEIcon.Get(realPath)
+        };
     }
 
     public string AppName { get; set; }
     public string AppPath { get; set; }
-    public ImageSource AppIcon => IconMgr.Get(AppPath);
+    public BitmapSource AppIcon { get; set; }
 }

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Security.Principal;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using StartPro.Resources;
 
@@ -101,6 +103,12 @@ public static class Utils
         bool result = dialog.ShowDialog( ) == true;
         fileName = dialog.FileName;
         return result;
+    }
+
+    public static string ShortenStr(string str, int len = 25)
+    {
+        return str.Length <= len ? str
+            : $"{str.AsSpan(0, len - 3)}…";
     }
 }
 

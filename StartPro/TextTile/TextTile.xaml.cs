@@ -7,7 +7,7 @@ public partial class TextTile : TileBase
 {
     protected static void TextShadowChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
-        (o as TextTile).TileTextShadow.Opacity = (!App.Program.Settings.Content.UIFlat && (o as TextTile).TextShadow) ? 0.4 : 0;
+        (o as TextTile).TileTextShadow.Opacity = (!App.Settings.Content.UIFlat && (o as TextTile).TextShadow) ? 0.4 : 0;
     }
 
     private void EditTile(object o, RoutedEventArgs e)

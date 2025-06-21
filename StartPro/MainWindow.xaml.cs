@@ -25,9 +25,6 @@ public partial class MainWindow : Window
         Left = (SystemParameters.WorkArea.Width - Width) / 2;
         ApplyBackground( );
 
-        StartMenuApp.SearchAll( );
-        AppList.ItemsSource = StartMenuApp.AllApps.Values;
-
         foreach (TileBase tile in App.Tiles)
         {
             TilePanel.Children.Add(tile);
@@ -68,7 +65,7 @@ public partial class MainWindow : Window
         window.ShowDialog( );
         Show( );
         AppTile tile = window.Item;
-        if (tile is null || !tile.IsEnabled)
+        if (tile?.IsEnabled != true)
             return;
         TilePanel.Children.Add(tile);
         tile.Refresh( );
@@ -81,7 +78,7 @@ public partial class MainWindow : Window
         window.ShowDialog( );
         Show( );
         TextTile tile = window.Item;
-        if (tile is null || !tile.IsEnabled)
+        if (tile?.IsEnabled != true)
             return;
         TilePanel.Children.Add(tile);
         tile.Refresh( );
@@ -91,17 +88,17 @@ public partial class MainWindow : Window
     {
         try
         {
-            if (App.Program.Settings.Content.Background.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
+            if (App.Settings.Content.Background.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
             {
-                MainBorder.Background = new ImageBrush(IconMgr.Get(App.Program.Settings.Content.Background)) { Stretch = Stretch.UniformToFill };
+                MainBorder.Background = new ImageBrush(PEIcon.Get(App.Settings.Content.Background)) { Stretch = Stretch.UniformToFill };
             }
-            else if (char.IsLetter(App.Program.Settings.Content.Background[0]))
+            else if (char.IsLetter(App.Settings.Content.Background[0]))
             {
-                MainBorder.Background = new ImageBrush(new BitmapImage(new Uri(App.Program.Settings.Content.Background))) { Stretch = Stretch.UniformToFill };
+                MainBorder.Background = new ImageBrush(new BitmapImage(new Uri(App.Settings.Content.Background))) { Stretch = Stretch.UniformToFill };
             }
             else
             {
-                int rgb = Convert.ToInt32(App.Program.Settings.Content.Background.Replace("#", ""), 16);
+                int rgb = Convert.ToInt32(App.Settings.Content.Background.Replace("#", ""), 16);
                 byte R = (byte) ((rgb >> 16) & 0xFF);
                 byte G = (byte) ((rgb >> 8) & 0xFF);
                 byte B = (byte) (rgb & 0xFF);
@@ -127,7 +124,16 @@ public partial class MainWindow : Window
 
     private void PinApp(object o, RoutedEventArgs e)
     {
-        AppTile appTile = new( ) { AppPath = StartMenuApp.AllApps[(AppList.SelectedItem as StartMenuApp).AppName].AppPath };
+        StartMenuApp app = AppList.SelectedItem as StartMenuApp;
+        AppTile appTile = new( )
+        {
+            AppName = app?.AppName,
+            AppPath = app?.AppPath,
+            AppIcon = app?.AppPath,
+            TileSize = TileSize.Medium,
+            Row = 0,
+            Column = 0
+        };
         TilePanel.Children.Add(appTile);
         appTile.Refresh( );
     }
@@ -153,6 +159,7 @@ public partial class MainWindow : Window
         ApplyBackground( );
         Show( );
     }
+
     private void TaskbarMenuExit(object o, RoutedEventArgs e)
         => Application.Current.Shutdown( );
 
@@ -170,9 +177,16 @@ public partial class MainWindow : Window
 
     private void WindowDeactivated(object o, EventArgs e)
             => ShowHide( );
+
+    private void WindowExit(object o, RoutedEventArgs e)
+    {
+        Application.Current.Shutdown( );
+    }
+
     private void WindowLoaded(object o, RoutedEventArgs e)
     {
         TilePanel.ResizeToFit( );
         ShowHideAppList(null, null);
+        AppList.ItemsSource = StartMenuApp.Search( );
     }
 }

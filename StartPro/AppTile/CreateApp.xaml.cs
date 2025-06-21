@@ -81,9 +81,14 @@ public partial class CreateApp : Window
 
     private void FontChanged(object o, TextChangedEventArgs e)
     {
-        Item.FontSize = double.TryParse(fontBox.Text, out double result)
-            ? (result is >= 0.1 and <= 256 ? result : Defaults.FontSize)
-            : Defaults.FontSize;
+        if (double.TryParse(fontBox.Text, out double result))
+        {
+            Item.FontSize = result is >= 0.1 and <= 256 ? result : Defaults.FontSize;
+        }
+        else
+        {
+            Item.FontSize = Defaults.FontSize;
+        }
     }
 
     private void SelectColor(object o, RoutedEventArgs e)
