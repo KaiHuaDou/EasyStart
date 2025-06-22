@@ -34,7 +34,7 @@
             <ComboBox x:Name="sizeBox"
                       Grid.Column="1"
                       Margin="0,0,0,10"
-                      SelectedIndex="1" SelectionChanged="TileSizeChanged">
+                      SelectedIndex="1">
                 <ComboBoxItem Content="{x:Static text:Tile.SizeSmall}" />
                 <ComboBoxItem Content="{x:Static text:Tile.SizeMedium}" />
                 <ComboBoxItem Content="{x:Static text:Tile.SizeWide}" />
@@ -44,15 +44,15 @@
                 <ComboBoxItem Content="{x:Static text:Tile.SizeLarge}" />
             </ComboBox>
             <TextBlock Grid.Row="1" Text="{x:Static text:TextTile.ContentText}" />
-            <TextBox x:Name="contentBox"
+            <TextBox x:Name="ContentBox"
                      Grid.Row="1" Grid.Column="1"
                      Margin="0,0,0,10"
-                     AcceptsReturn="True" TextChanged="ContentChanged" />
+                     AcceptsReturn="True" Text="Text" />
             <TextBlock Grid.Row="2" Text="{x:Static text:Tile.FontSizeText}" />
-            <TextBox x:Name="fontSizeBox"
+            <TextBox x:Name="FontSizeBox"
                      Grid.Row="2" Grid.Column="1"
                      Margin="0,0,0,10"
-                     TextChanged="FontChanged" />
+                     Text="19" />
             <TextBlock Grid.Row="3" Text="{x:Static text:Tile.ColorText}" />
             <Button Grid.Row="3" Grid.Column="1"
                     Margin="0,0,0,10" Padding="20,3"
@@ -64,14 +64,12 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <ComboBox x:Name="VerticalAlignmentBox" SelectedIndex="0" SelectionChanged="VerticalAlignmentChanged">
+                <ComboBox x:Name="VerticalAlignmentBox" SelectedIndex="0">
                     <ComboBoxItem Content="中" />
                     <ComboBoxItem Content="上" />
                     <ComboBoxItem Content="下" />
                 </ComboBox>
-                <ComboBox x:Name="HorizontalAlignmentBox"
-                          Grid.Column="1"
-                          SelectedIndex="0" SelectionChanged="HorizontalAlignmentChanged">
+                <ComboBox x:Name="HorizontalAlignmentBox" Grid.Column="1" SelectedIndex="0">
                     <ComboBoxItem Content="中" />
                     <ComboBoxItem Content="左" />
                     <ComboBoxItem Content="右" />
@@ -82,14 +80,12 @@
                         Orientation="Horizontal">
                 <CheckBox x:Name="TextShadowBox"
                           Margin="10,0,0,0"
-                          Checked="TextShadowBoxChecked"
                           Content="{x:Static text:TextTile.TextShadowText}"
-                          Unchecked="TextShadowBoxChecked" />
+                          IsChecked="True" />
                 <CheckBox x:Name="ShadowBox"
                           Margin="10,0,0,0"
-                          Checked="ShadowBoxChecked"
                           Content="{x:Static text:Tile.ShadowText}"
-                          Unchecked="ShadowBoxChecked" />
+                          IsChecked="True" />
             </StackPanel>
             <StackPanel Grid.Row="6" Grid.ColumnSpan="2"
                         HorizontalAlignment="Right"

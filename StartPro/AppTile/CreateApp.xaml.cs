@@ -22,7 +22,7 @@ public partial class CreateApp : Window
         else
         {
             Item = t;
-            Original = FastCopy<AppTile>.Copy(Item);
+            Original = FastCopy.Copy(Item);
         }
 
         Item.IsEnabled = false;
@@ -81,19 +81,14 @@ public partial class CreateApp : Window
 
     private void FontChanged(object o, TextChangedEventArgs e)
     {
-        if (double.TryParse(fontBox.Text, out double result))
-        {
-            Item.FontSize = result is >= 0.1 and <= 256 ? result : Defaults.FontSize;
-        }
-        else
-        {
-            Item.FontSize = Defaults.FontSize;
-        }
+        Item.FontSize = double.TryParse(fontBox.Text, out double result)
+            && result is >= 0.1 and <= 256
+            ? result : Defaults.FontSize;
     }
 
     private void SelectColor(object o, RoutedEventArgs e)
     {
-        if (Utils.TrySelectColor(out Color color))
+        if (Utils.TrySelectColor(out Color color, this))
             Item.TileColor = new SolidColorBrush(color);
     }
 
@@ -117,8 +112,7 @@ public partial class CreateApp : Window
 
     private void WindowClosing(object o, CancelEventArgs e)
     {
-        if (Item is not null)
-            Item.Margin = new Thickness(TileDatas.BaseMargin);
+        Item?.Margin = new Thickness(TileDatas.BaseMargin);
         mainPanel.Children.Remove(Item);
     }
 }

@@ -57,9 +57,9 @@ public partial class TextTile
         set => SetValue(TextHorizontalAlignmentProperty, value);
     }
 
-    public override void WriteAttributes(ref XmlElement element)
+    public override XmlElement WriteAttributes(XmlElement element)
     {
-        base.WriteAttributes(ref element);
+        element = base.WriteAttributes(element);
         element.SetAttribute("Type", "TextTile");
         element.SetAttribute("Text", Text);
         element.SetAttribute("TextShadow", TextShadow.ToString( ));
@@ -69,6 +69,7 @@ public partial class TextTile
         element.SetAttribute("FontWeight", (FontWeight == FontWeights.Bold).ToString( ));
         element.SetAttribute("FontFamily", FontFamily.ToString( ));
         element.SetAttribute("FontSize", FontSize.ToString( ));
+        return element;
     }
 
     public override void ReadAttributes(XmlNode node)

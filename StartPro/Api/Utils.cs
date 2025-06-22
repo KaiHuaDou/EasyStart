@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Security.Principal;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using StartPro.Resources;
 
@@ -51,16 +49,16 @@ public static class Utils
         return shortcut.TargetPath;
     }
 
-    public static bool TrySelectColor(out Color color)
+    public static bool TrySelectColor(out Color color, System.Windows.Window owner)
     {
-        System.Windows.Forms.ColorDialog dialog = new( )
+        ColorPickerDialog picker = new( ) { Owner = owner };
+        picker.ShowDialog();
+        if (picker.IsSelected)
         {
-            AllowFullOpen = true,
-            AnyColor = true,
-        };
-        bool result = dialog.ShowDialog( ) == System.Windows.Forms.DialogResult.OK;
-        color = Color.FromArgb(dialog.Color.A, dialog.Color.R, dialog.Color.G, dialog.Color.B);
-        return result;
+            color = picker.Color;
+            return true;
+        }
+        return false;
     }
 
     public static bool TrySelectExe(out string fileName)
@@ -107,18 +105,19 @@ public static class Utils
 
     public static string ShortenStr(string str, int len = 25)
     {
-        return str.Length <= len ? str
-            : $"{str.AsSpan(0, len - 3)}…";
+        return str.Length <= len ? str : $"{str.AsSpan(0, len - 3)}…";
     }
 }
 
-public static class FastCopy<T>
+public static class FastCopy
 {
-    private static readonly Func<T, T> cache = GetFunc( );
+    public static T Copy<T>(T item)
+    {
+        Func<T, T> cache = GetFunc<T>( );
+        return cache(item);
+    }
 
-    public static T Copy(T item) => cache(item);
-
-    private static Func<T, T> GetFunc( )
+    private static Func<T, T> GetFunc<T>( )
     {
         ParameterExpression parameterExpression = Expression.Parameter(typeof(T), "p");
         List<MemberBinding> memberBindingList = [];
@@ -132,8 +131,8 @@ public static class FastCopy<T>
             memberBindingList.Add(memberBinding);
         }
 
-        MemberInitExpression memberInitExpression = Expression.MemberInit(Expression.New(typeof(T)), [.. memberBindingList]);
-        Expression<Func<T, T>> lambda = Expression.Lambda<Func<T, T>>(memberInitExpression, [parameterExpression]);
+        MemberInitExpression memberInitExpression = Expression.MemberInit(Expression.New(typeof(T)), memberBindingList);
+        Expression<Func<T, T>> lambda = Expression.Lambda<Func<T, T>>(memberInitExpression, parameterExpression);
 
         return lambda.Compile( );
     }

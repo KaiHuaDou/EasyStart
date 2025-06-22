@@ -13,6 +13,6 @@ public class CustomCommand(Action executeMethod) : ICommand
     public void RaiseCanExecuteChanged( )
         => CanExecuteChanged(this, EventArgs.Empty);
 
-    void ICommand.Execute(object o)
+    void ICommand.Execute(object parameter)
         => executeMethod?.Invoke( );
 }

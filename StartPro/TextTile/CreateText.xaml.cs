@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using StartPro.Api;
 
@@ -22,45 +23,76 @@ public partial class CreateText : Window
         else
         {
             Item = t;
-            Original = FastCopy<TextTile>.Copy(Item);
+            Original = FastCopy.Copy(Item);
         }
 
         Item.IsEnabled = false;
         Title = t is null ? StartPro.Resources.Tile.TitleCreate : StartPro.Resources.Tile.TitleEdit;
 
-        sizeBox.SelectedIndex = (int) Item.TileSize;
-        contentBox.Text = Item.Text;
-        fontSizeBox.Text = Item.FontSize.ToString( );
-        ShadowBox.IsChecked = Item.Shadow;
-        TextShadowBox.IsChecked = Item.TextShadow;
-
+        Item.SetBinding(TextTile.TileSizeProperty,
+            new Binding( )
+            {
+                Source = sizeBox,
+                Path = new PropertyPath("SelectedIndex"),
+                Converter = new EnumIntConverter( ),
+            }
+        );
+        Item.SetBinding(TextTile.FontSizeProperty,
+            new Binding( )
+            {
+                Source = FontSizeBox,
+                Path = new PropertyPath("IsChecked"),
+                Converter = new FontSizeConverterX( ),
+            }
+        );
+        Item.SetBinding(TextTile.ShadowProperty,
+            new Binding( )
+            {
+                Source = ShadowBox,
+                Path = new PropertyPath("IsChecked"),
+                Converter = new BoolConverter( ),
+            }
+        );
+        Item.SetBinding(TextTile.TextShadowProperty,
+            new Binding( )
+            {
+                Source = TextShadowBox,
+                Path = new PropertyPath("IsChecked"),
+                Converter = new BoolConverter( ),
+            }
+        );
+        Item.SetBinding(TextTile.TextProperty,
+            new Binding( )
+            {
+                Source = ContentBox,
+                Path = new PropertyPath("Text")
+            }
+        );
+        Item.SetBinding(TextTile.VerticalAlignmentProperty,
+            new Binding( )
+            {
+                Source = VerticalAlignmentBox,
+                Path = new PropertyPath("SelectedIndex"),
+                Converter = new AlignmentEnumIntConverter( ),
+            }
+        );
+        Item.SetBinding(TextTile.HorizontalAlignmentProperty,
+            new Binding( )
+            {
+                Source = HorizontalAlignmentBox,
+                Path = new PropertyPath("SelectedIndex"),
+                Converter = new AlignmentEnumIntConverter( ),
+            }
+        );
         DockPanel.SetDock(Item, Dock.Right);
         mainPanel.Children.Insert(0, Item);
-    }
-    private void TileSizeChanged(object o, SelectionChangedEventArgs e)
-        => Item.TileSize = (TileSize) sizeBox.SelectedIndex;
-
-    private void ContentChanged(object o, RoutedEventArgs e)
-        => Item.Text = contentBox.Text;
-
-    private void FontChanged(object o, TextChangedEventArgs e)
-    {
-        Item.FontSize = double.TryParse(fontSizeBox.Text, out double result)
-            ? (result > 0 ? result : Defaults.FontSize)
-            : Defaults.FontSize;
     }
 
     private void SelectColor(object o, RoutedEventArgs e)
     {
-        if (Utils.TrySelectColor(out Color color))
+        if (Utils.TrySelectColor(out Color color, this))
             Item.TileColor = new SolidColorBrush(color);
     }
-
-    private void ShadowBoxChecked(object o, RoutedEventArgs e)
-        => Item.Shadow = (bool) ShadowBox.IsChecked;
-
-    private void TextShadowBoxChecked(object o, RoutedEventArgs e)
-        => Item.TextShadow = (bool) TextShadowBox.IsChecked;
 
     private void TaskCancel(object o, RoutedEventArgs e)
     {
@@ -76,30 +108,7 @@ public partial class CreateText : Window
 
     private void WindowClosing(object o, CancelEventArgs e)
     {
-        if (Item is not null)
-            Item.Margin = new Thickness(TileDatas.BaseMargin);
+        Item?.Margin = new Thickness(TileDatas.BaseMargin);
         mainPanel.Children.Remove(Item);
-    }
-
-    private void VerticalAlignmentChanged(object o, SelectionChangedEventArgs e)
-    {
-        Item.TextVerticalAlignment = VerticalAlignmentBox.SelectedIndex switch
-        {
-            0 => VerticalAlignment.Center,
-            1 => VerticalAlignment.Top,
-            2 => VerticalAlignment.Bottom,
-            _ => VerticalAlignment.Center
-        };
-    }
-
-    private void HorizontalAlignmentChanged(object o, SelectionChangedEventArgs e)
-    {
-        Item.TextHorizontalAlignment = HorizontalAlignmentBox.SelectedIndex switch
-        {
-            0 => HorizontalAlignment.Center,
-            1 => HorizontalAlignment.Left,
-            2 => HorizontalAlignment.Right,
-            _ => HorizontalAlignment.Center
-        };
     }
 }

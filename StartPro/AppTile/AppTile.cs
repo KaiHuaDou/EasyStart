@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Xml;
 using StartPro.Api;
 
@@ -61,9 +62,9 @@ public partial class AppTile : TileBase
         set => SetValue(ImageShadowProperty, value);
     }
 
-    public override void WriteAttributes(ref XmlElement element)
+    public override XmlElement WriteAttributes(XmlElement element)
     {
-        base.WriteAttributes(ref element);
+        element = base.WriteAttributes(element);
         element.SetAttribute("Type", "AppTile");
         element.SetAttribute("Name", AppName);
         element.SetAttribute("Path", AppPath);
@@ -71,6 +72,7 @@ public partial class AppTile : TileBase
         element.SetAttribute("Shadow", Shadow.ToString( ));
         element.SetAttribute("ImageShadow", ImageShadow.ToString( ));
         element.SetAttribute("FontSize", FontSize.ToString( ));
+        return element;
     }
 
     public override void ReadAttributes(XmlNode node)

@@ -7,13 +7,14 @@ namespace StartPro.Tile;
 
 public partial class TileBase
 {
-    public virtual void WriteAttributes(ref XmlElement element)
+    public virtual XmlElement WriteAttributes(XmlElement element)
     {
         element.SetAttribute("Type", "TileBase");
         element.SetAttribute("Size", ((int) TileSize).ToString( ));
         element.SetAttribute("Color", TileColor.ToString( ));
         element.SetAttribute("Row", Row.ToString( ));
         element.SetAttribute("Column", Column.ToString( ));
+        return element;
     }
 
     public virtual void ReadAttributes(XmlNode node)
@@ -37,7 +38,7 @@ public static class TileStore
         foreach (TileBase tile in tiles)
         {
             XmlElement element = document.CreateElement("Tile");
-            tile.WriteAttributes(ref element);
+            element = tile.WriteAttributes(element);
             Apps.AppendChild(element);
         }
         File.WriteAllText(xmlPath, Apps.OuterXml);

@@ -22,7 +22,9 @@
                FontSize="{Binding FontSize}"
                FontWeight="{Binding FontWeight}"
                FontStyle="{Binding FontStyle}"
-               Text="{Binding Text}">
+               Text="{Binding Text}"
+               TextAlignment="{Binding TextAlignment}"
+               TextDecorations="{Binding TextDecorations}">
         <TextBlock.Effect>
             <DropShadowEffect x:Name="TileTextShadow" Opacity="0.4" Color="#020202" />
         </TextBlock.Effect>

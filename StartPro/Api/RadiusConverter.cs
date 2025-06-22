@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Data;
 using StartPro.Tile;
 
-namespace StartPro;
+namespace StartPro.Api;
 
 public class RadiusConverter : IValueConverter
 {

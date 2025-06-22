@@ -3,7 +3,6 @@
         <OutputType>WinExe</OutputType>
         <TargetFramework>net9.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
-        <UseWindowsForms>true</UseWindowsForms>
         <LangVersion>preview</LangVersion>
     </PropertyGroup>
     <PropertyGroup>
@@ -20,8 +19,17 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="H.NotifyIcon.Wpf" Version="2.3.0" />
+        <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
         <PackageReference Include="SingleInstanceCore" Version="2.2.2" />
         <PackageReference Include="System.Drawing.Common" Version="9.0.6" />
+        <Reference Include="ColorPicker">
+            <HintPath>..\..\Clones\ColorPicker\src\ColorPicker\bin\Debug\net9.0-windows\ColorPicker.dll</HintPath>
+        </Reference>
+        <Reference Include="ColorPicker.Models">
+            <HintPath>..\..\Clones\ColorPicker\src\ColorPicker\bin\Debug\net9.0-windows\ColorPicker.Models.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
         <Compile Update="Resources\AppTile.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>

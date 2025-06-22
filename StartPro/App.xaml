@@ -11,7 +11,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <local:RadiusConverter x:Key="RadiusConverter" />
+                    <api:RadiusConverter x:Key="RadiusConverter" />
                     <api:NegativeConverter x:Key="NegativeConverter" />
                     <LinearGradientBrush x:Key="MaskDeepBrush" StartPoint="0,0" EndPoint="0,1">
                         <LinearGradientBrush.GradientStops>

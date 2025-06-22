@@ -140,12 +140,12 @@ public partial class MainWindow : Window
 
     private void ShowHideAppList(object o, RoutedEventArgs e)
     {
-        if ((AppListBorder.RenderTransform as TranslateTransform).X != 0 && Resources["ShowAppList"] is Storyboard showAnimation)
+        if ((AppListBorder.RenderTransform as TranslateTransform)?.X != 0 && Resources["ShowAppList"] is Storyboard showAnimation)
         {
             AppListBorder.Visibility = Visibility.Visible;
             showAnimation.Begin(AppListBorder);
         }
-        else if ((AppListBorder.RenderTransform as TranslateTransform).X == 0 && Resources["HideAppList"] is Storyboard hideAnimation)
+        else if (AppListBorder.RenderTransform is TranslateTransform { X: 0 } && Resources["HideAppList"] is Storyboard hideAnimation)
         {
             hideAnimation.Completed += (o, e) => AppListBorder.Visibility = Visibility.Collapsed;
             hideAnimation.Begin(AppListBorder);

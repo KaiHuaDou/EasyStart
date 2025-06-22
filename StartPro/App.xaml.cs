@@ -15,13 +15,12 @@ public partial class App : Application, ISingleInstance
 
     public static class Program
     {
-
         [STAThread]
         public static void Main( )
         {
             App app = new( );
             app.InitializeComponent( );
-            app.Run();
+            app.Run( );
             SingleInstance.Cleanup( );
         }
     }

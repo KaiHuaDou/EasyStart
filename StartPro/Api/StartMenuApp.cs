@@ -11,6 +11,9 @@ public class StartMenuApp
 
     public static IEnumerable<StartMenuApp> Search( )
     {
+#if DEBUG
+        yield break;
+#endif
         foreach (string app in Directory.GetFiles(UserAppsPath, "*.lnk", SearchOption.AllDirectories))
             yield return Append(app);
         foreach (string app in Directory.GetFiles(SystemAppsPath, "*.lnk", SearchOption.AllDirectories))
