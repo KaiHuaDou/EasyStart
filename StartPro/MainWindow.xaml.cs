@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -24,6 +26,14 @@ public partial class MainWindow : Window
         Top = SystemParameters.WorkArea.Height - Height;
         Left = (SystemParameters.WorkArea.Width - Width) / 2;
         LoadBackground( );
+
+        AppList.ItemsSource = new Collection<StartMenuApp>{
+            new( ) {
+                AppName = "Loading",
+                AppPath = "notepad.exe",
+                AppIcon = new BitmapImage()
+            }
+        };
 
         foreach (TileBase tile in App.Tiles)
         {
@@ -176,7 +186,7 @@ public partial class MainWindow : Window
     }
 
     private void WindowDeactivated(object o, EventArgs e)
-            => ShowHide( );
+        => ShowHide( );
 
     private void WindowExit(object o, RoutedEventArgs e)
     {
@@ -187,6 +197,14 @@ public partial class MainWindow : Window
     {
         TilePanel.ResizeToFit( );
         ShowHideAppList(null, null);
-        AppList.ItemsSource = StartMenuApp.Search( );
+        Task.Factory.StartNew(( ) =>
+        {
+            StartMenuApp.LoadApps( );
+            Dispatcher.BeginInvoke(( ) =>
+            {
+                StartMenuApp.LoadIcon( );
+                AppList.ItemsSource = StartMenuApp.Apps;
+            });
+        });
     }
 }

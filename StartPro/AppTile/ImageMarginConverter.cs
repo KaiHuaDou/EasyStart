@@ -6,7 +6,7 @@ using System.Windows.Data;
 
 namespace StartPro.Tile;
 
-public class MarginConverter : IValueConverter
+public class ImageMarginConverter : IValueConverter
 {
     public static int ImageMargin => 15;
 

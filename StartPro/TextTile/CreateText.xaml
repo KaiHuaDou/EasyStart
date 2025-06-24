@@ -33,7 +33,7 @@
             <ComboBox x:Name="sizeBox"
                       Grid.Column="1"
                       Margin="0,0,0,10"
-                      SelectedIndex="1">
+                      SelectedIndex="1" SelectionChanged="TileSizeChanged">
                 <ComboBoxItem Content="{x:Static text:Tile.SizeSmall}" />
                 <ComboBoxItem Content="{x:Static text:Tile.SizeMedium}" />
                 <ComboBoxItem Content="{x:Static text:Tile.SizeWide}" />
@@ -58,7 +58,9 @@
                     <ComboBoxItem Content="中" />
                     <ComboBoxItem Content="下" />
                 </ComboBox>
-                <ComboBox x:Name="HorizontalAlignmentBox" Grid.Column="1" SelectedIndex="0" SelectionChanged="HorizontalAlignmentBoxSelectionChanged">
+                <ComboBox x:Name="HorizontalAlignmentBox"
+                          Grid.Column="1"
+                          SelectedIndex="0" SelectionChanged="HorizontalAlignmentBoxSelectionChanged">
                     <ComboBoxItem Content="左" />
                     <ComboBoxItem Content="中" />
                     <ComboBoxItem Content="右" />
@@ -71,8 +73,8 @@
             <CheckBox x:Name="ShadowBox"
                       Grid.Row="4" Grid.ColumnSpan="2"
                       Margin="10,0,0,10"
-                      Content="{x:Static text:Tile.ShadowText}"
-                      IsChecked="True" Checked="ShadowBoxChecked" />
+                      Checked="ShadowBoxChecked" IsChecked="True" Unchecked="ShadowBoxChecked"
+                      Content="{x:Static text:Tile.ShadowText}" />
             <StackPanel Grid.Row="5" Grid.ColumnSpan="2"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">

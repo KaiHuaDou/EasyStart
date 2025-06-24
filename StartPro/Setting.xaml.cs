@@ -33,7 +33,7 @@ public partial class Setting : Window
 
     private void SelectColorClick(object o, RoutedEventArgs e)
     {
-        if (Utils.TrySelectColor(out Color color, this))
+        if (Utils.TrySelectColor(Defaults.Background.Color, out Color color, this))
             BackgroundBox.Text = color.ToString( );
     }
 

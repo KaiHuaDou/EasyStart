@@ -17,7 +17,7 @@ public class TextConfig : IStorable
     public TextDecorationCollection TextDecorations { get; set; } = [];
     public TextAlignment TextAlignment { get; set; } = Defaults.TextAlignment;
     public bool TextShadow { get; set; } = true;
-    public Color TextColor { get; set; } = Defaults.Foreground.Color;
+    public SolidColorBrush TextColor { get; set; } = Defaults.Foreground;
 
     public void ReadAttributes(XmlNode node)
     {
@@ -29,7 +29,7 @@ public class TextConfig : IStorable
         TextDecorations = TextDecorationCollectionConverter.ConvertFromString(node.GetAttribute("TextDecoration"));
         TextAlignment = Enum.Parse<TextAlignment>(node.GetAttribute("TextAlignment"));
         TextShadow = bool.Parse(node.GetAttribute("TextShadow"));
-        TextColor = (Color) ColorConverter.ConvertFromString(node.GetAttribute("TextColor"));
+        TextColor = new SolidColorBrush((Color) ColorConverter.ConvertFromString(node.GetAttribute("TextColor")));
     }
 
     public XmlElement WriteAttributes(XmlElement element)

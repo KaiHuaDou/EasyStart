@@ -103,8 +103,9 @@
                   Margin="10,5,0,5"
                   Content="{x:Static text:TextConfigure.TextShadowText}" />
         <TextBlock Grid.Row="8" VerticalAlignment="Center" Text="{x:Static text:TextConfigure.ColorText}" />
-        <picker:StandardColorPicker x:Name="colorPicker"
+        <picker:PortableColorPicker x:Name="colorPicker"
                                     Grid.Row="8" Grid.Column="1"
+                                    MinHeight="25"
                                     Margin="10,5,0,5" />
         <StackPanel Grid.Row="9" Grid.ColumnSpan="2"
                     HorizontalAlignment="Right"

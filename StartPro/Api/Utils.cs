@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq.Expressions;
-using System.Reflection;
 using System.Security.Principal;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -49,13 +46,13 @@ public static class Utils
         return shortcut.TargetPath;
     }
 
-    public static bool TrySelectColor(out Color color, System.Windows.Window owner)
+    public static bool TrySelectColor(Color from, out Color result, System.Windows.Window owner)
     {
-        ColorDialog dialog = new( ) { Owner = owner };
+        ColorDialog dialog = new( ) { Owner = owner, Color = from };
         dialog.ShowDialog( );
         if (dialog.IsSelected)
         {
-            color = dialog.Color;
+            result = dialog.Color;
             return true;
         }
         return false;
@@ -113,34 +110,5 @@ public static class Utils
         return double.TryParse(value, out double result)
                 && result > 0
                 ? result : Defaults.FontSize;
-    }
-}
-
-public static class FastCopy
-{
-    public static T Copy<T>(T item)
-    {
-        Func<T, T> cache = GetFunc<T>( );
-        return cache(item);
-    }
-
-    private static Func<T, T> GetFunc<T>( )
-    {
-        ParameterExpression parameterExpression = Expression.Parameter(typeof(T), "p");
-        List<MemberBinding> memberBindingList = [];
-
-        foreach (PropertyInfo item in typeof(T).GetProperties( ))
-        {
-            if (!item.CanWrite)
-                continue;
-            MemberExpression property = Expression.Property(parameterExpression, typeof(T).GetProperty(item.Name));
-            MemberBinding memberBinding = Expression.Bind(item, property);
-            memberBindingList.Add(memberBinding);
-        }
-
-        MemberInitExpression memberInitExpression = Expression.MemberInit(Expression.New(typeof(T)), memberBindingList);
-        Expression<Func<T, T>> lambda = Expression.Lambda<Func<T, T>>(memberInitExpression, parameterExpression);
-
-        return lambda.Compile( );
     }
 }

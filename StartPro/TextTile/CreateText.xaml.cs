@@ -8,9 +8,14 @@ namespace StartPro.Tile;
 
 public partial class CreateText : Window
 {
+    public TextTile? Item { get; set; } = new( );
+
+    public TextTile Original { get; set; }
+
     public CreateText(TextTile t = null)
     {
         InitializeComponent( );
+        MaxWidth = Defaults.WidthPercent * SystemParameters.PrimaryScreenWidth;
 
         if (t is null)
         {
@@ -18,8 +23,8 @@ public partial class CreateText : Window
         }
         else
         {
-            Item = t;
-            Original = FastCopy.Copy(Item);
+            Original = t;
+            Item = TileBase.Clone(t);
         }
 
         Item.IsEnabled = false;
@@ -34,8 +39,6 @@ public partial class CreateText : Window
         mainPanel.Children.Insert(0, Item);
     }
 
-    public TextTile Item { get; set; } = new( );
-    public TextTile Original { get; set; }
     private void ConfigureText(object o, RoutedEventArgs e)
     {
         TextConfigureDialog dialog = new(Item.TextConfig)
@@ -50,18 +53,21 @@ public partial class CreateText : Window
     }
 
     private void ContentBoxTextChanged(object sender, TextChangedEventArgs e)
-        => Item.Text = ContentBox.Text;
+        => Item?.Text = ContentBox.Text;
 
     private void HorizontalAlignmentBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
-        => Item.TextHorizontalAlignment = (HorizontalAlignment) HorizontalAlignmentBox.SelectedIndex;
+        => Item?.TextHorizontalAlignment = (HorizontalAlignment) HorizontalAlignmentBox.SelectedIndex;
 
     private void SelectColor(object o, RoutedEventArgs e)
     {
-        if (Utils.TrySelectColor(out Color color, this))
+        if (Utils.TrySelectColor(Item.TileColor.Color, out Color color, this))
             Item.TileColor = new SolidColorBrush(color);
     }
     private void ShadowBoxChecked(object sender, RoutedEventArgs e)
-        => Item.Shadow = ShadowBox.IsChecked == true;
+        => Item?.Shadow = ShadowBox.IsChecked == true;
+
+    private void TileSizeChanged(object sender, SelectionChangedEventArgs e)
+        => Item?.TileSize = (TileSize) sizeBox.SelectedIndex;
 
     private void TaskCancel(object o, RoutedEventArgs e)
     {
@@ -71,12 +77,12 @@ public partial class CreateText : Window
 
     private void TaskOk(object o, RoutedEventArgs e)
     {
-        Item.IsEnabled = true;
+        Item?.IsEnabled = true;
         Close( );
     }
 
     private void VerticalAlignmentBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
-        => Item.TextVerticalAlignment = (VerticalAlignment) VerticalAlignmentBox.SelectedIndex;
+        => Item?.TextVerticalAlignment = (VerticalAlignment) VerticalAlignmentBox.SelectedIndex;
 
     private void WindowClosing(object o, CancelEventArgs e)
     {

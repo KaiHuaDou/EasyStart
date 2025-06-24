@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using ColorPicker.Models; // 添加引用
 
 namespace StartPro.Api;
 
@@ -46,7 +45,7 @@ public partial class TextConfigureDialog : Window
         TextDecorationStrikeThroughBlock.IsChecked = TextConfig.TextDecorations.Contains(TextDecorations.Strikethrough[0]);
         TextDecorationBaseLineBlock.IsChecked = TextConfig.TextDecorations.Contains(TextDecorations.Baseline[0]);
         TextShadowBox.IsChecked = TextConfig.TextShadow;
-        colorPicker.SelectedColor = TextConfig.TextColor;
+        colorPicker.SelectedColor = TextConfig.TextColor.Color;
     }
 
     private void TaskCancel(object o, RoutedEventArgs e)
@@ -70,12 +69,12 @@ public partial class TextConfigureDialog : Window
         {
             FontSize = Utils.ToFontSize(FontSizeBox.Text),
             FontFamily = (FontFamily) FontFamilyBox.SelectedItem,
-            FontWeight = (FontWeightBox.SelectedItem as TextBlock).FontWeight,
-            FontStyle = (FontStyleBox.SelectedItem as TextBlock).FontStyle,
-            FontStretch = (FontStretchBox.SelectedItem as TextBlock).FontStretch,
+            FontWeight = (FontWeightBox.SelectedItem as TextBlock)?.FontWeight ?? Defaults.FontWeight,
+            FontStyle = (FontStyleBox.SelectedItem as TextBlock)?.FontStyle ?? Defaults.FontStyle,
+            FontStretch = (FontStretchBox.SelectedItem as TextBlock)?.FontStretch ?? Defaults.FontStretch,
             TextDecorations = textDecorations,
-            TextAlignment = (TextAlignmentBox.SelectedItem as TextBlock).TextAlignment,
-            TextColor = colorPicker.SelectedColor,
+            TextAlignment = (TextAlignmentBox.SelectedItem as TextBlock)?.TextAlignment ?? Defaults.TextAlignment,
+            TextColor = new SolidColorBrush(colorPicker.SelectedColor),
             TextShadow = TextShadowBox.IsChecked == true
         };
         Close( );

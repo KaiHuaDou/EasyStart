@@ -15,10 +15,10 @@ public partial class TextTile : TileBase
     {
         Panel parent = Parent as Panel;
         parent.Children.Remove(this);
-        CreateText c = new(this);
-        c.ShowDialog( );
-        c.Item.IsEnabled = true;
-        parent.Children.Add(c.Item);
-        c.Item.Refresh( );
+        CreateText dialog = new(this);
+        dialog.ShowDialog( );
+        dialog.Item.IsEnabled = true;
+        parent.Children.Add(dialog.Item);
+        dialog.Item.Refresh( );
     }
 }

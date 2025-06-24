@@ -5,7 +5,7 @@
                xmlns:text="clr-namespace:StartPro.Resources"
                xmlns:tile="clr-namespace:StartPro.Tile">
     <tile:TileBase.Resources>
-        <tile:MarginConverter x:Key="MarginConverter" />
+        <tile:ImageMarginConverter x:Key="ImageMarginConverter" />
     </tile:TileBase.Resources>
     <tile:TileBase.ContextMenu>
         <ContextMenu>
@@ -34,7 +34,7 @@
                    FontSize="{Binding FontSize, ElementName=userControl}"
                    Text="{Binding AppName}"
                    TextWrapping="WrapWithOverflow" />
-        <Image x:Name="image" Margin="{Binding TileSize, Converter={StaticResource MarginConverter}}" Source="{Binding AppIcon}">
+        <Image x:Name="image" Margin="{Binding TileSize, Converter={StaticResource ImageMarginConverter}}" Source="{Binding AppIcon}">
             <Image.Effect>
                 <DropShadowEffect x:Name="TileImageShadow" Opacity="0.4" Color="#020202" />
             </Image.Effect>

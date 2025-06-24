@@ -5,43 +5,11 @@ using System.Xml;
 
 namespace StartPro.Tile;
 
-public partial class TileBase : IStorable
-{
-    public virtual XmlElement WriteAttributes(XmlElement element)
-    {
-        element.SetAttribute("Type", "TileBase");
-        element.SetAttribute("Size", ((int) TileSize).ToString( ));
-        element.SetAttribute("Color", TileColor.ToString( ));
-        element.SetAttribute("Row", Row.ToString( ));
-        element.SetAttribute("Column", Column.ToString( ));
-        return element;
-    }
-
-    public virtual void ReadAttributes(XmlNode node)
-    {
-        TileSize = (TileSize) int.Parse(node.GetAttribute("Size"));
-        TileColor = new BrushConverter( ).ConvertFrom(node.GetAttribute("Color")) as SolidColorBrush;
-        Row = int.Parse(node.GetAttribute("Row"));
-        Column = int.Parse(node.GetAttribute("Column"));
-    }
-}
-
 public static class TileStore
 {
     private const string xmlPath = "tiles.xml";
     private static readonly XmlDocument document = new( );
     private static XmlNode Apps = document.CreateElement("Tiles");
-
-    public static void Save(HashSet<TileBase> tiles)
-    {
-        foreach (TileBase tile in tiles)
-        {
-            XmlElement element = document.CreateElement("Tile");
-            element = tile.WriteAttributes(element);
-            Apps.AppendChild(element);
-        }
-        File.WriteAllText(xmlPath, Apps.OuterXml);
-    }
 
     public static HashSet<TileBase> Load( )
     {
@@ -68,6 +36,17 @@ public static class TileStore
         }
         Apps = document.CreateElement("Tiles");
         return result;
+    }
+
+    public static void Save(HashSet<TileBase> tiles)
+    {
+        foreach (TileBase tile in tiles)
+        {
+            XmlElement element = document.CreateElement("Tile");
+            element = tile.WriteAttributes(element);
+            Apps.AppendChild(element);
+        }
+        File.WriteAllText(xmlPath, Apps.OuterXml);
     }
 }
 

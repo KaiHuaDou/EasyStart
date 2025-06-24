@@ -52,9 +52,12 @@ public partial class AppTile : TileBase
     {
         AppTile tile = o as AppTile;
         string value = e.NewValue as string;
-        FileInfo app = new(value);
-        tile.AppName = app.Name.Replace(app.Extension, "");
         tile.AppIcon = value;
+        if (!tile.IsEnabled)
+        {
+            FileInfo app = new(value);
+            tile.AppName = app.Name.Replace(app.Extension, "");
+        }
     }
 
     protected static void ImageShadowChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)

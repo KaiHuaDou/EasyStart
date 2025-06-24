@@ -37,7 +37,7 @@ public class DataStore<T> where T : class, new()
 
     public void Save( )
     {
-        FileStream Stream = new(File, FileMode.OpenOrCreate, FileAccess.Write);
+        FileStream Stream = new(File, FileMode.Create, FileAccess.Write);
         new XmlSerializer(typeof(T)).Serialize(Stream, Content);
     }
 }
