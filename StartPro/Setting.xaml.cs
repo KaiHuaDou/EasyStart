@@ -10,7 +10,8 @@ public partial class Setting : Window
     public Setting( )
     {
         InitializeComponent( );
-        backgroundBox.Text = App.Settings.Content.Background;
+        MaxWidth = Defaults.WidthPercent * SystemParameters.PrimaryScreenWidth;
+        BackgroundBox.Text = App.Settings.Content.Background;
         UIThemeBox.SelectedIndex = App.Settings.Content.UITheme;
         UIFlatBox.IsChecked = App.Settings.Content.UIFlat;
     }
@@ -22,7 +23,7 @@ public partial class Setting : Window
     {
         App.Settings.Content = new Config
         {
-            Background = backgroundBox.Text,
+            Background = BackgroundBox.Text,
             UITheme = UIThemeBox.SelectedIndex,
             UIFlat = UIFlatBox.IsChecked == true
         };
@@ -33,13 +34,13 @@ public partial class Setting : Window
     private void SelectColorClick(object o, RoutedEventArgs e)
     {
         if (Utils.TrySelectColor(out Color color, this))
-            backgroundBox.Text = color.ToString( );
+            BackgroundBox.Text = color.ToString( );
     }
 
     private void SelectImageClick(object o, RoutedEventArgs e)
     {
         if (Utils.TrySelectImage(out string fileName))
-            backgroundBox.Text = fileName;
+            BackgroundBox.Text = fileName;
     }
 
     private void UIThemeBoxSelectionChanged(object o, SelectionChangedEventArgs e)

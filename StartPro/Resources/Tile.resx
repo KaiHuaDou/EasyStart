@@ -97,9 +97,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ColorText" xml:space="preserve">
-    <value>Color:</value>
-  </data>
   <data name="ContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
@@ -108,9 +105,6 @@
   </data>
   <data name="ContextFastChange" xml:space="preserve">
     <value>Change Size</value>
-  </data>
-  <data name="FontSizeText" xml:space="preserve">
-    <value>Font Size:</value>
   </data>
   <data name="ShadowText" xml:space="preserve">
     <value>Tile Shadow</value>
@@ -131,7 +125,7 @@
     <value>Tall</value>
   </data>
   <data name="SizeText" xml:space="preserve">
-    <value>Size:</value>
+    <value>Size: </value>
   </data>
   <data name="SizeThin" xml:space="preserve">
     <value>Thin</value>

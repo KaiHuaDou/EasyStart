@@ -2,17 +2,13 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace StartPro.Api;
+namespace StartPro.Converter;
 
-public class FontSizeConverterX : IValueConverter
+public class NegativeConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return double.TryParse(value.ToString(), out double result)
-                && result > 0
-                ? result : Defaults.FontSize;
-    }
+        => -(double) value - 48;
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        => value.ToString( );
+        => -(double) value - 48;
 }

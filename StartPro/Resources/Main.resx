@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BackgroundText" xml:space="preserve">
-    <value>Background:</value>
+    <value>Background: </value>
   </data>
   <data name="CancelText" xml:space="preserve">
     <value>Cancel</value>
@@ -169,6 +169,6 @@
     <value>Flat UI</value>
   </data>
   <data name="UIThemeText" xml:space="preserve">
-    <value>UI Theme:</value>
+    <value>UI Theme: </value>
   </data>
 </root>

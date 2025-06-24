@@ -124,7 +124,7 @@
     <value>以管理员身份运行</value>
   </data>
   <data name="IconText" xml:space="preserve">
-    <value>图标:</value>
+    <value>图标：</value>
   </data>
   <data name="ImageShadowText" xml:space="preserve">
     <value>图像阴影</value>
@@ -133,9 +133,9 @@
     <value>导入</value>
   </data>
   <data name="NameText" xml:space="preserve">
-    <value>名称:</value>
+    <value>名称：</value>
   </data>
   <data name="PathText" xml:space="preserve">
-    <value>路径:</value>
+    <value>路径：</value>
   </data>
 </root>

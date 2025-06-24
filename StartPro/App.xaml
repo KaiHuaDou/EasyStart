@@ -1,7 +1,7 @@
 ﻿<Application x:Class="StartPro.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:api="clr-namespace:StartPro.Api"
+             xmlns:converter="clr-namespace:StartPro.Converter"
              xmlns:local="clr-namespace:StartPro"
              xmlns:tile="clr-namespace:StartPro.Tile"
              Exit="AppExit"
@@ -11,8 +11,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <api:RadiusConverter x:Key="RadiusConverter" />
-                    <api:NegativeConverter x:Key="NegativeConverter" />
+                    <converter:RadiusConverter x:Key="RadiusConverter" />
+                    <converter:NegativeConverter x:Key="NegativeConverter" />
                     <LinearGradientBrush x:Key="MaskDeepBrush" StartPoint="0,0" EndPoint="0,1">
                         <LinearGradientBrush.GradientStops>
                             <GradientStop Offset="0" Color="#34D9F4FF" />

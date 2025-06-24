@@ -18,13 +18,14 @@
                Margin="5"
                HorizontalAlignment="{Binding TextHorizontalAlignment}"
                VerticalAlignment="{Binding TextVerticalAlignment}"
-               FontFamily="{Binding FontFamily}"
-               FontSize="{Binding FontSize}"
-               FontWeight="{Binding FontWeight}"
-               FontStyle="{Binding FontStyle}"
+               FontFamily="{Binding TextConfig.FontFamily}"
+               FontSize="{Binding TextConfig.FontSize}"
+               FontWeight="{Binding TextConfig.FontWeight}"
+               FontStyle="{Binding TextConfig.FontStyle}"
+               FontStretch="{Binding TextConfig.FontStretch}"
                Text="{Binding Text}"
-               TextAlignment="{Binding TextAlignment}"
-               TextDecorations="{Binding TextDecorations}">
+               TextAlignment="{Binding TextConfig.TextAlignment}"
+               TextDecorations="{Binding TextConfig.TextDecorations}">
         <TextBlock.Effect>
             <DropShadowEffect x:Name="TileTextShadow" Opacity="0.4" Color="#020202" />
         </TextBlock.Effect>

@@ -1,10 +1,11 @@
-# EasyStart
-![](https://img.shields.io/github/actions/workflow/status/kaihuadou/easystart/build.yml) ![](https://img.shields.io/github/license/kaihuadou/easystart) ![](https://img.shields.io/github/commit-activity/w/kaihuadou/easystart)
+ï»¿# EasyStart
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/kaihuadou/easystart/build.yml)
+ ![](https://img.shields.io/github/license/kaihuadou/easystart) ![](https://img.shields.io/github/commit-activity/w/kaihuadou/easystart)
 
-> ÉĞÎ´Íê¹¤£¬Ôİ²»¿ÉÓÃ
+> å°šæœªå®Œå·¥ï¼Œæš‚ä¸å¯ç”¨
 
-Windows ´ÅÌù¿ªÊ¼²Ëµ¥µÄÌæ´úÆ·
+Windows ç£è´´å¼€å§‹èœå•çš„æ›¿ä»£å“
 
-## ¹¹½¨
+## æ„å»º
 
-Í¨¹ı [GitHub Actions](https://github.com/KaiHuaDou/EasyStart/actions) »ñÈ¡×îĞÂ¹¹½¨
+é€šè¿‡ [GitHub Actions](https://github.com/KaiHuaDou/EasyStart/actions) è·å–æœ€æ–°æ„å»º

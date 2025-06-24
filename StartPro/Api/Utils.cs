@@ -51,11 +51,11 @@ public static class Utils
 
     public static bool TrySelectColor(out Color color, System.Windows.Window owner)
     {
-        ColorPickerDialog picker = new( ) { Owner = owner };
-        picker.ShowDialog();
-        if (picker.IsSelected)
+        ColorDialog dialog = new( ) { Owner = owner };
+        dialog.ShowDialog( );
+        if (dialog.IsSelected)
         {
-            color = picker.Color;
+            color = dialog.Color;
             return true;
         }
         return false;
@@ -106,6 +106,13 @@ public static class Utils
     public static string ShortenStr(string str, int len = 25)
     {
         return str.Length <= len ? str : $"{str.AsSpan(0, len - 3)}…";
+    }
+
+    public static double ToFontSize(string value)
+    {
+        return double.TryParse(value, out double result)
+                && result > 0
+                ? result : Defaults.FontSize;
     }
 }
 

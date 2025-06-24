@@ -5,10 +5,10 @@ namespace StartPro.Tile;
 
 public partial class TextTile : TileBase
 {
-    protected static void TextShadowChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+    protected static void TextConfigChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
         TextTile textTile = (o as TextTile)!;
-        textTile.TileTextShadow.Opacity = (!App.Settings.Content.UIFlat && textTile.TextShadow) ? 0.4 : 0;
+        textTile.TileTextShadow.Opacity = (!App.Settings.Content.UIFlat && textTile.TextConfig.TextShadow) ? 0.4 : 0;
     }
 
     private void EditTile(object o, RoutedEventArgs e)

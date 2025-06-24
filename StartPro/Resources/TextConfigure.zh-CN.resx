@@ -117,58 +117,115 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BackgroundText" xml:space="preserve">
-    <value>背景：</value>
+  <data name="ColorText" xml:space="preserve">
+    <value>颜色:</value>
   </data>
-  <data name="CancelText" xml:space="preserve">
-    <value>取消</value>
+  <data name="FontFamilyText" xml:space="preserve">
+    <value>字体：</value>
   </data>
-  <data name="OkText" xml:space="preserve">
-    <value>确定</value>
+  <data name="FontSizeText" xml:space="preserve">
+    <value>字号:</value>
   </data>
-  <data name="SelectColorText" xml:space="preserve">
-    <value>选择颜色</value>
+  <data name="FontStretchCondensed" xml:space="preserve">
+    <value>挤压</value>
   </data>
-  <data name="SelectExeText" xml:space="preserve">
-    <value>选择可执行文件</value>
+  <data name="FontStretchExpanded" xml:space="preserve">
+    <value>扩展</value>
   </data>
-  <data name="SelectImageText" xml:space="preserve">
-    <value>选择图像</value>
+  <data name="FontStretchExtraCondensed" xml:space="preserve">
+    <value>大挤压</value>
   </data>
-  <data name="TitleSetting" xml:space="preserve">
-    <value>设置</value>
+  <data name="FontStretchExtraExpanded" xml:space="preserve">
+    <value>大扩展</value>
   </data>
-  <data name="TrayExit" xml:space="preserve">
-    <value>退出</value>
+  <data name="FontStretchNormal" xml:space="preserve">
+    <value>普通</value>
   </data>
-  <data name="TrayShowHide" xml:space="preserve">
-    <value>显示/隐藏</value>
+  <data name="FontStretchSemiCondensed" xml:space="preserve">
+    <value>半挤压</value>
   </data>
-  <data name="UITheme.Aero.NormalColor" xml:space="preserve">
-    <value>Windows Vista/7 的默认主题</value>
+  <data name="FontStretchSemiExpanded" xml:space="preserve">
+    <value>半扩展</value>
   </data>
-  <data name="UITheme.Aero2.NormalColor" xml:space="preserve">
-    <value>Windows 8/8.1/10 的默认主题</value>
+  <data name="FontStretchText" xml:space="preserve">
+    <value>字体拉伸：</value>
   </data>
-  <data name="UITheme.Classic" xml:space="preserve">
-    <value>Windows 9x 系列的默认主题</value>
+  <data name="FontStretchUltraCondensed" xml:space="preserve">
+    <value>超大挤压</value>
   </data>
-  <data name="UITheme.Luna.Homestead" xml:space="preserve">
-    <value>Windows XP 的橄榄色主题</value>
+  <data name="FontStretchUltraExpanded" xml:space="preserve">
+    <value>超大扩展</value>
   </data>
-  <data name="UITheme.Luna.Metallic" xml:space="preserve">
-    <value>Windows XP 的银色主题</value>
+  <data name="FontStyleItalic" xml:space="preserve">
+    <value>意大利斜体</value>
   </data>
-  <data name="UITheme.Luna.NormalColor" xml:space="preserve">
-    <value>Windows XP 的默认蓝色主题</value>
+  <data name="FontStyleNormal" xml:space="preserve">
+    <value>普通</value>
   </data>
-  <data name="UITheme.Royale.NormalColor" xml:space="preserve">
-    <value>Windows XP 的 Media Center 主题</value>
+  <data name="FontStyleOblique" xml:space="preserve">
+    <value>斜体</value>
   </data>
-  <data name="UIThemeFlat" xml:space="preserve">
-    <value>扁平化界面</value>
+  <data name="FontStyleText" xml:space="preserve">
+    <value>字体样式：</value>
   </data>
-  <data name="UIThemeText" xml:space="preserve">
-    <value>界面主题：</value>
+  <data name="FontWeightBold" xml:space="preserve">
+    <value>重</value>
+  </data>
+  <data name="FontWeightHeavy" xml:space="preserve">
+    <value>超重</value>
+  </data>
+  <data name="FontWeightLight" xml:space="preserve">
+    <value>轻</value>
+  </data>
+  <data name="FontWeightMedium" xml:space="preserve">
+    <value>中等</value>
+  </data>
+  <data name="FontWeightNormal" xml:space="preserve">
+    <value>普通</value>
+  </data>
+  <data name="FontWeightText" xml:space="preserve">
+    <value>字重：</value>
+  </data>
+  <data name="FontWeightThin" xml:space="preserve">
+    <value>超轻</value>
+  </data>
+  <data name="TextAlignmentCenter" xml:space="preserve">
+    <value>居中</value>
+  </data>
+  <data name="TextAlignmentJustify" xml:space="preserve">
+    <value>两端</value>
+  </data>
+  <data name="TextAlignmentLeft" xml:space="preserve">
+    <value>左</value>
+  </data>
+  <data name="TextAlignmentRight" xml:space="preserve">
+    <value>右</value>
+  </data>
+  <data name="TextAlignmentText" xml:space="preserve">
+    <value>文字对齐：</value>
+  </data>
+  <data name="TextConfigureText" xml:space="preserve">
+    <value>文字选项</value>
+  </data>
+  <data name="TextDecorationBaseline" xml:space="preserve">
+    <value>基线</value>
+  </data>
+  <data name="TextDecorationOverLine" xml:space="preserve">
+    <value>顶线</value>
+  </data>
+  <data name="TextDecorationStrikethrough" xml:space="preserve">
+    <value>删除线</value>
+  </data>
+  <data name="TextDecorationText" xml:space="preserve">
+    <value>文本装饰：</value>
+  </data>
+  <data name="TextDecorationUnderline" xml:space="preserve">
+    <value>下划线</value>
+  </data>
+  <data name="TextEffectText" xml:space="preserve">
+    <value>文本效果：</value>
+  </data>
+  <data name="TextShadowText" xml:space="preserve">
+    <value>文本阴影</value>
   </data>
 </root>

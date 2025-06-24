@@ -5,7 +5,7 @@ using System.Xml;
 
 namespace StartPro.Tile;
 
-public partial class TileBase
+public partial class TileBase : IStorable
 {
     public virtual XmlElement WriteAttributes(XmlElement element)
     {
@@ -21,7 +21,6 @@ public partial class TileBase
     {
         TileSize = (TileSize) int.Parse(node.GetAttribute("Size"));
         TileColor = new BrushConverter( ).ConvertFrom(node.GetAttribute("Color")) as SolidColorBrush;
-        FontSize = double.Parse(node.GetAttribute("FontSize"));
         Row = int.Parse(node.GetAttribute("Row"));
         Column = int.Parse(node.GetAttribute("Column"));
     }
@@ -65,7 +64,7 @@ public static class TileStore
                 item.IsEnabled = true;
                 result.Add(item);
             }
-            catch { }
+            catch { throw; }
         }
         Apps = document.CreateElement("Tiles");
         return result;

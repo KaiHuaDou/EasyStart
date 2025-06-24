@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ColorText" xml:space="preserve">
-    <value>颜色:</value>
-  </data>
   <data name="ContextDelete" xml:space="preserve">
     <value>删除</value>
   </data>
@@ -128,9 +125,6 @@
   </data>
   <data name="ContextFastChange" xml:space="preserve">
     <value>更改大小</value>
-  </data>
-  <data name="FontSizeText" xml:space="preserve">
-    <value>字号:</value>
   </data>
   <data name="ShadowText" xml:space="preserve">
     <value>磁贴阴影</value>
@@ -151,7 +145,7 @@
     <value>长</value>
   </data>
   <data name="SizeText" xml:space="preserve">
-    <value>尺寸:</value>
+    <value>尺寸：</value>
   </data>
   <data name="SizeThin" xml:space="preserve">
     <value>薄</value>

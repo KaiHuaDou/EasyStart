@@ -2,13 +2,13 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace StartPro.Api;
+namespace StartPro.Converter;
 
-public class BoolConverter : IValueConverter
+public class EnumIntConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        => (bool) value;
+        => (int) value;
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        => (bool?) value;
+        => Enum.ToObject(targetType, (int) value);
 }

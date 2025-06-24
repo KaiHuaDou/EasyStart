@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Xml;
 using StartPro.Api;
 
@@ -21,13 +20,13 @@ public partial class TextTile
     public override string ToString( ) => $"{Text} - {TileSize}";
 
     private static readonly PropertyMetadata textMeta = new("Text");
-    private static readonly PropertyMetadata textShadowMeta = new(true, TextShadowChanged);
+    private static readonly PropertyMetadata textConfigMeta = new(new TextConfig( ), TextConfigChanged);
     private static readonly PropertyMetadata textVerticalAlignmentMeta = new(VerticalAlignment.Center);
     private static readonly PropertyMetadata textHorizontalAlignmentMeta = new(HorizontalAlignment.Center);
     public static readonly DependencyProperty TextProperty
         = DependencyProperty.Register("Text", typeof(string), typeof(TextTile), textMeta);
-    public static readonly DependencyProperty TextShadowProperty
-        = DependencyProperty.Register("TextShadow", typeof(bool), typeof(TextTile), textShadowMeta);
+    public static readonly DependencyProperty TextConfigProperty
+        = DependencyProperty.Register("TextConfig", typeof(TextConfig), typeof(TextTile), textConfigMeta);
     public static readonly DependencyProperty TextVerticalAlignmentProperty
         = DependencyProperty.Register("TextVerticalAlignment", typeof(VerticalAlignment), typeof(TextTile), textVerticalAlignmentMeta);
     public static readonly DependencyProperty TextHorizontalAlignmentProperty
@@ -39,10 +38,10 @@ public partial class TextTile
         set => SetValue(TextProperty, value);
     }
 
-    public bool TextShadow
+    public TextConfig TextConfig
     {
-        get => (bool) GetValue(TextShadowProperty);
-        set => SetValue(TextShadowProperty, value);
+        get => (TextConfig) GetValue(TextConfigProperty);
+        set => SetValue(TextConfigProperty, value);
     }
 
     public VerticalAlignment TextVerticalAlignment
@@ -62,13 +61,9 @@ public partial class TextTile
         element = base.WriteAttributes(element);
         element.SetAttribute("Type", "TextTile");
         element.SetAttribute("Text", Text);
-        element.SetAttribute("TextShadow", TextShadow.ToString( ));
+        element.SetAttribute("TextConfig", TextConfig.ToString( ));
         element.SetAttribute("TextVerticalAlignment", ((int) TextVerticalAlignment).ToString( ));
         element.SetAttribute("TextHorizontalAlignment", ((int) TextHorizontalAlignment).ToString( ));
-        element.SetAttribute("FontStyle", (FontStyle == FontStyles.Italic).ToString( ));
-        element.SetAttribute("FontWeight", (FontWeight == FontWeights.Bold).ToString( ));
-        element.SetAttribute("FontFamily", FontFamily.ToString( ));
-        element.SetAttribute("FontSize", FontSize.ToString( ));
         return element;
     }
 
@@ -76,12 +71,8 @@ public partial class TextTile
     {
         base.ReadAttributes(node);
         Text = node.GetAttribute("Text");
-        TextShadow = bool.Parse(node.GetAttribute("TextShadow"));
+        TextConfig = TextConfig.FromString(node.GetAttribute("TextConfig"));
         TextVerticalAlignment = (VerticalAlignment) int.Parse(node.GetAttribute("TextVerticalAlignment"));
         TextHorizontalAlignment = (HorizontalAlignment) int.Parse(node.GetAttribute("TextHorizontalAlignment"));
-        FontStyle = bool.Parse(node.GetAttribute("FontStyle")) ? FontStyles.Italic : FontStyles.Normal;
-        FontWeight = bool.Parse(node.GetAttribute("FontWeight")) ? FontWeights.Bold : FontWeights.Normal;
-        FontFamily = new FontFamily(node.GetAttribute("FontFamily"));
-        FontSize = double.Parse(node.GetAttribute("FontSize"));
     }
 }

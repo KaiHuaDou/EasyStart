@@ -1,23 +1,18 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 
 namespace StartPro.Api;
 
-public class DataStore<T> : IDisposable where T : class, new()
+public class DataStore<T> where T : class, new()
 {
     public T Content { get; set; }
 
     private readonly string File;
-    private readonly FileStream Stream;
-    private readonly XmlReader Reader;
 
     public DataStore(string xmlFile)
     {
         File = new FileInfo(xmlFile).FullName;
-        Stream = new(File, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-        Reader = XmlReader.Create(Stream);
         try
         {
             Read( );
@@ -27,7 +22,8 @@ public class DataStore<T> : IDisposable where T : class, new()
 
     public void Read( )
     {
-        Stream.Seek(0, SeekOrigin.Begin);
+        FileStream Stream = new(File, FileMode.OpenOrCreate, FileAccess.Read);
+        XmlReader Reader = XmlReader.Create(Stream);
         XmlSerializer serializer = new(typeof(T));
         try
         {
@@ -41,14 +37,7 @@ public class DataStore<T> : IDisposable where T : class, new()
 
     public void Save( )
     {
-        Stream.Seek(0, SeekOrigin.Begin);
+        FileStream Stream = new(File, FileMode.OpenOrCreate, FileAccess.Write);
         new XmlSerializer(typeof(T)).Serialize(Stream, Content);
-    }
-
-    public void Dispose( )
-    {
-        Stream.Dispose( );
-        Reader.Dispose( );
-        GC.SuppressFinalize(this);
     }
 }

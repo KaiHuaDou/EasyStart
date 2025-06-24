@@ -61,7 +61,7 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Content: 的本地化字符串。
+        ///   查找类似 Content:  的本地化字符串。
         /// </summary>
         public static string ContentText {
             get {
@@ -70,20 +70,20 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Location: 的本地化字符串。
+        ///   查找类似 Create Text Tile 的本地化字符串。
         /// </summary>
-        public static string LocationText {
+        public static string CreateText {
             get {
-                return ResourceManager.GetString("LocationText", resourceCulture);
+                return ResourceManager.GetString("CreateText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Text Shadow 的本地化字符串。
+        ///   查找类似 Location:  的本地化字符串。
         /// </summary>
-        public static string TextShadowText {
+        public static string LocationText {
             get {
-                return ResourceManager.GetString("TextShadowText", resourceCulture);
+                return ResourceManager.GetString("LocationText", resourceCulture);
             }
         }
     }

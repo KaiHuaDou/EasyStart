@@ -61,15 +61,6 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Color: 的本地化字符串。
-        /// </summary>
-        public static string ColorText {
-            get {
-                return ResourceManager.GetString("ColorText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Delete 的本地化字符串。
         /// </summary>
         public static string ContextDelete {
@@ -93,15 +84,6 @@ namespace StartPro.Resources {
         public static string ContextFastChange {
             get {
                 return ResourceManager.GetString("ContextFastChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Font Size: 的本地化字符串。
-        /// </summary>
-        public static string FontSizeText {
-            get {
-                return ResourceManager.GetString("FontSizeText", resourceCulture);
             }
         }
         
@@ -160,7 +142,7 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Size: 的本地化字符串。
+        ///   查找类似 Size:  的本地化字符串。
         /// </summary>
         public static string SizeText {
             get {

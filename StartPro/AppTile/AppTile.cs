@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Xml;
 using StartPro.Api;
 
 namespace StartPro.Tile;
 
-public partial class AppTile : TileBase
+public partial class AppTile
 {
     public AppTile( )
     {
@@ -78,6 +77,7 @@ public partial class AppTile : TileBase
     public override void ReadAttributes(XmlNode node)
     {
         base.ReadAttributes(node);
+        FontSize = double.Parse(node.GetAttribute("FontSize"));
         AppPath = node.GetAttribute("Path");
         AppName = node.GetAttribute("Name");
         AppIcon = node.GetAttribute("Icon");

@@ -17,13 +17,13 @@ public partial class MainWindow : Window
     {
         InitializeComponent( );
 
-        Height = Defaults.SizeRate * SystemParameters.PrimaryScreenHeight;
-        Width = Defaults.SizeRate * SystemParameters.PrimaryScreenWidth;
+        Height = Defaults.HeightPercent * SystemParameters.PrimaryScreenHeight;
+        Width = Defaults.WidthPercent * SystemParameters.PrimaryScreenWidth;
         TilePanel.MinHeight = Height - 256;
         TilePanel.MinWidth = Width - 96;
         Top = SystemParameters.WorkArea.Height - Height;
         Left = (SystemParameters.WorkArea.Width - Width) / 2;
-        ApplyBackground( );
+        LoadBackground( );
 
         foreach (TileBase tile in App.Tiles)
         {
@@ -84,7 +84,7 @@ public partial class MainWindow : Window
         tile.Refresh( );
     }
 
-    private void ApplyBackground( )
+    private void LoadBackground( )
     {
         try
         {
@@ -92,11 +92,7 @@ public partial class MainWindow : Window
             {
                 MainBorder.Background = new ImageBrush(PEIcon.Get(App.Settings.Content.Background)) { Stretch = Stretch.UniformToFill };
             }
-            else if (char.IsLetter(App.Settings.Content.Background[0]))
-            {
-                MainBorder.Background = new ImageBrush(new BitmapImage(new Uri(App.Settings.Content.Background))) { Stretch = Stretch.UniformToFill };
-            }
-            else
+            else if (App.Settings.Content.Background.StartsWith("#"))
             {
                 int rgb = Convert.ToInt32(App.Settings.Content.Background.Replace("#", ""), 16);
                 byte R = (byte) ((rgb >> 16) & 0xFF);
@@ -104,8 +100,12 @@ public partial class MainWindow : Window
                 byte B = (byte) (rgb & 0xFF);
                 MainBorder.Background = new SolidColorBrush(Color.FromRgb(R, G, B));
             }
+            else
+            {
+                MainBorder.Background = new ImageBrush(new BitmapImage(new Uri(App.Settings.Content.Background))) { Stretch = Stretch.UniformToFill };
+            }
         }
-        catch { MainBorder.Background = Brushes.White; }
+        catch { MainBorder.Background = Defaults.Background; }
     }
 
     private void ImportAppTile(object o, RoutedEventArgs e)
@@ -156,7 +156,7 @@ public partial class MainWindow : Window
     {
         Hide( );
         new Setting( ).ShowDialog( );
-        ApplyBackground( );
+        LoadBackground( );
         Show( );
     }
 

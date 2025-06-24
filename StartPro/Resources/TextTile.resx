@@ -98,12 +98,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ContentText" xml:space="preserve">
-    <value>Content:</value>
+    <value>Content: </value>
+  </data>
+  <data name="CreateText" xml:space="preserve">
+    <value>Create Text Tile</value>
   </data>
   <data name="LocationText" xml:space="preserve">
-    <value>Location:</value>
-  </data>
-  <data name="TextShadowText" xml:space="preserve">
-    <value>Text Shadow</value>
+    <value>Location: </value>
   </data>
 </root>

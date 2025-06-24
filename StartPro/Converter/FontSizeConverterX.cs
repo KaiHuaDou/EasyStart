@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using StartPro.Api;
 
-namespace StartPro.Api;
+namespace StartPro.Converter;
 
-public class EnumIntConverter : IValueConverter
+public class FontSizeConverterX : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        => Enum.ToObject(targetType, (int) value);
+        => Utils.ToFontSize(value.ToString( ));
+
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        => (int) value;
+        => value.ToString( );
 }

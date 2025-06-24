@@ -1,10 +1,10 @@
-﻿<Window x:Class="StartPro.Api.ColorPickerDialog"
+﻿<Window x:Class="StartPro.Api.ColorDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:picker="clr-namespace:ColorPicker;assembly=ColorPicker"
-        Title="ColorPicker"
+        Title="ColorDialog"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         SizeToContent="WidthAndHeight">
-    <picker:StandardColorPicker x:Name="colorPicker" ColorChanged="ColorChanged" />
+    <picker:StandardColorPicker x:Name="colorPicker" />
 </Window>

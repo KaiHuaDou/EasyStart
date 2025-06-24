@@ -2,13 +2,13 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace StartPro.Api;
+namespace StartPro.Converter;
 
-public class NegativeConverter : IValueConverter
+public class BoolConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        => -(double) value - 48;
+        => (bool) value;
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        => -(double) value - 48;
+        => (bool?) value;
 }

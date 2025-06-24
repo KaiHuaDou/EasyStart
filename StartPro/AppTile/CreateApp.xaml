@@ -58,12 +58,12 @@
                 <Button DockPanel.Dock="Right" Click="SelectIcon" Content="..." />
                 <TextBox x:Name="iconBox" TextChanged="IconChanged" />
             </DockPanel>
-            <TextBlock Grid.Row="4" Text="{x:Static text:Tile.FontSizeText}" />
+            <TextBlock Grid.Row="4" Text="{x:Static text:TextConfigure.FontSizeText}" />
             <TextBox x:Name="fontBox"
                      Grid.Row="4" Grid.Column="1"
                      Margin="0,0,0,10"
                      TextChanged="FontChanged" />
-            <TextBlock Grid.Row="5" Text="{x:Static text:Tile.ColorText}" />
+            <TextBlock Grid.Row="5" Text="{x:Static text:TextConfigure.ColorText}" />
             <Button Grid.Row="5" Grid.Column="1"
                     Margin="0,0,0,10" Padding="20,3"
                     Click="SelectColor"

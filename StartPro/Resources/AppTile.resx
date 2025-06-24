@@ -104,7 +104,7 @@
     <value>Run as Administrator</value>
   </data>
   <data name="IconText" xml:space="preserve">
-    <value>Icon:</value>
+    <value>Icon: </value>
   </data>
   <data name="ImageShadowText" xml:space="preserve">
     <value>Image Shadow</value>
@@ -113,9 +113,9 @@
     <value>Import</value>
   </data>
   <data name="NameText" xml:space="preserve">
-    <value>Name:</value>
+    <value>Name: </value>
   </data>
   <data name="PathText" xml:space="preserve">
-    <value>Path:</value>
+    <value>Path: </value>
   </data>
 </root>

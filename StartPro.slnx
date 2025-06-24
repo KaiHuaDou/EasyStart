@@ -9,5 +9,10 @@
     <File Path="README.md" />
     <File Path="Settings.XamlStyler" />
   </Folder>
-  <Project Path="StartPro/StartPro.csproj" />
+  <Project Path="D:/Code/StartPro/StartPro/StartPro.csproj" />
+  <Properties Name="ExtensibilityGlobals" Scope="PostLoad">
+    <Property Name="RESX_ResXSortingComparison" Value="InvariantCultureIgnoreCase" />
+    <Property Name="RESX_Rules" Value="{&quot;EnabledRules&quot;:[&quot;StringFormat&quot;,&quot;WhiteSpaceLead&quot;,&quot;PunctuationLead&quot;,&quot;PunctuationTail&quot;]}" />
+    <Property Name="RESX_SortFileContentOnSave" Value="True" />
+  </Properties>
 </Solution>

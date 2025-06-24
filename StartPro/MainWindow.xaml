@@ -100,7 +100,7 @@
                         </ListBox>
                     </ScrollViewer>
                 </Border>
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
                     <Canvas x:Name="TilePanel"
                             Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" />
                 </ScrollViewer>

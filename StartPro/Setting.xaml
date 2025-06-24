@@ -33,7 +33,7 @@
             <Button DockPanel.Dock="Right"
                     Width="{Binding ActualHeight, ElementName=BackgroundPanel}"
                     Click="SelectImageClick" Content="I" />
-            <TextBox x:Name="backgroundBox" />
+            <TextBox x:Name="BackgroundBox" />
         </DockPanel>
         <TextBlock Grid.Row="1" Text="{x:Static text:Main.UIThemeText}" />
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,5,0,5">
