@@ -15,7 +15,7 @@ public partial class TileBase : UserControl
     public static readonly DependencyProperty TileColorProperty
         = DependencyProperty.Register("TileColor", typeof(SolidColorBrush), typeof(TileBase), TileColorMeta);
     public static readonly DependencyProperty ShadowProperty
-        = DependencyProperty.Register("TileShadow", typeof(bool), typeof(AppTile), ShadowMeta);
+        = DependencyProperty.Register("TileShadow", typeof(bool), typeof(TileBase), ShadowMeta);
 
     public Canvas Owner => Parent as Canvas;
 

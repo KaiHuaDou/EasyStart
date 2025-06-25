@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Effects;
 
 namespace StartPro.Tile;
@@ -53,6 +53,8 @@ public partial class TileBase : UserControl
         SizeLargeMenu = root.FindName("SizeLargeMenu") as MenuItem;
         TileDeleteMenu = root.FindName("TileDeleteMenu") as MenuItem;
 
+        VisualCacheMode = CacheMode = new BitmapCache(1) { SnapsToDevicePixels = true };
+
         SizeSmallMenu.Click += ToSmallClick;
         SizeMediumMenu.Click += ToMediumClick;
         SizeThinMenu.Click += ToThinClick;
@@ -61,9 +63,9 @@ public partial class TileBase : UserControl
         SizeHighMenu.Click += ToHighClick;
         SizeLargeMenu.Click += ToLargeClick;
         TileDeleteMenu.Click += RemoveTile;
-        MouseLeftButtonDown += TileDragStart;
-        MouseLeftButtonUp += TileLeftButtonUp;
-        MouseMove += TileDragging;
+        PreviewMouseLeftButtonDown += TileDragStart;
+        PreviewMouseLeftButtonUp += TileDragStop;
+        PreviewMouseMove += TileDragging;
     }
 
     public void Refresh( )
@@ -93,9 +95,6 @@ public partial class TileBase : UserControl
 
     protected static void TileShadowChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         => (o as TileBase)?.TileShadow.Opacity = (!App.Settings.Content.UIFlat && (o as TileBase)!.Shadow) ? 0.4 : 0;
-
-    protected void TileLeftButtonUp(object o, MouseButtonEventArgs e)
-        => TileDragStop(o, e);
 
     private void RemoveTile(object o, RoutedEventArgs e)
         => Owner.Children.Remove(this);

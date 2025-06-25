@@ -70,7 +70,7 @@ public partial class AppTile : TileBase
         AppTile tile = o as AppTile;
         Color color = tile.TileColor.Color;
         int brightness = (int) (color.R * 0.299) + (int) (color.G * 0.587) + (int) (color.B * 0.114);
-        tile.TileLabel.Foreground = new SolidColorBrush(brightness > 128 ? Colors.Black : Colors.White);
+        (tile.TileLabel.Foreground as SolidColorBrush).Color = brightness > 128 ? Colors.Black : Colors.White;
     }
 
     private void EditTile(object o, RoutedEventArgs e)
@@ -104,9 +104,9 @@ public partial class AppTile : TileBase
         App.TileWindow.Hide( );
     }
 
-    private new void TileLeftButtonUp(object o, MouseButtonEventArgs e)
+    private void TileLeftButtonUp(object o, MouseButtonEventArgs e)
     {
-        if (!OnDrag && IsEnabled)
+        if (!IsDrag && IsEnabled)
         {
             Process.Start(new ProcessStartInfo( )
             {
@@ -115,6 +115,5 @@ public partial class AppTile : TileBase
             });
             App.TileWindow.Hide( );
         }
-        base.TileLeftButtonUp(o, e);
     }
 }

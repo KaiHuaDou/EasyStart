@@ -46,7 +46,7 @@ public partial class CreateApp : Window
 
 
     private void ColorChanged(object sender, RoutedEventArgs e)
-        => Item?.TileColor = new SolidColorBrush(colorPicker.SelectedColor);
+        => Item?.TileColor.Color = colorPicker.SelectedColor;
 
     private void FontChanged(object o, TextChangedEventArgs e)
     {
@@ -94,7 +94,7 @@ public partial class CreateApp : Window
     }
 
     private void ShadowBoxChecked(object o, RoutedEventArgs e)
-        => Item?.Shadow = (bool) ShadowBox.IsChecked;
+        => Item?.Shadow = ShadowBox.IsChecked == true;
 
     private void TaskCancel(object o, RoutedEventArgs e)
     {

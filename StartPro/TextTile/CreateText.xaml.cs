@@ -63,6 +63,7 @@ public partial class CreateText : Window
         if (Utils.TrySelectColor(Item.TileColor.Color, out Color color, this))
             Item.TileColor = new SolidColorBrush(color);
     }
+
     private void ShadowBoxChecked(object sender, RoutedEventArgs e)
         => Item?.Shadow = ShadowBox.IsChecked == true;
 

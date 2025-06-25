@@ -14,8 +14,9 @@ public partial class AppTile
         InitializeComponent( );
         Utils.AppendContexts(ContextMenu, contextMenu);
 
-        MouseLeftButtonUp -= base.TileLeftButtonUp;
+        MouseLeftButtonUp -= TileDragStop;
         MouseLeftButtonUp += TileLeftButtonUp;
+        MouseLeftButtonUp += TileDragStop;
 
         userControl.Content = null;
         border.Child = RootPanel;

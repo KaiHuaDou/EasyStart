@@ -115,7 +115,7 @@ public partial class MainWindow : Window
             {
                 MainBorder.Background = new ImageBrush(PEIcon.Get(App.Settings.Content.Background)) { Stretch = Stretch.UniformToFill };
             }
-            else if (App.Settings.Content.Background.StartsWith("#"))
+            else if (App.Settings.Content.Background.StartsWith('#'))
             {
                 int rgb = Convert.ToInt32(App.Settings.Content.Background.Replace("#", ""), 16);
                 byte R = (byte) ((rgb >> 16) & 0xFF);
