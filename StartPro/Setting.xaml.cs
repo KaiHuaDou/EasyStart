@@ -39,7 +39,7 @@ public partial class Setting : Window
 
     private void SelectImageClick(object o, RoutedEventArgs e)
     {
-        if (Utils.TrySelectImage(out string fileName))
+        if (Utils.TrySelectFile(out string fileName, ".jpg"))
             BackgroundBox.Text = fileName;
     }
 

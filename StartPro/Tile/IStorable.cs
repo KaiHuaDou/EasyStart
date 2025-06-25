@@ -22,7 +22,6 @@ public partial class TileBase : IStorable
 
     public virtual XmlElement WriteAttributes(XmlElement element)
     {
-        element.SetAttribute("Type", "TileBase");
         element.SetAttribute("Size", ((int) TileSize).ToString( ));
         element.SetAttribute("Color", TileColor.ToString( ));
         element.SetAttribute("Row", Row.ToString( ));

@@ -1,23 +1,11 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Xml;
 using StartPro.Api;
 
 namespace StartPro.Tile;
 public partial class TextTile
 {
-    public TextTile( )
-    {
-        Grid root = Content as Grid;
-        InitializeComponent( );
-        userControl.Content = null;
-        border.Child = TextField;
-
-        Utils.AppendContexts(ContextMenu, contextMenu);
-        Content = root;
-    }
-
-    public override string ToString( ) => $"{Text} - {TileSize}";
+    public override string ToString( ) => $"{Text}";
 
     private static readonly PropertyMetadata textMeta = new("Text");
     private static readonly PropertyMetadata textConfigMeta = new(new TextConfig( ), TextConfigChanged);

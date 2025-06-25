@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Principal;
 using System.Windows.Controls;
@@ -58,13 +59,19 @@ public static class Utils
         return false;
     }
 
-    public static bool TrySelectExe(out string fileName)
+    public static Dictionary<string, string> FileFilter = new( ) {
+        {".exe", "*.exe *.com *.bat *.cmd|*.exe;*.com;*.bat;*.cmd|*.*|*.*"},
+        {".jpg", "*.exe *.dll *.jpg *.jpeg *.png *.bmp *.tif *.tiff *.gif *.ico|*.exe;*.dll;*.jpg;*.jpeg;*.png;*.bmp;*.tif;*.tiff;*.gif;*.ico|*.*|*.*"},
+        {".png", "*.jpg *.jpeg *.png *.bmp *.tif *.tiff *.gif *.ico|*.jpg;*.jpeg;*.png;*.bmp;*.tif;*.tiff;*.gif;*.ico|*.*|*.*"},
+    };
+
+    public static bool TrySelectFile(out string fileName, string fileType)
     {
         OpenFileDialog dialog = new( )
         {
             CheckFileExists = true,
-            DefaultExt = ".exe",
-            Filter = "*.exe *.com *.bat *.cmd|*.exe;*.com;*.bat;*.cmd|*.*|*.*",
+            DefaultExt = fileType,
+            Filter = FileFilter[fileType],
             Title = Main.SelectExeText,
         };
         bool result = dialog.ShowDialog( ) == true;
@@ -72,31 +79,18 @@ public static class Utils
         return result;
     }
 
-    public static bool TrySelectExe(out string[] fileName)
+    public static bool TrySelectFiles(out string[] fileName, string fileType)
     {
         OpenFileDialog dialog = new( )
         {
             CheckFileExists = true,
-            DefaultExt = ".exe",
-            Filter = "*.exe *.com *.bat *.cmd|*.exe;*.com;*.bat;*.cmd|*.*|*.*",
+            DefaultExt = fileType,
+            Filter = FileFilter[fileType],
             Title = Main.SelectExeText,
             Multiselect = true,
         };
         bool result = dialog.ShowDialog( ) == true;
         fileName = dialog.FileNames;
-        return result;
-    }
-
-    public static bool TrySelectImage(out string fileName)
-    {
-        OpenFileDialog dialog = new( )
-        {
-            CheckFileExists = true,
-            Filter = "*.exe *.dll *.jpg *.jpeg *.png *.bmp *.tif *.tiff *.gif *.ico|*.exe;*.dll;*.jpg;*.jpeg;*.png;*.bmp;*.tif;*.tiff;*.gif;*.ico|*.*|*.*",
-            Title = Main.SelectImageText
-        };
-        bool result = dialog.ShowDialog( ) == true;
-        fileName = dialog.FileName;
         return result;
     }
 

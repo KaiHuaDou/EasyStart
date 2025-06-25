@@ -41,7 +41,6 @@ public partial class MainWindow : Window
         }
     }
 
-    public CustomCommand SwitchStateCommand => new(ShowHide);
     public new void Hide( )
     {
         if (Resources["HideWindow"] is Storyboard hideAnimation)
@@ -80,6 +79,19 @@ public partial class MainWindow : Window
         tile.Refresh( );
     }
 
+    private void AddImageTile(object o, RoutedEventArgs e)
+    {
+        Hide( );
+        CreateImage window = new( );
+        window.ShowDialog( );
+        Show( );
+        ImageTile tile = window.Item;
+        if (tile?.IsEnabled != true)
+            return;
+        TilePanel.Children.Add(tile);
+        tile.Refresh( );
+    }
+
     private void AddTextTile(object o, RoutedEventArgs e)
     {
         Hide( );
@@ -92,7 +104,6 @@ public partial class MainWindow : Window
         TilePanel.Children.Add(tile);
         tile.Refresh( );
     }
-
     private void ImportAppTile(object o, RoutedEventArgs e)
     {
         Hide( );
@@ -129,6 +140,7 @@ public partial class MainWindow : Window
             }
         }
         catch { MainBorder.Background = Defaults.Background; }
+        MainBorder.Background.Freeze( );
     }
     private void PinApp(object o, RoutedEventArgs e)
     {
@@ -149,6 +161,7 @@ public partial class MainWindow : Window
     private void SaveData(object o, RoutedEventArgs e)
     {
         SaveDataButton.IsEnabled = false;
+        UpdateGlobalTiles( );
         TileStore.Save( );
         App.Settings.Write( );
         SaveDataButton.Content = "\uE73E";
@@ -187,12 +200,17 @@ public partial class MainWindow : Window
     private void TaskbarMenuShow(object o, RoutedEventArgs e)
         => ShowHide( );
 
-    private void WindowClosing(object o, CancelEventArgs e)
+    private void UpdateGlobalTiles( )
     {
-        Hide( );
         App.Tiles.Clear( );
         foreach (TileBase tile in TilePanel.Children)
             App.Tiles.Add(tile);
+    }
+
+    private void WindowClosing(object o, CancelEventArgs e)
+    {
+        Hide( );
+        UpdateGlobalTiles( );
         e.Cancel = true;
     }
     private void WindowDeactivated(object o, EventArgs e)

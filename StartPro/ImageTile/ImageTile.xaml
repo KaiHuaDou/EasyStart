@@ -1,0 +1,18 @@
+﻿<tile:TileBase x:Name="userControl"
+               x:Class="StartPro.Tile.ImageTile"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:local="clr-namespace:StartPro.Tile"
+               xmlns:text="clr-namespace:StartPro.Resources"
+               xmlns:tile="clr-namespace:StartPro.Tile">
+    <tile:TileBase.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="{x:Static text:Tile.ContextEdit}" Click="EditTile">
+                <MenuItem.Icon>
+                    <TextBlock Margin="3" FontFamily="Segoe Fluent Icons" Text="&#xE70F;" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+    </tile:TileBase.ContextMenu>
+    <Image x:Name="MainImage" Stretch="{Binding Stretch}" />
+</tile:TileBase>

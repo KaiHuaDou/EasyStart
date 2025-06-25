@@ -79,7 +79,7 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 default 的本地化字符串。
+        ///   查找类似 Basic 的本地化字符串。
         /// </summary>
         public static string DefaultGroup {
             get {
@@ -97,7 +97,7 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Hotkeys are occupied 的本地化字符串。
+        ///   查找类似 Hotkey is occupied 的本地化字符串。
         /// </summary>
         public static string HotkeyUsed {
             get {

@@ -124,7 +124,7 @@
     <value>取消</value>
   </data>
   <data name="DefaultGroup" xml:space="preserve">
-    <value>默认</value>
+    <value>基本</value>
   </data>
   <data name="HotkeyRegisterFailed" xml:space="preserve">
     <value>注册热键失败</value>

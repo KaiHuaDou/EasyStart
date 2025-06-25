@@ -1,29 +1,12 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
 using System.Xml;
-using StartPro.Api;
 
 namespace StartPro.Tile;
 
 public partial class AppTile
 {
-    public AppTile( )
-    {
-        Grid root = Content as Grid;
-        InitializeComponent( );
-        Utils.AppendContexts(ContextMenu, contextMenu);
-
-        MouseLeftButtonUp -= TileDragStop;
-        MouseLeftButtonUp += TileLeftButtonUp;
-        MouseLeftButtonUp += TileDragStop;
-
-        userControl.Content = null;
-        border.Child = RootPanel;
-        Content = root;
-    }
-
-    public override string ToString( ) => $"{AppName} - {TileSize}";
+    public override string ToString( ) => AppName;
 
     private static readonly PropertyMetadata appNameMeta = new("Application");
     private static readonly PropertyMetadata appIconMeta = new(AppIconChanged);

@@ -70,6 +70,11 @@
                                 <Button Click="AddTextTile" Content="&#xE710;" />
                             </StackPanel>
                         </GroupBox>
+                        <GroupBox Header="图像磁贴">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Click="AddImageTile" Content="&#xE710;" />
+                            </StackPanel>
+                        </GroupBox>
                     </StackPanel>
                 </Border>
                 <Border x:Name="AppListBorder"

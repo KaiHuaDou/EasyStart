@@ -36,7 +36,7 @@ public partial class ImportApp : Window
 
     private void ImportClick(object o, RoutedEventArgs e)
     {
-        if (Utils.TrySelectExe(out string[] fileName))
+        if (Utils.TrySelectFiles(out string[] fileName, ".exe"))
             AddNewTiles(fileName);
         RefreshTileList( );
     }

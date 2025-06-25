@@ -21,7 +21,7 @@ public partial class App : Application, ISingleInstance
         [STAThread]
         public static void Main( )
         {
-            CultureInfo.CurrentCulture = new CultureInfo("en-US");
+            // CultureInfo.CurrentUICulture = new CultureInfo("en-US");
             App app = new( );
             app.InitializeComponent( );
             app.Run( );

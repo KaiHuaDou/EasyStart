@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:picker="clr-namespace:ColorPicker;assembly=ColorPicker"
         xmlns:text="clr-namespace:StartPro.Resources"
-        Title="ColorDialog"
+        Title="{x:Static text:Main.SelectColorText}"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         SizeToContent="WidthAndHeight">

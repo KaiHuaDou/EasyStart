@@ -44,9 +44,8 @@ public partial class CreateApp : Window
         mainPanel.Children.Insert(0, Item);
     }
 
-
     private void ColorChanged(object sender, RoutedEventArgs e)
-        => Item?.TileColor.Color = colorPicker.SelectedColor;
+        => Item?.TileColor = new SolidColorBrush(colorPicker.SelectedColor);
 
     private void FontChanged(object o, TextChangedEventArgs e)
     {
@@ -80,7 +79,7 @@ public partial class CreateApp : Window
 
     private void SelectExe(object o, RoutedEventArgs e)
     {
-        if (Utils.TrySelectExe(out string fileName))
+        if (Utils.TrySelectFile(out string fileName, ".exe"))
         {
             pathBox.Text = fileName;
             PathChanged(o, e);
@@ -89,7 +88,7 @@ public partial class CreateApp : Window
 
     private void SelectIcon(object o, RoutedEventArgs e)
     {
-        if (Utils.TrySelectImage(out string fileName))
+        if (Utils.TrySelectFile(out string fileName, ".jpg"))
             iconBox.Text = fileName;
     }
 

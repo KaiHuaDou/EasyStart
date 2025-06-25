@@ -30,6 +30,7 @@ public partial class CreateText : Window
         Item.IsEnabled = false;
         Title = t is null ? StartPro.Resources.Tile.TitleCreate : StartPro.Resources.Tile.TitleEdit;
 
+        sizeBox.SelectedIndex = (int) Item.TileSize;
         ContentBox.Text = Item.Text;
         VerticalAlignmentBox.SelectedIndex = (int) Item.TextVerticalAlignment;
         HorizontalAlignmentBox.SelectedIndex = (int) Item.TextHorizontalAlignment;
@@ -67,9 +68,6 @@ public partial class CreateText : Window
     private void ShadowBoxChecked(object sender, RoutedEventArgs e)
         => Item?.Shadow = ShadowBox.IsChecked == true;
 
-    private void TileSizeChanged(object sender, SelectionChangedEventArgs e)
-        => Item?.TileSize = (TileSize) sizeBox.SelectedIndex;
-
     private void TaskCancel(object o, RoutedEventArgs e)
     {
         Item = Original;
@@ -82,6 +80,8 @@ public partial class CreateText : Window
         Close( );
     }
 
+    private void TileSizeChanged(object sender, SelectionChangedEventArgs e)
+                => Item?.TileSize = (TileSize) sizeBox.SelectedIndex;
     private void VerticalAlignmentBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         => Item?.TextVerticalAlignment = (VerticalAlignment) VerticalAlignmentBox.SelectedIndex;
 

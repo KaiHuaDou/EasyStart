@@ -124,13 +124,13 @@
     <value>Cancel</value>
   </data>
   <data name="DefaultGroup" xml:space="preserve">
-    <value>default</value>
+    <value>Basic</value>
   </data>
   <data name="HotkeyRegisterFailed" xml:space="preserve">
     <value>Register hotkey failed</value>
   </data>
   <data name="HotkeyUsed" xml:space="preserve">
-    <value>Hotkeys are occupied</value>
+    <value>Hotkey is occupied</value>
   </data>
   <data name="OkText" xml:space="preserve">
     <value>OK</value>

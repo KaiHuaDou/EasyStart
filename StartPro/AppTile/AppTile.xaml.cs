@@ -13,6 +13,21 @@ namespace StartPro.Tile;
 
 public partial class AppTile : TileBase
 {
+    public AppTile( )
+    {
+        Grid root = Content as Grid;
+        InitializeComponent( );
+        Utils.AppendContexts(ContextMenu, contextMenu);
+
+        MouseLeftButtonUp -= TileDragStop;
+        MouseLeftButtonUp += TileLeftButtonUp;
+        MouseLeftButtonUp += TileDragStop;
+
+        userControl.Content = null;
+        border.Child = RootPanel;
+        Content = root;
+    }
+
     static AppTile( )
     {
         TileSizeProperty.OverrideMetadata(typeof(AppTile), new(TileSize.Medium, TileSizeChanged));

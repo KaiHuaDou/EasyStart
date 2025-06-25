@@ -25,13 +25,19 @@ public static class TileStore
                 {
                     "AppTile" => new AppTile( ),
                     "TextTile" => new TextTile( ),
+                    "ImageTile" => new ImageTile( ),
                     _ => new TileBase( ),
                 };
                 item.ReadAttributes(node);
                 item.IsEnabled = true;
                 result.Add(item);
             }
-            catch { throw; }
+            catch
+            {
+#if DEBUG
+                throw;
+#endif
+            }
         }
         return result;
     }
