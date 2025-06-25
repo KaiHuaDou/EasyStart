@@ -123,8 +123,35 @@
   <data name="CancelText" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="DefaultGroup" xml:space="preserve">
+    <value>默认</value>
+  </data>
+  <data name="HotkeyRegisterFailed" xml:space="preserve">
+    <value>注册热键失败</value>
+  </data>
+  <data name="HotkeyUsed" xml:space="preserve">
+    <value>热键被占用</value>
+  </data>
   <data name="OkText" xml:space="preserve">
     <value>确定</value>
+  </data>
+  <data name="PinAppText" xml:space="preserve">
+    <value>固定</value>
+  </data>
+  <data name="PositionBottom" xml:space="preserve">
+    <value>下</value>
+  </data>
+  <data name="PositionCenter" xml:space="preserve">
+    <value>中</value>
+  </data>
+  <data name="PositionLeft" xml:space="preserve">
+    <value>左</value>
+  </data>
+  <data name="PositionRight" xml:space="preserve">
+    <value>右</value>
+  </data>
+  <data name="PositionTop" xml:space="preserve">
+    <value>上</value>
   </data>
   <data name="SelectColorText" xml:space="preserve">
     <value>选择颜色</value>

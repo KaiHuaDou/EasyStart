@@ -6,13 +6,28 @@ internal static partial class NativeMethods
 {
     internal const int WM_HOTKEY = 0x312;
 
+    [Flags]
+    internal enum KeyModifiers : uint
+    {
+        None = 0,
+        Alt = 1,
+        Ctrl = 1 << 1,
+        Shift = 1 << 2,
+        WindowsKey = 1 << 3
+    }
+
     [LibraryImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
     internal static partial bool SetForegroundWindow(IntPtr hWnd);
 
     [LibraryImport("user32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    internal static partial bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifuers, uint vk);
+    internal static partial bool RegisterHotKey(
+        IntPtr hWnd,
+        int id,
+        KeyModifiers fsModifuers,
+        uint vk
+    );
 
     [LibraryImport("user32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]

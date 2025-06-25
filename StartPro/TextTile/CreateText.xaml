@@ -54,16 +54,16 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <ComboBox x:Name="VerticalAlignmentBox" SelectedIndex="0" SelectionChanged="VerticalAlignmentBoxSelectionChanged">
-                    <ComboBoxItem Content="上" />
-                    <ComboBoxItem Content="中" />
-                    <ComboBoxItem Content="下" />
+                    <ComboBoxItem Content="{x:Static text:Main.PositionTop}" />
+                    <ComboBoxItem Content="{x:Static text:Main.PositionCenter}" />
+                    <ComboBoxItem Content="{x:Static text:Main.PositionBottom}" />
                 </ComboBox>
                 <ComboBox x:Name="HorizontalAlignmentBox"
                           Grid.Column="1"
                           SelectedIndex="0" SelectionChanged="HorizontalAlignmentBoxSelectionChanged">
-                    <ComboBoxItem Content="左" />
-                    <ComboBoxItem Content="中" />
-                    <ComboBoxItem Content="右" />
+                    <ComboBoxItem Content="{x:Static text:Main.PositionLeft}" />
+                    <ComboBoxItem Content="{x:Static text:Main.PositionCenter}" />
+                    <ComboBoxItem Content="{x:Static text:Main.PositionRight}" />
                 </ComboBox>
             </Grid>
             <Button Grid.Row="3" Grid.ColumnSpan="2"

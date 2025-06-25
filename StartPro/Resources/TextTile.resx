@@ -106,4 +106,7 @@
   <data name="LocationText" xml:space="preserve">
     <value>Location: </value>
   </data>
+  <data name="TextTileGroup" xml:space="preserve">
+    <value>Text Tile</value>
+  </data>
 </root>

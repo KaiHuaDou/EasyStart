@@ -61,6 +61,15 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
+        ///   查找类似 App Tile 的本地化字符串。
+        /// </summary>
+        public static string AppTileGroup {
+            get {
+                return ResourceManager.GetString("AppTileGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Open file location 的本地化字符串。
         /// </summary>
         public static string ContextOpen {
@@ -79,7 +88,7 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Icon: 的本地化字符串。
+        ///   查找类似 Icon:  的本地化字符串。
         /// </summary>
         public static string IconText {
             get {
@@ -106,7 +115,7 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Name: 的本地化字符串。
+        ///   查找类似 Name:  的本地化字符串。
         /// </summary>
         public static string NameText {
             get {
@@ -115,7 +124,7 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Path: 的本地化字符串。
+        ///   查找类似 Path:  的本地化字符串。
         /// </summary>
         public static string PathText {
             get {

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.Windows;
+using System.Windows.Threading;
 using SingleInstanceCore;
 using StartPro.Api;
 using StartPro.Tile;
@@ -18,6 +21,7 @@ public partial class App : Application, ISingleInstance
         [STAThread]
         public static void Main( )
         {
+            CultureInfo.CurrentCulture = new CultureInfo("en-US");
             App app = new( );
             app.InitializeComponent( );
             app.Run( );
@@ -27,8 +31,8 @@ public partial class App : Application, ISingleInstance
 
     private void AppExit(object o, ExitEventArgs e)
     {
-        TileStore.Save(Tiles);
-        Settings.Save( );
+        TileStore.Save( );
+        Settings.Write( );
     }
 
     private void AppStartup(object o, StartupEventArgs e)
@@ -54,13 +58,19 @@ public partial class App : Application, ISingleInstance
             })
         });
 
-        MainWindow mainWindow = new( );
-        Current.MainWindow = mainWindow;
-        mainWindow.Show( );
-
         Launcher launcher = new( );
         launcher.Show( );
+
+        MainWindow mainWindow = new( );
+        mainWindow.Show( );
+        Current.MainWindow = mainWindow;
     }
 
     public void OnInstanceInvoked(string[] args) => TileWindow?.Show( );
+
+    private void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+    {
+        Debug.WriteLine($"{e.Exception.Message}\n{e.Exception.StackTrace}", "Unhandled Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+        e.Handled = true;
+    }
 }

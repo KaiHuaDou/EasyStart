@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace StartPro.External;
+namespace StartPro.Api;
 
 public class CustomCommand(Action executeMethod) : ICommand
 {

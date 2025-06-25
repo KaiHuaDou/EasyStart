@@ -4,6 +4,7 @@
              xmlns:converter="clr-namespace:StartPro.Converter"
              xmlns:local="clr-namespace:StartPro"
              xmlns:tile="clr-namespace:StartPro.Tile"
+             DispatcherUnhandledException="AppDispatcherUnhandledException"
              Exit="AppExit"
              ShutdownMode="OnMainWindowClose"
              Startup="AppStartup">

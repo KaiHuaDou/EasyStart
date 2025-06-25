@@ -7,7 +7,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using StartPro.Api;
-using StartPro.External;
 using StartPro.Tile;
 using static StartPro.External.NativeMethods;
 
@@ -30,7 +29,7 @@ public partial class MainWindow : Window
         AppList.ItemsSource = new Collection<StartMenuApp>{
             new( ) {
                 AppName = "Loading",
-                AppPath = "notepad.exe",
+                AppPath = "",
                 AppIcon = new BitmapImage()
             }
         };
@@ -94,6 +93,20 @@ public partial class MainWindow : Window
         tile.Refresh( );
     }
 
+    private void ImportAppTile(object o, RoutedEventArgs e)
+    {
+        Hide( );
+        ImportApp window = new( );
+        window.ShowDialog( );
+        foreach (AppTile tile in window.Tiles)
+        {
+            TilePanel.Children.Add(tile);
+            tile.IsEnabled = true;
+            tile.Refresh( );
+        }
+        Show( );
+    }
+
     private void LoadBackground( )
     {
         try
@@ -117,21 +130,6 @@ public partial class MainWindow : Window
         }
         catch { MainBorder.Background = Defaults.Background; }
     }
-
-    private void ImportAppTile(object o, RoutedEventArgs e)
-    {
-        Hide( );
-        ImportApp window = new( );
-        window.ShowDialog( );
-        foreach (AppTile tile in window.Tiles)
-        {
-            TilePanel.Children.Add(tile);
-            tile.IsEnabled = true;
-            tile.Refresh( );
-        }
-        Show( );
-    }
-
     private void PinApp(object o, RoutedEventArgs e)
     {
         StartMenuApp app = AppList.SelectedItem as StartMenuApp;
@@ -146,6 +144,19 @@ public partial class MainWindow : Window
         };
         TilePanel.Children.Add(appTile);
         appTile.Refresh( );
+    }
+
+    private void SaveData(object o, RoutedEventArgs e)
+    {
+        SaveDataButton.IsEnabled = false;
+        TileStore.Save( );
+        App.Settings.Write( );
+        SaveDataButton.Content = "\uE73E";
+        Task.Delay(2000).ContinueWith(_ => Dispatcher.Invoke(( ) =>
+        {
+            SaveDataButton.Content = "\uE78C";
+            SaveDataButton.IsEnabled = true;
+        }));
     }
 
     private void ShowHideAppList(object o, RoutedEventArgs e)
@@ -184,7 +195,6 @@ public partial class MainWindow : Window
             App.Tiles.Add(tile);
         e.Cancel = true;
     }
-
     private void WindowDeactivated(object o, EventArgs e)
         => ShowHide( );
 

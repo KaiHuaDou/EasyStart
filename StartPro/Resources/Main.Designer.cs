@@ -61,7 +61,7 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Background: 的本地化字符串。
+        ///   查找类似 Background:  的本地化字符串。
         /// </summary>
         public static string BackgroundText {
             get {
@@ -79,11 +79,92 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
+        ///   查找类似 default 的本地化字符串。
+        /// </summary>
+        public static string DefaultGroup {
+            get {
+                return ResourceManager.GetString("DefaultGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Register hotkey failed 的本地化字符串。
+        /// </summary>
+        public static string HotkeyRegisterFailed {
+            get {
+                return ResourceManager.GetString("HotkeyRegisterFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Hotkeys are occupied 的本地化字符串。
+        /// </summary>
+        public static string HotkeyUsed {
+            get {
+                return ResourceManager.GetString("HotkeyUsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 OK 的本地化字符串。
         /// </summary>
         public static string OkText {
             get {
                 return ResourceManager.GetString("OkText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 fixed 的本地化字符串。
+        /// </summary>
+        public static string PinAppText {
+            get {
+                return ResourceManager.GetString("PinAppText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Bottom 的本地化字符串。
+        /// </summary>
+        public static string PositionBottom {
+            get {
+                return ResourceManager.GetString("PositionBottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Center 的本地化字符串。
+        /// </summary>
+        public static string PositionCenter {
+            get {
+                return ResourceManager.GetString("PositionCenter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Left 的本地化字符串。
+        /// </summary>
+        public static string PositionLeft {
+            get {
+                return ResourceManager.GetString("PositionLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Right 的本地化字符串。
+        /// </summary>
+        public static string PositionRight {
+            get {
+                return ResourceManager.GetString("PositionRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Top 的本地化字符串。
+        /// </summary>
+        public static string PositionTop {
+            get {
+                return ResourceManager.GetString("PositionTop", resourceCulture);
             }
         }
         
@@ -214,7 +295,7 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 UI Theme: 的本地化字符串。
+        ///   查找类似 UI Theme:  的本地化字符串。
         /// </summary>
         public static string UIThemeText {
             get {

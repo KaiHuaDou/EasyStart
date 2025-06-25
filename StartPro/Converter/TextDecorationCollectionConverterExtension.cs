@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 
-namespace StartPro.Api;
+namespace StartPro.Converter;
 public static class TextDecorationCollectionConverterExtension
 {
     public static string ConvertToString(this TextDecorationCollection collection)

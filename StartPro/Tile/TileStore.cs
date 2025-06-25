@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Windows.Media;
 using System.Xml;
 
 namespace StartPro.Tile;
@@ -9,7 +8,7 @@ public static class TileStore
 {
     private const string xmlPath = "tiles.xml";
     private static readonly XmlDocument document = new( );
-    private static XmlNode Apps = document.CreateElement("Tiles");
+    private static XmlNode Apps;
 
     public static HashSet<TileBase> Load( )
     {
@@ -34,13 +33,13 @@ public static class TileStore
             }
             catch { throw; }
         }
-        Apps = document.CreateElement("Tiles");
         return result;
     }
 
-    public static void Save(HashSet<TileBase> tiles)
+    public static void Save( )
     {
-        foreach (TileBase tile in tiles)
+        Apps = document.CreateElement("Tiles");
+        foreach (TileBase tile in App.Tiles)
         {
             XmlElement element = document.CreateElement("Tile");
             element = tile.WriteAttributes(element);

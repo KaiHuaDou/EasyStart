@@ -27,7 +27,7 @@ public partial class Setting : Window
             UITheme = UIThemeBox.SelectedIndex,
             UIFlat = UIFlatBox.IsChecked == true
         };
-        App.Settings.Save( );
+        App.Settings.Write( );
         Close( );
     }
 

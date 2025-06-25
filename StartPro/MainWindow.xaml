@@ -51,20 +51,21 @@
                                 <Setter Property="Margin" Value="5,5,5,0" />
                             </Style>
                         </StackPanel.Resources>
-                        <GroupBox Header="默认">
+                        <GroupBox Header="{x:Static text:Main.DefaultGroup}">
                             <StackPanel Orientation="Horizontal">
                                 <Button Click="ShowSetting" Content="&#xE713;" />
                                 <Button Click="WindowExit" Content="&#xF3B1;" />
+                                <Button x:Name="SaveDataButton" Click="SaveData" Content="&#xE78C;" />
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="应用磁贴">
+                        <GroupBox Header="{x:Static text:AppTile.AppTileGroup}">
                             <StackPanel Orientation="Horizontal">
                                 <Button Click="ShowHideAppList" Content="&#xE700;" />
                                 <Button Click="AddAppTile" Content="&#xE710;" />
                                 <Button Click="ImportAppTile" Content="&#xE8B5;" />
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="文本磁贴">
+                        <GroupBox Header="{x:Static text:TextTile.TextTileGroup}">
                             <StackPanel Orientation="Horizontal">
                                 <Button Click="AddTextTile" Content="&#xE710;" />
                             </StackPanel>
@@ -94,7 +95,7 @@
                                     <DockPanel>
                                         <DockPanel.ContextMenu>
                                             <ContextMenu>
-                                                <MenuItem Header="固定磁贴" Click="PinApp" />
+                                                <MenuItem Header="{x:Static text:Main.PinAppText}" Click="PinApp" />
                                             </ContextMenu>
                                         </DockPanel.ContextMenu>
                                         <Image Height="32" Source="{Binding AppIcon}" Stretch="Uniform" />

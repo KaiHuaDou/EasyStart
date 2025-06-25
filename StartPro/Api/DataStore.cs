@@ -24,20 +24,22 @@ public class DataStore<T> where T : class, new()
     {
         FileStream Stream = new(File, FileMode.OpenOrCreate, FileAccess.Read);
         XmlReader Reader = XmlReader.Create(Stream);
-        XmlSerializer serializer = new(typeof(T));
         try
         {
-            Content = serializer.Deserialize(Reader) as T;
+            Content = new XmlSerializer(typeof(T)).Deserialize(Reader) as T;
         }
         catch
         {
             Content = new T( );
         }
+        Reader.Close( );
+        Stream.Close( );
     }
 
-    public void Save( )
+    public void Write( )
     {
         FileStream Stream = new(File, FileMode.Create, FileAccess.Write);
         new XmlSerializer(typeof(T)).Serialize(Stream, Content);
+        Stream.Close( );
     }
 }

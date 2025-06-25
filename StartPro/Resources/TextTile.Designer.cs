@@ -86,5 +86,14 @@ namespace StartPro.Resources {
                 return ResourceManager.GetString("LocationText", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 Text Tile 的本地化字符串。
+        /// </summary>
+        public static string TextTileGroup {
+            get {
+                return ResourceManager.GetString("TextTileGroup", resourceCulture);
+            }
+        }
     }
 }

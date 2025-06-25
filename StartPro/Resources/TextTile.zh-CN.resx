@@ -126,4 +126,7 @@
   <data name="LocationText" xml:space="preserve">
     <value>位置：</value>
   </data>
+  <data name="TextTileGroup" xml:space="preserve">
+    <value>文本磁贴</value>
+  </data>
 </root>
