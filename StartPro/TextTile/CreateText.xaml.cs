@@ -6,38 +6,25 @@ using StartPro.Api;
 
 namespace StartPro.Tile;
 
-public partial class CreateText : Window
+public partial class CreateText : Window, IEditor<TextTile>
 {
-    public TextTile? Item { get; set; } = new( );
-
+    public TextTile? Item { get; set; }
     public TextTile Original { get; set; }
+    public IEditor<TextTile> Core => this;
+
+    public CreateText( ) : this(null) { }
 
     public CreateText(TextTile t = null)
     {
         InitializeComponent( );
-        MaxWidth = Defaults.WidthPercent * SystemParameters.PrimaryScreenWidth;
-
-        if (t is null)
-        {
-            Item = new TextTile { Row = 0, Column = 0 };
-        }
-        else
-        {
-            Original = t;
-            Item = TileBase.Clone(t);
-        }
-
-        Item.IsEnabled = false;
+        Core.Init(t);
         Title = t is null ? StartPro.Resources.Tile.TitleCreate : StartPro.Resources.Tile.TitleEdit;
-
         sizeBox.SelectedIndex = (int) Item.TileSize;
         ContentBox.Text = Item.Text;
         VerticalAlignmentBox.SelectedIndex = (int) Item.TextVerticalAlignment;
         HorizontalAlignmentBox.SelectedIndex = (int) Item.TextHorizontalAlignment;
         ShadowBox.IsChecked = Item.Shadow;
-
-        DockPanel.SetDock(Item, Dock.Right);
-        mainPanel.Children.Insert(0, Item);
+        Core.InsertTile(mainPanel);
     }
 
     private void ConfigureText(object o, RoutedEventArgs e)
@@ -69,25 +56,17 @@ public partial class CreateText : Window
         => Item?.Shadow = ShadowBox.IsChecked == true;
 
     private void TaskCancel(object o, RoutedEventArgs e)
-    {
-        Item = Original;
-        Close( );
-    }
+        => Core.OnCancel(this);
 
     private void TaskOk(object o, RoutedEventArgs e)
-    {
-        Item?.IsEnabled = true;
-        Close( );
-    }
+        => Core.OnOk(this);
 
     private void TileSizeChanged(object sender, SelectionChangedEventArgs e)
-                => Item?.TileSize = (TileSize) sizeBox.SelectedIndex;
+        => Core.OnTileSizeChanged(sizeBox);
+
     private void VerticalAlignmentBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         => Item?.TextVerticalAlignment = (VerticalAlignment) VerticalAlignmentBox.SelectedIndex;
 
     private void WindowClosing(object o, CancelEventArgs e)
-    {
-        Item?.Margin = new Thickness(TileDatas.BaseMargin);
-        mainPanel.Children.Remove(Item);
-    }
+        => Core.OnWindowClosing(mainPanel);
 }

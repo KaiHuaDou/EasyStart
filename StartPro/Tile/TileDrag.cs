@@ -101,9 +101,9 @@ public partial class TileBase
     }
 }
 
-public static class CanvasExtension
+public static class PanelExtension
 {
-    public static void ResizeToFit(this Canvas parent)
+    public static void ResizeToFit(this Panel parent)
     {
         double xmax = 0, ymax = 0;
         foreach (TileBase t in parent.Children)

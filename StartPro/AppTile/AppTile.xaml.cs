@@ -11,8 +11,13 @@ using StartPro.Api;
 
 namespace StartPro.Tile;
 
-public partial class AppTile : TileBase
+public partial class AppTile : TileBase, IEditable<AppTile>
 {
+    static AppTile( )
+    {
+        TileSizeProperty.OverrideMetadata(typeof(AppTile), new(TileSize.Medium, TileSizeChanged));
+    }
+
     public AppTile( )
     {
         Grid root = Content as Grid;
@@ -27,20 +32,7 @@ public partial class AppTile : TileBase
         border.Child = RootPanel;
         Content = root;
     }
-
-    static AppTile( )
-    {
-        TileSizeProperty.OverrideMetadata(typeof(AppTile), new(TileSize.Medium, TileSizeChanged));
-    }
-
-    protected static new void TileSizeChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-    {
-        TileBase.TileSizeChanged(o, e);
-        AppTile appTile = o as AppTile;
-        appTile?.TileLabel.Visibility =
-            appTile?.TileSize is TileSize.Small or TileSize.Thin or TileSize.Tall
-            ? Visibility.Collapsed : Visibility.Visible;
-    }
+    public IEditor<AppTile> Editor => new CreateApp(this);
 
     protected static void AppIconChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
@@ -88,15 +80,17 @@ public partial class AppTile : TileBase
         (tile.TileLabel.Foreground as SolidColorBrush).Color = brightness > 128 ? Colors.Black : Colors.White;
     }
 
+    protected static new void TileSizeChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+    {
+        TileBase.TileSizeChanged(o, e);
+        AppTile appTile = o as AppTile;
+        appTile?.TileLabel.Visibility =
+            appTile?.TileSize is TileSize.Small or TileSize.Thin or TileSize.Tall
+            ? Visibility.Collapsed : Visibility.Visible;
+    }
     private void EditTile(object o, RoutedEventArgs e)
     {
-        Panel parent = Parent as Panel;
-        parent.Children.Remove(this);
-        CreateApp c = new(this);
-        c.ShowDialog( );
-        c.Item.IsEnabled = true;
-        parent.Children.Add(c.Item);
-        c.Item.Refresh( );
+        (this as IEditable<AppTile>).Edit(Parent as Panel);
     }
 
     private void OpenTileLocation(object o, RoutedEventArgs e)

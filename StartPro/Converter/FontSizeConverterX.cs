@@ -10,7 +10,6 @@ public class FontSizeConverterX : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         => Utils.ToFontSize(value.ToString( ));
 
-
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         => value.ToString( );
 }

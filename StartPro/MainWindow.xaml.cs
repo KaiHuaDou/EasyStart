@@ -104,6 +104,7 @@ public partial class MainWindow : Window
         TilePanel.Children.Add(tile);
         tile.Refresh( );
     }
+
     private void ImportAppTile(object o, RoutedEventArgs e)
     {
         Hide( );

@@ -6,7 +6,7 @@ using StartPro.Api;
 
 namespace StartPro.Tile;
 
-public partial class ImageTile : TileBase
+public partial class ImageTile : TileBase, IEditable<ImageTile>
 {
     public ImageTile( )
     {
@@ -19,20 +19,15 @@ public partial class ImageTile : TileBase
         Content = root;
     }
 
+    public IEditor<ImageTile> Editor => new CreateImage(this);
+
     protected static void ImagePathChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
         ImageTile tile = o as ImageTile;
         tile.MainImage.Source = new BitmapImage(new Uri(tile.ImagePath));
     }
-
     private void EditTile(object o, RoutedEventArgs e)
     {
-        Panel parent = Parent as Panel;
-        parent.Children.Remove(this);
-        CreateImage dialog = new(this);
-        dialog.ShowDialog( );
-        dialog.Item.IsEnabled = true;
-        parent.Children.Add(dialog.Item);
-        dialog.Item.Refresh( );
+        (this as IEditable<ImageTile>).Edit(Parent as Panel);
     }
 }

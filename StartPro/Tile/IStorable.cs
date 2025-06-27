@@ -7,7 +7,6 @@ public interface IStorable
 {
     void ReadAttributes(XmlNode node);
     XmlElement WriteAttributes(XmlElement element);
-
 }
 
 public partial class TileBase : IStorable

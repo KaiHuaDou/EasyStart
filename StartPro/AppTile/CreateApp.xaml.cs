@@ -7,30 +7,20 @@ using StartPro.Api;
 
 namespace StartPro.Tile;
 
-public partial class CreateApp : Window
+public partial class CreateApp : Window, IEditor<AppTile>
 {
     public AppTile? Item { get; set; }
     public AppTile Original { get; set; }
+    public IEditor<AppTile> Core => this;
 
-    public CreateApp(AppTile t = null)
+    public CreateApp( ) : this(null) { }
+
+    public CreateApp(AppTile t)
     {
         InitializeComponent( );
-        MaxWidth = Defaults.WidthPercent * SystemParameters.PrimaryScreenWidth;
-
-        if (t is null)
-        {
-            Item = new AppTile { Row = 0, Column = 0 };
-        }
-        else
-        {
-            Original = t;
-            Item = TileBase.Clone(t);
-        }
-
-        Item.IsEnabled = false;
+        Core.Init(t);
         OkButton.IsEnabled = t is not null;
         Title = t is null ? StartPro.Resources.Tile.TitleCreate : StartPro.Resources.Tile.TitleEdit;
-
         sizeBox.SelectedIndex = (int) Item.TileSize;
         iconBox.Text = Item.AppIcon;
         nameBox.Text = Item.AppName;
@@ -39,9 +29,7 @@ public partial class CreateApp : Window
         ShadowBox.IsChecked = Item.Shadow;
         ImageShadowBox.IsChecked = Item.ImageShadow;
         colorPicker.SelectedColor = Item.TileColor.Color;
-
-        DockPanel.SetDock(Item, Dock.Right);
-        mainPanel.Children.Insert(0, Item);
+        Core.InsertTile(mainPanel);
     }
 
     private void ColorChanged(object sender, RoutedEventArgs e)
@@ -96,23 +84,14 @@ public partial class CreateApp : Window
         => Item?.Shadow = ShadowBox.IsChecked == true;
 
     private void TaskCancel(object o, RoutedEventArgs e)
-    {
-        Item = Original;
-        Close( );
-    }
+        => Core.OnCancel(this);
 
     private void TaskOk(object o, RoutedEventArgs e)
-    {
-        Item?.IsEnabled = true;
-        Close( );
-    }
+        => Core.OnOk(this);
 
     private void TileSizeChanged(object o, SelectionChangedEventArgs e)
-        => Item?.TileSize = (TileSize) sizeBox.SelectedIndex;
+        => Core.OnTileSizeChanged(sizeBox);
 
     private void WindowClosing(object o, CancelEventArgs e)
-    {
-        Item?.Margin = new Thickness(TileDatas.BaseMargin);
-        mainPanel.Children.Remove(Item);
-    }
+        => Core.OnWindowClosing(mainPanel);
 }

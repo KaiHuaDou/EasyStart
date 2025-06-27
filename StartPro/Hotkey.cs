@@ -14,7 +14,6 @@ public partial class MainWindow
     private const int HOTKEY_ID = 9527;
     private const int KEY_F3 = 0x72;
 
-
     protected override void OnSourceInitialized(EventArgs e)
     {
         base.OnSourceInitialized(e);

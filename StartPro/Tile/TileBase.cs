@@ -17,7 +17,7 @@ public partial class TileBase : UserControl
     public static readonly DependencyProperty ShadowProperty
         = DependencyProperty.Register("TileShadow", typeof(bool), typeof(TileBase), ShadowMeta);
 
-    public Canvas Owner => Parent as Canvas;
+    public Panel Owner => Parent as Panel;
 
     public TileSize TileSize
     {

@@ -7,7 +7,7 @@ public class CustomCommand(Action executeMethod) : ICommand
 {
     public event EventHandler CanExecuteChanged = delegate { };
 
-    bool ICommand.CanExecute(object o)
+    bool ICommand.CanExecute(object parameter)
         => true;
 
     public void RaiseCanExecuteChanged( )
