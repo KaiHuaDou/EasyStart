@@ -4,7 +4,6 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:text="clr-namespace:StartPro.Resources"
         Title="{x:Static text:Main.TitleSetting}"
-        Loaded="WindowLoaded"
         SizeToContent="WidthAndHeight">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
@@ -36,18 +35,9 @@
             <TextBox x:Name="BackgroundBox" />
         </DockPanel>
         <TextBlock Grid.Row="1" Text="{x:Static text:Main.UIThemeText}" />
-        <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,5,0,5">
-            <ComboBox x:Name="UIThemeBox" SelectionChanged="UIThemeBoxSelectionChanged">
-                <System:String>Aero.NormalColor</System:String>
-                <System:String>Aero2.NormalColor</System:String>
-                <System:String>Luna.NormalColor</System:String>
-                <System:String>Luna.Homestead</System:String>
-                <System:String>Luna.Metallic</System:String>
-                <System:String>Royale.NormalColor</System:String>
-                <System:String>Classic</System:String>
-            </ComboBox>
-            <Label x:Name="UIThemeText" />
-        </StackPanel>
+        <ComboBox x:Name="UIThemeBox"
+                  Grid.Row="1" Grid.Column="1"
+                  Margin="0,5,0,5" />
         <CheckBox x:Name="UIFlatBox" Grid.Row="2" Content="{x:Static text:Main.UIThemeFlat}" />
         <StackPanel Grid.Row="3" Grid.ColumnSpan="2"
                     HorizontalAlignment="Right"

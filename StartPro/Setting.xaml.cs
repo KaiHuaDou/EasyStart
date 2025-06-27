@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Media;
 using StartPro.Api;
 using StartPro.Resources;
@@ -10,8 +10,19 @@ public partial class Setting : Window
     public Setting( )
     {
         InitializeComponent( );
+        List<string> UIThemeSource =
+        [
+            Main.ResourceManager.GetString("UITheme.Aero.NormalColor") + " (Aero.NormalColor)",
+            Main.ResourceManager.GetString("UITheme.Aero2.NormalColor") + " (Aero2.NormalColor)",
+            Main.ResourceManager.GetString("UITheme.Luna.NormalColor") + " (Luna.NormalColor)",
+            Main.ResourceManager.GetString("UITheme.Luna.Homestead") + " (Luna.Homestead)",
+            Main.ResourceManager.GetString("UITheme.Luna.Metallic") + " (Luna.Metallic)",
+            Main.ResourceManager.GetString("UITheme.Royale.NormalColor") + " (Royale.NormalColor)",
+            Main.ResourceManager.GetString("UITheme.Classic") + " (Classic)",
+        ];
         MaxWidth = Defaults.WidthPercent * SystemParameters.PrimaryScreenWidth;
         BackgroundBox.Text = App.Settings.Content.Background;
+        UIThemeBox.ItemsSource = UIThemeSource;
         UIThemeBox.SelectedIndex = App.Settings.Content.UITheme;
         UIFlatBox.IsChecked = App.Settings.Content.UIFlat;
     }
@@ -42,13 +53,4 @@ public partial class Setting : Window
         if (Utils.TrySelectFile(out string fileName, ".jpg"))
             BackgroundBox.Text = fileName;
     }
-
-    private void UIThemeBoxSelectionChanged(object o, SelectionChangedEventArgs e)
-    {
-        if (UIThemeText is null || UIThemeBox is null) return;
-        UIThemeText.Content = Main.ResourceManager.GetString($"UITheme.{UIThemeBox.SelectedValue}");
-    }
-
-    private void WindowLoaded(object o, RoutedEventArgs e)
-        => UIThemeBoxSelectionChanged(null, null);
 }
