@@ -79,6 +79,15 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Color:  的本地化字符串。
+        /// </summary>
+        public static string ColorText {
+            get {
+                return ResourceManager.GetString("ColorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Basic 的本地化字符串。
         /// </summary>
         public static string DefaultGroup {
@@ -183,15 +192,6 @@ namespace StartPro.Resources {
         public static string SelectExeText {
             get {
                 return ResourceManager.GetString("SelectExeText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Select Image 的本地化字符串。
-        /// </summary>
-        public static string SelectImageText {
-            get {
-                return ResourceManager.GetString("SelectImageText", resourceCulture);
             }
         }
         

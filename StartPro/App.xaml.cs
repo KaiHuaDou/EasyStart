@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.Windows;
 using System.Windows.Threading;
 using SingleInstanceCore;
@@ -12,7 +11,7 @@ namespace StartPro;
 
 public partial class App : Application, ISingleInstance
 {
-    public static HashSet<TileBase> Tiles { get; set; }
+    public static ObservableCollection<TileBase> Tiles { get; set; }
     public static DataStore<Config> Settings { get; set; }
     public static MainWindow TileWindow => Current.MainWindow as MainWindow;
 
@@ -40,7 +39,7 @@ public partial class App : Application, ISingleInstance
         if (!this.InitializeAsFirstInstance("KaiHuaDou_StartPro"))
             Current.Shutdown( );
 
-        Settings = new("settings.xml");
+        Settings = new("settings.json");
         Tiles = TileStore.Load( );
 
         Resources.MergedDictionaries.Add(new ResourceDictionary( )
@@ -68,7 +67,7 @@ public partial class App : Application, ISingleInstance
 
     public void OnInstanceInvoked(string[] args) => TileWindow?.Show( );
 
-    private void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+    private void AppDispatcherUnhandledException(object o, DispatcherUnhandledExceptionEventArgs e)
     {
         Debug.WriteLine($"{e.Exception.Message}\n{e.Exception.StackTrace}", "Unhandled Exception", MessageBoxButton.OK, MessageBoxImage.Error);
         e.Handled = true;

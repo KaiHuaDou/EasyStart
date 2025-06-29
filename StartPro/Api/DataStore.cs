@@ -1,6 +1,5 @@
 ﻿using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
+using System.Text.Json;
 
 namespace StartPro.Api;
 
@@ -8,11 +7,19 @@ public class DataStore<T> where T : class, new()
 {
     public T Content { get; set; }
 
-    private readonly string File;
+    private readonly FileInfo File;
+
+    private readonly JsonSerializerOptions Options = new( )
+    {
+        PropertyNameCaseInsensitive = true,
+        ReadCommentHandling = JsonCommentHandling.Skip,
+        AllowTrailingCommas = true,
+        WriteIndented = true
+    };
 
     public DataStore(string xmlFile)
     {
-        File = new FileInfo(xmlFile).FullName;
+        File = new FileInfo(xmlFile);
         try
         {
             Read( );
@@ -22,24 +29,25 @@ public class DataStore<T> where T : class, new()
 
     public void Read( )
     {
-        FileStream Stream = new(File, FileMode.OpenOrCreate, FileAccess.Read);
-        XmlReader Reader = XmlReader.Create(Stream);
+        if (!File.Exists || File.Length == 0)
+        {
+            Content = new T( );
+            return;
+        }
+        using FileStream Stream = new(File.FullName, FileMode.OpenOrCreate, FileAccess.Read);
         try
         {
-            Content = new XmlSerializer(typeof(T)).Deserialize(Reader) as T;
+            Content = JsonSerializer.Deserialize<T>(Stream, Options) ?? new T( );
         }
         catch
         {
             Content = new T( );
         }
-        Reader.Close( );
-        Stream.Close( );
     }
 
     public void Write( )
     {
-        FileStream Stream = new(File, FileMode.Create, FileAccess.Write);
-        new XmlSerializer(typeof(T)).Serialize(Stream, Content);
-        Stream.Close( );
+        using FileStream Stream = new(File.FullName, FileMode.Create, FileAccess.Write);
+        JsonSerializer.Serialize(Stream, Content, Options);
     }
 }

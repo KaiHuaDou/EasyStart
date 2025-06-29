@@ -1,16 +1,16 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using StartPro.Api;
 
 namespace StartPro.Tile;
 public partial class CreateImage : Window, IEditor<ImageTile>
 {
+    public CreateImage( ) : this(null) { }
+    public IEditor<ImageTile> Core => this;
     public ImageTile? Item { get; set; }
     public ImageTile Original { get; set; }
-    public IEditor<ImageTile> Core => this;
-
-    public CreateImage( ) : this(null) { }
 
     public CreateImage(ImageTile t)
     {
@@ -19,6 +19,7 @@ public partial class CreateImage : Window, IEditor<ImageTile>
         Title = t is null ? StartPro.Resources.Tile.TitleCreate : StartPro.Resources.Tile.TitleEdit;
         sizeBox.SelectedIndex = (int) Item.TileSize;
         imageBox.Text = Item.ImagePath;
+        stretchBox.SelectedIndex = (int) Item.Stretch;
         Core.InsertTile(mainPanel);
     }
 
@@ -41,8 +42,11 @@ public partial class CreateImage : Window, IEditor<ImageTile>
         }
     }
 
-    private void ShadowBoxChecked(object sender, RoutedEventArgs e)
-        => Item?.Shadow = ShadowBox.IsChecked == true;
+    private void ShadowBoxChecked(object o, RoutedEventArgs e)
+        => Item?.Shadow = shadowBox.IsChecked == true;
+
+    private void StretchChanged(object o, SelectionChangedEventArgs e)
+        => Item?.Stretch = (Stretch) stretchBox.SelectedIndex;
 
     private void TaskCancel(object o, RoutedEventArgs e)
         => Core.OnCancel(this);
@@ -50,7 +54,7 @@ public partial class CreateImage : Window, IEditor<ImageTile>
     private void TaskOk(object o, RoutedEventArgs e)
         => Core.OnOk(this);
 
-    private void TileSizeChanged(object sender, SelectionChangedEventArgs e)
+    private void TileSizeChanged(object o, SelectionChangedEventArgs e)
         => Core.OnTileSizeChanged(sizeBox);
 
     private void WindowClosing(object o, CancelEventArgs e)

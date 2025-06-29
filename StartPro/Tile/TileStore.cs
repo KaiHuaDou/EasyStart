@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Xml;
 
@@ -10,9 +10,9 @@ public static class TileStore
     private static readonly XmlDocument document = new( );
     private static XmlNode Apps;
 
-    public static HashSet<TileBase> Load( )
+    public static ObservableCollection<TileBase> Load( )
     {
-        HashSet<TileBase> result = [];
+        ObservableCollection<TileBase> result = [];
         try { document.Load(xmlPath); }
         catch { return result; }
 
@@ -32,12 +32,7 @@ public static class TileStore
                 item.IsEnabled = true;
                 result.Add(item);
             }
-            catch
-            {
-#if DEBUG
-                throw;
-#endif
-            }
+            catch { }
         }
         return result;
     }
@@ -48,7 +43,7 @@ public static class TileStore
         foreach (TileBase tile in App.Tiles)
         {
             XmlElement element = document.CreateElement("Tile");
-            element = tile.WriteAttributes(element);
+            tile.WriteAttributes(ref element);
             Apps.AppendChild(element);
         }
         File.WriteAllText(xmlPath, Apps.OuterXml);

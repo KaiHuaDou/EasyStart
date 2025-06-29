@@ -26,13 +26,13 @@ public partial class CreateApp : Window, IEditor<AppTile>
         nameBox.Text = Item.AppName;
         pathBox.Text = Item.AppPath;
         fontBox.Text = Item.FontSize.ToString( );
-        ShadowBox.IsChecked = Item.Shadow;
-        ImageShadowBox.IsChecked = Item.ImageShadow;
+        shadowBox.IsChecked = Item.Shadow;
+        imageShadowBox.IsChecked = Item.ImageShadow;
         colorPicker.SelectedColor = Item.TileColor.Color;
         Core.InsertTile(mainPanel);
     }
 
-    private void ColorChanged(object sender, RoutedEventArgs e)
+    private void ColorChanged(object o, RoutedEventArgs e)
         => Item?.TileColor = new SolidColorBrush(colorPicker.SelectedColor);
 
     private void FontChanged(object o, TextChangedEventArgs e)
@@ -48,7 +48,7 @@ public partial class CreateApp : Window, IEditor<AppTile>
     }
 
     private void ImageShadowBoxChecked(object o, RoutedEventArgs e)
-        => Item?.ImageShadow = (bool) ImageShadowBox.IsChecked;
+        => Item?.ImageShadow = (bool) imageShadowBox.IsChecked;
 
     private void NameChanged(object o, TextChangedEventArgs e)
         => Item?.AppName = nameBox.Text;
@@ -81,7 +81,7 @@ public partial class CreateApp : Window, IEditor<AppTile>
     }
 
     private void ShadowBoxChecked(object o, RoutedEventArgs e)
-        => Item?.Shadow = ShadowBox.IsChecked == true;
+        => Item?.Shadow = shadowBox.IsChecked == true;
 
     private void TaskCancel(object o, RoutedEventArgs e)
         => Core.OnCancel(this);

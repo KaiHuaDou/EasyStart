@@ -36,6 +36,11 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>AppTile.resx</DependentUpon>
         </Compile>
+        <Compile Update="Resources\ImageTile.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>ImageTile.resx</DependentUpon>
+        </Compile>
         <Compile Update="Resources\Main.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
@@ -59,6 +64,10 @@
         <EmbeddedResource Update="Resources\AppTile.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
             <LastGenOutput>AppTile.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\ImageTile.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>ImageTile.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\Main.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>

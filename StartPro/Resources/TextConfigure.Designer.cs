@@ -61,15 +61,6 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Color:  的本地化字符串。
-        /// </summary>
-        public static string ColorText {
-            get {
-                return ResourceManager.GetString("ColorText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Font Family:  的本地化字符串。
         /// </summary>
         public static string FontFamilyText {

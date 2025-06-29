@@ -45,9 +45,9 @@ public partial class AppTile
         set => SetValue(ImageShadowProperty, value);
     }
 
-    public override XmlElement WriteAttributes(XmlElement element)
+    public override void WriteAttributes(ref XmlElement element)
     {
-        element = base.WriteAttributes(element);
+        base.WriteAttributes(ref element);
         element.SetAttribute("Type", "AppTile");
         element.SetAttribute("Name", AppName);
         element.SetAttribute("Path", AppPath);
@@ -55,7 +55,6 @@ public partial class AppTile
         element.SetAttribute("Shadow", Shadow.ToString( ));
         element.SetAttribute("ImageShadow", ImageShadow.ToString( ));
         element.SetAttribute("FontSize", FontSize.ToString( ));
-        return element;
     }
 
     public override void ReadAttributes(XmlNode node)

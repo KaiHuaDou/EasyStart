@@ -96,7 +96,7 @@ public static class Utils
 
     public static string ShortenStr(string str, int len = 25)
     {
-        return str.Length <= len ? str : $"{str.AsSpan(0, len - 3)}…";
+        return str.Length <= len ? str : $"{str.AsSpan(0, len - 3)}...";
     }
 
     public static double ToFontSize(string value)

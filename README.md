@@ -25,14 +25,18 @@ Windows 磁贴开始菜单的替代品
 
 通过 [GitHub Actions](https://github.com/KaiHuaDou/EasyStart/actions) 获取最新构建
 
-运行以下代码即可本地构建，需要`.NET 9.0 SDK`或更高版本：
+本地构建请运行以下代码即可，需要`.NET 9.0 SDK`或更高版本：
 
 ```bash
 git clone --depth=1 https://github.com/KaiHuaDou/EasyStart.git
 cd EasyStart
 dotnet build
-# 单文件输出
-# dotnet publish -p:PublishProfile=FolderProfile
+```
+
+如需构建发布版本，请运行：
+
+```bash
+dotnet publish -p:PublishProfile=FolderProfile
 ```
 
 ## 效果

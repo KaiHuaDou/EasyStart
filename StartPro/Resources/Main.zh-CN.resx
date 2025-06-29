@@ -123,6 +123,9 @@
   <data name="CancelText" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="ColorText" xml:space="preserve">
+    <value>颜色:</value>
+  </data>
   <data name="DefaultGroup" xml:space="preserve">
     <value>基本</value>
   </data>
@@ -158,9 +161,6 @@
   </data>
   <data name="SelectExeText" xml:space="preserve">
     <value>选择可执行文件</value>
-  </data>
-  <data name="SelectImageText" xml:space="preserve">
-    <value>选择图像</value>
   </data>
   <data name="TitleSetting" xml:space="preserve">
     <value>设置</value>

@@ -117,112 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FontFamilyText" xml:space="preserve">
-    <value>字体：</value>
+  <data name="CreateImageText" xml:space="preserve">
+    <value>创建图像磁贴</value>
   </data>
-  <data name="FontSizeText" xml:space="preserve">
-    <value>字号:</value>
+  <data name="ImageText" xml:space="preserve">
+    <value>图像：</value>
   </data>
-  <data name="FontStretchCondensed" xml:space="preserve">
-    <value>挤压</value>
+  <data name="ImageTileGroup" xml:space="preserve">
+    <value>图像磁贴</value>
   </data>
-  <data name="FontStretchExpanded" xml:space="preserve">
-    <value>扩展</value>
+  <data name="StretchFill" xml:space="preserve">
+    <value>填充</value>
   </data>
-  <data name="FontStretchExtraCondensed" xml:space="preserve">
-    <value>大挤压</value>
+  <data name="StretchNone" xml:space="preserve">
+    <value>无</value>
   </data>
-  <data name="FontStretchExtraExpanded" xml:space="preserve">
-    <value>大扩展</value>
+  <data name="StretchText" xml:space="preserve">
+    <value>拉伸</value>
   </data>
-  <data name="FontStretchNormal" xml:space="preserve">
-    <value>普通</value>
+  <data name="StretchUniform" xml:space="preserve">
+    <value>适应</value>
   </data>
-  <data name="FontStretchSemiCondensed" xml:space="preserve">
-    <value>半挤压</value>
-  </data>
-  <data name="FontStretchSemiExpanded" xml:space="preserve">
-    <value>半扩展</value>
-  </data>
-  <data name="FontStretchText" xml:space="preserve">
-    <value>字体拉伸：</value>
-  </data>
-  <data name="FontStretchUltraCondensed" xml:space="preserve">
-    <value>超大挤压</value>
-  </data>
-  <data name="FontStretchUltraExpanded" xml:space="preserve">
-    <value>超大扩展</value>
-  </data>
-  <data name="FontStyleItalic" xml:space="preserve">
-    <value>意大利斜体</value>
-  </data>
-  <data name="FontStyleNormal" xml:space="preserve">
-    <value>普通</value>
-  </data>
-  <data name="FontStyleOblique" xml:space="preserve">
-    <value>斜体</value>
-  </data>
-  <data name="FontStyleText" xml:space="preserve">
-    <value>字体样式：</value>
-  </data>
-  <data name="FontWeightBold" xml:space="preserve">
-    <value>重</value>
-  </data>
-  <data name="FontWeightHeavy" xml:space="preserve">
-    <value>超重</value>
-  </data>
-  <data name="FontWeightLight" xml:space="preserve">
-    <value>轻</value>
-  </data>
-  <data name="FontWeightMedium" xml:space="preserve">
-    <value>中等</value>
-  </data>
-  <data name="FontWeightNormal" xml:space="preserve">
-    <value>普通</value>
-  </data>
-  <data name="FontWeightText" xml:space="preserve">
-    <value>字重：</value>
-  </data>
-  <data name="FontWeightThin" xml:space="preserve">
-    <value>超轻</value>
-  </data>
-  <data name="TextAlignmentCenter" xml:space="preserve">
-    <value>居中</value>
-  </data>
-  <data name="TextAlignmentJustify" xml:space="preserve">
-    <value>两端</value>
-  </data>
-  <data name="TextAlignmentLeft" xml:space="preserve">
-    <value>左</value>
-  </data>
-  <data name="TextAlignmentRight" xml:space="preserve">
-    <value>右</value>
-  </data>
-  <data name="TextAlignmentText" xml:space="preserve">
-    <value>文字对齐：</value>
-  </data>
-  <data name="TextConfigureText" xml:space="preserve">
-    <value>文字选项</value>
-  </data>
-  <data name="TextDecorationBaseline" xml:space="preserve">
-    <value>基线</value>
-  </data>
-  <data name="TextDecorationOverLine" xml:space="preserve">
-    <value>顶线</value>
-  </data>
-  <data name="TextDecorationStrikethrough" xml:space="preserve">
-    <value>删除线</value>
-  </data>
-  <data name="TextDecorationText" xml:space="preserve">
-    <value>文本装饰：</value>
-  </data>
-  <data name="TextDecorationUnderline" xml:space="preserve">
-    <value>下划线</value>
-  </data>
-  <data name="TextEffectText" xml:space="preserve">
-    <value>文本效果：</value>
-  </data>
-  <data name="TextShadowText" xml:space="preserve">
-    <value>文本阴影</value>
+  <data name="StretchUniformToFill" xml:space="preserve">
+    <value>适应以填充</value>
   </data>
 </root>

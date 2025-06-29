@@ -25,13 +25,13 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock VerticalAlignment="Center" Text="{x:Static text:TextConfigure.FontSizeText}" />
-        <TextBox x:Name="FontSizeBox" Grid.Column="1" Margin="10,5,0,5" />
+        <TextBox x:Name="fontSizeBox" Grid.Column="1" Margin="10,5,0,5" />
         <TextBlock Grid.Row="1" VerticalAlignment="Center" Text="{x:Static text:TextConfigure.FontFamilyText}" />
-        <ComboBox x:Name="FontFamilyBox"
+        <ComboBox x:Name="fontFamilyBox"
                   Grid.Row="1" Grid.Column="1"
                   Margin="10,5,0,5" />
         <TextBlock Grid.Row="2" VerticalAlignment="Center" Text="{x:Static text:TextConfigure.FontWeightText}" />
-        <ComboBox x:Name="FontWeightBox"
+        <ComboBox x:Name="fontWeightBox"
                   Grid.Row="2" Grid.Column="1"
                   Margin="10,5,0,5">
             <TextBlock FontWeight="Thin" Text="{x:Static text:TextConfigure.FontWeightThin}" />
@@ -42,7 +42,7 @@
             <TextBlock FontWeight="Heavy" Text="{x:Static text:TextConfigure.FontWeightHeavy}" />
         </ComboBox>
         <TextBlock Grid.Row="3" VerticalAlignment="Center" Text="{x:Static text:TextConfigure.FontStyleText}" />
-        <ComboBox x:Name="FontStyleBox"
+        <ComboBox x:Name="fontStyleBox"
                   Grid.Row="3" Grid.Column="1"
                   Margin="10,5,0,5">
             <TextBlock FontStyle="Normal" Text="{x:Static text:TextConfigure.FontStyleNormal}" />
@@ -50,7 +50,7 @@
             <TextBlock FontStyle="Oblique" Text="{x:Static text:TextConfigure.FontStyleOblique}" />
         </ComboBox>
         <TextBlock Grid.Row="4" VerticalAlignment="Center" Text="{x:Static text:TextConfigure.FontStretchText}" />
-        <ComboBox x:Name="FontStretchBox"
+        <ComboBox x:Name="fontStretchBox"
                   Grid.Row="4" Grid.Column="1"
                   Margin="10,5,0,5">
             <TextBlock FontStretch="UltraCondensed" Text="{x:Static text:TextConfigure.FontStretchUltraCondensed}" />
@@ -72,24 +72,24 @@
                     <TextBlock Text="{x:Static text:TextConfigure.TextDecorationUnderline}" TextDecorations="Underline" />
                 </CheckBox.Content>
             </CheckBox>
-            <CheckBox x:Name="TextDecorationOverLineBlock" Margin="5,0,5,0">
+            <CheckBox x:Name="textDecorationOverLineBlock" Margin="5,0,5,0">
                 <CheckBox.Content>
                     <TextBlock Text="{x:Static text:TextConfigure.TextDecorationOverLine}" TextDecorations="OverLine" />
                 </CheckBox.Content>
             </CheckBox>
-            <CheckBox x:Name="TextDecorationStrikeThroughBlock" Margin="5,0,5,0">
+            <CheckBox x:Name="textDecorationStrikeThroughBlock" Margin="5,0,5,0">
                 <CheckBox.Content>
                     <TextBlock Text="{x:Static text:TextConfigure.TextDecorationStrikethrough}" TextDecorations="Strikethrough" />
                 </CheckBox.Content>
             </CheckBox>
-            <CheckBox x:Name="TextDecorationBaseLineBlock" Margin="5,0,5,0">
+            <CheckBox x:Name="textDecorationBaseLineBlock" Margin="5,0,5,0">
                 <CheckBox.Content>
                     <TextBlock Text="{x:Static text:TextConfigure.TextDecorationBaseline}" TextDecorations="Baseline" />
                 </CheckBox.Content>
             </CheckBox>
         </StackPanel>
         <TextBlock Grid.Row="6" VerticalAlignment="Center" Text="{x:Static text:TextConfigure.TextAlignmentText}" />
-        <ComboBox x:Name="TextAlignmentBox"
+        <ComboBox x:Name="textAlignmentBox"
                   Grid.Row="6" Grid.Column="1"
                   Margin="10,5,0,5">
             <TextBlock Text="{x:Static text:TextConfigure.TextAlignmentLeft}" TextAlignment="Left" />
@@ -98,11 +98,11 @@
             <TextBlock Text="{x:Static text:TextConfigure.TextAlignmentJustify}" TextAlignment="Justify" />
         </ComboBox>
         <TextBlock Grid.Row="7" VerticalAlignment="Center" Text="{x:Static text:TextConfigure.TextEffectText}" />
-        <CheckBox x:Name="TextShadowBox"
+        <CheckBox x:Name="textShadowBox"
                   Grid.Row="7" Grid.Column="1"
                   Margin="10,5,0,5"
                   Content="{x:Static text:TextConfigure.TextShadowText}" />
-        <TextBlock Grid.Row="8" VerticalAlignment="Center" Text="{x:Static text:TextConfigure.ColorText}" />
+        <TextBlock Grid.Row="8" VerticalAlignment="Center" Text="{x:Static text:Main.ColorText}" />
         <picker:PortableColorPicker x:Name="colorPicker"
                                     Grid.Row="8" Grid.Column="1"
                                     MinHeight="25"

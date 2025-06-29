@@ -8,8 +8,8 @@ public interface IEditor<TTile> where TTile : TileBase, new()
     TTile? Item { get; set; }
     TTile Original { get; set; }
 
-    Window Owner { get => (this as Window).Owner; set => (this as Window).Owner = value; }
-    void ShowDialog( ) => (this as Window).ShowDialog( );
+    Window Owner { get => (this as Window)?.Owner; set => (this as Window)?.Owner = value; }
+    void ShowDialog( ) => (this as Window)?.ShowDialog( );
 
     void Init(TTile t)
     {

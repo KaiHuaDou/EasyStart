@@ -123,6 +123,9 @@
   <data name="CancelText" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="ColorText" xml:space="preserve">
+    <value>Color: </value>
+  </data>
   <data name="DefaultGroup" xml:space="preserve">
     <value>Basic</value>
   </data>
@@ -158,9 +161,6 @@
   </data>
   <data name="SelectExeText" xml:space="preserve">
     <value>Select Executable</value>
-  </data>
-  <data name="SelectImageText" xml:space="preserve">
-    <value>Select Image</value>
   </data>
   <data name="TitleSetting" xml:space="preserve">
     <value>Setting</value>

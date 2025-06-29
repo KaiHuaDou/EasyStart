@@ -70,7 +70,7 @@
                                 <Button Click="AddTextTile" Content="&#xE710;" />
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="图像磁贴">
+                        <GroupBox Header="{x:Static text:ImageTile.ImageTileGroup}">
                             <StackPanel Orientation="Horizontal">
                                 <Button Click="AddImageTile" Content="&#xE710;" />
                             </StackPanel>

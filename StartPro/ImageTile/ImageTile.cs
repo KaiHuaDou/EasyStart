@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 using System.Xml;
 
@@ -25,19 +24,18 @@ public partial class ImageTile
         set => SetValue(StretchProperty, value);
     }
 
-    public override XmlElement WriteAttributes(XmlElement element)
+    public override void WriteAttributes(ref XmlElement element)
     {
-        element = base.WriteAttributes(element);
+        base.WriteAttributes(ref element);
         element.SetAttribute("Type", "ImageTile");
         element.SetAttribute("ImagePath", ImagePath);
-        element.SetAttribute("Stretch", Stretch.ToString( ));
-        return element;
+        element.SetAttribute("Stretch", ((int) Stretch).ToString( ));
     }
 
     public override void ReadAttributes(XmlNode node)
     {
         base.ReadAttributes(node);
         ImagePath = node.GetAttribute("ImagePath");
-        Stretch = Enum.Parse<Stretch>(node.GetAttribute("Stretch"));
+        Stretch = (Stretch) int.Parse(node.GetAttribute("Stretch"));
     }
 }

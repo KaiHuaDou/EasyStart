@@ -2,8 +2,12 @@
 
 public enum UIThemes
 {
-    AeroNormalColor = 0, Aero2NormalColor = 1,
-    LunaNormalColor = 2, LunaHomestead = 3, LunaMetallic = 4, RoyaleNormalColor = 5,
+    AeroNormalColor = 0,
+    Aero2NormalColor = 1,
+    LunaNormalColor = 2,
+    LunaHomestead = 3,
+    LunaMetallic = 4,
+    RoyaleNormalColor = 5,
     Classic = 6
 }
 

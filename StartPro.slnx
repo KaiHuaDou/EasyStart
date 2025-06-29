@@ -5,12 +5,12 @@
     <File Path=".github/workflows/build.yml" />
     <File Path=".gitignore" />
     <File Path="LICENSE" />
-    <File Path="publish.cmd" />
     <File Path="README.md" />
     <File Path="Settings.XamlStyler" />
   </Folder>
   <Project Path="StartPro/StartPro.csproj" />
   <Properties Name="ExtensibilityGlobals" Scope="PostLoad">
+    <Property Name="RESX_AutoCreateNewLanguageFiles" Value="True" />
     <Property Name="RESX_ResXSortingComparison" Value="InvariantCultureIgnoreCase" />
     <Property Name="RESX_Rules" Value="{&quot;EnabledRules&quot;:[&quot;StringFormat&quot;,&quot;WhiteSpaceLead&quot;,&quot;PunctuationLead&quot;,&quot;PunctuationTail&quot;]}" />
     <Property Name="RESX_SortFileContentOnSave" Value="True" />

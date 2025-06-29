@@ -33,7 +33,7 @@ public class TextConfig : IStorable
         TextColor = new SolidColorBrush((Color) ColorConverter.ConvertFromString(node.GetAttribute("TextColor")));
     }
 
-    public XmlElement WriteAttributes(XmlElement element)
+    public void WriteAttributes(ref XmlElement element)
     {
         element.SetAttribute("FontSize", FontSize.ToString( ));
         element.SetAttribute("FontFamily", FontFamily.ToString( ));
@@ -44,7 +44,6 @@ public class TextConfig : IStorable
         element.SetAttribute("TextAlignment", TextAlignment.ToString( ));
         element.SetAttribute("TextShadow", TextShadow.ToString( ));
         element.SetAttribute("TextColor", TextColor.ToString( ));
-        return element;
     }
 
     public static TextConfig FromString(string xmlString)
@@ -61,7 +60,7 @@ public class TextConfig : IStorable
         XmlDocument doc = new( );
         XmlElement root = doc.CreateElement("TextConfig");
         doc.AppendChild(root);
-        WriteAttributes(root);
+        WriteAttributes(ref root);
         using StringWriter stringWriter = new( );
         using XmlTextWriter xmlWriter = new(stringWriter);
         doc.WriteTo(xmlWriter);

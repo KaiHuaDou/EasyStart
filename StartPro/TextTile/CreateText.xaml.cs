@@ -8,11 +8,10 @@ namespace StartPro.Tile;
 
 public partial class CreateText : Window, IEditor<TextTile>
 {
+    public CreateText( ) : this(null) { }
+    public IEditor<TextTile> Core => this;
     public TextTile? Item { get; set; }
     public TextTile Original { get; set; }
-    public IEditor<TextTile> Core => this;
-
-    public CreateText( ) : this(null) { }
 
     public CreateText(TextTile t = null)
     {
@@ -23,16 +22,17 @@ public partial class CreateText : Window, IEditor<TextTile>
         ContentBox.Text = Item.Text;
         VerticalAlignmentBox.SelectedIndex = (int) Item.TextVerticalAlignment;
         HorizontalAlignmentBox.SelectedIndex = (int) Item.TextHorizontalAlignment;
-        ShadowBox.IsChecked = Item.Shadow;
+        colorPicker.SelectedColor = Item.TileColor.Color;
+        shadowBox.IsChecked = Item.Shadow;
         Core.InsertTile(mainPanel);
     }
 
+    private void ColorChanged(object o, RoutedEventArgs e)
+        => Item?.TileColor = new SolidColorBrush(colorPicker.SelectedColor);
+
     private void ConfigureText(object o, RoutedEventArgs e)
     {
-        TextConfigureDialog dialog = new(Item.TextConfig)
-        {
-            Owner = this
-        };
+        TextConfigureDialog dialog = new(Item.TextConfig) { Owner = this };
         dialog.ShowDialog( );
         if (dialog.IsSelected)
         {
@@ -40,20 +40,14 @@ public partial class CreateText : Window, IEditor<TextTile>
         }
     }
 
-    private void ContentBoxTextChanged(object sender, TextChangedEventArgs e)
+    private void ContentBoxTextChanged(object o, TextChangedEventArgs e)
         => Item?.Text = ContentBox.Text;
 
-    private void HorizontalAlignmentBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void HorizontalAlignmentBoxSelectionChanged(object o, SelectionChangedEventArgs e)
         => Item?.TextHorizontalAlignment = (HorizontalAlignment) HorizontalAlignmentBox.SelectedIndex;
 
-    private void SelectColor(object o, RoutedEventArgs e)
-    {
-        if (Utils.TrySelectColor(Item.TileColor.Color, out Color color, this))
-            Item.TileColor = new SolidColorBrush(color);
-    }
-
-    private void ShadowBoxChecked(object sender, RoutedEventArgs e)
-        => Item?.Shadow = ShadowBox.IsChecked == true;
+    private void ShadowBoxChecked(object o, RoutedEventArgs e)
+        => Item?.Shadow = shadowBox.IsChecked == true;
 
     private void TaskCancel(object o, RoutedEventArgs e)
         => Core.OnCancel(this);
@@ -61,10 +55,10 @@ public partial class CreateText : Window, IEditor<TextTile>
     private void TaskOk(object o, RoutedEventArgs e)
         => Core.OnOk(this);
 
-    private void TileSizeChanged(object sender, SelectionChangedEventArgs e)
+    private void TileSizeChanged(object o, SelectionChangedEventArgs e)
         => Core.OnTileSizeChanged(sizeBox);
 
-    private void VerticalAlignmentBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void VerticalAlignmentBoxSelectionChanged(object o, SelectionChangedEventArgs e)
         => Item?.TextVerticalAlignment = (VerticalAlignment) VerticalAlignmentBox.SelectedIndex;
 
     private void WindowClosing(object o, CancelEventArgs e)

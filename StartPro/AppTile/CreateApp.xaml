@@ -64,19 +64,19 @@
                      Grid.Row="4" Grid.Column="1"
                      Margin="0,0,0,10"
                      TextChanged="FontChanged" />
-            <TextBlock Grid.Row="5" Text="{x:Static text:TextConfigure.ColorText}" />
+            <TextBlock Grid.Row="5" Text="{x:Static text:Main.ColorText}" />
             <picker:PortableColorPicker x:Name="colorPicker"
                                         Grid.Row="5" Grid.Column="1"
-                                        Margin="0,0,0,10" Padding="20,3"
+                                        Margin="0,0,0,10"
                                         ColorChanged="ColorChanged" />
             <StackPanel Grid.Row="6" Grid.ColumnSpan="2"
                         Margin="0,0,0,10"
                         Orientation="Horizontal">
-                <CheckBox x:Name="ImageShadowBox"
+                <CheckBox x:Name="imageShadowBox"
                           Margin="10,0,0,0"
                           Checked="ImageShadowBoxChecked" Unchecked="ImageShadowBoxChecked"
                           Content="{x:Static text:AppTile.ImageShadowText}" />
-                <CheckBox x:Name="ShadowBox"
+                <CheckBox x:Name="shadowBox"
                           Margin="10,0,0,0"
                           Checked="ShadowBoxChecked" Unchecked="ShadowBoxChecked"
                           Content="{x:Static text:Tile.ShadowText}" />

@@ -44,22 +44,23 @@ public partial class TextTile
         set => SetValue(TextHorizontalAlignmentProperty, value);
     }
 
-    public override XmlElement WriteAttributes(XmlElement element)
+    public override void WriteAttributes(ref XmlElement element)
     {
-        element = base.WriteAttributes(element);
+        base.WriteAttributes(ref element);
         element.SetAttribute("Type", "TextTile");
         element.SetAttribute("Text", Text);
-        element.SetAttribute("TextConfig", TextConfig.ToString( ));
         element.SetAttribute("TextVerticalAlignment", ((int) TextVerticalAlignment).ToString( ));
         element.SetAttribute("TextHorizontalAlignment", ((int) TextHorizontalAlignment).ToString( ));
-        return element;
+        XmlElement textConfig = element.OwnerDocument.CreateElement("TextConfig");
+        TextConfig.WriteAttributes(ref textConfig);
+        element.AppendChild(textConfig);
     }
 
     public override void ReadAttributes(XmlNode node)
     {
         base.ReadAttributes(node);
         Text = node.GetAttribute("Text");
-        TextConfig = TextConfig.FromString(node.GetAttribute("TextConfig"));
+        TextConfig.ReadAttributes(node.ChildNodes[0]);
         TextVerticalAlignment = (VerticalAlignment) int.Parse(node.GetAttribute("TextVerticalAlignment"));
         TextHorizontalAlignment = (HorizontalAlignment) int.Parse(node.GetAttribute("TextHorizontalAlignment"));
     }
