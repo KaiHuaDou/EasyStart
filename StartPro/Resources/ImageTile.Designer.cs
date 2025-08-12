@@ -22,7 +22,7 @@ namespace StartPro.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ImageTile {
+    public class ImageTile {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace StartPro.Resources {
         ///   返回此类使用的缓存的 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("StartPro.Resources.ImageTile", typeof(ImageTile).Assembly);
@@ -51,7 +51,7 @@ namespace StartPro.Resources {
         ///   使用此强类型资源类的所有资源查找执行重写。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace StartPro.Resources {
         /// <summary>
         ///   查找类似 Create Image Tile 的本地化字符串。
         /// </summary>
-        internal static string CreateImageText {
+        public static string CreateImageText {
             get {
                 return ResourceManager.GetString("CreateImageText", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace StartPro.Resources {
         /// <summary>
         ///   查找类似 Image:  的本地化字符串。
         /// </summary>
-        internal static string ImageText {
+        public static string ImageText {
             get {
                 return ResourceManager.GetString("ImageText", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace StartPro.Resources {
         /// <summary>
         ///   查找类似 Image Tile 的本地化字符串。
         /// </summary>
-        internal static string ImageTileGroup {
+        public static string ImageTileGroup {
             get {
                 return ResourceManager.GetString("ImageTileGroup", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace StartPro.Resources {
         /// <summary>
         ///   查找类似 Fill 的本地化字符串。
         /// </summary>
-        internal static string StretchFill {
+        public static string StretchFill {
             get {
                 return ResourceManager.GetString("StretchFill", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace StartPro.Resources {
         /// <summary>
         ///   查找类似 None 的本地化字符串。
         /// </summary>
-        internal static string StretchNone {
+        public static string StretchNone {
             get {
                 return ResourceManager.GetString("StretchNone", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace StartPro.Resources {
         /// <summary>
         ///   查找类似 Stretch 的本地化字符串。
         /// </summary>
-        internal static string StretchText {
+        public static string StretchText {
             get {
                 return ResourceManager.GetString("StretchText", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace StartPro.Resources {
         /// <summary>
         ///   查找类似 Uniform 的本地化字符串。
         /// </summary>
-        internal static string StretchUniform {
+        public static string StretchUniform {
             get {
                 return ResourceManager.GetString("StretchUniform", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace StartPro.Resources {
         /// <summary>
         ///   查找类似 Uniform to fill 的本地化字符串。
         /// </summary>
-        internal static string StretchUniformToFill {
+        public static string StretchUniformToFill {
             get {
                 return ResourceManager.GetString("StretchUniformToFill", resourceCulture);
             }

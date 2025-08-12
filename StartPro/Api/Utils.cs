@@ -25,7 +25,10 @@ public static class Utils
                 Verb = isAdmin ? "" : "runas"
             });
         }
-        catch { }
+        catch
+        {
+            App.ShowInfo("无法以管理员身份运行");
+        }
     }
 
     public static void AppendContexts(ContextMenu from, ContextMenu to)
@@ -59,38 +62,33 @@ public static class Utils
         return false;
     }
 
-    public static Dictionary<string, string> FileFilter = new( ) {
-        {".exe", "*.exe *.com *.bat *.cmd|*.exe;*.com;*.bat;*.cmd|*.*|*.*"},
-        {".jpg", "*.exe *.dll *.jpg *.jpeg *.png *.bmp *.tif *.tiff *.gif *.ico|*.exe;*.dll;*.jpg;*.jpeg;*.png;*.bmp;*.tif;*.tiff;*.gif;*.ico|*.*|*.*"},
-        {".png", "*.jpg *.jpeg *.png *.bmp *.tif *.tiff *.gif *.ico|*.jpg;*.jpeg;*.png;*.bmp;*.tif;*.tiff;*.gif;*.ico|*.*|*.*"},
+    public static Dictionary<string, (string defaultExt, string filter)> FileFilter = new( ) {
+        { "exe", (".exe", "*.exe *.com *.bat *.cmd|*.exe;*.com;*.bat;*.cmd|*.*|*.*") },
+        { "img", (".png", "*.jpg *.jpeg *.png *.bmp *.tif *.tiff *.gif *.ico|*.jpg;*.jpeg;*.png;*.bmp;*.tif;*.tiff;*.gif;*.ico|*.*|*.*") },
+        { "exe+img", (".png", "*.exe *.jpg *.jpeg *.png *.bmp *.tif *.tiff *.gif *.ico|*.exe;*.jpg;*.jpeg;*.png;*.bmp;*.tif;*.tiff;*.gif;*.ico|*.*|*.*") },
+    };
+
+    private static OpenFileDialog CreateOpenFileDialog => new( )
+    {
+        CheckFileExists = true,
+        DefaultExt = ".exe",
+        Filter = FileFilter["exe"].filter,
+        Title = Main.SelectExeText,
     };
 
     public static bool TrySelectFile(out string fileName, string fileType)
     {
-        OpenFileDialog dialog = new( )
-        {
-            CheckFileExists = true,
-            DefaultExt = fileType,
-            Filter = FileFilter[fileType],
-            Title = Main.SelectExeText,
-        };
+        OpenFileDialog dialog = CreateOpenFileDialog;
         bool result = dialog.ShowDialog( ) == true;
         fileName = dialog.FileName;
         return result;
     }
 
-    public static bool TrySelectFiles(out string[] fileName, string fileType)
+    public static bool TrySelectFiles(out string[] fileNames, string fileType)
     {
-        OpenFileDialog dialog = new( )
-        {
-            CheckFileExists = true,
-            DefaultExt = fileType,
-            Filter = FileFilter[fileType],
-            Title = Main.SelectExeText,
-            Multiselect = true,
-        };
+        OpenFileDialog dialog = CreateOpenFileDialog;
         bool result = dialog.ShowDialog( ) == true;
-        fileName = dialog.FileNames;
+        fileNames = dialog.FileNames;
         return result;
     }
 

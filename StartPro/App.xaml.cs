@@ -11,8 +11,9 @@ namespace StartPro;
 
 public partial class App : Application, ISingleInstance
 {
-    public static ObservableCollection<TileBase> Tiles { get; set; }
-    public static DataStore<Config> Settings { get; set; }
+    public static ObservableCollection<TileBase> Tiles { get; private set; }
+    public static ConfigStore<Config> Settings { get; set; }
+    public static ObservableCollection<string> Infos { get; } = [];
     public static MainWindow TileWindow => Current.MainWindow as MainWindow;
 
     public static class Program
@@ -26,6 +27,12 @@ public partial class App : Application, ISingleInstance
             app.Run( );
             SingleInstance.Cleanup( );
         }
+    }
+
+    public static void ShowInfo(string message)
+    {
+        Infos.Add(message);
+        TileWindow?.InfoBox?.SelectedItem = message;
     }
 
     private void AppExit(object o, ExitEventArgs e)

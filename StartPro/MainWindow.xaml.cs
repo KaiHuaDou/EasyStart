@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
@@ -33,6 +36,11 @@ public partial class MainWindow : Window
                 AppIcon = new BitmapImage()
             }
         };
+
+        InfoBox.SetBinding(ItemsControl.ItemsSourceProperty, new Binding( ) { Source = App.Infos });
+        NotifyCollectionChangedEventHandler UpdateHeader = (_, _) => InfoGroup?.Header = $"信息{(InfoBox.Items.Count == 0 ? "" : $" ({InfoBox.Items.Count})")}";
+        App.Infos.CollectionChanged += UpdateHeader;
+        UpdateHeader(null, null);
 
         foreach (TileBase tile in App.Tiles)
         {
@@ -193,6 +201,12 @@ public partial class MainWindow : Window
         new Setting( ).ShowDialog( );
         LoadBackground( );
         Show( );
+    }
+
+    private void ClearInfo(object o, RoutedEventArgs e)
+    {
+        App.Infos.Remove(InfoBox.Text);
+        InfoBox.SelectedIndex = 0;
     }
 
     private void TaskbarMenuExit(object o, RoutedEventArgs e)

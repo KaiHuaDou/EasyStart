@@ -67,7 +67,7 @@ public partial class CreateApp : Window, IEditor<AppTile>
 
     private void SelectExe(object o, RoutedEventArgs e)
     {
-        if (Utils.TrySelectFile(out string fileName, ".exe"))
+        if (Utils.TrySelectFile(out string fileName, "exe"))
         {
             pathBox.Text = fileName;
             PathChanged(o, e);
@@ -76,7 +76,7 @@ public partial class CreateApp : Window, IEditor<AppTile>
 
     private void SelectIcon(object o, RoutedEventArgs e)
     {
-        if (Utils.TrySelectFile(out string fileName, ".jpg"))
+        if (Utils.TrySelectFile(out string fileName, "exe+img"))
             iconBox.Text = fileName;
     }
 

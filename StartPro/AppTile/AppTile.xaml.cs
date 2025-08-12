@@ -100,10 +100,9 @@ public partial class AppTile : TileBase, IEditable<AppTile>
             Utils.ExecuteAsAdmin(Directory.GetParent(AppPath).FullName);
             App.TileWindow.Hide( );
         }
-        catch (Win32Exception ex)
+        catch (Win32Exception)
         {
-            MessageBox.Show(ex.Message, "StartPro",
-                MessageBoxButton.OK, MessageBoxImage.Error);
+            App.ShowInfo("无法打开应用所在目录");
         }
     }
 

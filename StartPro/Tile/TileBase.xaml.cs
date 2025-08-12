@@ -71,13 +71,14 @@ public partial class TileBase : UserControl
     public void Refresh( )
     {
         border.DataContext = this;
-        if (Owner is not null && Application.Current.MainWindow is MainWindow window)
+        if (Application.Current.MainWindow is MainWindow window)
         {
             // 重新测量并布局确保 ActualWidth 和 ActualHeight 及时更新，以便移动磁贴至适宜位置
             Measure(new Size(window.Width, window.Height));
             Arrange(new Rect(0, 0, window.DesiredSize.Width, window.DesiredSize.Height));
-            MoveToSpace( );
         }
+        if (Owner is Canvas)
+            MoveToSpace( );
     }
 
     protected static void TileColorChanged(DependencyObject o, DependencyPropertyChangedEventArgs e) { }

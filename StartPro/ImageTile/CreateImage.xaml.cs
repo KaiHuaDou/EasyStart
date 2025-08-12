@@ -35,7 +35,7 @@ public partial class CreateImage : Window, IEditor<ImageTile>
 
     private void SelectImage(object o, RoutedEventArgs e)
     {
-        if (Utils.TrySelectFile(out string fileName, ".png"))
+        if (Utils.TrySelectFile(out string fileName, "img"))
         {
             imageBox.Text = fileName;
             ImageChanged(o, e);

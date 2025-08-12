@@ -6,6 +6,7 @@ namespace StartPro.Api;
 public partial class ColorDialog : Window
 {
     public bool IsSelected { get; private set; }
+
     public Color Color
     {
         get => colorPicker.SelectedColor;

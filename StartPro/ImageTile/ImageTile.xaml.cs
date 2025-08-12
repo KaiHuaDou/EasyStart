@@ -26,6 +26,7 @@ public partial class ImageTile : TileBase, IEditable<ImageTile>
         ImageTile tile = o as ImageTile;
         tile.MainImage.Source = new BitmapImage(new Uri(tile.ImagePath));
     }
+
     private void EditTile(object o, RoutedEventArgs e)
     {
         (this as IEditable<ImageTile>).Edit(Parent as Panel);

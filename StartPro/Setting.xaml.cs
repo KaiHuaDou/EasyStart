@@ -12,13 +12,13 @@ public partial class Setting : Window
         InitializeComponent( );
         List<string> UIThemeSource =
         [
-            Main.ResourceManager.GetString("UITheme.Aero.NormalColor") + " (Aero.NormalColor)",
-            Main.ResourceManager.GetString("UITheme.Aero2.NormalColor") + " (Aero2.NormalColor)",
-            Main.ResourceManager.GetString("UITheme.Luna.NormalColor") + " (Luna.NormalColor)",
-            Main.ResourceManager.GetString("UITheme.Luna.Homestead") + " (Luna.Homestead)",
-            Main.ResourceManager.GetString("UITheme.Luna.Metallic") + " (Luna.Metallic)",
-            Main.ResourceManager.GetString("UITheme.Royale.NormalColor") + " (Royale.NormalColor)",
-            Main.ResourceManager.GetString("UITheme.Classic") + " (Classic)",
+            Main.UITheme_Aero_NormalColor + " (Aero.NormalColor)",
+            Main.UITheme_Aero2_NormalColor + " (Aero2.NormalColor)",
+            Main.UITheme_Luna_NormalColor + " (Luna.NormalColor)",
+            Main.UITheme_Luna_Homestead + " (Luna.Homestead)",
+            Main.UITheme_Luna_Metallic + " (Luna.Metallic)",
+            Main.UITheme_Royale_NormalColor + " (Royale.NormalColor)",
+            Main.UITheme_Classic + " (Classic)",
         ];
         MaxWidth = Defaults.WidthPercent * SystemParameters.PrimaryScreenWidth;
         BackgroundBox.Text = App.Settings.Content.Background;
@@ -50,7 +50,7 @@ public partial class Setting : Window
 
     private void SelectImageClick(object o, RoutedEventArgs e)
     {
-        if (Utils.TrySelectFile(out string fileName, ".jpg"))
+        if (Utils.TrySelectFile(out string fileName, "img"))
             BackgroundBox.Text = fileName;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Windows.Controls;
 
 namespace StartPro.Tile;
+
 public interface IEditable<TTile>
     where TTile : TileBase, new()
 {

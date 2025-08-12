@@ -37,45 +37,56 @@
                     <Border.Effect>
                         <DropShadowEffect Opacity="0.2" Direction="90" Color="#ACACAC" />
                     </Border.Effect>
-                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                        <StackPanel.Resources>
+                    <Grid>
+                        <Grid.Resources>
                             <Style BasedOn="{StaticResource {x:Type GroupBox}}" TargetType="{x:Type GroupBox}">
-                                <Setter Property="Margin" Value="5,5,5,5" />
+                                <Setter Property="Margin" Value="5" />
                             </Style>
                             <Style TargetType="{x:Type StackPanel}">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
+                                <Setter Property="Orientation" Value="Horizontal" />
                             </Style>
                             <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
                                 <Setter Property="FontFamily" Value="Segoe Fluent Icons" />
                                 <Setter Property="FontSize" Value="24" />
                                 <Setter Property="Margin" Value="5,5,5,0" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
                             </Style>
-                        </StackPanel.Resources>
-                        <GroupBox Header="{x:Static text:Main.DefaultGroup}">
-                            <StackPanel Orientation="Horizontal">
-                                <Button Click="ShowSetting" Content="&#xE713;" />
-                                <Button Click="WindowExit" Content="&#xF3B1;" />
-                                <Button x:Name="SaveDataButton" Click="SaveData" Content="&#xE78C;" />
+                        </Grid.Resources>
+                        <StackPanel HorizontalAlignment="Center">
+                            <GroupBox Header="{x:Static text:Main.DefaultGroup}">
+                                <StackPanel>
+                                    <Button Click="ShowSetting" Content="&#xE713;" />
+                                    <Button Click="WindowExit" Content="&#xF3B1;" />
+                                    <Button x:Name="SaveDataButton" Click="SaveData" Content="&#xE78C;" />
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Header="{x:Static text:AppTile.AppTileGroup}">
+                                <StackPanel>
+                                    <Button Click="ShowHideAppList" Content="&#xE700;" />
+                                    <Button Click="AddAppTile" Content="&#xE710;" />
+                                    <Button Click="ImportAppTile" Content="&#xE8B5;" />
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Header="{x:Static text:TextTile.TextTileGroup}">
+                                <StackPanel>
+                                    <Button Click="AddTextTile" Content="&#xE710;" />
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Header="{x:Static text:ImageTile.ImageTileGroup}">
+                                <StackPanel>
+                                    <Button Click="AddImageTile" Content="&#xE710;" />
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+                        <GroupBox x:Name="InfoGroup" Header="信息"
+                                  Margin="5,5,10,5" HorizontalAlignment="Right">
+                            <StackPanel>
+                                <ComboBox x:Name="InfoBox" Margin="5,5,5,0" SelectedIndex="0" />
+                                <Button Click="ClearInfo" Content="&#xE711;" />
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="{x:Static text:AppTile.AppTileGroup}">
-                            <StackPanel Orientation="Horizontal">
-                                <Button Click="ShowHideAppList" Content="&#xE700;" />
-                                <Button Click="AddAppTile" Content="&#xE710;" />
-                                <Button Click="ImportAppTile" Content="&#xE8B5;" />
-                            </StackPanel>
-                        </GroupBox>
-                        <GroupBox Header="{x:Static text:TextTile.TextTileGroup}">
-                            <StackPanel Orientation="Horizontal">
-                                <Button Click="AddTextTile" Content="&#xE710;" />
-                            </StackPanel>
-                        </GroupBox>
-                        <GroupBox Header="{x:Static text:ImageTile.ImageTileGroup}">
-                            <StackPanel Orientation="Horizontal">
-                                <Button Click="AddImageTile" Content="&#xE710;" />
-                            </StackPanel>
-                        </GroupBox>
-                    </StackPanel>
+                    </Grid>
                 </Border>
                 <Border x:Name="AppListBorder"
                         DockPanel.Dock="Left"

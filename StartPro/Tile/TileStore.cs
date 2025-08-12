@@ -13,8 +13,16 @@ public static class TileStore
     public static ObservableCollection<TileBase> Load( )
     {
         ObservableCollection<TileBase> result = [];
-        try { document.Load(xmlPath); }
-        catch { return result; }
+        try
+        {
+            document.Load(xmlPath);
+            File.Copy(xmlPath, "tiles.bak", true);
+        }
+        catch
+        {
+            App.ShowInfo("无法读取磁贴配置文件，旧文件已备份");
+            return result;
+        }
 
         Apps = document.ChildNodes[0];
         foreach (XmlNode node in Apps.ChildNodes)
@@ -32,7 +40,10 @@ public static class TileStore
                 item.IsEnabled = true;
                 result.Add(item);
             }
-            catch { }
+            catch
+            {
+                App.ShowInfo("存在无法读取的磁贴，已跳过");
+            }
         }
         return result;
     }
