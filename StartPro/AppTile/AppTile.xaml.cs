@@ -32,8 +32,10 @@ public partial class AppTile : TileBase, IEditable<AppTile>
         border.Child = RootPanel;
         Content = root;
 
-        Foreground = Defaults.Foreground;
+        Foreground = Utils.TryParseBrushFromText(App.Settings.Foreground, out Brush fore)
+            ? fore : Defaults.Foreground;
     }
+
     public IEditor<AppTile> Editor => new CreateApp(this);
 
     protected static void AppIconChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
@@ -74,14 +76,6 @@ public partial class AppTile : TileBase, IEditable<AppTile>
         (o as AppTile)?.TileImageShadow.Opacity = (!App.Settings.UIFlat && (o as AppTile).ImageShadow) ? 0.4 : 0;
     }
 
-    protected static new void TileColorChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-    {
-        AppTile tile = o as AppTile;
-        Color color = tile.TileColor.Color;
-        int brightness = (int) (color.R * 0.299) + (int) (color.G * 0.587) + (int) (color.B * 0.114);
-        (tile.TileLabel.Foreground as SolidColorBrush).Color = brightness > 128 ? Colors.Black : Colors.White;
-    }
-
     protected static new void TileSizeChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
         TileBase.TileSizeChanged(o, e);
@@ -99,7 +93,7 @@ public partial class AppTile : TileBase, IEditable<AppTile>
     {
         try
         {
-            Utils.ExecuteAsAdmin(Directory.GetParent(AppPath).FullName);
+            Utils.ExecuteAsAdmin("explorer.exe", $"/e, /select, {AppPath}");
             App.TileWindow.Hide( );
         }
         catch (Win32Exception)

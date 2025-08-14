@@ -7,26 +7,21 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using NHotkey.Wpf;
 using StartPro.Api;
 using StartPro.Tile;
-using static StartPro.External.NativeMethods;
 
 namespace StartPro;
 
 public partial class MainWindow : Window
 {
-    private IntPtr handle;
-
     public MainWindow( )
     {
         InitializeComponent( );
 
-        handle = new WindowInteropHelper(this).Handle;
         HotkeyManager.Current.AddOrReplace(
             "ShowHide",
             new KeyGesture(Key.None, ModifierKeys.Windows | ModifierKeys.Control),
@@ -39,19 +34,10 @@ public partial class MainWindow : Window
 
         Height = Defaults.HeightPercent * SystemParameters.PrimaryScreenHeight;
         Width = Defaults.WidthPercent * SystemParameters.PrimaryScreenWidth;
-        TilePanel.MinHeight = Height - 256;
-        TilePanel.MinWidth = Width - 96;
         Top = SystemParameters.WorkArea.Height - Height;
         Left = (SystemParameters.WorkArea.Width - Width) / 2;
-        LoadSettings( );
-
-        AppList.ItemsSource = new Collection<StartMenuApp>{
-            new( ) {
-                AppName = "Loading",
-                AppPath = "",
-                AppIcon = new BitmapImage()
-            }
-        };
+        TilePanel.MinHeight = Height - 256;
+        TilePanel.MinWidth = Width - 96;
 
         InfoBox.SetBinding(ItemsControl.ItemsSourceProperty, new Binding( ) { Source = App.Infos });
         void UpdateHeader(object? _o, NotifyCollectionChangedEventArgs _e)
@@ -67,6 +53,16 @@ public partial class MainWindow : Window
             TilePanel.Children.Add(tile);
             tile.Refresh( );
         }
+
+        UpdateBackground( );
+
+        AppList.ItemsSource = new Collection<StartMenuApp>{
+            new( ) {
+                AppName = "Loading",
+                AppPath = "",
+                AppIcon = new BitmapImage()
+            }
+        };
     }
 
     public new void Hide( )
@@ -81,10 +77,8 @@ public partial class MainWindow : Window
     {
         if (Resources["ShowWindow"] is not Storyboard showAnimation)
             return;
-
         base.Show( );
         Activate( );
-        SetForegroundWindow(handle);
         showAnimation.Begin(MainBorder);
     }
 
@@ -102,16 +96,11 @@ public partial class MainWindow : Window
         InfoBox.SelectedIndex = 0;
     }
 
-    private void LoadSettings( )
+    private void UpdateBackground( )
     {
         MainBorder.Background =
             Utils.TryParseBrushFromText(App.Settings.Background, out Brush back)
             ? back : Defaults.Background;
-        foreach (TileBase tile in TilePanel.Children)
-        {
-            tile.Foreground = Utils.TryParseBrushFromText(App.Settings.Foreground, out Brush fore)
-                ? fore : Defaults.Foreground;
-        }
     }
 
     private void SaveData(object o, RoutedEventArgs e)
@@ -132,7 +121,7 @@ public partial class MainWindow : Window
     {
         Hide( );
         new Setting( ).ShowDialog( );
-        LoadSettings( );
+        UpdateBackground( );
         Show( );
     }
 

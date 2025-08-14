@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Threading;
 using SingleInstanceCore;
@@ -76,7 +75,7 @@ public partial class App : Application, ISingleInstance
 
     private void AppDispatcherUnhandledException(object o, DispatcherUnhandledExceptionEventArgs e)
     {
-        Debug.WriteLine($"{e.Exception.Message}\n{e.Exception.StackTrace}", "Unhandled Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+        ShowInfo($"{e.Exception.Message}\n{e.Exception.StackTrace}");
         e.Handled = true;
     }
 }

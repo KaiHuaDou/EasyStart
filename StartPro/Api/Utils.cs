@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security.Principal;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -31,7 +30,7 @@ public static class Utils
         }
     }
 
-    public static void ExecuteAsAdmin(string executable)
+    public static void ExecuteAsAdmin(string executable, string arguments = "")
     {
         WindowsIdentity identity = WindowsIdentity.GetCurrent( );
         WindowsPrincipal principal = new(identity);
@@ -42,6 +41,7 @@ public static class Utils
             {
                 UseShellExecute = true,
                 FileName = executable,
+                Arguments = arguments,
                 Verb = isAdmin ? "" : "runas"
             });
         }
@@ -78,7 +78,7 @@ public static class Utils
             brush = new ImageBrush(source) { Stretch = Stretch.UniformToFill };
             return true;
         }
-        else if (text.StartsWith('#') && text.Length == 9 
+        else if (text.StartsWith('#') && text.Length == 9
             && byte.TryParse(text.AsSpan(1, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out byte a)
             && byte.TryParse(text.AsSpan(3, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out byte r)
             && byte.TryParse(text.AsSpan(5, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out byte g)

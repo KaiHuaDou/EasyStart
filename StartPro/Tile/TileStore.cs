@@ -16,10 +16,10 @@ public static class TileStore
         try
         {
             document.Load(xmlPath);
-            File.Copy(xmlPath, "tiles.bak", true);
         }
         catch
         {
+            File.Copy(xmlPath, "tiles.bak", true);
             App.ShowInfo("无法读取磁贴配置文件，旧文件已备份");
             return result;
         }

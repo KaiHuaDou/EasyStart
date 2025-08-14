@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using static StartPro.External.NativeMethods;
 
 namespace StartPro.Api;
 
@@ -42,7 +41,7 @@ public static class PEIcon
         catch { }
         finally
         {
-            DestroyIcon(handle);
+            icon.Dispose( );
         }
         return false;
     }
