@@ -198,4 +198,7 @@
   <data name="UIThemeText" xml:space="preserve">
     <value>UI Theme: </value>
   </data>
+  <data name="ForegroundText" xml:space="preserve">
+    <value>Foreground: </value>
+  </data>
 </root>

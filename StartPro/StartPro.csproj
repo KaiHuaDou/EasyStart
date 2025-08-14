@@ -21,6 +21,7 @@
     <ItemGroup>
         <PackageReference Include="H.NotifyIcon.Wpf" Version="2.3.0" />
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+        <PackageReference Include="NHotkey.Wpf" Version="3.0.0" />
         <PackageReference Include="SingleInstanceCore" Version="2.2.2" />
         <PackageReference Include="System.Drawing.Common" Version="9.0.8" />
         <Reference Include="ColorPicker">

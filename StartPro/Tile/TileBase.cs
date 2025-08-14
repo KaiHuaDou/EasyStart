@@ -8,7 +8,7 @@ namespace StartPro.Tile;
 public partial class TileBase : UserControl
 {
     private static readonly PropertyMetadata TileSizeMeta = new(TileSize.Medium, TileSizeChanged);
-    private static readonly PropertyMetadata TileColorMeta = new(Defaults.Background, TileColorChanged);
+    private static readonly PropertyMetadata TileColorMeta = new(Defaults.TileColor, TileColorChanged);
     private static readonly PropertyMetadata ShadowMeta = new(true, TileShadowChanged);
     public static DependencyProperty TileSizeProperty
         = DependencyProperty.Register("TileSize", typeof(TileSize), typeof(TileBase), TileSizeMeta);

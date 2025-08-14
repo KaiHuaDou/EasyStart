@@ -9,40 +9,46 @@ namespace StartPro.Api;
 
 public static class PEIcon
 {
-    public static BitmapSource Get(string path)
-        => ToSource(GetIcon(path));
-
-    public static BitmapSource ToSource(Icon icon)
+    public static bool FromFile(string fileName, out BitmapSource source)
     {
-        if (icon != null)
+        if (string.IsNullOrEmpty(fileName))
         {
-            try
-            {
-                BitmapSource bitmap = Imaging.CreateBitmapSourceFromHIcon(
-                    icon.Handle, new Int32Rect( ), BitmapSizeOptions.FromEmptyOptions( ));
-                DestroyIcon(icon.Handle);
-                return bitmap;
-            }
-            catch { }
+            source = null;
+            return false;
         }
-        return new BitmapImage( );
+        Icon icon = GetIcon(fileName);
+        return FromIcon(icon, out source);
     }
 
-    public static Icon GetIcon(string path)
+    public static bool FromIcon(Icon icon, out BitmapSource source)
     {
-        Icon result = null;
-        int iconCnt = PrivateExtractIcons(path, 0, 0, 0, null, null, 0, 0);
-        IntPtr[] icons = new IntPtr[iconCnt];
-        int okCnt = PrivateExtractIcons(path, 0, 256, 256, icons, null, iconCnt, 0);
-        for (int i = 0; i < okCnt; i++)
+        source = null;
+        IntPtr handle = icon.Handle;
+        try
         {
-            if (icons[i] == IntPtr.Zero)
-                continue;
-            if (result is null)
-                result = Icon.FromHandle(icons[i]);
-            else
-                DestroyIcon(icons[i]);
+            if (handle == IntPtr.Zero)
+                return false;
+            source = Imaging.CreateBitmapSourceFromHIcon(handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions( ));
+            if (source is null)
+            {
+                return false;
+            }
+            else if (source.CanFreeze)
+            {
+                source.Freeze( );
+                return true;
+            }
         }
-        return result;
+        catch { }
+        finally
+        {
+            DestroyIcon(handle);
+        }
+        return false;
+    }
+
+    public static Icon GetIcon(string fileName)
+    {
+        return Icon.ExtractIcon(fileName, 0, 256);
     }
 }

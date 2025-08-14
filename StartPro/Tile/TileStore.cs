@@ -42,7 +42,11 @@ public static class TileStore
             }
             catch
             {
+#if DEBUG
+                throw;
+#else
                 App.ShowInfo("存在无法读取的磁贴，已跳过");
+#endif
             }
         }
         return result;

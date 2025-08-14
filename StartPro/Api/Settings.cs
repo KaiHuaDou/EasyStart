@@ -14,24 +14,9 @@ public enum UIThemes
     Classic = 6
 }
 
-public class Config
+public class Settings
 {
-    public string Background
-    {
-        get;
-        set => field = string.IsNullOrWhiteSpace(value) ? "#FFEEEEEE" : value;
-    } = "#FFEEEEEE";
-
-    public int UITheme { get; set; } = (int) UIThemes.AeroNormalColor;
-
-    public bool UIFlat { get; set; }
-}
-
-public class ConfigStore<T> where T : class, new()
-{
-    public T Content { get; set; }
-
-    private readonly FileInfo File;
+    private const string xml = "settings.json";
 
     private readonly JsonSerializerOptions Options = new( )
     {
@@ -41,35 +26,45 @@ public class ConfigStore<T> where T : class, new()
         WriteIndented = true
     };
 
-    public ConfigStore(string xmlFile)
+    public string Background
     {
-        File = new FileInfo(xmlFile);
-        Read( );
-    }
+        get;
+        set => field = string.IsNullOrWhiteSpace(value) ? "#FFFAFAFA" : value;
+    } = "#FFFAFAFA";
 
-    public void Read( )
+    public string Foreground
     {
+        get;
+        set => field = string.IsNullOrWhiteSpace(value) ? "#FF060606" : value;
+    } = "#FF060606";
+
+    public bool UIFlat { get; set; }
+
+    public int UITheme { get; set; } = (int) UIThemes.AeroNormalColor;
+
+    public Settings Read( )
+    {
+        FileInfo File = new(xml);
         if (!File.Exists || File.Length == 0)
         {
-            Content = new T( );
-            return;
+            return new Settings( );
         }
         using FileStream Stream = new(File.FullName, FileMode.OpenOrCreate, FileAccess.Read);
         try
         {
-            Content = JsonSerializer.Deserialize<T>(Stream, Options) ?? new T( );
+            return JsonSerializer.Deserialize<Settings>(Stream, Options) ?? new Settings( );
         }
         catch
         {
             File.CopyTo(File.FullName + ".bak", true);
-            Content = new T( );
             App.ShowInfo("配置文件读取失败，旧配置文件已备份");
+            return new Settings( );
         }
     }
 
     public void Write( )
     {
-        using FileStream Stream = new(File.FullName, FileMode.Create, FileAccess.Write);
-        JsonSerializer.Serialize(Stream, Content, Options);
+        using FileStream Stream = new(new(xml), FileMode.Create, FileAccess.Write);
+        JsonSerializer.Serialize(Stream, this, Options);
     }
 }

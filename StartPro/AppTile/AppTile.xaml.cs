@@ -31,6 +31,8 @@ public partial class AppTile : TileBase, IEditable<AppTile>
         userControl.Content = null;
         border.Child = RootPanel;
         Content = root;
+
+        Foreground = Defaults.Foreground;
     }
     public IEditor<AppTile> Editor => new CreateApp(this);
 
@@ -40,7 +42,7 @@ public partial class AppTile : TileBase, IEditable<AppTile>
         string path = e.NewValue as string;
         if (tile.AppIcon.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
         {
-            tile.image.Source = PEIcon.Get(path);
+            tile.image.Source = PEIcon.FromFile(path, out BitmapSource source) ? source : new BitmapImage( );
         }
         else if (File.Exists(path))
         {
@@ -69,7 +71,7 @@ public partial class AppTile : TileBase, IEditable<AppTile>
 
     protected static void ImageShadowChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
-        (o as AppTile)?.TileImageShadow.Opacity = (!App.Settings.Content.UIFlat && (o as AppTile).ImageShadow) ? 0.4 : 0;
+        (o as AppTile)?.TileImageShadow.Opacity = (!App.Settings.UIFlat && (o as AppTile).ImageShadow) ? 0.4 : 0;
     }
 
     protected static new void TileColorChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)

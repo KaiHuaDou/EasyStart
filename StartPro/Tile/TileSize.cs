@@ -11,7 +11,7 @@ public static class TileDatas
 {
     public static int BaseSize => 64;
     public static int BaseMargin => 10;
-    public static int BaseRadius => App.Settings.Content.UIFlat ? 0 : 10;
+    public static int BaseRadius => App.Settings.UIFlat ? 0 : 10;
 
     public static int BlockSize => BaseSize + BaseMargin;
 

@@ -59,8 +59,8 @@ public partial class ImportApp : Window
             AppPath = fileName,
             AppIcon = fileName,
             TileSize = TileSize.Medium,
-            Shadow = App.Settings.Content.UIFlat,
-            ImageShadow = App.Settings.Content.UIFlat,
+            Shadow = App.Settings.UIFlat,
+            ImageShadow = App.Settings.UIFlat,
             Row = 0,
             Column = 0,
             IsEnabled = false

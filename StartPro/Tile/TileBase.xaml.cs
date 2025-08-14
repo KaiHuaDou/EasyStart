@@ -95,7 +95,7 @@ public partial class TileBase : UserControl
     }
 
     protected static void TileShadowChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-        => (o as TileBase)?.TileShadow.Opacity = (!App.Settings.Content.UIFlat && (o as TileBase)!.Shadow) ? 0.4 : 0;
+        => (o as TileBase)?.TileShadow.Opacity = (!App.Settings.UIFlat && (o as TileBase)!.Shadow) ? 0.4 : 0;
 
     private void RemoveTile(object o, RoutedEventArgs e)
         => Owner.Children.Remove(this);

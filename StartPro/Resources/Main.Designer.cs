@@ -97,6 +97,15 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Foreground:  的本地化字符串。
+        /// </summary>
+        public static string ForegroundText {
+            get {
+                return ResourceManager.GetString("ForegroundText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Register hotkey failed 的本地化字符串。
         /// </summary>
         public static string HotkeyRegisterFailed {

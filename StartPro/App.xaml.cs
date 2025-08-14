@@ -12,7 +12,7 @@ namespace StartPro;
 public partial class App : Application, ISingleInstance
 {
     public static ObservableCollection<TileBase> Tiles { get; private set; }
-    public static ConfigStore<Config> Settings { get; set; }
+    public static Settings Settings { get; set; } = new Settings( );
     public static ObservableCollection<string> Infos { get; } = [];
     public static MainWindow TileWindow => Current.MainWindow as MainWindow;
 
@@ -46,12 +46,12 @@ public partial class App : Application, ISingleInstance
         if (!this.InitializeAsFirstInstance("KaiHuaDou_StartPro"))
             Current.Shutdown( );
 
-        Settings = new("settings.json");
+        Settings = Settings.Read( );
         Tiles = TileStore.Load( );
 
         Resources.MergedDictionaries.Add(new ResourceDictionary( )
         {
-            Source = new Uri(Settings.Content.UITheme switch
+            Source = new Uri(Settings.UITheme switch
             {
                 0 => "pack://application:,,,/PresentationFramework.Aero,Version=9.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Aero.NormalColor.xaml",
                 1 => "pack://application:,,,/PresentationFramework.Aero2,Version=9.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Aero2.NormalColor.xaml",

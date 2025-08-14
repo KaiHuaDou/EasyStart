@@ -15,6 +15,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.Resources>
             <Style TargetType="DockPanel">
@@ -34,12 +35,21 @@
                     Click="SelectImageClick" Content="I" />
             <TextBox x:Name="BackgroundBox" />
         </DockPanel>
-        <TextBlock Grid.Row="1" Text="{x:Static text:Main.UIThemeText}" />
+        <TextBlock Grid.Row="1" Text="{x:Static text:Main.ForegroundText}" />
+        <DockPanel x:Name="ForegroundPanel"
+                   Grid.Row="1" Grid.Column="1"
+                   Margin="0,0,0,10">
+            <Button DockPanel.Dock="Right"
+                    Width="{Binding ActualHeight, ElementName=ForegroundPanel}"
+                    Click="SelectColorClick" Content="C" />
+            <TextBox x:Name="ForegroundBox" />
+        </DockPanel>
+        <TextBlock Grid.Row="2" Text="{x:Static text:Main.UIThemeText}" />
         <ComboBox x:Name="UIThemeBox"
-                  Grid.Row="1" Grid.Column="1"
+                  Grid.Row="2" Grid.Column="1"
                   Margin="0,5,0,5" />
-        <CheckBox x:Name="UIFlatBox" Grid.Row="2" Content="{x:Static text:Main.UIThemeFlat}" />
-        <StackPanel Grid.Row="3" Grid.ColumnSpan="2"
+        <CheckBox x:Name="UIFlatBox" Grid.Row="3" Content="{x:Static text:Main.UIThemeFlat}" />
+        <StackPanel Grid.Row="4" Grid.ColumnSpan="2"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
             <Button x:Name="OkButton"

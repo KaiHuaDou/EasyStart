@@ -198,4 +198,7 @@
   <data name="UIThemeText" xml:space="preserve">
     <value>界面主题：</value>
   </data>
+  <data name="ForegroundText" xml:space="preserve">
+    <value>前景：</value>
+  </data>
 </root>

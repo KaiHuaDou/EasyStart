@@ -14,5 +14,6 @@ public static class Defaults
     public static FontStretch FontStretch => FontStretches.Normal;
     public static TextAlignment TextAlignment => TextAlignment.Center;
     public static SolidColorBrush Foreground => new(Color.FromArgb(0xFF, 0x06, 0x06, 0x06));
-    public static SolidColorBrush Background => new(Color.FromArgb(0x55, 0xFA, 0xFA, 0xFA));
+    public static SolidColorBrush Background => new(Color.FromArgb(0xFF, 0xFA, 0xFA, 0xFA));
+    public static SolidColorBrush TileColor => new(Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF));
 }

@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using NHotkey.Wpf;
 using StartPro.Api;
 using StartPro.Tile;
 using static StartPro.External.NativeMethods;
@@ -17,9 +20,22 @@ namespace StartPro;
 
 public partial class MainWindow : Window
 {
+    private IntPtr handle;
+
     public MainWindow( )
     {
         InitializeComponent( );
+
+        handle = new WindowInteropHelper(this).Handle;
+        HotkeyManager.Current.AddOrReplace(
+            "ShowHide",
+            new KeyGesture(Key.None, ModifierKeys.Windows | ModifierKeys.Control),
+            (_, e) =>
+            {
+                ShowHide( );
+                e.Handled = true;
+            }
+        );
 
         Height = Defaults.HeightPercent * SystemParameters.PrimaryScreenHeight;
         Width = Defaults.WidthPercent * SystemParameters.PrimaryScreenWidth;
@@ -27,7 +43,7 @@ public partial class MainWindow : Window
         TilePanel.MinWidth = Width - 96;
         Top = SystemParameters.WorkArea.Height - Height;
         Left = (SystemParameters.WorkArea.Width - Width) / 2;
-        LoadBackground( );
+        LoadSettings( );
 
         AppList.ItemsSource = new Collection<StartMenuApp>{
             new( ) {
@@ -38,7 +54,11 @@ public partial class MainWindow : Window
         };
 
         InfoBox.SetBinding(ItemsControl.ItemsSourceProperty, new Binding( ) { Source = App.Infos });
-        NotifyCollectionChangedEventHandler UpdateHeader = (_, _) => InfoGroup?.Header = $"信息{(InfoBox.Items.Count == 0 ? "" : $" ({InfoBox.Items.Count})")}";
+        void UpdateHeader(object? _o, NotifyCollectionChangedEventArgs _e)
+        {
+            string countText = InfoBox.Items.Count == 0 ? "" : $" ({InfoBox.Items.Count})";
+            InfoGroup?.Header = $"信息{countText}";
+        }
         App.Infos.CollectionChanged += UpdateHeader;
         UpdateHeader(null, null);
 
@@ -51,120 +71,47 @@ public partial class MainWindow : Window
 
     public new void Hide( )
     {
-        if (Resources["HideWindow"] is Storyboard hideAnimation)
-        {
-            hideAnimation.Completed += (o, e) => base.Hide( );
-            hideAnimation.Begin(MainBorder);
-        }
+        if (Resources["HideWindow"] is not Storyboard hideAnimation)
+            return;
+        hideAnimation.Completed += (o, e) => base.Hide( );
+        hideAnimation.Begin(MainBorder);
     }
 
     public new void Show( )
     {
-        if (Resources["ShowWindow"] is Storyboard showAnimation)
-        {
-            base.Show( );
-            showAnimation.Begin(MainBorder);
-        }
+        if (Resources["ShowWindow"] is not Storyboard showAnimation)
+            return;
+
+        base.Show( );
+        Activate( );
         SetForegroundWindow(handle);
+        showAnimation.Begin(MainBorder);
     }
 
     public void ShowHide( )
     {
-        if (Visibility == Visibility.Hidden) Show( );
-        else Hide( );
+        if (Visibility == Visibility.Hidden)
+            Show( );
+        else
+            Hide( );
     }
 
-    private void AddAppTile(object o, RoutedEventArgs e)
+    private void ClearInfo(object o, RoutedEventArgs e)
     {
-        Hide( );
-        CreateApp window = new( );
-        window.ShowDialog( );
-        Show( );
-        AppTile tile = window.Item;
-        if (tile?.IsEnabled != true)
-            return;
-        TilePanel.Children.Add(tile);
-        tile.Refresh( );
+        App.Infos.Remove(InfoBox.Text);
+        InfoBox.SelectedIndex = 0;
     }
 
-    private void AddImageTile(object o, RoutedEventArgs e)
+    private void LoadSettings( )
     {
-        Hide( );
-        CreateImage window = new( );
-        window.ShowDialog( );
-        Show( );
-        ImageTile tile = window.Item;
-        if (tile?.IsEnabled != true)
-            return;
-        TilePanel.Children.Add(tile);
-        tile.Refresh( );
-    }
-
-    private void AddTextTile(object o, RoutedEventArgs e)
-    {
-        Hide( );
-        CreateText window = new( );
-        window.ShowDialog( );
-        Show( );
-        TextTile tile = window.Item;
-        if (tile?.IsEnabled != true)
-            return;
-        TilePanel.Children.Add(tile);
-        tile.Refresh( );
-    }
-
-    private void ImportAppTile(object o, RoutedEventArgs e)
-    {
-        Hide( );
-        ImportApp window = new( );
-        window.ShowDialog( );
-        foreach (AppTile tile in window.Tiles)
+        MainBorder.Background =
+            Utils.TryParseBrushFromText(App.Settings.Background, out Brush back)
+            ? back : Defaults.Background;
+        foreach (TileBase tile in TilePanel.Children)
         {
-            TilePanel.Children.Add(tile);
-            tile.IsEnabled = true;
-            tile.Refresh( );
+            tile.Foreground = Utils.TryParseBrushFromText(App.Settings.Foreground, out Brush fore)
+                ? fore : Defaults.Foreground;
         }
-        Show( );
-    }
-
-    private void LoadBackground( )
-    {
-        try
-        {
-            if (App.Settings.Content.Background.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
-            {
-                MainBorder.Background = new ImageBrush(PEIcon.Get(App.Settings.Content.Background)) { Stretch = Stretch.UniformToFill };
-            }
-            else if (App.Settings.Content.Background.StartsWith('#'))
-            {
-                int rgb = Convert.ToInt32(App.Settings.Content.Background.Replace("#", ""), 16);
-                byte R = (byte) ((rgb >> 16) & 0xFF);
-                byte G = (byte) ((rgb >> 8) & 0xFF);
-                byte B = (byte) (rgb & 0xFF);
-                MainBorder.Background = new SolidColorBrush(Color.FromRgb(R, G, B));
-            }
-            else
-            {
-                MainBorder.Background = new ImageBrush(new BitmapImage(new Uri(App.Settings.Content.Background))) { Stretch = Stretch.UniformToFill };
-            }
-        }
-        catch { MainBorder.Background = Defaults.Background; }
-        MainBorder.Background.Freeze( );
-    }
-    private void PinApp(object o, RoutedEventArgs e)
-    {
-        StartMenuApp app = AppList.SelectedItem as StartMenuApp;
-        AppTile appTile = new( )
-        {
-            AppName = app?.AppName,
-            AppPath = app?.AppPath,
-            AppIcon = app?.AppPath,
-            TileSize = TileSize.Medium,
-            Row = 0,
-            Column = 0
-        };
-        TilePanel.Children.Add(appTile);
-        appTile.Refresh( );
     }
 
     private void SaveData(object o, RoutedEventArgs e)
@@ -181,32 +128,12 @@ public partial class MainWindow : Window
         }));
     }
 
-    private void ShowHideAppList(object o, RoutedEventArgs e)
-    {
-        if ((AppListBorder.RenderTransform as TranslateTransform)?.X != 0 && Resources["ShowAppList"] is Storyboard showAnimation)
-        {
-            AppListBorder.Visibility = Visibility.Visible;
-            showAnimation.Begin(AppListBorder);
-        }
-        else if (AppListBorder.RenderTransform is TranslateTransform { X: 0 } && Resources["HideAppList"] is Storyboard hideAnimation)
-        {
-            hideAnimation.Completed += (o, e) => AppListBorder.Visibility = Visibility.Collapsed;
-            hideAnimation.Begin(AppListBorder);
-        }
-    }
-
     private void ShowSetting(object o, RoutedEventArgs e)
     {
         Hide( );
         new Setting( ).ShowDialog( );
-        LoadBackground( );
+        LoadSettings( );
         Show( );
-    }
-
-    private void ClearInfo(object o, RoutedEventArgs e)
-    {
-        App.Infos.Remove(InfoBox.Text);
-        InfoBox.SelectedIndex = 0;
     }
 
     private void TaskbarMenuExit(object o, RoutedEventArgs e)
@@ -228,18 +155,18 @@ public partial class MainWindow : Window
         UpdateGlobalTiles( );
         e.Cancel = true;
     }
+
     private void WindowDeactivated(object o, EventArgs e)
-        => ShowHide( );
+        => Hide( );
 
     private void WindowExit(object o, RoutedEventArgs e)
-    {
-        Application.Current.Shutdown( );
-    }
+        => Application.Current.Shutdown( );
 
     private void WindowLoaded(object o, RoutedEventArgs e)
     {
         TilePanel.ResizeToFit( );
         ShowHideAppList(null, null);
+#if !DEBUG
         Task.Factory.StartNew(( ) =>
         {
             StartMenuApp.LoadApps( );
@@ -249,5 +176,6 @@ public partial class MainWindow : Window
                 AppList.ItemsSource = StartMenuApp.Apps;
             });
         });
+#endif
     }
 }

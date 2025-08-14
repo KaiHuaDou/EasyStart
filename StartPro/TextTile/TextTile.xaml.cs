@@ -10,7 +10,7 @@ public partial class TextTile : TileBase, IEditable<TextTile>
     {
         Grid root = Content as Grid;
         InitializeComponent( );
-        userControl.Content = null;
+        userControl = null;
         border.Child = TextField;
 
         Utils.AppendContexts(ContextMenu, contextMenu);
@@ -22,7 +22,7 @@ public partial class TextTile : TileBase, IEditable<TextTile>
     protected static void TextConfigChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
         TextTile textTile = (o as TextTile)!;
-        textTile.TileTextShadow.Opacity = (!App.Settings.Content.UIFlat && textTile.TextConfig.TextShadow) ? 0.4 : 0;
+        textTile.TileTextShadow.Opacity = (!App.Settings.UIFlat && textTile.TextConfig.TextShadow) ? 0.4 : 0;
     }
     private void EditTile(object o, RoutedEventArgs e)
     {

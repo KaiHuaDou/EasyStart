@@ -30,7 +30,7 @@
         <TextBlock x:Name="TileLabel"
                    DockPanel.Dock="Bottom"
                    Margin="0,0,0,10" HorizontalAlignment="Center"
-                   Foreground="Black"
+                   Foreground="{Binding Foreground}"
                    FontSize="{Binding FontSize, ElementName=userControl}"
                    Text="{Binding AppName}"
                    TextWrapping="WrapWithOverflow" />

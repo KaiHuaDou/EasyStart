@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using StartPro.Api;
 using StartPro.Resources;
@@ -21,10 +22,11 @@ public partial class Setting : Window
             Main.UITheme_Classic + " (Classic)",
         ];
         MaxWidth = Defaults.WidthPercent * SystemParameters.PrimaryScreenWidth;
-        BackgroundBox.Text = App.Settings.Content.Background;
+        BackgroundBox.Text = App.Settings.Background;
+        ForegroundBox.Text = App.Settings.Foreground;
         UIThemeBox.ItemsSource = UIThemeSource;
-        UIThemeBox.SelectedIndex = App.Settings.Content.UITheme;
-        UIFlatBox.IsChecked = App.Settings.Content.UIFlat;
+        UIThemeBox.SelectedIndex = App.Settings.UITheme;
+        UIFlatBox.IsChecked = App.Settings.UIFlat;
     }
 
     private void CancelClick(object o, RoutedEventArgs e)
@@ -32,9 +34,10 @@ public partial class Setting : Window
 
     private void OkClick(object o, RoutedEventArgs e)
     {
-        App.Settings.Content = new Config
+        App.Settings = new Settings
         {
             Background = BackgroundBox.Text,
+            Foreground = ForegroundBox.Text,
             UITheme = UIThemeBox.SelectedIndex,
             UIFlat = UIFlatBox.IsChecked == true
         };
@@ -45,7 +48,13 @@ public partial class Setting : Window
     private void SelectColorClick(object o, RoutedEventArgs e)
     {
         if (Utils.TrySelectColor(Defaults.Background.Color, out Color color, this))
-            BackgroundBox.Text = color.ToString( );
+        {
+            int condition = ((o as Button).Parent as DockPanel).Children.Count;
+            if (condition == 3)
+                BackgroundBox.Text = color.ToString( );
+            else
+                ForegroundBox.Text = color.ToString( );
+        }
     }
 
     private void SelectImageClick(object o, RoutedEventArgs e)
