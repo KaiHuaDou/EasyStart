@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -58,7 +59,8 @@ public partial class CreateApp : Window, IEditor<AppTile>
         try
         {
             Item?.AppPath = pathBox.Text;
-            nameBox.Text = Item?.AppName;
+            string name = Path.GetFileNameWithoutExtension(Item?.AppPath);
+            nameBox.Text = Item?.AppName = name;
             iconBox.Text = Item?.AppIcon;
             OkButton.IsEnabled = true;
         }

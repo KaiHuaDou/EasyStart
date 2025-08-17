@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Xml;
 
@@ -19,8 +20,16 @@ public static class TileStore
         }
         catch
         {
-            File.Copy(xmlPath, "tiles.bak", true);
-            App.ShowInfo("无法读取磁贴配置文件，旧文件已备份");
+            if (File.Exists(xmlPath))
+            {
+                File.Copy(xmlPath, "tiles.bak", true);
+                App.AddInfo("无法读取磁贴配置文件，旧文件已备份");
+            }
+            else
+            {
+                File.Create(xmlPath).Close( );
+                App.AddInfo("配置文件不存在，已创建新文件");
+            }
             return result;
         }
 
@@ -34,6 +43,7 @@ public static class TileStore
                     "AppTile" => new AppTile( ),
                     "TextTile" => new TextTile( ),
                     "ImageTile" => new ImageTile( ),
+                    "__MFGM__" => new DebugTile( ),
                     _ => new TileBase( ),
                 };
                 item.ReadAttributes(node);
@@ -45,14 +55,14 @@ public static class TileStore
 #if DEBUG
                 throw;
 #else
-                App.ShowInfo("存在无法读取的磁贴，已跳过");
+                App.AddInfo("存在无法读取的磁贴，已跳过");
 #endif
             }
         }
         return result;
     }
 
-    public static void Save( )
+    public static bool Save( )
     {
         Apps = document.CreateElement("Tiles");
         foreach (TileBase tile in App.Tiles)
@@ -61,12 +71,21 @@ public static class TileStore
             tile.WriteAttributes(ref element);
             Apps.AppendChild(element);
         }
-        File.WriteAllText(xmlPath, Apps.OuterXml);
+        try
+        {
+            File.WriteAllText(xmlPath, Apps.OuterXml);
+        }
+        catch (Exception ex)
+        {
+            App.AddInfo($"无法保存磁贴: {ex.Message}");
+            return false;
+        }
+        return true;
     }
 }
 
 public static class XmlNodeExtend
 {
     public static string GetAttribute(this XmlNode node, string name)
-        => (node.Attributes.GetNamedItem(name) as XmlAttribute)?.Value;
+        => (node.Attributes?.GetNamedItem(name) as XmlAttribute)?.Value;
 }

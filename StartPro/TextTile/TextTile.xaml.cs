@@ -16,6 +16,8 @@ public partial class TextTile : TileBase, IEditable<TextTile>
 
         Utils.AppendContexts(ContextMenu, contextMenu);
         Content = root;
+
+        TextConfig = new TextConfig( ); // 是的，默认值要在这里初始化。
     }
 
     public IEditor<TextTile> Editor => new CreateText(this);

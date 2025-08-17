@@ -17,6 +17,7 @@ public partial class TileBase : IStorable
         TileColor = new BrushConverter( ).ConvertFrom(node.GetAttribute("Color")) as SolidColorBrush;
         Row = int.Parse(node.GetAttribute("Row"));
         Column = int.Parse(node.GetAttribute("Column"));
+        Shadow = bool.Parse(node.GetAttribute("Shadow"));
     }
 
     public virtual void WriteAttributes(ref XmlElement element)
@@ -25,6 +26,7 @@ public partial class TileBase : IStorable
         element.SetAttribute("Color", TileColor.ToString( ));
         element.SetAttribute("Row", Row.ToString( ));
         element.SetAttribute("Column", Column.ToString( ));
+        element.SetAttribute("Shadow", Shadow.ToString( ));
     }
 }
 

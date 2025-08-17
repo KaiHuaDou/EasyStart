@@ -1,0 +1,9 @@
+﻿<tile:TileBase x:Name="userControl"
+               x:Class="StartPro.Tile.DebugTile"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:local="clr-namespace:StartPro.Tile"
+               xmlns:text="clr-namespace:StartPro.Resources"
+               xmlns:tile="clr-namespace:StartPro.Tile">
+    <Grid x:Name="MainGrid" />
+</tile:TileBase>

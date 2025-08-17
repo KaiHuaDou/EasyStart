@@ -6,7 +6,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using StartPro.Api;
 
 namespace StartPro.Tile;
@@ -24,9 +23,7 @@ public partial class AppTile : TileBase, IEditable<AppTile>
         InitializeComponent( );
         Utils.AppendContexts(ContextMenu, contextMenu);
 
-        MouseLeftButtonUp -= TileDragStop;
         MouseLeftButtonUp += TileLeftButtonUp;
-        MouseLeftButtonUp += TileDragStop;
 
         userControl.Content = null;
         border.Child = RootPanel;
@@ -42,33 +39,13 @@ public partial class AppTile : TileBase, IEditable<AppTile>
     {
         AppTile tile = o as AppTile;
         string path = e.NewValue as string;
-        if (tile.AppIcon.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
-        {
-            tile.image.Source = PEIcon.FromFile(path, out BitmapSource source) ? source : new BitmapImage( );
-        }
-        else if (File.Exists(path))
-        {
-            try
-            {
-                tile.image.Source = new BitmapImage(new Uri(path));
-            }
-            catch
-            {
-                tile.image.Source = new BitmapImage( );
-            }
-        }
+        tile.image.Source = Utils.ParseImageSourceFromText(path);
     }
 
     protected static void AppPathChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
     {
         AppTile tile = o as AppTile;
-        string value = e.NewValue as string;
-        tile.AppIcon = value;
-        if (!tile.IsEnabled)
-        {
-            FileInfo app = new(value);
-            tile.AppName = app.Name.Replace(app.Extension, "");
-        }
+        tile.AppIcon = e.NewValue as string;
     }
 
     protected static void ImageShadowChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
@@ -98,7 +75,7 @@ public partial class AppTile : TileBase, IEditable<AppTile>
         }
         catch (Win32Exception)
         {
-            App.ShowInfo("无法打开应用所在目录");
+            App.AddInfo("无法打开应用所在目录");
         }
     }
 
@@ -110,14 +87,21 @@ public partial class AppTile : TileBase, IEditable<AppTile>
 
     private void TileLeftButtonUp(object o, MouseButtonEventArgs e)
     {
-        if (!IsDrag && IsEnabled)
+        if (IsDragging || !IsEnabled)
+            return;
+
+        try
         {
             Process.Start(new ProcessStartInfo( )
             {
                 UseShellExecute = true,
                 FileName = AppPath,
             });
-            App.TileWindow.Hide( );
         }
+        catch (Exception ex)
+        {
+            App.AddInfo($"无法启动程序: {ex.Message}");
+        }
+        App.TileWindow.Hide( );
     }
 }

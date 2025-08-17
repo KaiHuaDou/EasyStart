@@ -1,6 +1,7 @@
 ﻿<Grid x:Name="baseControl"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:text="clr-namespace:StartPro.Resources"
       xmlns:tile="clr-namespace:StartPro.Tile">
     <Grid.ContextMenu>
@@ -54,28 +55,14 @@
             </MenuItem>
         </ContextMenu>
     </Grid.ContextMenu>
-    <Border x:Name="maskBorder" Panel.ZIndex="16384">
-        <Border.Style>
-            <Style TargetType="Border">
-                <Setter Property="Background" Value="Transparent" />
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background">
-                            <Setter.Value>
-                                <StaticResource ResourceKey="MaskLightBrush" />
-                            </Setter.Value>
-                        </Setter>
-                    </Trigger>
-                    <DataTrigger Binding="{Binding IsDrag}" Value="True">
-                        <Setter Property="Background">
-                            <Setter.Value>
-                                <StaticResource ResourceKey="MaskDeepBrush" />
-                            </Setter.Value>
-                        </Setter>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </Border.Style>
+    <Border x:Name="maskBorder" Panel.ZIndex="16384" IsHitTestVisible="False">
+        <Border.Background>
+            <MultiBinding Converter="{StaticResource MaskBrushConverter}">
+                <Binding ElementName="border" Path="IsMouseOver" />
+                <Binding Path="IsDragging" RelativeSource="{RelativeSource AncestorType=tile:TileBase}" />
+                <Binding Path="IsMouseLeftButtonDown" RelativeSource="{RelativeSource AncestorType=tile:TileBase}" />
+            </MultiBinding>
+        </Border.Background>
     </Border>
     <Border x:Name="border"
             Panel.ZIndex="8192"
@@ -84,5 +71,6 @@
         <Border.Effect>
             <DropShadowEffect x:Name="TileShadow" Opacity="0.4" Color="#020202" />
         </Border.Effect>
+        <CheckBox />
     </Border>
 </Grid>

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text.Json;
 
 namespace StartPro.Api;
@@ -17,6 +18,8 @@ public enum UIThemes
 public class Settings
 {
     private const string xml = "settings.json";
+    private static readonly FileInfo File = new(xml);
+    private static readonly FileStream FileStream = new(File.FullName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
     private readonly JsonSerializerOptions Options = new( )
     {
@@ -44,27 +47,33 @@ public class Settings
 
     public Settings Read( )
     {
-        FileInfo File = new(xml);
         if (!File.Exists || File.Length == 0)
         {
             return new Settings( );
         }
-        using FileStream Stream = new(File.FullName, FileMode.OpenOrCreate, FileAccess.Read);
         try
         {
-            return JsonSerializer.Deserialize<Settings>(Stream, Options) ?? new Settings( );
+            return JsonSerializer.Deserialize<Settings>(FileStream, Options) ?? new Settings( );
         }
         catch
         {
             File.CopyTo(File.FullName + ".bak", true);
-            App.ShowInfo("配置文件读取失败，旧配置文件已备份");
+            App.AddInfo("配置文件读取失败，旧配置文件已备份");
             return new Settings( );
         }
     }
 
-    public void Write( )
+    public bool Write( )
     {
-        using FileStream Stream = new(new(xml), FileMode.Create, FileAccess.Write);
-        JsonSerializer.Serialize(Stream, this, Options);
+        try
+        {
+            JsonSerializer.Serialize(FileStream, this, Options);
+        }
+        catch (Exception ex)
+        {
+            App.AddInfo($"配置文件写入失败: {ex.Message}");
+            return false;
+        }
+        return true;
     }
 }

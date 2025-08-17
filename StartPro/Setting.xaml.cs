@@ -27,6 +27,7 @@ public partial class Setting : Window
         UIThemeBox.ItemsSource = UIThemeSource;
         UIThemeBox.SelectedIndex = App.Settings.UITheme;
         UIFlatBox.IsChecked = App.Settings.UIFlat;
+        StartupBox.IsChecked = Utils.ReadStartup( );
     }
 
     private void CancelClick(object o, RoutedEventArgs e)
@@ -47,13 +48,20 @@ public partial class Setting : Window
 
     private void SelectColorClick(object o, RoutedEventArgs e)
     {
-        if (Utils.TrySelectColor(Defaults.Background.Color, out Color color, this))
+        int condition = ((o as Button).Parent as DockPanel).Children.Count;
+        string text = condition == 3 ? BackgroundBox.Text : ForegroundBox.Text;
+        Color fromColor = Utils.ParseColorFromText(text, out Color _color) ? _color : Defaults.Background.Color;
+
+        if (Utils.TrySelectColor(fromColor, out Color color, this))
         {
-            int condition = ((o as Button).Parent as DockPanel).Children.Count;
             if (condition == 3)
+            {
                 BackgroundBox.Text = color.ToString( );
+            }
             else
+            {
                 ForegroundBox.Text = color.ToString( );
+            }
         }
     }
 
@@ -62,4 +70,10 @@ public partial class Setting : Window
         if (Utils.TrySelectFile(out string fileName, "img"))
             BackgroundBox.Text = fileName;
     }
+
+    private void StartupBoxChecked(object o, RoutedEventArgs e)
+        => StartupBox.IsChecked = Utils.AddToStartup( );
+
+    private void StartupBoxUnchecked(object o, RoutedEventArgs e)
+        => StartupBox.IsChecked = !Utils.RemoveFromStartup( );
 }

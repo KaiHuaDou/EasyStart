@@ -10,13 +10,17 @@ public class RadiusConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (TileDatas.BaseRadius == 0)
+        if (App.Settings.UIFlat)
         {
             return new CornerRadius(0);
         }
         else if (parameter.ToString( ) == "MainWindow")
         {
             return new CornerRadius(32, 32, 0, 0);
+        }
+        else if (parameter.ToString() == "AppList")
+        {
+            return new CornerRadius(32, 0, 0, 0);
         }
         else
         {

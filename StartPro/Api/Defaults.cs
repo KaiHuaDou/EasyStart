@@ -5,8 +5,8 @@ namespace StartPro.Api;
 
 public static class Defaults
 {
-    public static double HeightPercent => 0.75;
-    public static double WidthPercent => 0.75;
+    public static double HeightPercent => 1;
+    public static double WidthPercent => 1;
     public static double FontSize => 19;
     public static FontFamily FontFamily => new("Segoe UI");
     public static FontWeight FontWeight => FontWeights.Normal;

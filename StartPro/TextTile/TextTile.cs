@@ -3,12 +3,13 @@ using System.Xml;
 using StartPro.Api;
 
 namespace StartPro.Tile;
+
 public partial class TextTile
 {
     public override string ToString( ) => $"{Text}";
 
     private static readonly PropertyMetadata textMeta = new("Text");
-    private static readonly PropertyMetadata textConfigMeta = new(new TextConfig( ), TextConfigChanged);
+    private static readonly PropertyMetadata textConfigMeta = new(null, TextConfigChanged);
     private static readonly PropertyMetadata textVerticalAlignmentMeta = new(VerticalAlignment.Center);
     private static readonly PropertyMetadata textHorizontalAlignmentMeta = new(HorizontalAlignment.Center);
     public static readonly DependencyProperty TextProperty

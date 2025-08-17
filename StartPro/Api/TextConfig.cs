@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Xml;
@@ -44,26 +43,5 @@ public class TextConfig : IStorable
         element.SetAttribute("TextAlignment", TextAlignment.ToString( ));
         element.SetAttribute("TextShadow", TextShadow.ToString( ));
         element.SetAttribute("TextColor", TextColor.ToString( ));
-    }
-
-    public static TextConfig FromString(string xmlString)
-    {
-        TextConfig config = new( );
-        XmlDocument doc = new( );
-        doc.LoadXml(xmlString);
-        config.ReadAttributes(doc.DocumentElement);
-        return config;
-    }
-
-    public override string ToString( )
-    {
-        XmlDocument doc = new( );
-        XmlElement root = doc.CreateElement("TextConfig");
-        doc.AppendChild(root);
-        WriteAttributes(ref root);
-        using StringWriter stringWriter = new( );
-        using XmlTextWriter xmlWriter = new(stringWriter);
-        doc.WriteTo(xmlWriter);
-        return stringWriter.ToString( );
     }
 }

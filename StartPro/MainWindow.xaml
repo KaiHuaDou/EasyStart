@@ -53,12 +53,14 @@
                                 <Setter Property="VerticalAlignment" Value="Center" />
                             </Style>
                         </Grid.Resources>
-                        <StackPanel HorizontalAlignment="Center">
+                        <StackPanel x:Name="FunctionPanel" HorizontalAlignment="Center">
                             <GroupBox Header="{x:Static text:Main.DefaultGroup}">
                                 <StackPanel>
                                     <Button Click="ShowSetting" Content="&#xE713;" />
                                     <Button Click="WindowExit" Content="&#xF3B1;" />
                                     <Button x:Name="SaveDataButton" Click="SaveData" Content="&#xE78C;" />
+                                    <Button Click="OpenConfigFolder" Content="&#xE838;" />
+                                    <Button Click="ImportSystemStart" Content="&#xE8B5;" />
                                 </StackPanel>
                             </GroupBox>
                             <GroupBox Header="{x:Static text:AppTile.AppTileGroup}">
@@ -92,7 +94,7 @@
                         DockPanel.Dock="Left"
                         Padding="10" HorizontalAlignment="Left" Panel.ZIndex="65"
                         Background="#99FFFFFF"
-                        CornerRadius="32,0,0,0">
+                        CornerRadius="{Binding Margin, ConverterParameter=AppList, Converter={StaticResource RadiusConverter}, ElementName=MainBorder}">
                     <Border.Effect>
                         <DropShadowEffect Opacity="0.2" Direction="0" Color="#ACACAC" />
                     </Border.Effect>
@@ -122,7 +124,7 @@
                         </ListBox>
                     </ScrollViewer>
                 </Border>
-                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
                     <Canvas x:Name="TilePanel"
                             Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" />
                 </ScrollViewer>

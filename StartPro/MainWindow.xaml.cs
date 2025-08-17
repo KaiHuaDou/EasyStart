@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using NHotkey.Wpf;
 using StartPro.Api;
 using StartPro.Tile;
 
@@ -22,41 +20,20 @@ public partial class MainWindow : Window
     {
         InitializeComponent( );
 
-        HotkeyManager.Current.AddOrReplace(
-            "ShowHide",
-            new KeyGesture(Key.None, ModifierKeys.Windows | ModifierKeys.Control),
-            (_, e) =>
-            {
-                ShowHide( );
-                e.Handled = true;
-            }
-        );
+        Utils.RegisterHotkey(ShowHide);
 
-        Height = Defaults.HeightPercent * SystemParameters.PrimaryScreenHeight;
-        Width = Defaults.WidthPercent * SystemParameters.PrimaryScreenWidth;
+        Height = Defaults.HeightPercent * SystemParameters.WorkArea.Height;
+        Width = Defaults.WidthPercent * SystemParameters.WorkArea.Width;
         Top = SystemParameters.WorkArea.Height - Height;
         Left = (SystemParameters.WorkArea.Width - Width) / 2;
         TilePanel.MinHeight = Height - 256;
         TilePanel.MinWidth = Width - 96;
 
-        InfoBox.SetBinding(ItemsControl.ItemsSourceProperty, new Binding( ) { Source = App.Infos });
-        void UpdateHeader(object? _o, NotifyCollectionChangedEventArgs _e)
-        {
-            string countText = InfoBox.Items.Count == 0 ? "" : $" ({InfoBox.Items.Count})";
-            InfoGroup?.Header = $"信息{countText}";
-        }
-        App.Infos.CollectionChanged += UpdateHeader;
-        UpdateHeader(null, null);
+        AddTiles(App.Tiles);
 
-        foreach (TileBase tile in App.Tiles)
-        {
-            TilePanel.Children.Add(tile);
-            tile.Refresh( );
-        }
+        ApplySettings( );
 
-        UpdateBackground( );
-
-        AppList.ItemsSource = new Collection<StartMenuApp>{
+        AppList.ItemsSource = new Collection<SystemApp>{
             new( ) {
                 AppName = "Loading",
                 AppPath = "",
@@ -90,58 +67,101 @@ public partial class MainWindow : Window
             Hide( );
     }
 
+    private void AddTiles(ObservableCollection<TileBase> tiles)
+    {
+        foreach (TileBase tile in tiles)
+        {
+            TilePanel.Children.Add(tile);
+            tile.Refresh( );
+        }
+    }
+
+    private void ApplySettings( )
+    {
+        MainBorder.Background =
+            Utils.TryParseBrushFromText(App.Settings.Background, out Brush back)
+            ? back : Defaults.Background;
+        foreach (TileBase tile in TilePanel.Children)
+        {
+            tile.Foreground = Utils.TryParseBrushFromText(App.Settings.Foreground, out Brush fore)
+                ? fore : Defaults.Foreground;
+        }
+    }
+
     private void ClearInfo(object o, RoutedEventArgs e)
     {
         App.Infos.Remove(InfoBox.Text);
         InfoBox.SelectedIndex = 0;
     }
 
-    private void UpdateBackground( )
+    private void ImportSystemStart(object o, RoutedEventArgs e)
     {
-        MainBorder.Background =
-            Utils.TryParseBrushFromText(App.Settings.Background, out Brush back)
-            ? back : Defaults.Background;
+        ObservableCollection<TileBase> tiles = SystemTiles.Import( );
+        AddTiles(tiles);
+    }
+
+    private void InitInfoBox( )
+    {
+        InfoBox.SetBinding(ItemsControl.ItemsSourceProperty, new Binding( ) { Source = App.Infos });
+        InfoBox.MaxHeight = FunctionPanel.ActualHeight;
+        InfoBox.MaxWidth = 0.25 * SystemParameters.WorkArea.Width;
+        void UpdateHeader(object? _o, NotifyCollectionChangedEventArgs _e)
+        {
+            string countText = InfoBox.Items.Count == 0 ? "" : $" ({InfoBox.Items.Count})";
+            InfoGroup?.Header = $"信息{countText}";
+        }
+        App.Infos.CollectionChanged += UpdateHeader;
+        UpdateHeader(null, null);
+    }
+
+    private void OpenConfigFolder(object o, RoutedEventArgs e)
+    {
+        Utils.ExecuteAsAdmin("explorer.exe", $"/e, /select, {Environment.ProcessPath}");
     }
 
     private void SaveData(object o, RoutedEventArgs e)
     {
         SaveDataButton.IsEnabled = false;
-        UpdateGlobalTiles( );
-        TileStore.Save( );
-        App.Settings.Write( );
-        SaveDataButton.Content = "\uE73E";
-        Task.Delay(2000).ContinueWith(_ => Dispatcher.Invoke(( ) =>
+        SyncGlobalTiles( );
+        if (TileStore.Save( ) && App.Settings.Write( ))
         {
-            SaveDataButton.Content = "\uE78C";
+            SaveDataButton.Content = "\uE73E";
+            Task.Delay(2000).ContinueWith(_ => Dispatcher.Invoke(( ) =>
+            {
+                SaveDataButton.Content = "\uE78C";
+                SaveDataButton.IsEnabled = true;
+            }));
+        }
+        else
+        {
             SaveDataButton.IsEnabled = true;
-        }));
+        }
     }
 
     private void ShowSetting(object o, RoutedEventArgs e)
     {
         Hide( );
         new Setting( ).ShowDialog( );
-        UpdateBackground( );
+        ApplySettings( );
         Show( );
     }
 
-    private void TaskbarMenuExit(object o, RoutedEventArgs e)
-        => Application.Current.Shutdown( );
-
-    private void TaskbarMenuShow(object o, RoutedEventArgs e)
-        => ShowHide( );
-
-    private void UpdateGlobalTiles( )
+    private void SyncGlobalTiles( )
     {
         App.Tiles.Clear( );
         foreach (TileBase tile in TilePanel.Children)
             App.Tiles.Add(tile);
     }
 
+    private void TaskbarMenuExit(object o, RoutedEventArgs e)
+            => Application.Current.Shutdown( );
+
+    private void TaskbarMenuShow(object o, RoutedEventArgs e)
+        => ShowHide( );
     private void WindowClosing(object o, CancelEventArgs e)
     {
         Hide( );
-        UpdateGlobalTiles( );
+        SyncGlobalTiles( );
         e.Cancel = true;
     }
 
@@ -155,14 +175,18 @@ public partial class MainWindow : Window
     {
         TilePanel.ResizeToFit( );
         ShowHideAppList(null, null);
+        InitInfoBox( );
+
 #if !DEBUG
+        App.AddInfo("调试模式不加载开始菜单");
+#else
         Task.Factory.StartNew(( ) =>
         {
-            StartMenuApp.LoadApps( );
+            SystemApp.LoadApps( );
             Dispatcher.BeginInvoke(( ) =>
             {
-                StartMenuApp.LoadIcon( );
-                AppList.ItemsSource = StartMenuApp.Apps;
+                SystemApp.LoadIcon( );
+                AppList.ItemsSource = SystemApp.Apps;
             });
         });
 #endif

@@ -96,7 +96,6 @@
             <Generator>PublicResXFileCodeGenerator</Generator>
             <LastGenOutput>Tile.Designer.cs</LastGenOutput>
         </EmbeddedResource>
-        <Folder Include="External\" />
         <Folder Include="Properties\PublishProfiles\" />
     </ItemGroup>
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

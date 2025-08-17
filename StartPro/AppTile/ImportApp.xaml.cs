@@ -36,7 +36,7 @@ public partial class ImportApp : Window
 
     private void ImportClick(object o, RoutedEventArgs e)
     {
-        if (Utils.TrySelectFiles(out string[] fileName, ".exe"))
+        if (Utils.TrySelectFiles(out string[] fileName, "exe"))
             AddNewTiles(fileName);
         RefreshTileList( );
     }
@@ -73,7 +73,7 @@ public partial class ImportApp : Window
             string fileName = file.ToString( );
             if (fileName.EndsWith(".lnk", StringComparison.OrdinalIgnoreCase))
             {
-                AddNewTile(fileName, Utils.ReadShortcut(fileName));
+                AddNewTile(fileName, Utils.ResolveShortcut(fileName));
             }
             else
             {

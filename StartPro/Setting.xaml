@@ -16,6 +16,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.Resources>
             <Style TargetType="DockPanel">
@@ -48,8 +49,16 @@
         <ComboBox x:Name="UIThemeBox"
                   Grid.Row="2" Grid.Column="1"
                   Margin="0,5,0,5" />
-        <CheckBox x:Name="UIFlatBox" Grid.Row="3" Content="{x:Static text:Main.UIThemeFlat}" />
-        <StackPanel Grid.Row="4" Grid.ColumnSpan="2"
+        <CheckBox x:Name="StartupBox"
+                  Grid.Row="3"
+                  Margin="0,5,0,5"
+                  Checked="StartupBoxChecked" Unchecked="StartupBoxUnchecked"
+                  Content="开机时启动" />
+        <CheckBox x:Name="UIFlatBox"
+                  Grid.Row="4"
+                  Margin="0,5,0,5"
+                  Content="{x:Static text:Main.UIThemeFlat}" />
+        <StackPanel Grid.Row="5" Grid.ColumnSpan="2"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
             <Button x:Name="OkButton"

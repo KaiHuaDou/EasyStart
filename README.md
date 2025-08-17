@@ -1,4 +1,4 @@
-﻿# EasyStart
+# EasyStart
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/kaihuadou/easystart/build.yml) ![](https://img.shields.io/github/license/kaihuadou/easystart) ![](https://img.shields.io/github/commit-activity/w/kaihuadou/easystart)
 
@@ -13,13 +13,16 @@ Windows 开始菜单磁贴的 C# 升级重制版。
 - 自由拖动
 - 快速固定应用磁贴
 
+## 快捷键
+
+使用 <kbd>Ctrl</kbd>+<kbd>Win</kbd> 切换开始菜单的显示与隐藏。
+
 ## 配置文件
 
 所有配置文件都是便携的
 
 - `settings.json` 保存应用程序设置
 - `tiles.xml` 保存磁贴
-    - 手动修改可能导致磁贴丢失
 
 ## 下载
 
@@ -45,4 +48,10 @@ dotnet publish -p:PublishProfile=FolderProfile
 
 ## 屏幕截图
 
+Aero 风格 (`UIFlat = false`)：
+
 ![屏幕截图](./doc/Screenshot01.png)
+
+Metro 风格 (`UIFlat = true`)：
+
+![屏幕截图](./doc/Screenshot02.png)

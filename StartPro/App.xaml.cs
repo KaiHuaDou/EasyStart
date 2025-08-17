@@ -28,7 +28,7 @@ public partial class App : Application, ISingleInstance
         }
     }
 
-    public static void ShowInfo(string message)
+    public static void AddInfo(string message)
     {
         Infos.Add(message);
         TileWindow?.InfoBox?.SelectedItem = message;
@@ -63,9 +63,6 @@ public partial class App : Application, ISingleInstance
             })
         });
 
-        Launcher launcher = new( );
-        launcher.Show( );
-
         MainWindow mainWindow = new( );
         mainWindow.Show( );
         Current.MainWindow = mainWindow;
@@ -75,7 +72,11 @@ public partial class App : Application, ISingleInstance
 
     private void AppDispatcherUnhandledException(object o, DispatcherUnhandledExceptionEventArgs e)
     {
-        ShowInfo($"{e.Exception.Message}\n{e.Exception.StackTrace}");
+#if DEBUG
+        MessageBox.Show($"{e.Exception.Message}\n{e.Exception.StackTrace}", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
+#else
+        AddInfo($"{e.Exception.Message}\n{e.Exception.StackTrace}");
         e.Handled = true;
+#endif
     }
 }

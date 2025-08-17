@@ -52,7 +52,6 @@ public partial class AppTile
         element.SetAttribute("Name", AppName);
         element.SetAttribute("Path", AppPath);
         element.SetAttribute("Icon", AppIcon);
-        element.SetAttribute("Shadow", Shadow.ToString( ));
         element.SetAttribute("ImageShadow", ImageShadow.ToString( ));
         element.SetAttribute("FontSize", FontSize.ToString( ));
     }
@@ -64,7 +63,6 @@ public partial class AppTile
         AppPath = node.GetAttribute("Path");
         AppName = node.GetAttribute("Name");
         AppIcon = node.GetAttribute("Icon");
-        Shadow = bool.Parse(node.GetAttribute("Shadow"));
         ImageShadow = bool.Parse(node.GetAttribute("ImageShadow"));
     }
 }

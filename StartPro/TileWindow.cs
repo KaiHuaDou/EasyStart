@@ -63,7 +63,7 @@ public partial class MainWindow
 
     private void PinApp(object o, RoutedEventArgs e)
     {
-        StartMenuApp app = AppList.SelectedItem as StartMenuApp;
+        SystemApp app = AppList.SelectedItem as SystemApp;
         AppTile appTile = new( )
         {
             AppName = app?.AppName,
