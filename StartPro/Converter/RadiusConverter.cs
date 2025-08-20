@@ -18,7 +18,7 @@ public class RadiusConverter : IValueConverter
         {
             return new CornerRadius(32, 32, 0, 0);
         }
-        else if (parameter.ToString() == "AppList")
+        else if (parameter.ToString( ) == "AppList")
         {
             return new CornerRadius(32, 0, 0, 0);
         }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,9 +9,11 @@ namespace StartPro.Tile;
 
 public partial class CreateApp : Window, IEditor<AppTile>
 {
-    public AppTile? Item { get; set; }
-    public AppTile Original { get; set; }
     public IEditor<AppTile> Core => this;
+
+    public AppTile Item { get; set; }
+
+    public AppTile Original { get; set; }
 
     public CreateApp( ) : this(null) { }
 
@@ -22,16 +23,22 @@ public partial class CreateApp : Window, IEditor<AppTile>
         Core.Init(t);
         OkButton.IsEnabled = t is not null;
         Title = t is null ? StartPro.Resources.Tile.TitleCreate : StartPro.Resources.Tile.TitleEdit;
-        sizeBox.SelectedIndex = (int) Item.TileSize;
+
+        argumentsBox.Text = Item.Arguments;
+        colorPicker.SelectedColor = (Item.TileColor as SolidColorBrush).Color;
+        fontBox.Text = Item.FontSize.ToString( );
         iconBox.Text = Item.AppIcon;
+        imageShadowBox.IsChecked = Item.ImageShadow;
         nameBox.Text = Item.AppName;
         pathBox.Text = Item.AppPath;
-        fontBox.Text = Item.FontSize.ToString( );
         shadowBox.IsChecked = Item.Shadow;
-        imageShadowBox.IsChecked = Item.ImageShadow;
-        colorPicker.SelectedColor = Item.TileColor.Color;
+        sizeBox.SelectedIndex = (int) Item.TileSize;
+
         Core.InsertTile(mainPanel);
     }
+
+    private void ArgumentsChanged(object o, RoutedEventArgs e)
+        => Item?.Arguments = argumentsBox.Text;
 
     private void ColorChanged(object o, RoutedEventArgs e)
         => Item?.TileColor = new SolidColorBrush(colorPicker.SelectedColor);
@@ -44,9 +51,7 @@ public partial class CreateApp : Window, IEditor<AppTile>
     }
 
     private void IconChanged(object o, TextChangedEventArgs e)
-    {
-        try { Item?.AppIcon = new Uri(iconBox.Text).LocalPath; } catch { }
-    }
+        => Item?.AppIcon = iconBox.Text;
 
     private void ImageShadowBoxChecked(object o, RoutedEventArgs e)
         => Item?.ImageShadow = (bool) imageShadowBox.IsChecked;

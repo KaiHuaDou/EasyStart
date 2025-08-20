@@ -3,9 +3,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
+using DependencyPropertyGenerator;
 
 namespace StartPro.Tile;
 
+[DependencyProperty<TileSize>("TileSize", DefaultValue = TileSize.Medium, OnChanged = nameof(OnTileSizeChanged))]
+[DependencyProperty<Brush>("TileColor", DefaultValueExpression = "StartPro.Api.Defaults.TileColor", OnChanged = nameof(OnTileColorChanged))]
+[DependencyProperty<bool>("Shadow", DefaultValue = false, OnChanged = nameof(OnShadowChanged))]
 public partial class TileBase : UserControl
 {
     internal Border border;
@@ -13,10 +17,10 @@ public partial class TileBase : UserControl
     internal Border maskBorder;
     internal MenuItem SizeHighMenu;
     internal MenuItem SizeLargeMenu;
-    internal MenuItem SizeThinMenu;
     internal MenuItem SizeMediumMenu;
     internal MenuItem SizeSmallMenu;
     internal MenuItem SizeTallMenu;
+    internal MenuItem SizeThinMenu;
     internal MenuItem SizeWideMenu;
     internal MenuItem TileDeleteMenu;
     internal DropShadowEffect TileShadow;
@@ -26,9 +30,23 @@ public partial class TileBase : UserControl
     public TileBase( )
     {
         InitializeComponent( );
-        TileSizeChanged(this, new DependencyPropertyChangedEventArgs( ));
-        TileShadowChanged(this, new DependencyPropertyChangedEventArgs( ));
+        OnTileSizeChanged(TileSize);
+        OnShadowChanged(Shadow);
         Refresh( );
+    }
+
+    public Panel Owner => Parent as Panel;
+
+    public int Column
+    {
+        get => (int) Canvas.GetLeft(this) / TileDatas.BlockSize;
+        set => Canvas.SetLeft(this, (value < 0 ? 0 : value) * TileDatas.BlockSize);
+    }
+
+    public int Row
+    {
+        get => (int) Canvas.GetTop(this) / TileDatas.BlockSize;
+        set => Canvas.SetTop(this, (value < 0 ? 0 : value) * TileDatas.BlockSize);
     }
 
     public void InitializeComponent( )
@@ -77,25 +95,27 @@ public partial class TileBase : UserControl
             Measure(new Size(window.Width, window.Height));
             Arrange(new Rect(0, 0, window.DesiredSize.Width, window.DesiredSize.Height));
         }
-        if (Owner is Canvas)
+        if (Owner is Canvas owner)
+        {
             MoveToSpace( );
+            owner.ResizeToFit( );
+        }
     }
 
-    protected static void TileColorChanged(DependencyObject o, DependencyPropertyChangedEventArgs e) { }
+    protected virtual void OnShadowChanged(bool newValue)
+        => TileShadow.Opacity = (!App.Settings.UIFlat && newValue) ? 0.4 : 0;
 
-    protected static void TileSizeChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+    protected virtual void OnTileColorChanged(Brush newValue) { }
+
+    protected virtual void OnTileSizeChanged(TileSize newValue)
     {
-        TileBase tile = o as TileBase;
-        (int, int) tileSize = TileDatas.TileSizes[tile.TileSize];
-        tile.MinWidth = tile.Width = tileSize.Item1;
-        tile.MinHeight = tile.Height = tileSize.Item2;
-        tile.Margin = new Thickness(TileDatas.BaseMargin);
-        tile.border.CornerRadius = tile.maskBorder.CornerRadius = new CornerRadius(TileDatas.TileRadius[tile.TileSize]);
-        tile.Refresh( );
+        (int, int) tileSize = TileDatas.TileSizes[newValue];
+        MinWidth = Width = tileSize.Item1;
+        MinHeight = Height = tileSize.Item2;
+        Margin = new Thickness(TileDatas.BaseMargin);
+        border.CornerRadius = maskBorder.CornerRadius = new CornerRadius(TileDatas.TileRadius[newValue]);
+        Refresh( );
     }
-
-    protected static void TileShadowChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-        => (o as TileBase)?.TileShadow.Opacity = (!App.Settings.UIFlat && (o as TileBase)!.Shadow) ? 0.4 : 0;
 
     private void RemoveTile(object o, RoutedEventArgs e)
         => Owner.Children.Remove(this);
@@ -104,7 +124,7 @@ public partial class TileBase : UserControl
     private void ToMediumClick(object o, RoutedEventArgs e) => TileSize = TileSize.Medium;
     private void ToThinClick(object o, RoutedEventArgs e) => TileSize = TileSize.Thin;
     private void ToWideClick(object o, RoutedEventArgs e) => TileSize = TileSize.Wide;
-    private void ToTallClick(object o, RoutedEventArgs e) => TileSize = TileSize.Tall;
     private void ToHighClick(object o, RoutedEventArgs e) => TileSize = TileSize.High;
+    private void ToTallClick(object o, RoutedEventArgs e) => TileSize = TileSize.Tall;
     private void ToLargeClick(object o, RoutedEventArgs e) => TileSize = TileSize.Large;
 }

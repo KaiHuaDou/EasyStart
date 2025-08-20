@@ -17,7 +17,7 @@ public static class PEIcon
             source = null;
             return false;
         }
-        Icon icon = GetIcon(fileName);
+        Icon icon = GetDirect(fileName);
         return FromIcon(icon, out source);
     }
 
@@ -50,7 +50,7 @@ public static class PEIcon
         return false;
     }
 
-    public static Icon GetIcon(string fileName)
+    public static Icon GetDirect(string fileName)
     {
         try
         {
@@ -62,22 +62,24 @@ public static class PEIcon
         }
     }
 
-    public static bool GetThumbnail(string filePath, out BitmapSource source)
+    public static bool GetComplex(string path, out BitmapSource source)
     {
         source = null;
 
-        if (string.IsNullOrEmpty(filePath))
+        if (string.IsNullOrEmpty(path))
             return false;
 
         IntPtr pImgFactory = IntPtr.Zero;
         try
         {
             Guid iid = IID_IShellItemImageFactory;
-            SHCreateItemFromParsingName(filePath, IntPtr.Zero, ref iid, out pImgFactory);
+            SHCreateItemFromParsingName(path, IntPtr.Zero, ref iid, out pImgFactory);
             if (pImgFactory == IntPtr.Zero)
                 return false;
 
-            IShellItemImageFactory factory = Marshal.GetObjectForIUnknown(pImgFactory) as IShellItemImageFactory;
+            if (Marshal.GetObjectForIUnknown(pImgFactory) is not IShellItemImageFactory factory)
+                return false;
+
             Marshal.Release(pImgFactory);
             pImgFactory = IntPtr.Zero;
 

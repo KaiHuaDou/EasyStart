@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Threading;
@@ -10,9 +11,9 @@ namespace StartPro;
 
 public partial class App : Application, ISingleInstance
 {
-    public static ObservableCollection<TileBase> Tiles { get; private set; }
-    public static Settings Settings { get; set; } = new Settings( );
-    public static ObservableCollection<string> Infos { get; } = [];
+    public static List<TileBase> Tiles { get; private set; }
+    public static Settings Settings { get; private set; }
+    public static ObservableCollection<string> Infos { get; private set; }
     public static MainWindow TileWindow => Current.MainWindow as MainWindow;
 
     public static class Program
@@ -45,6 +46,7 @@ public partial class App : Application, ISingleInstance
         if (!this.InitializeAsFirstInstance("KaiHuaDou_StartPro"))
             Current.Shutdown( );
 
+        Infos = []; // Must initialize first
         Settings = Settings.Read( );
         Tiles = TileStore.Load( );
 
@@ -72,10 +74,15 @@ public partial class App : Application, ISingleInstance
 
     private void AppDispatcherUnhandledException(object o, DispatcherUnhandledExceptionEventArgs e)
     {
-#if DEBUG
-        MessageBox.Show($"{e.Exception.Message}\n{e.Exception.StackTrace}", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
-#else
-        AddInfo($"{e.Exception.Message}\n{e.Exception.StackTrace}");
+#if !DEBUG
+        if (MainWindow?.IsLoaded == true)
+        {
+            AddInfo($"{e.Exception.Message}");
+        }
+        else
+        {
+            MessageBox.Show($"{e.Exception.Message}\n{e.Exception.StackTrace}", "严重错误", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
         e.Handled = true;
 #endif
     }

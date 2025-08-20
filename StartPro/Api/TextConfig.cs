@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 using System.Xml;
 using StartPro.Converter;
@@ -21,15 +20,15 @@ public class TextConfig : IStorable
 
     public void ReadAttributes(XmlNode node)
     {
-        FontSize = double.Parse(node.GetAttribute("FontSize"));
-        FontFamily = new FontFamily(node.GetAttribute("FontFamily"));
-        FontWeight = (FontWeight) new FontWeightConverter( ).ConvertFromString(node.GetAttribute("FontWeight"));
-        FontStyle = (FontStyle) new FontStyleConverter( ).ConvertFromString(node.GetAttribute("FontStyle"));
-        FontStretch = (FontStretch) new FontStretchConverter( ).ConvertFromString(node.GetAttribute("FontStretch"));
-        TextDecorations = TextDecorationCollectionConverter.ConvertFromString(node.GetAttribute("TextDecoration"));
-        TextAlignment = Enum.Parse<TextAlignment>(node.GetAttribute("TextAlignment"));
-        TextShadow = bool.Parse(node.GetAttribute("TextShadow"));
-        TextColor = new SolidColorBrush((Color) ColorConverter.ConvertFromString(node.GetAttribute("TextColor")));
+        FontSize = node.FromAttribute("FontSize", Defaults.FontSize);
+        FontFamily = node.FromAttribute("FontFamily", Defaults.FontFamily);
+        FontWeight = node.FromAttribute("FontWeight", Defaults.FontWeight);
+        FontStyle = node.FromAttribute("FontStyle", Defaults.FontStyle);
+        FontStretch = node.FromAttribute("FontStretch", Defaults.FontStretch);
+        TextDecorations = node.FromAttribute("TextDecoration", new TextDecorationCollection( ));
+        TextAlignment = node.FromAttribute("TextAlignment", Defaults.TextAlignment);
+        TextShadow = node.FromAttribute("TextShadow", false);
+        TextColor = new SolidColorBrush(node.FromAttribute("TextColor", Defaults.Foreground.Color));
     }
 
     public void WriteAttributes(ref XmlElement element)

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,7 +21,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent( );
 
-        Utils.RegisterHotkey(ShowHide);
+        Integration.RegisterHotkey(ShowHide);
 
         Height = Defaults.HeightPercent * SystemParameters.WorkArea.Height;
         Width = Defaults.WidthPercent * SystemParameters.WorkArea.Width;
@@ -28,6 +29,7 @@ public partial class MainWindow : Window
         Left = (SystemParameters.WorkArea.Width - Width) / 2;
         TilePanel.MinHeight = Height - 256;
         TilePanel.MinWidth = Width - 96;
+        InfoBox.MaxHeight = SystemParameters.WorkArea.Height - 256;
 
         AddTiles(App.Tiles);
 
@@ -35,7 +37,7 @@ public partial class MainWindow : Window
 
         AppList.ItemsSource = new Collection<SystemApp>{
             new( ) {
-                AppName = "Loading",
+                AppName = "正在加载...",
                 AppPath = "",
                 AppIcon = new BitmapImage()
             }
@@ -67,15 +69,6 @@ public partial class MainWindow : Window
             Hide( );
     }
 
-    private void AddTiles(ObservableCollection<TileBase> tiles)
-    {
-        foreach (TileBase tile in tiles)
-        {
-            TilePanel.Children.Add(tile);
-            tile.Refresh( );
-        }
-    }
-
     private void ApplySettings( )
     {
         MainBorder.Background =
@@ -90,14 +83,14 @@ public partial class MainWindow : Window
 
     private void ClearInfo(object o, RoutedEventArgs e)
     {
-        App.Infos.Remove(InfoBox.Text);
+        if (InfoBox.SelectedValue is string selectedInfo)
+            App.Infos.Remove(selectedInfo);
         InfoBox.SelectedIndex = 0;
     }
 
     private void ImportSystemStart(object o, RoutedEventArgs e)
     {
-        ObservableCollection<TileBase> tiles = SystemTiles.Import( );
-        AddTiles(tiles);
+        AddTiles(SystemTiles.Import( ));
     }
 
     private void InitInfoBox( )
@@ -116,7 +109,7 @@ public partial class MainWindow : Window
 
     private void OpenConfigFolder(object o, RoutedEventArgs e)
     {
-        Utils.ExecuteAsAdmin("explorer.exe", $"/e, /select, {Environment.ProcessPath}");
+        Integration.ExecuteAsAdmin("explorer.exe", $"/e, /select, {Path.Join(Utils.ParentDir, "tiles.xml")}");
     }
 
     private void SaveData(object o, RoutedEventArgs e)
@@ -146,18 +139,12 @@ public partial class MainWindow : Window
         Show( );
     }
 
-    private void SyncGlobalTiles( )
-    {
-        App.Tiles.Clear( );
-        foreach (TileBase tile in TilePanel.Children)
-            App.Tiles.Add(tile);
-    }
-
     private void TaskbarMenuExit(object o, RoutedEventArgs e)
-            => Application.Current.Shutdown( );
+        => Application.Current.Shutdown( );
 
     private void TaskbarMenuShow(object o, RoutedEventArgs e)
         => ShowHide( );
+
     private void WindowClosing(object o, CancelEventArgs e)
     {
         Hide( );
@@ -177,7 +164,7 @@ public partial class MainWindow : Window
         ShowHideAppList(null, null);
         InitInfoBox( );
 
-#if !DEBUG
+#if DEBUG
         App.AddInfo("调试模式不加载开始菜单");
 #else
         Task.Factory.StartNew(( ) =>

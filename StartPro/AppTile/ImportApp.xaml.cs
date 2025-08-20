@@ -7,7 +7,52 @@ using StartPro.Api;
 namespace StartPro.Tile;
 public partial class ImportApp : Window
 {
+    public ImportApp( )
+    {
+        InitializeComponent( );
+        TileList.ItemsSource = ConvertTileSet(Tiles);
+    }
+
     public HashSet<AppTile> Tiles { get; } = [];
+
+    private void AddNewTile(string displayName, string path, string arguments)
+    {
+        Tiles.Add(new AppTile
+        {
+            AppName = Path.GetFileNameWithoutExtension(displayName),
+            AppPath = path,
+            Arguments = arguments,
+            AppIcon = path,
+            TileSize = TileSize.Medium,
+            Shadow = App.Settings.UIFlat,
+            ImageShadow = App.Settings.UIFlat,
+            Row = 0,
+            Column = 0,
+            IsEnabled = false
+        });
+    }
+
+    private void AddNewTiles(string[] files)
+    {
+        foreach (string file in files)
+        {
+            if (file.EndsWith(".lnk", StringComparison.OrdinalIgnoreCase)
+                && Integration.ResolveShortcut(file, out string target, out string arguments))
+            {
+                AddNewTile(file, target, arguments);
+            }
+            else
+            {
+                AddNewTile(file, file, "");
+            }
+        }
+    }
+
+    private void CancelClick(object o, RoutedEventArgs e)
+    {
+        Tiles.Clear( );
+        Close( );
+    }
 
     private HashSet<string> ConvertTileSet(HashSet<AppTile> x)
     {
@@ -17,21 +62,15 @@ public partial class ImportApp : Window
         return result;
     }
 
-    public ImportApp( )
+    private void DropTile(object o, DragEventArgs e)
     {
-        InitializeComponent( );
-        TileList.ItemsSource = ConvertTileSet(Tiles);
-    }
-
-    private void OkClick(object o, RoutedEventArgs e)
-    {
-        Close( );
-    }
-
-    private void CancelClick(object o, RoutedEventArgs e)
-    {
-        Tiles.Clear( );
-        Close( );
+        IDataObject data = e.Data;
+        if (!data.GetDataPresent(DataFormats.FileDrop))
+            return;
+        if (e.Data.GetData(DataFormats.FileDrop) is not string[] files || files.Length == 0)
+            return;
+        AddNewTiles(files);
+        RefreshTileList( );
     }
 
     private void ImportClick(object o, RoutedEventArgs e)
@@ -41,45 +80,9 @@ public partial class ImportApp : Window
         RefreshTileList( );
     }
 
-    private void DropTile(object o, DragEventArgs e)
+    private void OkClick(object o, RoutedEventArgs e)
     {
-        IDataObject data = e.Data;
-        if (!data.GetDataPresent(DataFormats.FileDrop))
-            return;
-        Array files = e.Data.GetData(DataFormats.FileDrop) as Array;
-        AddNewTiles(files);
-        RefreshTileList( );
-    }
-
-    private void AddNewTile(string displayName, string fileName)
-    {
-        Tiles.Add(new AppTile
-        {
-            AppName = Path.GetFileNameWithoutExtension(displayName),
-            AppPath = fileName,
-            AppIcon = fileName,
-            TileSize = TileSize.Medium,
-            Shadow = App.Settings.UIFlat,
-            ImageShadow = App.Settings.UIFlat,
-            Row = 0,
-            Column = 0,
-            IsEnabled = false
-        });
-    }
-    private void AddNewTiles(Array files)
-    {
-        foreach (object file in files)
-        {
-            string fileName = file.ToString( );
-            if (fileName.EndsWith(".lnk", StringComparison.OrdinalIgnoreCase))
-            {
-                AddNewTile(fileName, Utils.ResolveShortcut(fileName));
-            }
-            else
-            {
-                AddNewTile(fileName, fileName);
-            }
-        }
+        Close( );
     }
 
     private void RefreshTileList( )

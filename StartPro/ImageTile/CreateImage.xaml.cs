@@ -9,7 +9,7 @@ public partial class CreateImage : Window, IEditor<ImageTile>
 {
     public CreateImage( ) : this(null) { }
     public IEditor<ImageTile> Core => this;
-    public ImageTile? Item { get; set; }
+    public ImageTile Item { get; set; }
     public ImageTile Original { get; set; }
 
     public CreateImage(ImageTile t)

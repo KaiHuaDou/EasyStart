@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using StartPro.Api;
@@ -47,6 +48,15 @@ public partial class MainWindow
         tile.Refresh( );
     }
 
+    private void AddTiles(List<TileBase> tiles)
+    {
+        foreach (TileBase tile in tiles)
+        {
+            TilePanel.Children.Add(tile);
+            tile.Refresh( );
+        }
+    }
+
     private void ImportAppTile(object o, RoutedEventArgs e)
     {
         Hide( );
@@ -89,5 +99,12 @@ public partial class MainWindow
             hideAnimation.Completed += (o, e) => AppListBorder.Visibility = Visibility.Collapsed;
             hideAnimation.Begin(AppListBorder);
         }
+    }
+
+    private void SyncGlobalTiles( )
+    {
+        App.Tiles.Clear( );
+        foreach (TileBase tile in TilePanel.Children)
+            App.Tiles.Add(tile);
     }
 }

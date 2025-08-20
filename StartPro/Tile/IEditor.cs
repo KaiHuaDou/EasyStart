@@ -5,7 +5,7 @@ namespace StartPro.Tile;
 
 public interface IEditor<TTile> where TTile : TileBase, new()
 {
-    TTile? Item { get; set; }
+    TTile Item { get; set; }
     TTile Original { get; set; }
 
     Window Owner { get => (this as Window)?.Owner; set => (this as Window)?.Owner = value; }

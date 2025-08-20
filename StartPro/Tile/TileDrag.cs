@@ -32,15 +32,14 @@ public partial class TileBase
         if (!IsMouseLeftButtonDown)
             return;
 
-        Vector mousePoint = (Vector) Mouse.GetPosition(Owner);
-        Vector offset = mousePoint - startMousePoint;
+        Point mousePoint = Mouse.GetPosition(Owner);
+        Point offset = mousePoint - startMousePoint;
         if (offset.X == 0 || offset.Y == 0)
             return;
 
         IsDragging = true;
-        Vector tilePoint = startTilePoint + offset;
-        Canvas.SetLeft(o as TileBase, tilePoint.X);
-        Canvas.SetTop(o as TileBase, tilePoint.Y);
+        Canvas.SetLeft(o as TileBase, startTilePoint.X + offset.X);
+        Canvas.SetTop(o as TileBase, startTilePoint.Y + offset.Y);
         e.Handled = true;
     }
 
@@ -106,7 +105,6 @@ public partial class TileBase
                 }
             }
         }
-        Owner.ResizeToFit( );
     }
 
     private void ToTopmost( )

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 
@@ -9,11 +9,11 @@ public static class TileStore
 {
     private const string xmlPath = "tiles.xml";
     private static readonly XmlDocument document = new( );
-    private static XmlNode Apps;
+    private static XmlNode Tiles;
 
-    public static ObservableCollection<TileBase> Load( )
+    public static List<TileBase> Load( )
     {
-        ObservableCollection<TileBase> result = [];
+        List<TileBase> result = [];
         try
         {
             document.Load(xmlPath);
@@ -33,9 +33,14 @@ public static class TileStore
             return result;
         }
 
-        Apps = document.ChildNodes[0];
-        foreach (XmlNode node in Apps.ChildNodes)
+        Tiles = document.ChildNodes[0];
+        if (Tiles is null)
+            return [];
+
+        foreach (XmlNode node in Tiles.ChildNodes)
         {
+            if (node.Name != "Tile")
+                continue;
             try
             {
                 TileBase item = node.GetAttribute("Type") switch
@@ -52,11 +57,7 @@ public static class TileStore
             }
             catch
             {
-#if DEBUG
-                throw;
-#else
                 App.AddInfo("存在无法读取的磁贴，已跳过");
-#endif
             }
         }
         return result;
@@ -64,16 +65,16 @@ public static class TileStore
 
     public static bool Save( )
     {
-        Apps = document.CreateElement("Tiles");
+        Tiles = document.CreateElement("Tiles");
         foreach (TileBase tile in App.Tiles)
         {
             XmlElement element = document.CreateElement("Tile");
             tile.WriteAttributes(ref element);
-            Apps.AppendChild(element);
+            Tiles.AppendChild(element);
         }
         try
         {
-            File.WriteAllText(xmlPath, Apps.OuterXml);
+            File.WriteAllText(xmlPath, Tiles.OuterXml);
         }
         catch (Exception ex)
         {
@@ -84,8 +85,3 @@ public static class TileStore
     }
 }
 
-public static class XmlNodeExtend
-{
-    public static string GetAttribute(this XmlNode node, string name)
-        => (node.Attributes?.GetNamedItem(name) as XmlAttribute)?.Value;
-}

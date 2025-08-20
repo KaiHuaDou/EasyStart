@@ -9,8 +9,11 @@ namespace StartPro.Tile;
 public partial class CreateText : Window, IEditor<TextTile>
 {
     public CreateText( ) : this(null) { }
+
     public IEditor<TextTile> Core => this;
-    public TextTile? Item { get; set; }
+
+    public TextTile Item { get; set; }
+
     public TextTile Original { get; set; }
 
     public CreateText(TextTile t = null)
@@ -22,7 +25,7 @@ public partial class CreateText : Window, IEditor<TextTile>
         ContentBox.Text = Item.Text;
         VerticalAlignmentBox.SelectedIndex = (int) Item.TextVerticalAlignment;
         HorizontalAlignmentBox.SelectedIndex = (int) Item.TextHorizontalAlignment;
-        colorPicker.SelectedColor = Item.TileColor.Color;
+        colorPicker.SelectedColor = (Item.TileColor as SolidColorBrush).Color;
         shadowBox.IsChecked = Item.Shadow;
         Core.InsertTile(mainPanel);
     }

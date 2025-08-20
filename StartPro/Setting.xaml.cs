@@ -27,7 +27,7 @@ public partial class Setting : Window
         UIThemeBox.ItemsSource = UIThemeSource;
         UIThemeBox.SelectedIndex = App.Settings.UITheme;
         UIFlatBox.IsChecked = App.Settings.UIFlat;
-        StartupBox.IsChecked = Utils.ReadStartup( );
+        StartupBox.IsChecked = Integration.ReadStartup( );
     }
 
     private void CancelClick(object o, RoutedEventArgs e)
@@ -35,13 +35,10 @@ public partial class Setting : Window
 
     private void OkClick(object o, RoutedEventArgs e)
     {
-        App.Settings = new Settings
-        {
-            Background = BackgroundBox.Text,
-            Foreground = ForegroundBox.Text,
-            UITheme = UIThemeBox.SelectedIndex,
-            UIFlat = UIFlatBox.IsChecked == true
-        };
+        App.Settings.Background = BackgroundBox.Text;
+        App.Settings.Foreground = ForegroundBox.Text;
+        App.Settings.UITheme = UIThemeBox.SelectedIndex;
+        App.Settings.UIFlat = UIFlatBox.IsChecked == true;
         App.Settings.Write( );
         Close( );
     }
@@ -72,8 +69,8 @@ public partial class Setting : Window
     }
 
     private void StartupBoxChecked(object o, RoutedEventArgs e)
-        => StartupBox.IsChecked = Utils.AddToStartup( );
+        => StartupBox.IsChecked = Integration.AddToStartup( );
 
     private void StartupBoxUnchecked(object o, RoutedEventArgs e)
-        => StartupBox.IsChecked = !Utils.RemoveFromStartup( );
+        => StartupBox.IsChecked = !Integration.RemoveFromStartup( );
 }

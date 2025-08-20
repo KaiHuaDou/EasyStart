@@ -34,9 +34,12 @@
                    FontSize="{Binding FontSize, ElementName=userControl}"
                    Text="{Binding AppName}"
                    TextWrapping="WrapWithOverflow" />
-        <Image x:Name="image" Margin="{Binding TileSize, Converter={StaticResource ImageMarginConverter}}" Source="{Binding AppIcon}">
+        <Image x:Name="image"
+               Margin="{Binding TileSize, Converter={StaticResource ImageMarginConverter}}"
+               Source="{Binding AppIcon}"
+               Stretch="Uniform">
             <Image.Effect>
-                <DropShadowEffect x:Name="TileImageShadow" Opacity="0.4" Color="#020202" />
+                <DropShadowEffect x:Name="TileImageShadow" Opacity="0" Color="#020202" />
             </Image.Effect>
         </Image>
     </DockPanel>

@@ -3,8 +3,13 @@
         <OutputType>WinExe</OutputType>
         <TargetFramework>net9.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
-        <Nullable>annotations</Nullable>
         <LangVersion>preview</LangVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+        <Nullable>annotations</Nullable>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <Nullable>annotations</Nullable>
     </PropertyGroup>
     <PropertyGroup>
         <PublishSingleFile>true</PublishSingleFile>
@@ -29,6 +34,10 @@
         <None Remove="Tile\TileBase.UI.cs.bak" />
     </ItemGroup>
     <ItemGroup>
+        <PackageReference Include="DependencyPropertyGenerator" Version="1.5.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="H.NotifyIcon.Wpf" Version="2.3.0" />
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
         <PackageReference Include="NHotkey.Wpf" Version="3.0.0" />
@@ -48,9 +57,9 @@
             <DependentUpon>AppTile.resx</DependentUpon>
         </Compile>
         <Compile Update="Resources\ImageTile.Designer.cs">
-          <DesignTime>True</DesignTime>
-          <AutoGen>True</AutoGen>
-          <DependentUpon>ImageTile.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ImageTile.resx</DependentUpon>
         </Compile>
         <Compile Update="Resources\Main.Designer.cs">
             <DesignTime>True</DesignTime>
@@ -58,9 +67,9 @@
             <DependentUpon>Main.resx</DependentUpon>
         </Compile>
         <Compile Update="Resources\TextConfigure.Designer.cs">
-          <DesignTime>True</DesignTime>
-          <AutoGen>True</AutoGen>
-          <DependentUpon>TextConfigure.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>TextConfigure.resx</DependentUpon>
         </Compile>
         <Compile Update="Resources\TextTile.Designer.cs">
             <DesignTime>True</DesignTime>
@@ -77,16 +86,16 @@
             <LastGenOutput>AppTile.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\ImageTile.resx">
-          <Generator>PublicResXFileCodeGenerator</Generator>
-          <LastGenOutput>ImageTile.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>ImageTile.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\Main.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
             <LastGenOutput>Main.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\TextConfigure.resx">
-          <Generator>PublicResXFileCodeGenerator</Generator>
-          <LastGenOutput>TextConfigure.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>TextConfigure.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\TextTile.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>

@@ -1,20 +1,31 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Xml;
+using DependencyPropertyGenerator;
 using StartPro.Api;
 
 namespace StartPro.Tile;
 
+[DependencyProperty<string>("AppName", DefaultValue = "Application")]
+[DependencyProperty<string>("AppIcon")]
+[DependencyProperty<string>("AppPath", DefaultValue = @"%WINDIR%\System32\notepad.exe")]
+[DependencyProperty<string>("Arguments", DefaultValue = "")]
+[DependencyProperty<bool>("ImageShadow", DefaultValue = false)]
 public partial class AppTile : TileBase, IEditable<AppTile>
 {
     static AppTile( )
     {
-        TileSizeProperty.OverrideMetadata(typeof(AppTile), new(TileSize.Medium, TileSizeChanged));
+        FrameworkPropertyMetadata tileSizeMeta = new(
+            TileSize.Medium,
+            static (sender, args)
+                => (sender as AppTile)?.OnTileSizeChanged((TileSize) args.NewValue)
+        );
+        TileSizeProperty.OverrideMetadata(typeof(AppTile), tileSizeMeta);
     }
 
     public AppTile( )
@@ -35,42 +46,62 @@ public partial class AppTile : TileBase, IEditable<AppTile>
 
     public IEditor<AppTile> Editor => new CreateApp(this);
 
-    protected static void AppIconChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+    public override void ReadAttributes(XmlNode node)
     {
-        AppTile tile = o as AppTile;
-        string path = e.NewValue as string;
-        tile.image.Source = Utils.ParseImageSourceFromText(path);
+        base.ReadAttributes(node);
+        FontSize = node.FromAttribute("FontSize", Defaults.FontSize);
+        AppPath = node.FromAttribute("Path", Environment.ProcessPath!);
+        Arguments = node.FromAttribute("Arguments", string.Empty);
+        AppName = node.FromAttribute("Name", "StartPro");
+        AppIcon = node.FromAttribute("Icon", Environment.ProcessPath!);
+        ImageShadow = node.FromAttribute("ImageShadow", false);
     }
 
-    protected static void AppPathChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+    public override void WriteAttributes(ref XmlElement element)
     {
-        AppTile tile = o as AppTile;
-        tile.AppIcon = e.NewValue as string;
+        base.WriteAttributes(ref element);
+        element.SetAttribute("Type", "AppTile");
+        element.SetAttribute("Name", AppName);
+        element.SetAttribute("Path", AppPath);
+        element.SetAttribute("Arguments", Arguments);
+        element.SetAttribute("Icon", AppIcon);
+        element.SetAttribute("ImageShadow", ImageShadow.ToString( ));
+        element.SetAttribute("FontSize", FontSize.ToString( ));
     }
 
-    protected static void ImageShadowChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+    protected new void OnTileSizeChanged(TileSize newValue)
     {
-        (o as AppTile)?.TileImageShadow.Opacity = (!App.Settings.UIFlat && (o as AppTile).ImageShadow) ? 0.4 : 0;
-    }
-
-    protected static new void TileSizeChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-    {
-        TileBase.TileSizeChanged(o, e);
-        AppTile appTile = o as AppTile;
-        appTile?.TileLabel.Visibility =
-            appTile?.TileSize is TileSize.Small or TileSize.Thin or TileSize.Tall
+        base.OnTileSizeChanged(newValue);
+        TileLabel.Visibility =
+            newValue is TileSize.Small or TileSize.Thin or TileSize.Tall
             ? Visibility.Collapsed : Visibility.Visible;
     }
+
     private void EditTile(object o, RoutedEventArgs e)
     {
-        (this as IEditable<AppTile>).Edit(Parent as Panel);
+        (this as IEditable<AppTile>).Edit(Owner);
+    }
+
+    partial void OnAppIconChanged(string newValue)
+    {
+        image.Source = Utils.ParseImageSource(newValue);
+    }
+
+    partial void OnAppPathChanged(string newValue)
+    {
+        AppIcon = newValue;
+    }
+
+    partial void OnImageShadowChanged(bool newValue)
+    {
+        TileImageShadow.Opacity = (!App.Settings.UIFlat && newValue) ? 0.4 : 0;
     }
 
     private void OpenTileLocation(object o, RoutedEventArgs e)
     {
         try
         {
-            Utils.ExecuteAsAdmin("explorer.exe", $"/e, /select, {AppPath}");
+            Integration.ExecuteAsAdmin("explorer.exe", $"/e, /select, {AppPath}");
             App.TileWindow.Hide( );
         }
         catch (Win32Exception)
@@ -81,7 +112,7 @@ public partial class AppTile : TileBase, IEditable<AppTile>
 
     private void RunAsAdmin(object o, RoutedEventArgs e)
     {
-        Utils.ExecuteAsAdmin(AppPath);
+        Integration.ExecuteAsAdmin(AppPath);
         App.TileWindow.Hide( );
     }
 
@@ -96,6 +127,7 @@ public partial class AppTile : TileBase, IEditable<AppTile>
             {
                 UseShellExecute = true,
                 FileName = AppPath,
+                Arguments = Arguments
             });
         }
         catch (Exception ex)

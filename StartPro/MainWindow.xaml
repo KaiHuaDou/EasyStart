@@ -22,126 +22,123 @@
             <ContentPresenter ClipToBounds="True" />
         </ControlTemplate>
     </Window.Template>
-    <Border Padding="32,32,32,0" Background="Transparent">
-        <Border x:Name="MainBorder" CornerRadius="{Binding Margin, ConverterParameter=MainWindow, Converter={StaticResource RadiusConverter}, ElementName=MainBorder}" RenderTransformOrigin="0.5,1">
-            <Border.Effect>
-                <DropShadowEffect Opacity="0.4" BlurRadius="32" Direction="90" />
-            </Border.Effect>
-            <Border.RenderTransform>
-                <ScaleTransform ScaleX="1" ScaleY="1" />
-            </Border.RenderTransform>
-            <DockPanel>
-                <Border DockPanel.Dock="Bottom"
-                        VerticalAlignment="Bottom" Panel.ZIndex="64"
-                        Background="#99FFFFFF">
-                    <Border.Effect>
-                        <DropShadowEffect Opacity="0.2" Direction="90" Color="#ACACAC" />
-                    </Border.Effect>
-                    <Grid>
-                        <Grid.Resources>
-                            <Style BasedOn="{StaticResource {x:Type GroupBox}}" TargetType="{x:Type GroupBox}">
-                                <Setter Property="Margin" Value="5" />
-                            </Style>
-                            <Style TargetType="{x:Type StackPanel}">
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                                <Setter Property="Orientation" Value="Horizontal" />
-                            </Style>
-                            <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
-                                <Setter Property="FontFamily" Value="Segoe Fluent Icons" />
-                                <Setter Property="FontSize" Value="24" />
-                                <Setter Property="Margin" Value="5,5,5,0" />
-                                <Setter Property="VerticalAlignment" Value="Center" />
-                            </Style>
-                        </Grid.Resources>
-                        <StackPanel x:Name="FunctionPanel" HorizontalAlignment="Center">
-                            <GroupBox Header="{x:Static text:Main.DefaultGroup}">
-                                <StackPanel>
-                                    <Button Click="ShowSetting" Content="&#xE713;" />
-                                    <Button Click="WindowExit" Content="&#xF3B1;" />
-                                    <Button x:Name="SaveDataButton" Click="SaveData" Content="&#xE78C;" />
-                                    <Button Click="OpenConfigFolder" Content="&#xE838;" />
-                                    <Button Click="ImportSystemStart" Content="&#xE8B5;" />
-                                </StackPanel>
-                            </GroupBox>
-                            <GroupBox Header="{x:Static text:AppTile.AppTileGroup}">
-                                <StackPanel>
-                                    <Button Click="ShowHideAppList" Content="&#xE700;" />
-                                    <Button Click="AddAppTile" Content="&#xE710;" />
-                                    <Button Click="ImportAppTile" Content="&#xE8B5;" />
-                                </StackPanel>
-                            </GroupBox>
-                            <GroupBox Header="{x:Static text:TextTile.TextTileGroup}">
-                                <StackPanel>
-                                    <Button Click="AddTextTile" Content="&#xE710;" />
-                                </StackPanel>
-                            </GroupBox>
-                            <GroupBox Header="{x:Static text:ImageTile.ImageTileGroup}">
-                                <StackPanel>
-                                    <Button Click="AddImageTile" Content="&#xE710;" />
-                                </StackPanel>
-                            </GroupBox>
-                        </StackPanel>
-                        <GroupBox x:Name="InfoGroup" Header="信息"
-                                  Margin="5,5,10,5" HorizontalAlignment="Right">
+    <Border x:Name="MainBorder" RenderTransformOrigin="0.5,1">
+        <Border.RenderTransform>
+            <ScaleTransform ScaleX="1" ScaleY="1" />
+        </Border.RenderTransform>
+        <DockPanel>
+            <Border DockPanel.Dock="Bottom"
+                    VerticalAlignment="Bottom" Panel.ZIndex="64"
+                    Background="#99FFFFFF">
+                <Border.Effect>
+                    <DropShadowEffect Opacity="0.2" Direction="90" Color="#ACACAC" />
+                </Border.Effect>
+                <Grid>
+                    <Grid.Resources>
+                        <Style BasedOn="{StaticResource {x:Type GroupBox}}" TargetType="{x:Type GroupBox}">
+                            <Setter Property="Margin" Value="5" />
+                        </Style>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="Orientation" Value="Horizontal" />
+                        </Style>
+                        <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
+                            <Setter Property="FontFamily" Value="Segoe Fluent Icons" />
+                            <Setter Property="FontSize" Value="24" />
+                            <Setter Property="Margin" Value="5,5,5,0" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                    </Grid.Resources>
+                    <StackPanel x:Name="FunctionPanel" HorizontalAlignment="Center">
+                        <GroupBox Header="{x:Static text:Main.DefaultGroup}">
                             <StackPanel>
-                                <ComboBox x:Name="InfoBox" Margin="5,5,5,0" SelectedIndex="0" />
-                                <Button Click="ClearInfo" Content="&#xE711;" />
+                                <Button Click="ShowSetting" Content="&#xE713;" />
+                                <Button Click="WindowExit" Content="&#xF3B1;" />
+                                <Button x:Name="SaveDataButton" Click="SaveData" Content="&#xE78C;" />
+                                <Button Click="OpenConfigFolder" Content="&#xE838;" />
+                                <Button Click="ImportSystemStart" Content="&#xE8B5;" />
                             </StackPanel>
                         </GroupBox>
-                    </Grid>
-                </Border>
-                <Border x:Name="AppListBorder"
-                        DockPanel.Dock="Left"
-                        Padding="10" HorizontalAlignment="Left" Panel.ZIndex="65"
-                        Background="#99FFFFFF"
-                        CornerRadius="{Binding Margin, ConverterParameter=AppList, Converter={StaticResource RadiusConverter}, ElementName=MainBorder}">
-                    <Border.Effect>
-                        <DropShadowEffect Opacity="0.2" Direction="0" Color="#ACACAC" />
-                    </Border.Effect>
-                    <Border.RenderTransform>
-                        <TranslateTransform X="0" />
-                    </Border.RenderTransform>
-                    <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
-                        <ListBox x:Name="AppList" Background="Transparent" BorderThickness="0">
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel />
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <DockPanel>
-                                        <DockPanel.ContextMenu>
-                                            <ContextMenu>
-                                                <MenuItem Header="{x:Static text:Main.PinAppText}" Click="PinApp" />
-                                            </ContextMenu>
-                                        </DockPanel.ContextMenu>
-                                        <Image Height="32" Source="{Binding AppIcon}" Stretch="Uniform" />
-                                        <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="{Binding AppName}" />
-                                    </DockPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </ScrollViewer>
-                </Border>
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
-                    <Canvas x:Name="TilePanel"
-                            Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <GroupBox Header="{x:Static text:AppTile.AppTileGroup}">
+                            <StackPanel>
+                                <Button Click="ShowHideAppList" Content="&#xE700;" />
+                                <Button Click="AddAppTile" Content="&#xE710;" />
+                                <Button Click="ImportAppTile" Content="&#xE8B5;" />
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="{x:Static text:TextTile.TextTileGroup}">
+                            <StackPanel>
+                                <Button Click="AddTextTile" Content="&#xE710;" />
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="{x:Static text:ImageTile.ImageTileGroup}">
+                            <StackPanel>
+                                <Button Click="AddImageTile" Content="&#xE710;" />
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                    <GroupBox x:Name="InfoGroup" Header="信息"
+                              Margin="5,5,10,5" HorizontalAlignment="Right">
+                        <StackPanel>
+                            <ComboBox x:Name="InfoBox" Margin="5,5,5,0" SelectedIndex="0" />
+                            <Button Click="ClearInfo" Content="&#xE711;" />
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </Border>
+            <Border x:Name="AppListBorder"
+                    DockPanel.Dock="Left"
+                    Padding="10" HorizontalAlignment="Left" Panel.ZIndex="65"
+                    Background="#99FFFFFF"
+                    CornerRadius="{Binding Margin, ConverterParameter=AppList, Converter={StaticResource RadiusConverter}, ElementName=MainBorder}">
+                <Border.Effect>
+                    <DropShadowEffect Opacity="0.2" Direction="0" Color="#ACACAC" />
+                </Border.Effect>
+                <Border.RenderTransform>
+                    <TranslateTransform X="0" />
+                </Border.RenderTransform>
+                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+                    <ListBox x:Name="AppList"
+                             Background="Transparent" BorderThickness="0"
+                             ScrollViewer.CanContentScroll="True">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <DockPanel.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="{x:Static text:Main.PinAppText}" Click="PinApp" />
+                                        </ContextMenu>
+                                    </DockPanel.ContextMenu>
+                                    <Image Height="32" Source="{Binding AppIcon}" Stretch="Uniform" />
+                                    <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="{Binding AppName}" />
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </ScrollViewer>
-                <notify:TaskbarIcon MenuActivation="RightClick">
-                    <notify:TaskbarIcon.IconSource>
-                        <notify:GeneratedIconSource Foreground="White"
-                                                    FontFamily="Segoe Fluent Icons" FontSize="64" FontWeight="ExtraBlack"
-                                                    Text="&#xF71C;" />
-                    </notify:TaskbarIcon.IconSource>
-                    <notify:TaskbarIcon.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="{x:Static text:Main.TrayShowHide}" Click="TaskbarMenuShow" />
-                            <MenuItem Header="{x:Static text:Main.TrayExit}" Click="TaskbarMenuExit" />
-                        </ContextMenu>
-                    </notify:TaskbarIcon.ContextMenu>
-                </notify:TaskbarIcon>
-            </DockPanel>
-        </Border>
+            </Border>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                <Canvas x:Name="TilePanel"
+                        Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            </ScrollViewer>
+            <notify:TaskbarIcon MenuActivation="RightClick">
+                <notify:TaskbarIcon.IconSource>
+                    <notify:GeneratedIconSource Foreground="White"
+                                                FontFamily="Segoe Fluent Icons" FontSize="64" FontWeight="ExtraBlack"
+                                                Text="&#xF71C;" />
+                </notify:TaskbarIcon.IconSource>
+                <notify:TaskbarIcon.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="{x:Static text:Main.TrayShowHide}" Click="TaskbarMenuShow" />
+                        <MenuItem Header="{x:Static text:Main.TrayExit}" Click="TaskbarMenuExit" />
+                    </ContextMenu>
+                </notify:TaskbarIcon.ContextMenu>
+            </notify:TaskbarIcon>
+        </DockPanel>
     </Border>
 </Window>

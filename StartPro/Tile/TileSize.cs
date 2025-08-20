@@ -9,7 +9,7 @@ public enum TileSize
 
 public static class TileDatas
 {
-    public static int BaseSize => App.Settings.UIFlat ? 50 : 60;
+    public static int BaseSize => 54;
     public static int BaseMargin => App.Settings.UIFlat ? 4 : 10;
     public static int BaseRadius => App.Settings.UIFlat ? 0 : 10;
 

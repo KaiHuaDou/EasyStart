@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace StartPro.Api;
 
@@ -21,14 +22,6 @@ public class Settings
     private static readonly FileInfo File = new(xml);
     private static readonly FileStream FileStream = new(File.FullName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
-    private readonly JsonSerializerOptions Options = new( )
-    {
-        PropertyNameCaseInsensitive = true,
-        ReadCommentHandling = JsonCommentHandling.Skip,
-        AllowTrailingCommas = true,
-        WriteIndented = true
-    };
-
     public string Background
     {
         get;
@@ -45,7 +38,7 @@ public class Settings
 
     public int UITheme { get; set; } = (int) UIThemes.AeroNormalColor;
 
-    public Settings Read( )
+    public static Settings Read( )
     {
         if (!File.Exists || File.Length == 0)
         {
@@ -53,7 +46,7 @@ public class Settings
         }
         try
         {
-            return JsonSerializer.Deserialize<Settings>(FileStream, Options) ?? new Settings( );
+            return JsonSerializer.Deserialize(FileStream, SettingsContext.Default.Settings) ?? new Settings( );
         }
         catch
         {
@@ -67,7 +60,7 @@ public class Settings
     {
         try
         {
-            JsonSerializer.Serialize(FileStream, this, Options);
+            JsonSerializer.Serialize(FileStream, this, SettingsContext.Default.Settings);
         }
         catch (Exception ex)
         {
@@ -77,3 +70,12 @@ public class Settings
         return true;
     }
 }
+
+[JsonSourceGenerationOptions(
+    PropertyNameCaseInsensitive = true,
+    ReadCommentHandling = JsonCommentHandling.Skip,
+    AllowTrailingCommas = true,
+    WriteIndented = true
+)]
+[JsonSerializable(typeof(Settings))]
+internal sealed partial class SettingsContext : JsonSerializerContext;
