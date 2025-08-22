@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using StartPro.Api;
 
 namespace StartPro.Tile;
 
 public static class TileStore
 {
-    private const string xmlPath = "tiles.xml";
+    private static readonly string xmlPath = Path.Join(Utils.ParentDir, "tiles.xml");
     private static readonly XmlDocument document = new( );
     private static XmlNode Tiles;
 

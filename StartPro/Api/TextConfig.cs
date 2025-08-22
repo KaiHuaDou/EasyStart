@@ -28,7 +28,7 @@ public class TextConfig : IStorable
         TextDecorations = node.FromAttribute("TextDecoration", new TextDecorationCollection( ));
         TextAlignment = node.FromAttribute("TextAlignment", Defaults.TextAlignment);
         TextShadow = node.FromAttribute("TextShadow", false);
-        TextColor = new SolidColorBrush(node.FromAttribute("TextColor", Defaults.Foreground.Color));
+        TextColor = new SolidColorBrush(node.FromAttribute("TextColor", Defaults.ForegroundColor));
     }
 
     public void WriteAttributes(ref XmlElement element)

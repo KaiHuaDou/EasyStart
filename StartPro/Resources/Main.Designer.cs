@@ -259,6 +259,15 @@ namespace StartPro.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Default Theme of Windows 11 的本地化字符串。
+        /// </summary>
+        public static string UITheme_Fluent {
+            get {
+                return ResourceManager.GetString("UITheme.Fluent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Olive theme for Windows XP 的本地化字符串。
         /// </summary>
         public static string UITheme_Luna_Homestead {

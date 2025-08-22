@@ -43,26 +43,16 @@ public partial class App : Application, ISingleInstance
 
     private void AppStartup(object o, StartupEventArgs e)
     {
-        if (!this.InitializeAsFirstInstance("KaiHuaDou_StartPro"))
+        if (!this.InitializeAsFirstInstance("EasyStartInstanceInvariantVersion"))
             Current.Shutdown( );
 
-        Infos = []; // Must initialize first
+        Infos = []; // 必须先初始化以捕获所有错误
         Settings = Settings.Read( );
         Tiles = TileStore.Load( );
 
         Resources.MergedDictionaries.Add(new ResourceDictionary( )
         {
-            Source = new Uri(Settings.UITheme switch
-            {
-                0 => "pack://application:,,,/PresentationFramework.Aero,Version=9.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Aero.NormalColor.xaml",
-                1 => "pack://application:,,,/PresentationFramework.Aero2,Version=9.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Aero2.NormalColor.xaml",
-                2 => "pack://application:,,,/PresentationFramework.Luna,Version=9.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Luna.NormalColor.xaml",
-                3 => "pack://application:,,,/PresentationFramework.Luna,Version=9.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Luna.Homestead.xaml",
-                4 => "pack://application:,,,/PresentationFramework.Luna,Version=9.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Luna.Metallic.xaml",
-                5 => "pack://application:,,,/PresentationFramework.Luna,Version=9.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Royale.NormalColor.xaml",
-                6 => "pack://application:,,,/PresentationFramework.Classic,Version=9.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Classic.xaml",
-                _ => "pack://application:,,,/PresentationFramework.Aero,Version=9.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35;component/themes/Aero.NormalColor.xaml",
-            })
+            Source = ((UIThemes) Settings.UITheme).GetUri( )
         });
 
         MainWindow mainWindow = new( );

@@ -8,7 +8,7 @@ using DependencyPropertyGenerator;
 namespace StartPro.Tile;
 
 [DependencyProperty<TileSize>("TileSize", DefaultValue = TileSize.Medium, OnChanged = nameof(OnTileSizeChanged))]
-[DependencyProperty<Brush>("TileColor", DefaultValueExpression = "StartPro.Api.Defaults.TileColor", OnChanged = nameof(OnTileColorChanged))]
+[DependencyProperty<Brush>("TileColor", DefaultValueExpression = "StartPro.Api.Defaults.TileColorBrush", OnChanged = nameof(OnTileColorChanged))]
 [DependencyProperty<bool>("Shadow", DefaultValue = false, OnChanged = nameof(OnShadowChanged))]
 public partial class TileBase : UserControl
 {

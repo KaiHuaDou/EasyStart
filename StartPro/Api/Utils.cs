@@ -13,7 +13,7 @@ namespace StartPro.Api;
 
 public static class Utils
 {
-    public static string ParentDir = Path.GetDirectoryName(Environment.ProcessPath);
+    public static readonly string ParentDir = Path.GetDirectoryName(Environment.ProcessPath);
 
     private static readonly Dictionary<string, (string defaultExt, string filter)> FileFilter = new( ) {
         { "exe", (".exe", "*.exe *.com *.bat *.cmd|*.exe;*.com;*.bat;*.cmd|*.*|*.*") },
@@ -69,7 +69,7 @@ public static class Utils
         {
             result = source;
         }
-        // :: Disabled due to get customized info using PEIcon.GetComplex
+        // 快捷方式解包交由上层，本层使用 PEIcon.GetComplex 直接获取
         //
         // else if (text.EndsWith(".lnk", StringComparison.InvariantCultureIgnoreCase)
         //         && ResolveShortcut(text, out string target, out _)

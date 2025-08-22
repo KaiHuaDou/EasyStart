@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Media;
 using System.Xml;
 using StartPro.Api;
@@ -17,7 +18,7 @@ public partial class TileBase : IStorable
     public virtual void ReadAttributes(XmlNode node)
     {
         TileSize = node.FromAttribute("Size", TileSize.Medium);
-        TileColor = new SolidColorBrush(node.FromAttribute("Color", Defaults.TileColor.Color));
+        TileColor = new SolidColorBrush(node.FromAttribute("Color", Defaults.TileColorBrush.Color));
         Row = node.FromAttribute("Row", 0);
         Column = node.FromAttribute("Column", 0);
         Shadow = node.FromAttribute("Shadow", false);

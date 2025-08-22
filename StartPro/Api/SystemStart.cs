@@ -20,9 +20,87 @@ public static partial class SystemTiles
     {
         ["1x1"] = TileSize.Small,
         ["2x2"] = TileSize.Medium,
-        ["2x4"] = TileSize.Wide,
+        ["4x2"] = TileSize.Wide,
         ["4x4"] = TileSize.Large
     };
+
+    public static TileBase CreateTile(TileData data)
+    {
+        return new AppTile
+        {
+            AppName = data.AppName,
+            AppPath = data.AppPath,
+            Arguments = data.Arguments,
+            AppIcon = data.AppIcon,
+            TileSize = data.TileSize,
+            TileColor = Defaults.TileColorBrush,
+            Shadow = false,
+            ImageShadow = false,
+            FontSize = Defaults.FontSize,
+            Row = data.Row,
+            Column = data.Column,
+        };
+    }
+
+    public static List<TileData> ImportData( )
+    {
+        if (!GetXml(out XDocument xml))
+            return [];
+        List<TileData> result = [];
+
+        IEnumerable<XElement> groups = xml
+            .Descendants( )
+            .Where(static e => e.Name.LocalName == "Group");
+        string groupWidthRaw = xml
+            .Descendants( )
+            .First(static e => e.Name.LocalName == "LayoutOptions")?
+            .Attribute("StartTileGroupCellWidth")?
+            .Value ?? "8";
+        int groupWidth = int.TryParse(groupWidthRaw, out int _width) ? _width : 0;
+
+        int colAdjust = 0, rowAdjust = 0, rowMax = 0;
+        foreach (XElement group in groups)
+        {
+            IEnumerable<XElement> tiles = group
+                .Descendants( )
+                .Where(static e => e.Name.LocalName is "DesktopApplicationTile" or "Tile");
+
+            foreach (XElement tile in tiles)
+            {
+                string colRaw = tile.Attribute("Column")!.Value;
+                string rowRaw = tile.Attribute("Row")!.Value;
+                int col = int.TryParse(colRaw, out int _col) ? _col : 0;
+                int row = int.TryParse(rowRaw, out int _row) ? _row : 0;
+                if (row > rowMax) rowMax = row;
+
+                TileData tileData = ParseTileData(tile, row + rowAdjust, col + colAdjust);
+                result.Add(tileData);
+            }
+            colAdjust += groupWidth + 1;
+            if (colAdjust == 3 * (groupWidth + 1))
+            {
+                rowAdjust += rowMax + 4;
+                colAdjust = 0;
+            }
+        }
+        return result;
+    }
+
+    [GeneratedRegex(@"(?<=(.+\.)).+(?=_)")]
+    private static partial Regex AUMIDRegex( );
+    private static string ExtractName(string path)
+    {
+        path = path.Trim( ).Trim('"');
+        string result = "App";
+        try
+        {
+            string fileName = Path.GetFileNameWithoutExtension(path);
+            if (!string.IsNullOrEmpty(fileName))
+                result = fileName;
+        }
+        catch { }
+        return result;
+    }
 
     private static bool GetXml(out XDocument xml)
     {
@@ -76,68 +154,17 @@ public static partial class SystemTiles
         }
     }
 
-    public static List<TileBase> Import( )
-    {
-        if (!GetXml(out XDocument xml))
-            return [];
-        List<TileBase> result = [];
+    public record TileData(
+        string AppName,
+        string AppPath,
+        string Arguments,
+        string AppIcon,
+        TileSize TileSize,
+        int Row,
+        int Column
+    );
 
-        IEnumerable<XElement> groups = xml
-            .Descendants( )
-            .Where(static e => e.Name.LocalName == "Group");
-        string groupWidthRaw = xml
-            .Descendants( )
-            .First(static e => e.Name.LocalName == "LayoutOptions")?
-            .Attribute("StartTileGroupCellWidth")?
-            .Value ?? "8";
-        int groupWidth = int.TryParse(groupWidthRaw, out int _width) ? _width : 0;
-
-        int colAdjust = 0, rowAdjust = 0, rowMax = 0;
-        foreach (XElement group in groups)
-        {
-            IEnumerable<XElement> tiles = group
-                .Descendants( )
-                .Where(static e => e.Name.LocalName is "DesktopApplicationTile" or "Tile");
-
-            foreach (XElement tile in tiles)
-            {
-                string colRaw = tile.Attribute("Column")!.Value;
-                string rowRaw = tile.Attribute("Row")!.Value;
-                int col = int.TryParse(colRaw, out int _col) ? _col : 0;
-                int row = int.TryParse(rowRaw, out int _row) ? _row : 0;
-                if (row > rowMax) rowMax = row;
-
-                AppTile appTile = ParseTile(tile, row + rowAdjust, col + colAdjust);
-                result.Add(appTile);
-            }
-            colAdjust += groupWidth + 1;
-            if (colAdjust == 3 * (groupWidth + 1))
-            {
-                rowAdjust += rowMax + 4;
-                colAdjust = 0;
-            }
-        }
-        return result;
-    }
-
-    [GeneratedRegex(@"(?<=(.+\.)).+(?=_)")]
-    private static partial Regex AUMIDRegex( );
-
-    private static string ExtractName(string path)
-    {
-        path = path.Trim( ).Trim('"');
-        string result = "App";
-        try
-        {
-            string fileName = Path.GetFileNameWithoutExtension(path);
-            if (!string.IsNullOrEmpty(fileName))
-                result = fileName;
-        }
-        catch { }
-        return result;
-    }
-
-    private static AppTile ParseTile(XElement tile, int row, int col)
+    private static TileData ParseTileData(XElement tile, int row, int col)
     {
         TileSize size = SizeMap[tile.Attribute("Size")!.Value];
         string name, path, arguments, icon;
@@ -162,20 +189,7 @@ public static partial class SystemTiles
                 icon = string.IsNullOrEmpty(arguments) ? path : lnk;
             }
         }
-        return new( )
-        {
-            AppName = name,
-            AppPath = path,
-            Arguments = arguments,
-            AppIcon = icon,
-            TileSize = size,
-            TileColor = Defaults.TileColor,
-            Shadow = false,
-            ImageShadow = false,
-            FontSize = Defaults.FontSize,
-            Row = row,
-            Column = col,
-        };
+        return new TileData(name, path, arguments, icon, size, row, col);
     }
 }
 
@@ -221,7 +235,7 @@ public class SystemApp
             ? null
             : new SystemApp
             {
-                AppName = Utils.ShortenStr(appName),
+                AppName = appName,
                 AppPath = target,
                 Arguments = arguments,
                 appIcon = PEIcon.GetDirect(target),

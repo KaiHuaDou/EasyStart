@@ -201,4 +201,7 @@
   <data name="ForegroundText" xml:space="preserve">
     <value>Foreground: </value>
   </data>
+  <data name="UITheme.Fluent" xml:space="preserve">
+    <value>Default Theme of Windows 11</value>
+  </data>
 </root>

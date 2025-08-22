@@ -14,6 +14,7 @@ public partial class Setting : Window
         List<string> UIThemeSource =
         [
             Main.UITheme_Aero_NormalColor + " (Aero.NormalColor)",
+            Main.UITheme_Fluent + " (Fluent)",
             Main.UITheme_Aero2_NormalColor + " (Aero2.NormalColor)",
             Main.UITheme_Luna_NormalColor + " (Luna.NormalColor)",
             Main.UITheme_Luna_Homestead + " (Luna.Homestead)",
@@ -47,7 +48,7 @@ public partial class Setting : Window
     {
         int condition = ((o as Button).Parent as DockPanel).Children.Count;
         string text = condition == 3 ? BackgroundBox.Text : ForegroundBox.Text;
-        Color fromColor = Utils.ParseColorFromText(text, out Color _color) ? _color : Defaults.Background.Color;
+        Color fromColor = Utils.ParseColorFromText(text, out Color _color) ? _color : Defaults.BackgroundColor;
 
         if (Utils.TrySelectColor(fromColor, out Color color, this))
         {

@@ -24,8 +24,7 @@
                             <GradientStop Offset="1" Color="#3481D8FF" />
                         </LinearGradientBrush.GradientStops>
                     </LinearGradientBrush>
-                    <converter:RadiusConverter x:Key="RadiusConverter" />
-                    <converter:NegativeConverter x:Key="NegativeConverter" />
+                    <converter:WidthConverter x:Key="WidthConverter" />
                     <converter:MaskBrushConverter x:Key="MaskBrushConverter" MaskDeepBrush="{StaticResource MaskDeepBrush}" MaskLightBrush="{StaticResource MaskLightBrush}" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>

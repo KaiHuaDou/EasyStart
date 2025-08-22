@@ -201,4 +201,7 @@
   <data name="ForegroundText" xml:space="preserve">
     <value>前景：</value>
   </data>
+  <data name="UITheme.Fluent" xml:space="preserve">
+    <value>Windows 11 的默认主题</value>
+  </data>
 </root>

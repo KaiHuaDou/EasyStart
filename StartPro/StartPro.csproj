@@ -66,6 +66,11 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>Main.resx</DependentUpon>
         </Compile>
+        <Compile Update="Resources\Info.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>Info.resx</DependentUpon>
+        </Compile>
         <Compile Update="Resources\TextConfigure.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
@@ -92,6 +97,10 @@
         <EmbeddedResource Update="Resources\Main.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
             <LastGenOutput>Main.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\Info.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>Info.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\TextConfigure.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>

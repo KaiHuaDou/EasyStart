@@ -88,11 +88,6 @@ public partial class MainWindow : Window
         InfoBox.SelectedIndex = 0;
     }
 
-    private void ImportSystemStart(object o, RoutedEventArgs e)
-    {
-        AddTiles(SystemTiles.Import( ));
-    }
-
     private void InitInfoBox( )
     {
         InfoBox.SetBinding(ItemsControl.ItemsSourceProperty, new Binding( ) { Source = App.Infos });
@@ -161,10 +156,10 @@ public partial class MainWindow : Window
     private void WindowLoaded(object o, RoutedEventArgs e)
     {
         TilePanel.ResizeToFit( );
-        ShowHideAppList(null, null);
+        SwitchAppList(null, null);
         InitInfoBox( );
 
-#if DEBUG
+#if false
         App.AddInfo("调试模式不加载开始菜单");
 #else
         Task.Factory.StartNew(( ) =>

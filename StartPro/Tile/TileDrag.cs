@@ -96,8 +96,8 @@ public partial class TileBase
             isIntersect = false;
             for (int i = 0; i < Owner.Children.Count; i++)
             {
-                TileBase target = Owner.Children[i] as TileBase;
-                if (this != target && IntersectsWith(target))
+                if (Owner.Children[i] is TileBase target
+                    && this != target && IntersectsWith(target))
                 {
                     Row++;
                     isIntersect = true;
@@ -120,10 +120,10 @@ public static class PanelExtension
     public static void ResizeToFit(this Panel parent)
     {
         double xmax = 0, ymax = 0;
-        foreach (TileBase t in parent.Children)
+        foreach (TileBase tile in parent.Children)
         {
-            double txmax = t.Column * TileDatas.BlockSize + t.ActualWidth;
-            double tymax = t.Row * TileDatas.BlockSize + t.ActualHeight;
+            double txmax = tile.Column * TileDatas.BlockSize + tile.ActualWidth;
+            double tymax = tile.Row * TileDatas.BlockSize + tile.ActualHeight;
             xmax = txmax > xmax ? txmax : xmax;
             ymax = tymax > ymax ? tymax : ymax;
         }

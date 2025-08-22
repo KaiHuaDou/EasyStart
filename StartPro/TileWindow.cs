@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
+using System.Windows.Controls;
 using StartPro.Api;
 using StartPro.Tile;
 
@@ -71,9 +71,17 @@ public partial class MainWindow
         Show( );
     }
 
+    private async void ImportSystemStart(object o, RoutedEventArgs e)
+    {
+        List<SystemTiles.TileData> tileDataList = await Task.Run(SystemTiles.ImportData);
+        List<TileBase> tiles = tileDataList.ConvertAll(SystemTiles.CreateTile);
+        AddTiles(tiles);
+    }
+
     private void PinApp(object o, RoutedEventArgs e)
     {
-        SystemApp app = AppList.SelectedItem as SystemApp;
+        if (o is not MenuItem menuItem || menuItem.CommandParameter is not SystemApp app)
+            return;
         AppTile appTile = new( )
         {
             AppName = app?.AppName,
@@ -87,18 +95,14 @@ public partial class MainWindow
         appTile.Refresh( );
     }
 
-    private void ShowHideAppList(object o, RoutedEventArgs e)
+    private void SwitchAppList(object o, RoutedEventArgs e)
     {
-        if ((AppListBorder.RenderTransform as TranslateTransform)?.X != 0 && Resources["ShowAppList"] is Storyboard showAnimation)
-        {
-            AppListBorder.Visibility = Visibility.Visible;
-            showAnimation.Begin(AppListBorder);
-        }
-        else if (AppListBorder.RenderTransform is TranslateTransform { X: 0 } && Resources["HideAppList"] is Storyboard hideAnimation)
-        {
-            hideAnimation.Completed += (o, e) => AppListBorder.Visibility = Visibility.Collapsed;
-            hideAnimation.Begin(AppListBorder);
-        }
+        AppListScroll.Visibility = AppListSwitchButton.IsChecked == false
+            ? Visibility.Collapsed
+            : Visibility.Visible;
+        TilePanelScroll.Visibility = AppListSwitchButton.IsChecked == true
+            ? Visibility.Collapsed
+            : Visibility.Visible;
     }
 
     private void SyncGlobalTiles( )
