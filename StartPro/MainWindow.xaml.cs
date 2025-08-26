@@ -12,6 +12,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using StartPro.Api;
 using StartPro.Tile;
+using static StartPro.External.NativeMethods;
 
 namespace StartPro;
 
@@ -72,11 +73,11 @@ public partial class MainWindow : Window
     private void ApplySettings( )
     {
         MainBorder.Background =
-            Utils.TryParseBrushFromText(App.Settings.Background, out Brush back)
+            Utils.TryParseBrush(App.Settings.Background, out Brush back)
             ? back : Defaults.Background;
         foreach (TileBase tile in TilePanel.Children)
         {
-            tile.Foreground = Utils.TryParseBrushFromText(App.Settings.Foreground, out Brush fore)
+            tile.Foreground = Utils.TryParseBrush(App.Settings.Foreground, out Brush fore)
                 ? fore : Defaults.Foreground;
         }
     }
@@ -93,10 +94,17 @@ public partial class MainWindow : Window
         InfoBox.SetBinding(ItemsControl.ItemsSourceProperty, new Binding( ) { Source = App.Infos });
         InfoBox.MaxHeight = FunctionPanel.ActualHeight;
         InfoBox.MaxWidth = 0.25 * SystemParameters.WorkArea.Width;
-        void UpdateHeader(object? _o, NotifyCollectionChangedEventArgs _e)
+        void UpdateHeader(object _o, NotifyCollectionChangedEventArgs _e)
         {
-            string countText = InfoBox.Items.Count == 0 ? "" : $" ({InfoBox.Items.Count})";
-            InfoGroup?.Header = $"信息{countText}";
+            if (InfoBox.Items.Count == 0)
+            {
+                InfoGroup.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                InfoGroup.Header = $"信息 ({InfoBox.Items.Count})";
+                InfoGroup.Visibility = Visibility.Visible;
+            }
         }
         App.Infos.CollectionChanged += UpdateHeader;
         UpdateHeader(null, null);
@@ -105,6 +113,54 @@ public partial class MainWindow : Window
     private void OpenConfigFolder(object o, RoutedEventArgs e)
     {
         Integration.ExecuteAsAdmin("explorer.exe", $"/e, /select, {Path.Join(Utils.ParentDir, "tiles.xml")}");
+    }
+
+    private void PowerLock(object o, RoutedEventArgs e)
+    {
+        if (!LockWorkStation( ))
+        {
+            App.AddInfo("无法锁定计算机");
+        }
+    }
+
+    private void PowerLogout(object o, RoutedEventArgs e)
+    {
+        if (!ExitWindowsEx(EWX_LOGOFF | EWX_FORCE, 0))
+        {
+            App.AddInfo("无法注销当前用户");
+        }
+    }
+
+    private void PowerRestart(object o, RoutedEventArgs e)
+    {
+        if (EnableShutdownPrivilege( ))
+        {
+            ExitWindowsEx(EWX_REBOOT | EWX_FORCE, 0);
+        }
+        else
+        {
+            App.AddInfo("权限不足，无法重启");
+        }
+    }
+
+    private void PowerShutdown(object o, RoutedEventArgs e)
+    {
+        if (EnableShutdownPrivilege( ))
+        {
+            ExitWindowsEx(EWX_SHUTDOWN | EWX_FORCE, 0);
+        }
+        else
+        {
+            App.AddInfo("权限不足，无法关机");
+        }
+    }
+
+    private void PowerSleep(object o, RoutedEventArgs e)
+    {
+        if (!SetSuspendState(false, true, false))
+        {
+            App.AddInfo("无法睡眠计算机");
+        }
     }
 
     private void SaveData(object o, RoutedEventArgs e)
@@ -159,7 +215,7 @@ public partial class MainWindow : Window
         SwitchAppList(null, null);
         InitInfoBox( );
 
-#if false
+#if DEBUG
         App.AddInfo("调试模式不加载开始菜单");
 #else
         Task.Factory.StartNew(( ) =>

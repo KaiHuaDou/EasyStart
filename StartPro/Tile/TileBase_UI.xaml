@@ -26,7 +26,11 @@
                         <TextBlock Text="&#xE744;" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name="SizeThinMenu" Header="{x:Static text:Tile.SizeThin}" />
+                <MenuItem x:Name="SizeThinMenu" Header="{x:Static text:Tile.SizeThin}">
+                    <MenuItem.Icon>
+                        <TextBlock Text="&#xE745;" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem x:Name="SizeWideMenu" Header="{x:Static text:Tile.SizeWide}">
                     <MenuItem.Icon>
                         <TextBlock Text="&#xE745;" />

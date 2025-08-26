@@ -48,7 +48,7 @@ public partial class Setting : Window
     {
         int condition = ((o as Button).Parent as DockPanel).Children.Count;
         string text = condition == 3 ? BackgroundBox.Text : ForegroundBox.Text;
-        Color fromColor = Utils.ParseColorFromText(text, out Color _color) ? _color : Defaults.BackgroundColor;
+        Color fromColor = Utils.TryParseColor(text, out Color _color) ? _color : Defaults.BackgroundColor;
 
         if (Utils.TrySelectColor(fromColor, out Color color, this))
         {

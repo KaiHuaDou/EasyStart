@@ -56,40 +56,51 @@
                         </Style>
                     </Grid.Resources>
                     <StackPanel x:Name="FunctionPanel" HorizontalAlignment="Center">
+                        <GroupBox Header="电源">
+                            <StackPanel>
+                                <Button Click="PowerShutdown" Content="&#xE7E8;" ToolTip="关机" />
+                                <Button Click="PowerRestart" Content="&#xE777;" ToolTip="重启" />
+                                <Button Click="PowerSleep" Content="&#xE708;" ToolTip="睡眠" />
+                                <Button Click="PowerLock" Content="&#xE72E;" ToolTip="锁定" />
+                                <Button Click="PowerLogout" Content="&#xF3B1;" ToolTip="注销" />
+                            </StackPanel>
+                        </GroupBox>
                         <GroupBox Header="{x:Static text:Main.DefaultGroup}">
                             <StackPanel>
-                                <Button Click="ShowSetting" Content="&#xE713;" />
-                                <Button Click="WindowExit" Content="&#xF3B1;" />
-                                <Button x:Name="SaveDataButton" Click="SaveData" Content="&#xE78C;" />
-                                <Button Click="OpenConfigFolder" Content="&#xE838;" />
-                                <Button Click="ImportSystemStart" Content="&#xE8B5;" />
+                                <Button Click="ShowSetting" Content="&#xE713;" ToolTip="设置" />
+                                <Button Click="WindowExit" Content="&#xE711;" ToolTip="退出" />
+                                <Button x:Name="SaveDataButton"
+                                        Click="SaveData" Content="&#xE74E;" ToolTip="手动保存数据" />
+                                <Button Click="OpenConfigFolder" Content="&#xE838;" ToolTip="打开配置文件夹" />
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="{x:Static text:AppTile.AppTileGroup}">
                             <StackPanel>
-                                <ToggleButton x:Name="AppListSwitchButton" Click="SwitchAppList" Content="&#xE700;" />
-                                <Button Click="AddAppTile" Content="&#xE710;" />
-                                <Button Click="ImportAppTile" Content="&#xE8B5;" />
+                                <ToggleButton x:Name="AppListSwitchButton"
+                                              Click="SwitchAppList" Content="&#xE700;" ToolTip="切换应用列表" />
+                                <Button Click="AddAppTile" Content="&#xE710;" ToolTip="添加应用磁贴" />
+                                <Button Click="ImportSystemStart" Content="&#xE8B6;" ToolTip="导入系统开始菜单" />
+                                <Button Click="ImportAppTile" Content="&#xE8B5;" ToolTip="导入应用程序" />
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="{x:Static text:TextTile.TextTileGroup}">
                             <StackPanel>
-                                <Button Click="AddTextTile" Content="&#xE710;" />
+                                <Button Click="AddTextTile" Content="&#xE710;" ToolTip="添加文本磁贴" />
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="{x:Static text:ImageTile.ImageTileGroup}">
                             <StackPanel>
-                                <Button Click="AddImageTile" Content="&#xE710;" />
+                                <Button Click="AddImageTile" Content="&#xE710;" ToolTip="添加图像磁贴" />
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox x:Name="InfoGroup" Header="信息"
+                                  Margin="5,5,10,5" HorizontalAlignment="Right">
+                            <StackPanel>
+                                <ComboBox x:Name="InfoBox" Margin="5,5,5,0" SelectedIndex="0" />
+                                <Button Click="ClearInfo" Content="&#xE711;" ToolTip="删除此条消息" />
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
-                    <GroupBox x:Name="InfoGroup" Header="信息"
-                              Margin="5,5,10,5" HorizontalAlignment="Right">
-                        <StackPanel>
-                            <ComboBox x:Name="InfoBox" Margin="5,5,5,0" SelectedIndex="0" />
-                            <Button Click="ClearInfo" Content="&#xE711;" />
-                        </StackPanel>
-                    </GroupBox>
                 </Grid>
             </Border>
             <Grid x:Name="MainGrid">
@@ -98,7 +109,10 @@
                             Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top"
                             Background="Transparent" />
                 </ScrollViewer>
-                <ScrollViewer x:Name="AppListScroll" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer x:Name="AppListScroll"
+                              Margin="0,20,0,20"
+                              Visibility="Collapsed"
+                              VerticalScrollBarVisibility="Auto">
                     <ItemsControl x:Name="AppList" Background="Transparent" BorderThickness="0">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -108,14 +122,15 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Border Width="{Binding Converter={StaticResource WidthConverter}}"
-                                        Margin="5" Padding="5"
-                                        BorderBrush="Gray" BorderThickness="0"
+                                        Margin="10" Padding="5"
+                                        BorderBrush="Gray"
                                         CornerRadius="5">
                                     <Border.Style>
                                         <Style TargetType="Border">
                                             <Style.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="True">
                                                     <Setter Property="Background" Value="{StaticResource MaskLightBrush}" />
+                                                    <Setter Property="BorderThickness" Value="1" />
                                                 </Trigger>
                                             </Style.Triggers>
                                         </Style>
@@ -127,7 +142,9 @@
                                             </ContextMenu>
                                         </DockPanel.ContextMenu>
                                         <Image Height="32" Source="{Binding AppIcon}" Stretch="Uniform" />
-                                        <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="{Binding AppName}" />
+                                        <TextBlock Margin="5,0,0,0" VerticalAlignment="Center"
+                                                   Text="{Binding AppName}"
+                                                   TextWrapping="WrapWithOverflow" />
                                     </DockPanel>
                                 </Border>
                             </DataTemplate>

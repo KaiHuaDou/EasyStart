@@ -12,8 +12,7 @@ using StartPro.Tile;
 
 namespace StartPro.Api;
 
-#if WINDOWS
-
+#if WINDOWS7_0_OR_GREATER
 public static partial class SystemTiles
 {
     private static readonly Dictionary<string, TileSize> SizeMap = new( )
@@ -24,7 +23,7 @@ public static partial class SystemTiles
         ["4x4"] = TileSize.Large
     };
 
-    public static TileBase CreateTile(TileData data)
+    public static TileBase CreateTile(TileRaw data)
     {
         return new AppTile
         {
@@ -42,11 +41,11 @@ public static partial class SystemTiles
         };
     }
 
-    public static List<TileData> ImportData( )
+    public static List<TileRaw> ImportData( )
     {
         if (!GetXml(out XDocument xml))
             return [];
-        List<TileData> result = [];
+        List<TileRaw> result = [];
 
         IEnumerable<XElement> groups = xml
             .Descendants( )
@@ -73,7 +72,7 @@ public static partial class SystemTiles
                 int row = int.TryParse(rowRaw, out int _row) ? _row : 0;
                 if (row > rowMax) rowMax = row;
 
-                TileData tileData = ParseTileData(tile, row + rowAdjust, col + colAdjust);
+                TileRaw tileData = ParseTileData(tile, row + rowAdjust, col + colAdjust);
                 result.Add(tileData);
             }
             colAdjust += groupWidth + 1;
@@ -154,7 +153,7 @@ public static partial class SystemTiles
         }
     }
 
-    public record TileData(
+    public record TileRaw(
         string AppName,
         string AppPath,
         string Arguments,
@@ -164,7 +163,7 @@ public static partial class SystemTiles
         int Column
     );
 
-    private static TileData ParseTileData(XElement tile, int row, int col)
+    private static TileRaw ParseTileData(XElement tile, int row, int col)
     {
         TileSize size = SizeMap[tile.Attribute("Size")!.Value];
         string name, path, arguments, icon;
@@ -189,17 +188,19 @@ public static partial class SystemTiles
                 icon = string.IsNullOrEmpty(arguments) ? path : lnk;
             }
         }
-        return new TileData(name, path, arguments, icon, size, row, col);
+        return new TileRaw(name, path, arguments, icon, size, row, col);
     }
 }
+#endif
 
+#if WINDOWS
 public class SystemApp
 {
     public static ReadOnlyCollection<SystemApp> Apps;
     public static string SystemAppsPath = Environment.ExpandEnvironmentVariables("%ProgramData%\\Microsoft\\Windows\\Start Menu\\Programs");
     public static string UserAppsPath = Environment.ExpandEnvironmentVariables("%AppData%\\Microsoft\\Windows\\Start Menu\\Programs");
 
-    private Icon appIcon;
+    private IntPtr appIcon;
     public BitmapSource AppIcon { get; set; }
 
     public string AppName { get; set; }
@@ -210,20 +211,20 @@ public class SystemApp
 
     public static void LoadApps( )
     {
-        Apps = new ReadOnlyCollection<SystemApp>(
-            [.. Directory.GetFiles(UserAppsPath, "*.lnk", SearchOption.AllDirectories)
-                    .Concat(Directory.GetFiles(SystemAppsPath, "*.lnk", SearchOption.AllDirectories))
-                    .Select(FromLazy).Where(static item => item is not null)]
-        );
+        string[] UserApps = Directory.GetFiles(UserAppsPath, "*.lnk", SearchOption.AllDirectories);
+        string[] SystemApps = Directory.GetFiles(SystemAppsPath, "*.lnk", SearchOption.AllDirectories);
+        Apps = new([.. UserApps.Concat(SystemApps).Select(FromLazy)]);
     }
 
     public static void LoadIcon( )
     {
         foreach (SystemApp app in Apps)
         {
-            app.AppIcon =
-                PEIcon.FromIcon(app.appIcon, out BitmapSource source)
-                ? source : new BitmapImage( );
+            app.AppIcon = PEIcon.FromIcon(Icon.FromHandle(app.appIcon), out BitmapSource source)
+                ? source
+                : PEIcon.FromBitmap(app.appIcon, out BitmapSource source1)
+                ? source1
+                : new BitmapImage( );
             app.AppIcon.Freeze( );
         }
     }
@@ -231,16 +232,22 @@ public class SystemApp
     private static SystemApp FromLazy(string appPath)
     {
         string appName = Path.GetFileNameWithoutExtension(appPath);
-        return !Integration.ResolveShortcut(appPath, out string target, out string arguments)
-            ? null
-            : new SystemApp
+        return appPath.EndsWith("*.lnk", StringComparison.InvariantCultureIgnoreCase)
+            && Integration.ResolveShortcut(appPath, out string target, out string arguments)
+            ? new SystemApp
             {
                 AppName = appName,
                 AppPath = target,
                 Arguments = arguments,
-                appIcon = PEIcon.GetDirect(target),
+                appIcon = PEIcon.DirectIcon(target)?.Handle ?? IntPtr.Zero,
+            }
+            : new SystemApp
+            {
+                AppName = appName,
+                AppPath = appPath,
+                Arguments = string.Empty,
+                appIcon = PEIcon.ComplexBitmap(appPath)
             };
     }
 }
-
 #endif

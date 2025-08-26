@@ -40,7 +40,7 @@ public partial class AppTile : TileBase, IEditable<AppTile>
         border.Child = RootPanel;
         Content = root;
 
-        Foreground = Utils.TryParseBrushFromText(App.Settings.Foreground, out Brush fore)
+        Foreground = Utils.TryParseBrush(App.Settings.Foreground, out Brush fore)
             ? fore : Defaults.Foreground;
     }
 
@@ -84,7 +84,8 @@ public partial class AppTile : TileBase, IEditable<AppTile>
 
     partial void OnAppIconChanged(string newValue)
     {
-        image.Source = Utils.ParseImageSource(newValue);
+        if (Utils.TryParseImageSource(newValue, out ImageSource source))
+            image.Source = source;
     }
 
     partial void OnAppPathChanged(string newValue)

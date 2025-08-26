@@ -33,7 +33,51 @@ public static class Utils
         }
     }
 
-    public static bool ParseColorFromText(string text, out Color color)
+    public static bool CreateBitmapImageSafe(string path, out BitmapImage image)
+    {
+        try
+        {
+            image = new BitmapImage(new Uri(path));
+            return true;
+        }
+        catch
+        {
+            image = null;
+            return false;
+        }
+    }
+
+    public static string ShortenStr(string str, int len = 25)
+    {
+        return str.Length <= len ? str : $"{str.AsSpan(0, len - 3)}...";
+    }
+
+    public static double ParseFontSize(string value)
+    {
+        return double.TryParse(value, out double result)
+                && result > 0
+                ? result : Defaults.FontSize;
+    }
+
+    public static bool TryParseBrush(string text, out Brush brush)
+    {
+        if (TryParseImageSource(text, out ImageSource source))
+        {
+            brush = new ImageBrush(source) { Stretch = Stretch.UniformToFill };
+        }
+        else if (TryParseColor(text, out Color color))
+        {
+            brush = new SolidColorBrush(color);
+        }
+        else
+        {
+            brush = null;
+            return false;
+        }
+        return true;
+    }
+
+    public static bool TryParseColor(string text, out Color color)
     {
         if (text.StartsWith('#') && text.Length == 9
             && byte.TryParse(text.AsSpan(1, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out byte a)
@@ -47,85 +91,26 @@ public static class Utils
         return false;
     }
 
-    public static bool CreateBitmapImageSafe(string uri, out BitmapImage image)
+    public static bool TryParseImageSource(string text, out ImageSource source)
     {
-        try
+        if (PEIcon.Direct(text, out BitmapSource source1))
         {
-            image = new BitmapImage(new Uri(uri));
-            return true;
+            source = source1;
         }
-        catch
-        {
-            image = null;
-            return false;
-        }
-    }
-
-    public static ImageSource ParseImageSource(string text)
-    {
-        ImageSource result = new BitmapImage( );
-        if (text.EndsWith(".exe", StringComparison.InvariantCultureIgnoreCase)
-            && PEIcon.FromFile(text, out BitmapSource source))
-        {
-            result = source;
-        }
-        // 快捷方式解包交由上层，本层使用 PEIcon.GetComplex 直接获取
-        //
-        // else if (text.EndsWith(".lnk", StringComparison.InvariantCultureIgnoreCase)
-        //         && ResolveShortcut(text, out string target, out _)
-        //         && PEIcon.FromFile(target, out BitmapSource source1))
-        // {
-        //     result = source1;
-        // }
         else if (File.Exists(text) && CreateBitmapImageSafe(text, out BitmapImage image))
         {
-            result = image;
+            source = image;
         }
-        else if (PEIcon.GetComplex(text, out BitmapSource thumbnail))
+        else if (PEIcon.Complex(text, out BitmapSource source2))
         {
-            result = thumbnail;
-        }
-        return result;
-    }
-
-    public static string ShortenStr(string str, int len = 25)
-    {
-        return str.Length <= len ? str : $"{str.AsSpan(0, len - 3)}...";
-    }
-
-    public static double ToFontSize(string value)
-    {
-        return double.TryParse(value, out double result)
-                && result > 0
-                ? result : Defaults.FontSize;
-    }
-
-    public static bool TryParseBrushFromText(string text, out Brush brush)
-    {
-        if (text.EndsWith(".exe", StringComparison.OrdinalIgnoreCase)
-            && PEIcon.FromFile(text, out BitmapSource source))
-        {
-            brush = new ImageBrush(source) { Stretch = Stretch.UniformToFill };
-            return true;
-        }
-        else if (ParseColorFromText(text, out Color color))
-        {
-            brush = new SolidColorBrush(color);
-            return true;
+            source = source2;
         }
         else
         {
-            try
-            {
-                brush = new ImageBrush(new BitmapImage(new Uri(text))) { Stretch = Stretch.UniformToFill };
-                return true;
-            }
-            catch
-            {
-                brush = null;
-                return false;
-            }
+            source = null;
+            return false;
         }
+        return true;
     }
 
     public static bool TrySelectColor(Color from, out Color result, Window owner)

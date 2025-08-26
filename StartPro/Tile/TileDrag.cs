@@ -2,29 +2,14 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using DependencyPropertyGenerator;
 
 namespace StartPro.Tile;
 
+[DependencyProperty<bool>("IsDragging", DefaultValue = false)]
+[DependencyProperty<bool>("IsMouseLeftButtonDown", DefaultValue = false)]
 public partial class TileBase
 {
-    public static readonly DependencyProperty IsDraggingProperty =
-        DependencyProperty.Register("IsDragging", typeof(bool), typeof(TileBase), new PropertyMetadata(false));
-
-    public static readonly DependencyProperty IsMouseLeftButtonDownProperty =
-        DependencyProperty.Register("IsMouseLeftButtonDown", typeof(bool), typeof(TileBase), new PropertyMetadata(false));
-
-    public bool IsDragging
-    {
-        get => (bool) GetValue(IsDraggingProperty);
-        set => SetValue(IsDraggingProperty, value);
-    }
-
-    public bool IsMouseLeftButtonDown
-    {
-        get => (bool) GetValue(IsMouseLeftButtonDownProperty);
-        set => SetValue(IsMouseLeftButtonDownProperty, value);
-    }
-
     private Vector startMousePoint, startTilePoint;
 
     protected void TileDragging(object o, MouseEventArgs e)

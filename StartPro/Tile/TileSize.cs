@@ -9,13 +9,12 @@ public enum TileSize
 
 public static class TileDatas
 {
-    public static int BaseSize => 54;
-    public static int BaseMargin => App.Settings.UIFlat ? 4 : 10;
-    public static int BaseRadius => App.Settings.UIFlat ? 0 : 10;
+    public static readonly int BaseSize = 54;
+    public static readonly int BaseMargin = App.Settings.UIFlat ? 4 : 10;
+    public static readonly int BaseRadius = App.Settings.UIFlat ? 0 : 10;
+    public static readonly int BlockSize = BaseSize + BaseMargin;
 
-    public static int BlockSize => BaseSize + BaseMargin;
-
-    public static Dictionary<TileSize, (int, int)> TileSizes => new( )
+    public static readonly Dictionary<TileSize, (int, int)> TileSizes = new( )
     {
         {TileSize.Small,  (1 * BaseSize + 0 * BaseMargin, 1 * BaseSize + 0 * BaseMargin)},
         {TileSize.Medium, (2 * BaseSize + 1 * BaseMargin, 2 * BaseSize + BaseMargin)},
@@ -26,7 +25,7 @@ public static class TileDatas
         {TileSize.Large,  (4 * BaseSize + 3 * BaseMargin, 4 * BaseSize + 3 * BaseMargin) },
     };
 
-    public static Dictionary<TileSize, int> TileRadius => new( )
+    public static readonly Dictionary<TileSize, int> TileRadius = new( )
     {
         {TileSize.Small  , BaseRadius / 2 },
         {TileSize.Medium , BaseRadius },

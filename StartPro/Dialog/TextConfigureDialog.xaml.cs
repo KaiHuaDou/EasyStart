@@ -67,7 +67,7 @@ public partial class TextConfigureDialog : Window
         IsSelected = true;
         TextConfig = new TextConfig
         {
-            FontSize = Utils.ToFontSize(fontSizeBox.Text),
+            FontSize = Utils.ParseFontSize(fontSizeBox.Text),
             FontFamily = (FontFamily) fontFamilyBox.SelectedItem,
             FontWeight = (fontWeightBox.SelectedItem as TextBlock)?.FontWeight ?? Defaults.FontWeight,
             FontStyle = (fontStyleBox.SelectedItem as TextBlock)?.FontStyle ?? Defaults.FontStyle,

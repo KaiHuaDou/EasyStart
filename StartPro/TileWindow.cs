@@ -73,7 +73,7 @@ public partial class MainWindow
 
     private async void ImportSystemStart(object o, RoutedEventArgs e)
     {
-        List<SystemTiles.TileData> tileDataList = await Task.Run(SystemTiles.ImportData);
+        List<SystemTiles.TileRaw> tileDataList = await Task.Run(SystemTiles.ImportData);
         List<TileBase> tiles = tileDataList.ConvertAll(SystemTiles.CreateTile);
         AddTiles(tiles);
     }

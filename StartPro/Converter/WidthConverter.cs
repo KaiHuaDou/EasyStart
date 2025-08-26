@@ -7,10 +7,10 @@ namespace StartPro.Converter;
 
 public class WidthConverter : IValueConverter
 {
-    private const double COUNT = 8.0;
+    private const int COUNT = 6;
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        => SystemParameters.WorkArea.Width / COUNT - 10.0 - 23.0 / COUNT;
+        => SystemParameters.WorkArea.Width / COUNT - 20.0 - 20.0 / COUNT;
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException( );
 }
