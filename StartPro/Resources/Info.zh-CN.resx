@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
 	<!-- 
 		Microsoft ResX Schema
@@ -58,7 +58,6 @@
 			: using a System.ComponentModel.TypeConverter
 			: and then encoded with base64 encoding.
 	-->
-	
 	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
 		<xsd:element name="root" msdata:IsDataSet="true">
 			<xsd:complexType>
@@ -100,149 +99,149 @@
 	</resheader>
 	<!-- Main Window -->
 	<data name="PowerShutdown" xml:space="preserve">
-		<value>Shutdown</value>
+		<value>关机</value>
 	</data>
 	<data name="PowerRestart" xml:space="preserve">
-		<value>Restart</value>
+		<value>重启</value>
 	</data>
 	<data name="PowerSleep" xml:space="preserve">
-		<value>Sleep</value>
+		<value>睡眠</value>
 	</data>
 	<data name="PowerLock" xml:space="preserve">
-		<value>Lock</value>
+		<value>锁定</value>
 	</data>
 	<data name="PowerLogout" xml:space="preserve">
-		<value>Logout</value>
+		<value>注销</value>
 	</data>
 	<data name="Setting" xml:space="preserve">
-		<value>Settings</value>
+		<value>设置</value>
 	</data>
 	<data name="Exit" xml:space="preserve">
-		<value>Exit</value>
+		<value>退出</value>
 	</data>
 	<data name="SaveData" xml:space="preserve">
-		<value>Save Data Manually</value>
+		<value>手动保存数据</value>
 	</data>
 	<data name="OpenConfigFolder" xml:space="preserve">
-		<value>Open Config Folder</value>
+		<value>打开配置文件夹</value>
 	</data>
 	<data name="SwitchAppList" xml:space="preserve">
-		<value>Switch App List</value>
+		<value>切换应用列表</value>
 	</data>
 	<data name="AddAppTile" xml:space="preserve">
-		<value>Add App Tile</value>
+		<value>添加应用磁贴</value>
 	</data>
 	<data name="ImportSystemStart" xml:space="preserve">
-		<value>Import System Start Menu</value>
+		<value>导入系统开始菜单</value>
 	</data>
 	<data name="ImportAppTile" xml:space="preserve">
-		<value>Import Application</value>
+		<value>导入应用程序</value>
 	</data>
 	<data name="AddTextTile" xml:space="preserve">
-		<value>Add Text Tile</value>
+		<value>添加文本磁贴</value>
 	</data>
 	<data name="AddImageTile" xml:space="preserve">
-		<value>Add Image Tile</value>
+		<value>添加图像磁贴</value>
 	</data>
 	<data name="DeleteMessage" xml:space="preserve">
-		<value>Delete This Message</value>
+		<value>删除此条消息</value>
 	</data>
 	<data name="PowerGroup" xml:space="preserve">
-		<value>Power</value>
+		<value>电源</value>
 	</data>
 	<data name="InfoGroup" xml:space="preserve">
-		<value>Info</value>
+		<value>信息</value>
 	</data>
 	<data name="Loading" xml:space="preserve">
-		<value>Loading...</value>
+		<value>正在加载...</value>
 	</data>
 	<data name="StartupWithWindows" xml:space="preserve">
-		<value>Start with Windows</value>
+		<value>开机时启动</value>
 	</data>
 
 	<!-- Settings -->
 	<data name="ConfigReadFailed" xml:space="preserve">
-		<value>Failed to read config file, old config file has been backed up</value>
+		<value>配置文件读取失败，旧配置文件已备份</value>
 	</data>
 	<data name="ConfigWriteFailed" xml:space="preserve">
-		<value>Failed to write config file: {0}</value>
+		<value>配置文件写入失败: {0}</value>
 	</data>
 
 	<!-- System Start -->
 	<data name="ExportStartMenuErrorPowerShell" xml:space="preserve">
-		<value>Export Start Menu Error - Failed to start Powershell</value>
+		<value>导出开始菜单错误 - 无法启动 Powershell</value>
 	</data>
 	<data name="ExportStartMenuErrorTimeout" xml:space="preserve">
-		<value>Export Start Menu Error - Process timeout</value>
+		<value>导出开始菜单错误 - 进程超时</value>
 	</data>
 	<data name="ExportStartMenuErrorStdErr" xml:space="preserve">
-		<value>Export Start Menu Error: {0}</value>
+		<value>导出开始菜单错误: {0}</value>
 	</data>
 	<data name="ExportStartMenuErrorNoFile" xml:space="preserve">
-		<value>Export Start Menu Error - No file generated</value>
+		<value>导出开始菜单错误 - 未生成文件</value>
 	</data>
 	<data name="ExportStartMenuErrorException" xml:space="preserve">
-		<value>Export Start Menu Error: {0}</value>
+		<value>导出开始菜单错误: {0}</value>
 	</data>
 
 	<!-- Integration -->
 	<data name="AddStartupFailedRegistry" xml:space="preserve">
-		<value>Failed to add startup item - Registry key not found</value>
+		<value>添加启动项失败 - 找不到注册表键</value>
 	</data>
 	<data name="AddStartupFailedPermission" xml:space="preserve">
-		<value>Failed to add startup item - Insufficient permissions</value>
+		<value>添加启动项失败 - 权限不足</value>
 	</data>
 	<data name="AddStartupFailedIO" xml:space="preserve">
-		<value>Failed to add startup item - I/O error</value>
+		<value>添加启动项失败 - I/O错误</value>
 	</data>
 	<data name="AddStartupFailedException" xml:space="preserve">
-		<value>Failed to add startup item: {0}</value>
+		<value>添加启动项失败: {0}</value>
 	</data>
 	<data name="RunAsAdminFailed" xml:space="preserve">
-		<value>Failed to run as administrator</value>
+		<value>无法以管理员身份运行</value>
 	</data>
 	<data name="ReadStartupFailed" xml:space="preserve">
-		<value>Failed to read startup item: {0}</value>
+		<value>读取启动项失败: {0}</value>
 	</data>
 	<data name="DeleteStartupFailedRegistry" xml:space="preserve">
-		<value>Failed to delete startup item - Registry key not found</value>
+		<value>删除启动项失败 - 找不到注册表键</value>
 	</data>
 	<data name="DeleteStartupFailedPermission" xml:space="preserve">
-		<value>Failed to delete startup item - Insufficient permissions</value>
+		<value>删除启动项失败 - 权限不足</value>
 	</data>
 	<data name="DeleteStartupFailedIO" xml:space="preserve">
-		<value>Failed to delete startup item - I/O error</value>
+		<value>删除启动项失败 - I/O错误</value>
 	</data>
 	<data name="DeleteStartupFailedException" xml:space="preserve">
-		<value>Failed to delete startup item: {0}</value>
+		<value>删除启动项失败: {0}</value>
 	</data>
 	<data name="ParseShortcutFailed" xml:space="preserve">
-		<value>Failed to parse shortcut: {0}</value>
+		<value>解析快捷方式失败: {0}</value>
 	</data>
 	<data name="HotkeyRegisterFailedInUse" xml:space="preserve">
-		<value>Failed to register hotkey - Already in use</value>
+		<value>无法注册热键 - 已被占用</value>
 	</data>
 	<data name="HotkeyRegisterFailedException" xml:space="preserve">
-		<value>Failed to register hotkey: {0}</value>
+		<value>无法注册热键: {0}</value>
 	</data>
 
 	<!-- Power Operations -->
 	<data name="LockFailed" xml:space="preserve">
-		<value>Failed to lock computer</value>
+		<value>无法锁定计算机</value>
 	</data>
 	<data name="LogoutFailed" xml:space="preserve">
-		<value>Failed to logout current user</value>
+		<value>无法注销当前用户</value>
 	</data>
 	<data name="RestartFailed" xml:space="preserve">
-		<value>Insufficient permissions to restart</value>
+		<value>权限不足，无法重启</value>
 	</data>
 	<data name="ShutdownFailed" xml:space="preserve">
-		<value>Insufficient permissions to shutdown</value>
+		<value>权限不足，无法关机</value>
 	</data>
 	<data name="SleepFailed" xml:space="preserve">
-		<value>Failed to sleep computer</value>
+		<value>无法睡眠计算机</value>
 	</data>
 	<data name="DebugModeNoLoad" xml:space="preserve">
-		<value>Debug mode - Not loading start menu</value>
+		<value>调试模式不加载开始菜单</value>
 	</data>
 </root>

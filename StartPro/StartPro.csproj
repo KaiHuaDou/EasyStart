@@ -99,7 +99,7 @@
             <LastGenOutput>Main.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\Info.resx">
-          <Generator>ResXFileCodeGenerator</Generator>
+          <Generator>PublicResXFileCodeGenerator</Generator>
           <LastGenOutput>Info.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\TextConfigure.resx">

@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Microsoft.Win32;
 using NHotkey;
 using NHotkey.Wpf;
+using StartPro.Resources;
 
 namespace StartPro.Api;
 
@@ -23,7 +24,7 @@ public static class Integration
             using RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
             if (key is null)
             {
-                App.AddInfo("添加启动项失败 - 找不到注册表键");
+                App.AddInfo(Info.AddStartupFailedRegistry);
                 return false;
             }
             key.SetValue(AppName, AppPath);
@@ -31,15 +32,15 @@ public static class Integration
         }
         catch (UnauthorizedAccessException)
         {
-            App.AddInfo("添加启动项失败 - 权限不足");
+            App.AddInfo(Info.AddStartupFailedPermission);
         }
         catch (IOException)
         {
-            App.AddInfo("添加启动项失败 - I/O错误");
+            App.AddInfo(Info.AddStartupFailedIO);
         }
         catch (Exception ex)
         {
-            App.AddInfo($"添加启动项失败: {ex.Message}");
+            App.AddInfo(string.Format(Info.AddStartupFailedException, ex.Message));
         }
         return false;
     }
@@ -60,7 +61,7 @@ public static class Integration
         }
         catch
         {
-            App.AddInfo("无法以管理员身份运行");
+            App.AddInfo(Info.RunAsAdminFailed);
         }
     }
     public static bool ReadStartup( )
@@ -70,14 +71,14 @@ public static class Integration
             using RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run");
             if (key is null)
             {
-                App.AddInfo("读取启动项失败 - 找不到注册表键");
+                App.AddInfo(string.Format(Info.ReadStartupFailed, "找不到注册表键"));
                 return false;
             }
             return key.GetValue(AppName)?.ToString( ) != AppPath;
         }
         catch (Exception ex)
         {
-            App.AddInfo($"读取启动项失败 - {ex.Message}");
+            App.AddInfo(string.Format(Info.ReadStartupFailed, ex.Message));
             return false;
         }
     }
@@ -102,11 +103,11 @@ public static class Integration
         }
         catch (HotkeyAlreadyRegisteredException)
         {
-            App.AddInfo("无法注册热键 - 已被占用");
+            App.AddInfo(Info.HotkeyRegisterFailedInUse);
         }
         catch (Exception ex)
         {
-            App.AddInfo($"无法注册热键 - {ex.Message}");
+            App.AddInfo(string.Format(Info.HotkeyRegisterFailedException, ex.Message));
         }
     }
 
@@ -117,7 +118,7 @@ public static class Integration
             using RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
             if (key is null)
             {
-                App.AddInfo("删除启动项失败 - 找不到注册表键");
+                App.AddInfo(Info.DeleteStartupFailedRegistry);
                 return false;
             }
             if (key.GetValue(AppName) != null)
@@ -128,15 +129,15 @@ public static class Integration
         }
         catch (UnauthorizedAccessException)
         {
-            App.AddInfo("删除启动项失败 - 权限不足");
+            App.AddInfo(Info.DeleteStartupFailedPermission);
         }
         catch (IOException)
         {
-            App.AddInfo("删除启动项失败 - I/O错误");
+            App.AddInfo(Info.DeleteStartupFailedIO);
         }
         catch (Exception ex)
         {
-            App.AddInfo($"删除启动项失败: {ex.Message}");
+            App.AddInfo(string.Format(Info.DeleteStartupFailedException, ex.Message));
         }
         return false;
     }
@@ -168,7 +169,7 @@ public static class Integration
         }
         catch (Exception ex)
         {
-            App.AddInfo($"解析快捷方式失败 - {ex.Message}");
+            App.AddInfo(string.Format(Info.ParseShortcutFailed, ex.Message));
             return false;
         }
         finally

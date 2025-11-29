@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using StartPro.Resources;
 
 namespace StartPro.Api;
 
@@ -39,7 +40,7 @@ public class Settings
 {
     private static readonly string xml = Path.Join(Utils.ParentDir, "settings.json");
     private static readonly FileInfo File = new(xml);
-    private static readonly FileStream FileStream = new(File.FullName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+    private static FileStream FileStream => new(File.FullName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
     public string Background
     {
@@ -61,13 +62,13 @@ public class Settings
     {
         try
         {
-            FileStream.Seek(0, SeekOrigin.Begin);
-            return JsonSerializer.Deserialize(FileStream, SettingsContext.Default.Settings) ?? new Settings( );
+            using FileStream fileStream = FileStream;
+            return JsonSerializer.Deserialize(fileStream, SettingsContext.Default.Settings) ?? new Settings( );
         }
         catch
         {
             File.CopyTo(File.FullName + ".bak", true);
-            App.AddInfo("配置文件读取失败，旧配置文件已备份");
+            App.AddInfo(Info.ConfigReadFailed);
             return new Settings( );
         }
     }
@@ -76,12 +77,12 @@ public class Settings
     {
         try
         {
-            FileStream.Seek(0, SeekOrigin.Begin);
-            JsonSerializer.Serialize(FileStream, this, SettingsContext.Default.Settings);
+            using FileStream fileStream = FileStream;
+            JsonSerializer.Serialize(fileStream, this, SettingsContext.Default.Settings);
         }
         catch (Exception ex)
         {
-            App.AddInfo($"配置文件写入失败: {ex.Message}");
+            App.AddInfo(string.Format(Info.ConfigWriteFailed, ex.Message));
             return false;
         }
         return true;

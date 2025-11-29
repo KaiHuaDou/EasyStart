@@ -53,7 +53,7 @@
                   Grid.Row="3"
                   Margin="0,5,0,5"
                   Checked="StartupBoxChecked" Unchecked="StartupBoxUnchecked"
-                  Content="开机时启动" />
+                  Content="{x:Static text:Info.StartupWithWindows}" />
         <CheckBox x:Name="UIFlatBox"
                   Grid.Row="4"
                   Margin="0,5,0,5"

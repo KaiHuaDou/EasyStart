@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using StartPro.Api;
+using StartPro.Resources;
 using StartPro.Tile;
 using static StartPro.External.NativeMethods;
 
@@ -38,7 +39,7 @@ public partial class MainWindow : Window
 
         AppList.ItemsSource = new Collection<SystemApp>{
             new( ) {
-                AppName = "正在加载...",
+                AppName = Info.Loading,
                 AppPath = "",
                 AppIcon = new BitmapImage()
             }
@@ -119,7 +120,7 @@ public partial class MainWindow : Window
     {
         if (!LockWorkStation( ))
         {
-            App.AddInfo("无法锁定计算机");
+            App.AddInfo(Info.LockFailed);
         }
     }
 
@@ -127,7 +128,7 @@ public partial class MainWindow : Window
     {
         if (!ExitWindowsEx(EWX_LOGOFF | EWX_FORCE, 0))
         {
-            App.AddInfo("无法注销当前用户");
+            App.AddInfo(Info.LogoutFailed);
         }
     }
 
@@ -139,7 +140,7 @@ public partial class MainWindow : Window
         }
         else
         {
-            App.AddInfo("权限不足，无法重启");
+            App.AddInfo(Info.RestartFailed);
         }
     }
 
@@ -151,7 +152,7 @@ public partial class MainWindow : Window
         }
         else
         {
-            App.AddInfo("权限不足，无法关机");
+            App.AddInfo(Info.ShutdownFailed);
         }
     }
 
@@ -159,7 +160,7 @@ public partial class MainWindow : Window
     {
         if (!SetSuspendState(false, true, false))
         {
-            App.AddInfo("无法睡眠计算机");
+            App.AddInfo(Info.SleepFailed);
         }
     }
 
@@ -216,7 +217,7 @@ public partial class MainWindow : Window
         InitInfoBox( );
 
 #if DEBUG
-        App.AddInfo("调试模式不加载开始菜单");
+        App.AddInfo(Info.DebugModeNoLoad);
 #else
         Task.Factory.StartNew(( ) =>
         {

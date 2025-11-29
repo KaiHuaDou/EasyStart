@@ -22,7 +22,7 @@ namespace StartPro.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Info {
+    public class Info {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace StartPro.Resources {
         ///   返回此类使用的缓存的 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("StartPro.Resources.Info", typeof(Info).Assembly);
@@ -51,12 +51,426 @@ namespace StartPro.Resources {
         ///   使用此强类型资源类的所有资源查找执行重写。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Add App Tile 的本地化字符串。
+        /// </summary>
+        public static string AddAppTile {
+            get {
+                return ResourceManager.GetString("AddAppTile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Add Image Tile 的本地化字符串。
+        /// </summary>
+        public static string AddImageTile {
+            get {
+                return ResourceManager.GetString("AddImageTile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to add startup item: {0} 的本地化字符串。
+        /// </summary>
+        public static string AddStartupFailedException {
+            get {
+                return ResourceManager.GetString("AddStartupFailedException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to add startup item - I/O error 的本地化字符串。
+        /// </summary>
+        public static string AddStartupFailedIO {
+            get {
+                return ResourceManager.GetString("AddStartupFailedIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to add startup item - Insufficient permissions 的本地化字符串。
+        /// </summary>
+        public static string AddStartupFailedPermission {
+            get {
+                return ResourceManager.GetString("AddStartupFailedPermission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to add startup item - Registry key not found 的本地化字符串。
+        /// </summary>
+        public static string AddStartupFailedRegistry {
+            get {
+                return ResourceManager.GetString("AddStartupFailedRegistry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Add Text Tile 的本地化字符串。
+        /// </summary>
+        public static string AddTextTile {
+            get {
+                return ResourceManager.GetString("AddTextTile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to read config file, old config file has been backed up 的本地化字符串。
+        /// </summary>
+        public static string ConfigReadFailed {
+            get {
+                return ResourceManager.GetString("ConfigReadFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to write config file: {0} 的本地化字符串。
+        /// </summary>
+        public static string ConfigWriteFailed {
+            get {
+                return ResourceManager.GetString("ConfigWriteFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Debug mode - Not loading start menu 的本地化字符串。
+        /// </summary>
+        public static string DebugModeNoLoad {
+            get {
+                return ResourceManager.GetString("DebugModeNoLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Delete This Message 的本地化字符串。
+        /// </summary>
+        public static string DeleteMessage {
+            get {
+                return ResourceManager.GetString("DeleteMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to delete startup item: {0} 的本地化字符串。
+        /// </summary>
+        public static string DeleteStartupFailedException {
+            get {
+                return ResourceManager.GetString("DeleteStartupFailedException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to delete startup item - I/O error 的本地化字符串。
+        /// </summary>
+        public static string DeleteStartupFailedIO {
+            get {
+                return ResourceManager.GetString("DeleteStartupFailedIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to delete startup item - Insufficient permissions 的本地化字符串。
+        /// </summary>
+        public static string DeleteStartupFailedPermission {
+            get {
+                return ResourceManager.GetString("DeleteStartupFailedPermission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to delete startup item - Registry key not found 的本地化字符串。
+        /// </summary>
+        public static string DeleteStartupFailedRegistry {
+            get {
+                return ResourceManager.GetString("DeleteStartupFailedRegistry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Exit 的本地化字符串。
+        /// </summary>
+        public static string Exit {
+            get {
+                return ResourceManager.GetString("Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Export Start Menu Error: {0} 的本地化字符串。
+        /// </summary>
+        public static string ExportStartMenuErrorException {
+            get {
+                return ResourceManager.GetString("ExportStartMenuErrorException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Export Start Menu Error - No file generated 的本地化字符串。
+        /// </summary>
+        public static string ExportStartMenuErrorNoFile {
+            get {
+                return ResourceManager.GetString("ExportStartMenuErrorNoFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Export Start Menu Error - Failed to start Powershell 的本地化字符串。
+        /// </summary>
+        public static string ExportStartMenuErrorPowerShell {
+            get {
+                return ResourceManager.GetString("ExportStartMenuErrorPowerShell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Export Start Menu Error: {0} 的本地化字符串。
+        /// </summary>
+        public static string ExportStartMenuErrorStdErr {
+            get {
+                return ResourceManager.GetString("ExportStartMenuErrorStdErr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Export Start Menu Error - Process timeout 的本地化字符串。
+        /// </summary>
+        public static string ExportStartMenuErrorTimeout {
+            get {
+                return ResourceManager.GetString("ExportStartMenuErrorTimeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to register hotkey: {0} 的本地化字符串。
+        /// </summary>
+        public static string HotkeyRegisterFailedException {
+            get {
+                return ResourceManager.GetString("HotkeyRegisterFailedException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to register hotkey - Already in use 的本地化字符串。
+        /// </summary>
+        public static string HotkeyRegisterFailedInUse {
+            get {
+                return ResourceManager.GetString("HotkeyRegisterFailedInUse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Import Application 的本地化字符串。
+        /// </summary>
+        public static string ImportAppTile {
+            get {
+                return ResourceManager.GetString("ImportAppTile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Import System Start Menu 的本地化字符串。
+        /// </summary>
+        public static string ImportSystemStart {
+            get {
+                return ResourceManager.GetString("ImportSystemStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Info 的本地化字符串。
+        /// </summary>
+        public static string InfoGroup {
+            get {
+                return ResourceManager.GetString("InfoGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Loading... 的本地化字符串。
+        /// </summary>
+        public static string Loading {
+            get {
+                return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to lock computer 的本地化字符串。
+        /// </summary>
+        public static string LockFailed {
+            get {
+                return ResourceManager.GetString("LockFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to logout current user 的本地化字符串。
+        /// </summary>
+        public static string LogoutFailed {
+            get {
+                return ResourceManager.GetString("LogoutFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Open Config Folder 的本地化字符串。
+        /// </summary>
+        public static string OpenConfigFolder {
+            get {
+                return ResourceManager.GetString("OpenConfigFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to parse shortcut: {0} 的本地化字符串。
+        /// </summary>
+        public static string ParseShortcutFailed {
+            get {
+                return ResourceManager.GetString("ParseShortcutFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Power 的本地化字符串。
+        /// </summary>
+        public static string PowerGroup {
+            get {
+                return ResourceManager.GetString("PowerGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Lock 的本地化字符串。
+        /// </summary>
+        public static string PowerLock {
+            get {
+                return ResourceManager.GetString("PowerLock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Logout 的本地化字符串。
+        /// </summary>
+        public static string PowerLogout {
+            get {
+                return ResourceManager.GetString("PowerLogout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Restart 的本地化字符串。
+        /// </summary>
+        public static string PowerRestart {
+            get {
+                return ResourceManager.GetString("PowerRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Shutdown 的本地化字符串。
+        /// </summary>
+        public static string PowerShutdown {
+            get {
+                return ResourceManager.GetString("PowerShutdown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Sleep 的本地化字符串。
+        /// </summary>
+        public static string PowerSleep {
+            get {
+                return ResourceManager.GetString("PowerSleep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to read startup item: {0} 的本地化字符串。
+        /// </summary>
+        public static string ReadStartupFailed {
+            get {
+                return ResourceManager.GetString("ReadStartupFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Insufficient permissions to restart 的本地化字符串。
+        /// </summary>
+        public static string RestartFailed {
+            get {
+                return ResourceManager.GetString("RestartFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to run as administrator 的本地化字符串。
+        /// </summary>
+        public static string RunAsAdminFailed {
+            get {
+                return ResourceManager.GetString("RunAsAdminFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Save Data Manually 的本地化字符串。
+        /// </summary>
+        public static string SaveData {
+            get {
+                return ResourceManager.GetString("SaveData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Settings 的本地化字符串。
+        /// </summary>
+        public static string Setting {
+            get {
+                return ResourceManager.GetString("Setting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Insufficient permissions to shutdown 的本地化字符串。
+        /// </summary>
+        public static string ShutdownFailed {
+            get {
+                return ResourceManager.GetString("ShutdownFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to sleep computer 的本地化字符串。
+        /// </summary>
+        public static string SleepFailed {
+            get {
+                return ResourceManager.GetString("SleepFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Start with Windows 的本地化字符串。
+        /// </summary>
+        public static string StartupWithWindows {
+            get {
+                return ResourceManager.GetString("StartupWithWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Switch App List 的本地化字符串。
+        /// </summary>
+        public static string SwitchAppList {
+            get {
+                return ResourceManager.GetString("SwitchAppList", resourceCulture);
             }
         }
     }

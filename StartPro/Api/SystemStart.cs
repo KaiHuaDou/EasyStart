@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
+using StartPro.Resources;
 using StartPro.Tile;
 
 namespace StartPro.Api;
@@ -25,7 +26,7 @@ public static partial class SystemTiles
 
     public static TileBase CreateTile(TileRaw data)
     {
-        return new AppTile
+        return new StartPro.Tile.AppTile
         {
             AppName = data.AppName,
             AppPath = data.AppPath,
@@ -120,23 +121,23 @@ public static partial class SystemTiles
             using Process process = Process.Start(psi);
             if (process is null)
             {
-                App.AddInfo("导出开始菜单错误 - 无法启动 Powershell");
+                App.AddInfo(Info.ExportStartMenuErrorPowerShell);
                 return false;
             }
             if (!process.WaitForExit(5000))
             {
                 try { process.Kill(true); } catch { }
-                App.AddInfo("导出开始菜单错误 - 进程超时");
+                App.AddInfo(Info.ExportStartMenuErrorTimeout);
                 return false;
             }
             if (process.ExitCode != 0)
             {
-                App.AddInfo($"导出开始菜单错误: {process.StandardError.ReadToEnd( )}");
+                App.AddInfo(string.Format(Info.ExportStartMenuErrorStdErr, process.StandardError.ReadToEnd()));
                 return false;
             }
             if (!File.Exists(tempFile))
             {
-                App.AddInfo("导出开始菜单错误 - 未生成文件");
+                App.AddInfo(Info.ExportStartMenuErrorNoFile);
                 return false;
             }
             xml = XDocument.Load(tempFile);
@@ -144,7 +145,7 @@ public static partial class SystemTiles
         }
         catch (Exception ex)
         {
-            App.AddInfo($"导出开始菜单错误: {ex.Message}");
+            App.AddInfo(string.Format(Info.ExportStartMenuErrorException, ex.Message));
             return false;
         }
         finally

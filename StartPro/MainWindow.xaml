@@ -48,6 +48,9 @@
                             <Setter Property="Margin" Value="5,5,5,0" />
                             <Setter Property="VerticalAlignment" Value="Center" />
                         </Style>
+                        <Style BasedOn="{StaticResource {x:Type ToolTip}}" TargetType="{x:Type ToolTip}">
+                            <Setter Property="FontFamily" Value="{x:Static SystemFonts.MessageFontFamily}" />
+                        </Style>
                         <Style BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="{x:Type ToggleButton}">
                             <Setter Property="FontFamily" Value="Segoe Fluent Icons" />
                             <Setter Property="FontSize" Value="24" />
@@ -56,48 +59,48 @@
                         </Style>
                     </Grid.Resources>
                     <StackPanel x:Name="FunctionPanel" HorizontalAlignment="Center">
-                        <GroupBox Header="电源">
+                        <GroupBox Header="{x:Static text:Info.PowerGroup}">
                             <StackPanel>
-                                <Button Click="PowerShutdown" Content="&#xE7E8;" ToolTip="关机" />
-                                <Button Click="PowerRestart" Content="&#xE777;" ToolTip="重启" />
-                                <Button Click="PowerSleep" Content="&#xE708;" ToolTip="睡眠" />
-                                <Button Click="PowerLock" Content="&#xE72E;" ToolTip="锁定" />
-                                <Button Click="PowerLogout" Content="&#xF3B1;" ToolTip="注销" />
+                                <Button Click="PowerShutdown" Content="&#xE7E8;" ToolTip="{x:Static text:Info.PowerShutdown}" />
+                                <Button Click="PowerRestart" Content="&#xE777;" ToolTip="{x:Static text:Info.PowerRestart}" />
+                                <Button Click="PowerSleep" Content="&#xE708;" ToolTip="{x:Static text:Info.PowerSleep}" />
+                                <Button Click="PowerLock" Content="&#xE72E;" ToolTip="{x:Static text:Info.PowerLock}" />
+                                <Button Click="PowerLogout" Content="&#xF3B1;" ToolTip="{x:Static text:Info.PowerLogout}" />
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="{x:Static text:Main.DefaultGroup}">
                             <StackPanel>
-                                <Button Click="ShowSetting" Content="&#xE713;" ToolTip="设置" />
-                                <Button Click="WindowExit" Content="&#xE711;" ToolTip="退出" />
+                                <Button Click="ShowSetting" Content="&#xE713;" ToolTip="{x:Static text:Info.Setting}" />
+                                <Button Click="WindowExit" Content="&#xE711;" ToolTip="{x:Static text:Info.Exit}" />
                                 <Button x:Name="SaveDataButton"
-                                        Click="SaveData" Content="&#xE74E;" ToolTip="手动保存数据" />
-                                <Button Click="OpenConfigFolder" Content="&#xE838;" ToolTip="打开配置文件夹" />
+                                        Click="SaveData" Content="&#xE74E;" ToolTip="{x:Static text:Info.SaveData}" />
+                                <Button Click="OpenConfigFolder" Content="&#xE838;" ToolTip="{x:Static text:Info.OpenConfigFolder}" />
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="{x:Static text:AppTile.AppTileGroup}">
                             <StackPanel>
                                 <ToggleButton x:Name="AppListSwitchButton"
-                                              Click="SwitchAppList" Content="&#xE700;" ToolTip="切换应用列表" />
-                                <Button Click="AddAppTile" Content="&#xE710;" ToolTip="添加应用磁贴" />
-                                <Button Click="ImportSystemStart" Content="&#xE8B6;" ToolTip="导入系统开始菜单" />
-                                <Button Click="ImportAppTile" Content="&#xE8B5;" ToolTip="导入应用程序" />
+                                              Click="SwitchAppList" Content="&#xE700;" ToolTip="{x:Static text:Info.SwitchAppList}" />
+                                <Button Click="AddAppTile" Content="&#xE710;" ToolTip="{x:Static text:Info.AddAppTile}" />
+                                <Button Click="ImportSystemStart" Content="&#xE8B6;" ToolTip="{x:Static text:Info.ImportSystemStart}" />
+                                <Button Click="ImportAppTile" Content="&#xE8B5;" ToolTip="{x:Static text:Info.ImportAppTile}" />
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="{x:Static text:TextTile.TextTileGroup}">
                             <StackPanel>
-                                <Button Click="AddTextTile" Content="&#xE710;" ToolTip="添加文本磁贴" />
+                                <Button Click="AddTextTile" Content="&#xE710;" ToolTip="{x:Static text:Info.AddTextTile}" />
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="{x:Static text:ImageTile.ImageTileGroup}">
                             <StackPanel>
-                                <Button Click="AddImageTile" Content="&#xE710;" ToolTip="添加图像磁贴" />
+                                <Button Click="AddImageTile" Content="&#xE710;" ToolTip="{x:Static text:Info.AddImageTile}" />
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox x:Name="InfoGroup" Header="信息"
+                        <GroupBox x:Name="InfoGroup" Header="{x:Static text:Info.InfoGroup}"
                                   Margin="5,5,10,5" HorizontalAlignment="Right">
                             <StackPanel>
                                 <ComboBox x:Name="InfoBox" Margin="5,5,5,0" SelectedIndex="0" />
-                                <Button Click="ClearInfo" Content="&#xE711;" ToolTip="删除此条消息" />
+                                <Button Click="ClearInfo" Content="&#xE711;" ToolTip="{x:Static text:Info.DeleteMessage}" />
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>

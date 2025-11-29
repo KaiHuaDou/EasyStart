@@ -49,7 +49,6 @@ public static class TileStore
                     "AppTile" => new AppTile( ),
                     "TextTile" => new TextTile( ),
                     "ImageTile" => new ImageTile( ),
-                    "__MFGM__" => new DebugTile( ),
                     _ => new TileBase( ),
                 };
                 item.ReadAttributes(node);
