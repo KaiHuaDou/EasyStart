@@ -2,10 +2,10 @@ name: .NET Build
 
 on:
   push:
-    branches: ['main']
+    branches: ["main"]
 
   pull_request:
-    branches: ['main']
+    branches: ["main"]
 
 jobs:
   build:
@@ -13,23 +13,18 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Install .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v6
         with:
           dotnet-version: 9.x
-          cache: true
 
-      - name: Build Solution
-        run: |
-         dotnet workload config --update-mode workload-set
-         dotnet workload update
-         dotnet restore
-         dotnet publish -p:PublishProfile=FolderProfile
+      - name: Publish App
+        run: dotnet publish -p:PublishProfile=FolderProfile
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+      - name: Upload App
+        uses: actions/upload-artifact@v7
         with:
-          name: App
+          name: EasyStart
           path: ./StartPro/bin/publish/*
