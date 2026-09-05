@@ -1,0 +1,11 @@
+AdjustTokenPrivileges
+DeleteObject
+ExitWindowsEx
+GetCurrentProcess
+LockWorkStation
+LookupPrivilegeValue
+OpenProcessToken
+SetSuspendState
+SHCreateItemFromParsingName
+IShellItemImageFactory
+SIIGBF

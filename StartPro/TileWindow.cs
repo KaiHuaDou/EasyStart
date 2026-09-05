@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+
 using StartPro.Api;
 using StartPro.Tile;
 
@@ -15,9 +18,12 @@ public partial class MainWindow
         CreateApp window = new( );
         window.ShowDialog( );
         Show( );
-        AppTile tile = window.Item;
+        var tile = window.Item;
         if (tile?.IsEnabled != true)
+        {
             return;
+        }
+
         TilePanel.Children.Add(tile);
         tile.Refresh( );
     }
@@ -28,9 +34,12 @@ public partial class MainWindow
         CreateImage window = new( );
         window.ShowDialog( );
         Show( );
-        ImageTile tile = window.Item;
+        var tile = window.Item;
         if (tile?.IsEnabled != true)
+        {
             return;
+        }
+
         TilePanel.Children.Add(tile);
         tile.Refresh( );
     }
@@ -41,16 +50,19 @@ public partial class MainWindow
         CreateText window = new( );
         window.ShowDialog( );
         Show( );
-        TextTile tile = window.Item;
+        var tile = window.Item;
         if (tile?.IsEnabled != true)
+        {
             return;
+        }
+
         TilePanel.Children.Add(tile);
         tile.Refresh( );
     }
 
-    private void AddTiles(List<TileBase> tiles)
+    private void AddTiles(IEnumerable<TileBase> tiles)
     {
-        foreach (TileBase tile in tiles)
+        foreach (var tile in tiles)
         {
             TilePanel.Children.Add(tile);
             tile.Refresh( );
@@ -62,31 +74,37 @@ public partial class MainWindow
         Hide( );
         ImportApp window = new( );
         window.ShowDialog( );
-        foreach (AppTile tile in window.Tiles)
+        foreach (var tile in window.Tiles)
         {
             TilePanel.Children.Add(tile);
             tile.IsEnabled = true;
             tile.Refresh( );
         }
+
         Show( );
     }
 
     private async void ImportSystemStart(object o, RoutedEventArgs e)
     {
-        List<SystemTiles.TileRaw> tileDataList = await Task.Run(SystemTiles.ImportData);
-        List<TileBase> tiles = tileDataList.ConvertAll(SystemTiles.CreateTile);
+        ImportSystemStartButton.IsEnabled = false;
+        var tileDataList = await Task.Run(SystemTiles.ImportData);
+        var tiles = tileDataList?.Select(SystemTiles.CreateTile) ?? [];
         AddTiles(tiles);
+        ImportSystemStartButton.IsEnabled = true;
     }
 
     private void PinApp(object o, RoutedEventArgs e)
     {
         if (o is not MenuItem menuItem || menuItem.CommandParameter is not SystemApp app)
+        {
             return;
+        }
+
         AppTile appTile = new( )
         {
-            AppName = app?.AppName,
-            AppPath = app?.AppPath,
-            AppIcon = app?.AppPath,
+            AppName = app.AppName,
+            AppPath = app.AppPath,
+            AppIcon = app.AppPath,
             TileSize = TileSize.Medium,
             Row = 0,
             Column = 0
@@ -95,7 +113,7 @@ public partial class MainWindow
         appTile.Refresh( );
     }
 
-    private void SwitchAppList(object o, RoutedEventArgs e)
+    private void SwitchAppList(object? o, RoutedEventArgs? e)
     {
         AppListScroll.Visibility = AppListSwitchButton.IsChecked == false
             ? Visibility.Collapsed
@@ -109,6 +127,8 @@ public partial class MainWindow
     {
         App.Tiles.Clear( );
         foreach (TileBase tile in TilePanel.Children)
+        {
             App.Tiles.Add(tile);
+        }
     }
 }

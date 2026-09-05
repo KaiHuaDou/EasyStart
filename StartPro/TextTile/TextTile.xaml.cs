@@ -1,7 +1,9 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Xml;
+
 using DependencyPropertyGenerator;
+
 using StartPro.Api;
 
 namespace StartPro.Tile;
@@ -15,7 +17,7 @@ public partial class TextTile : TileBase, IEditable<TextTile>
 {
     public TextTile( )
     {
-        Grid root = Content as Grid;
+        var root = Content as Grid;
         InitializeComponent( );
         userControl.Content = null; // 没有任何原因，非要有这一行才能工作。
         userControl = null;
@@ -34,7 +36,10 @@ public partial class TextTile : TileBase, IEditable<TextTile>
         base.ReadAttributes(node);
         Text = node.FromAttribute("Text", string.Empty);
         if (node.ChildNodes[0] is not null)
-            TextConfig.ReadAttributes(node);
+        {
+            TextConfig?.ReadAttributes(node);
+        }
+
         TextVerticalAlignment = node.FromAttribute("TextVerticalAlignment", VerticalAlignment.Center);
         TextHorizontalAlignment = node.FromAttribute("TextHorizontalAlignment", HorizontalAlignment.Center);
     }
@@ -46,18 +51,21 @@ public partial class TextTile : TileBase, IEditable<TextTile>
         element.SetAttribute("Text", Text);
         element.SetAttribute("TextVerticalAlignment", ((int) TextVerticalAlignment).ToString( ));
         element.SetAttribute("TextHorizontalAlignment", ((int) TextHorizontalAlignment).ToString( ));
-        XmlElement textConfig = element.OwnerDocument.CreateElement("TextConfig");
-        TextConfig.WriteAttributes(ref textConfig);
+        var textConfig = element.OwnerDocument.CreateElement("TextConfig");
+        TextConfig?.WriteAttributes(ref textConfig);
         element.AppendChild(textConfig);
     }
 
     private void EditTile(object o, RoutedEventArgs e)
     {
-        (this as IEditable<TextTile>).Edit(Owner);
+        if (Owner is not null)
+        {
+            (this as IEditable<TextTile>).Edit(Owner);
+        }
     }
 
     partial void OnTextChanged(string newValue)
     {
-        TileTextShadow.Opacity = (!App.Settings.UIFlat && TextConfig.TextShadow) ? 0.4 : 0;
+        TileTextShadow.Opacity = (!App.Settings.UIFlat && (TextConfig?.TextShadow ?? true)) ? 0.4 : 0;
     }
 }

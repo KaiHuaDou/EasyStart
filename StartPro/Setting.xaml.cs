@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
+
 using StartPro.Api;
 using StartPro.Resources;
 
@@ -32,7 +32,9 @@ public partial class Setting : Window
     }
 
     private void CancelClick(object o, RoutedEventArgs e)
-        => Close( );
+    {
+        Close( );
+    }
 
     private void OkClick(object o, RoutedEventArgs e)
     {
@@ -46,11 +48,11 @@ public partial class Setting : Window
 
     private void SelectColorClick(object o, RoutedEventArgs e)
     {
-        int condition = ((o as Button).Parent as DockPanel).Children.Count;
-        string text = condition == 3 ? BackgroundBox.Text : ForegroundBox.Text;
-        Color fromColor = Utils.TryParseColor(text, out Color _color) ? _color : Defaults.BackgroundColor;
+        var condition = ((o as Button)?.Parent as DockPanel)?.Children.Count ?? 0;
+        var text = condition == 3 ? BackgroundBox.Text : ForegroundBox.Text;
+        var fromColor = Utils.TryParseColor(text, out var _color) ? _color : Defaults.BackgroundColor;
 
-        if (Utils.TrySelectColor(fromColor, out Color color, this))
+        if (Utils.TrySelectColor(fromColor, out var color, this))
         {
             if (condition == 3)
             {
@@ -65,13 +67,19 @@ public partial class Setting : Window
 
     private void SelectImageClick(object o, RoutedEventArgs e)
     {
-        if (Utils.TrySelectFile(out string fileName, "img"))
+        if (Utils.TrySelectFile(out var fileName, "img"))
+        {
             BackgroundBox.Text = fileName;
+        }
     }
 
     private void StartupBoxChecked(object o, RoutedEventArgs e)
-        => StartupBox.IsChecked = Integration.AddToStartup( );
+    {
+        StartupBox.IsChecked = Integration.AddToStartup( );
+    }
 
     private void StartupBoxUnchecked(object o, RoutedEventArgs e)
-        => StartupBox.IsChecked = !Integration.RemoveFromStartup( );
+    {
+        StartupBox.IsChecked = !Integration.RemoveFromStartup( );
+    }
 }

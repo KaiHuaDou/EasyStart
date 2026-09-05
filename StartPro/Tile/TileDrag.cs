@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+
 using DependencyPropertyGenerator;
 
 namespace StartPro.Tile;
@@ -15,12 +16,16 @@ public partial class TileBase
     protected void TileDragging(object o, MouseEventArgs e)
     {
         if (!IsMouseLeftButtonDown)
+        {
             return;
+        }
 
-        Point mousePoint = Mouse.GetPosition(Owner);
-        Point offset = mousePoint - startMousePoint;
+        var mousePoint = Mouse.GetPosition(Owner);
+        var offset = mousePoint - startMousePoint;
         if (offset.X == 0 || offset.Y == 0)
+        {
             return;
+        }
 
         IsDragging = true;
         Canvas.SetLeft(o as TileBase, startTilePoint.X + offset.X);
@@ -32,7 +37,7 @@ public partial class TileBase
     {
         IsMouseLeftButtonDown = true;
 
-        TileBase tile = o as TileBase;
+        var tile = (TileBase) o;
         startMousePoint = (Vector) Mouse.GetPosition(Owner);
         startTilePoint = new Vector(Canvas.GetLeft(tile), Canvas.GetTop(tile));
 
@@ -45,20 +50,23 @@ public partial class TileBase
     {
         IsMouseLeftButtonDown = false;
 
-        TileBase tile = o as TileBase;
+        var tile = (TileBase) o;
         startMousePoint = (Vector) Mouse.GetPosition(Owner);
         startTilePoint = new Vector(Canvas.GetLeft(tile), Canvas.GetTop(tile));
 
         if (!IsDragging)
+        {
             return;
+        }
+
         IsDragging = false;
         ReleaseMouseCapture( );
 
-        Vector mousePoint = (Vector) Mouse.GetPosition(Owner);
-        Vector offset = mousePoint - startMousePoint;
-        Vector tilePoint = startTilePoint + offset;
-        (o as TileBase).Column = (int) Math.Round(tilePoint.X / TileDatas.BlockSize);
-        (o as TileBase).Row = (int) Math.Round(tilePoint.Y / TileDatas.BlockSize);
+        var mousePoint = (Vector) Mouse.GetPosition(Owner);
+        var offset = mousePoint - startMousePoint;
+        var tilePoint = startTilePoint + offset;
+        tile.Column = (int) Math.Round(tilePoint.X / TileDatas.BlockSize);
+        tile.Row = (int) Math.Round(tilePoint.Y / TileDatas.BlockSize);
         Refresh( );
 
         e.Handled = true;
@@ -75,13 +83,18 @@ public partial class TileBase
 
     private void MoveToSpace( )
     {
-        bool isIntersect = true;
+        if (Owner is not Panel owner)
+        {
+            return;
+        }
+
+        var isIntersect = true;
         while (isIntersect)
         {
             isIntersect = false;
-            for (int i = 0; i < Owner.Children.Count; i++)
+            for (var i = 0; i < owner.Children.Count; i++)
             {
-                if (Owner.Children[i] is TileBase target
+                if (owner.Children[i] is TileBase target
                     && this != target && IntersectsWith(target))
                 {
                     Row++;
@@ -94,9 +107,17 @@ public partial class TileBase
 
     private void ToTopmost( )
     {
-        for (int i = 0; i < Owner.Children.Count; i++)
-            Panel.SetZIndex(Owner.Children[i], i);
-        Panel.SetZIndex(this, Owner.Children.Count);
+        if (Owner is not Panel owner)
+        {
+            return;
+        }
+
+        for (var i = 0; i < owner.Children.Count; i++)
+        {
+            Panel.SetZIndex(owner.Children[i], i);
+        }
+
+        Panel.SetZIndex(this, owner.Children.Count);
     }
 }
 
@@ -107,11 +128,12 @@ public static class PanelExtension
         double xmax = 0, ymax = 0;
         foreach (TileBase tile in parent.Children)
         {
-            double txmax = tile.Column * TileDatas.BlockSize + tile.ActualWidth;
-            double tymax = tile.Row * TileDatas.BlockSize + tile.ActualHeight;
+            var txmax = tile.Column * TileDatas.BlockSize + tile.ActualWidth;
+            var tymax = tile.Row * TileDatas.BlockSize + tile.ActualHeight;
             xmax = txmax > xmax ? txmax : xmax;
             ymax = tymax > ymax ? tymax : ymax;
         }
+
         (parent.Width, parent.Height) = (xmax + TileDatas.BaseMargin * 2, ymax + TileDatas.BaseMargin * 2 * 2);
     }
 }

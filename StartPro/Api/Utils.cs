@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -6,14 +6,16 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+
 using Microsoft.Win32;
+
 using StartPro.Resources;
 
 namespace StartPro.Api;
 
 public static class Utils
 {
-    public static readonly string ParentDir = Path.GetDirectoryName(Environment.ProcessPath);
+    public static readonly string AppPath = Path.GetDirectoryName(Environment.ProcessPath)!;
 
     private static readonly Dictionary<string, (string defaultExt, string filter)> FileFilter = new( ) {
         { "exe", (".exe", "*.exe *.com *.bat *.cmd|*.exe;*.com;*.bat;*.cmd|*.*|*.*") },
@@ -23,11 +25,14 @@ public static class Utils
 
     public static void AppendContexts(ContextMenu from, ContextMenu to)
     {
-        int count = from.Items.Count;
-        for (int i = 0; i < count; i++)
+        var count = from.Items.Count;
+        for (var i = 0; i < count; i++)
         {
             if (from.Items[0] is not MenuItem item)
+            {
                 continue;
+            }
+
             from.Items.Remove(item);
             to.Items.Add(item);
         }
@@ -42,7 +47,7 @@ public static class Utils
         }
         catch
         {
-            image = null;
+            image = new BitmapImage( );
             return false;
         }
     }
@@ -54,18 +59,18 @@ public static class Utils
 
     public static double ParseFontSize(string value)
     {
-        return double.TryParse(value, out double result)
+        return double.TryParse(value, out var result)
                 && result > 0
                 ? result : Defaults.FontSize;
     }
 
-    public static bool TryParseBrush(string text, out Brush brush)
+    public static bool TryParseBrush(string text, out Brush? brush)
     {
-        if (TryParseImageSource(text, out ImageSource source))
+        if (TryParseImageSource(text, out var source))
         {
             brush = new ImageBrush(source) { Stretch = Stretch.UniformToFill };
         }
-        else if (TryParseColor(text, out Color color))
+        else if (TryParseColor(text, out var color))
         {
             brush = new SolidColorBrush(color);
         }
@@ -74,42 +79,45 @@ public static class Utils
             brush = null;
             return false;
         }
+
         return true;
     }
 
     public static bool TryParseColor(string text, out Color color)
     {
         if (text.StartsWith('#') && text.Length == 9
-            && byte.TryParse(text.AsSpan(1, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out byte a)
-            && byte.TryParse(text.AsSpan(3, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out byte r)
-            && byte.TryParse(text.AsSpan(5, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out byte g)
-            && byte.TryParse(text.AsSpan(7, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out byte b))
+            && byte.TryParse(text.AsSpan(1, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var a)
+            && byte.TryParse(text.AsSpan(3, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var r)
+            && byte.TryParse(text.AsSpan(5, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var g)
+            && byte.TryParse(text.AsSpan(7, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var b))
         {
             color = Color.FromArgb(a, r, g, b);
             return true;
         }
+
         return false;
     }
 
     public static bool TryParseImageSource(string text, out ImageSource source)
     {
-        if (PEIcon.Direct(text, out BitmapSource source1))
+        if (PEIcon.Direct(text, out var source1))
         {
             source = source1;
         }
-        else if (File.Exists(text) && CreateBitmapImageSafe(text, out BitmapImage image))
+        else if (File.Exists(text) && CreateBitmapImageSafe(text, out var image))
         {
             source = image;
         }
-        else if (PEIcon.Complex(text, out BitmapSource source2))
+        else if (PEIcon.Complex(text, out var source2))
         {
             source = source2;
         }
         else
         {
-            source = null;
+            source = new BitmapImage( );
             return false;
         }
+
         return true;
     }
 
@@ -122,30 +130,34 @@ public static class Utils
             result = dialog.Color;
             return true;
         }
+
         return false;
     }
 
     public static bool TrySelectFile(out string fileName, string fileType)
     {
-        OpenFileDialog dialog = CreateOpenFileDialog(fileType);
-        bool result = dialog.ShowDialog( ) == true;
+        var dialog = CreateOpenFileDialog(fileType);
+        var result = dialog.ShowDialog( ) == true;
         fileName = dialog.FileName;
         return result;
     }
 
     public static bool TrySelectFiles(out string[] fileNames, string fileType)
     {
-        OpenFileDialog dialog = CreateOpenFileDialog(fileType);
-        bool result = dialog.ShowDialog( ) == true;
+        var dialog = CreateOpenFileDialog(fileType);
+        var result = dialog.ShowDialog( ) == true;
         fileNames = dialog.FileNames;
         return result;
     }
 
-    private static OpenFileDialog CreateOpenFileDialog(string fileType) => new( )
+    private static OpenFileDialog CreateOpenFileDialog(string fileType)
     {
-        CheckFileExists = true,
-        DefaultExt = ".exe",
-        Filter = FileFilter[fileType].filter,
-        Title = Main.SelectExeText,
-    };
+        return new( )
+        {
+            CheckFileExists = true,
+            DefaultExt = ".exe",
+            Filter = FileFilter[fileType].filter,
+            Title = Main.SelectExeText,
+        };
+    }
 }

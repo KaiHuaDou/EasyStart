@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Xml;
+
 using StartPro.Api;
 
 namespace StartPro.Tile;
 
 public static class TileStore
 {
-    private static readonly string xmlPath = Path.Join(Utils.ParentDir, "tiles.xml");
+    private static readonly string xmlPath = Path.Join(Utils.AppPath, "tiles.xml");
     private static readonly XmlDocument document = new( );
-    private static XmlNode Tiles;
+    private static XmlNode? Tiles;
 
-    public static List<TileBase> Load( )
+    public static Collection<TileBase> Load( )
     {
-        List<TileBase> result = [];
+        Collection<TileBase> result = [];
         try
         {
             document.Load(xmlPath);
@@ -31,20 +32,26 @@ public static class TileStore
                 File.Create(xmlPath).Close( );
                 App.AddInfo("配置文件不存在，已创建新文件");
             }
+
             return result;
         }
 
         Tiles = document.ChildNodes[0];
         if (Tiles is null)
+        {
             return [];
+        }
 
         foreach (XmlNode node in Tiles.ChildNodes)
         {
             if (node.Name != "Tile")
+            {
                 continue;
+            }
+
             try
             {
-                TileBase item = node.GetAttribute("Type") switch
+                var item = node.GetAttribute("Type") switch
                 {
                     "AppTile" => new AppTile( ),
                     "TextTile" => new TextTile( ),
@@ -60,18 +67,20 @@ public static class TileStore
                 App.AddInfo("存在无法读取的磁贴，已跳过");
             }
         }
+
         return result;
     }
 
     public static bool Save( )
     {
         Tiles = document.CreateElement("Tiles");
-        foreach (TileBase tile in App.Tiles)
+        foreach (var tile in App.Tiles)
         {
-            XmlElement element = document.CreateElement("Tile");
+            var element = document.CreateElement("Tile");
             tile.WriteAttributes(ref element);
             Tiles.AppendChild(element);
         }
+
         try
         {
             File.WriteAllText(xmlPath, Tiles.OuterXml);
@@ -81,6 +90,7 @@ public static class TileStore
             App.AddInfo($"无法保存磁贴: {ex.Message}");
             return false;
         }
+
         return true;
     }
 }

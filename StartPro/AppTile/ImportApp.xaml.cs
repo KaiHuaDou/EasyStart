@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+
 using StartPro.Api;
 
 namespace StartPro.Tile;
@@ -34,10 +35,10 @@ public partial class ImportApp : Window
 
     private void AddNewTiles(string[] files)
     {
-        foreach (string file in files)
+        foreach (var file in files)
         {
             if (file.EndsWith(".lnk", StringComparison.OrdinalIgnoreCase)
-                && Integration.ResolveShortcut(file, out string target, out string arguments))
+                && Integration.ResolveShortcut(file, out var target, out var arguments))
             {
                 AddNewTile(file, target, arguments);
             }
@@ -54,29 +55,41 @@ public partial class ImportApp : Window
         Close( );
     }
 
-    private HashSet<string> ConvertTileSet(HashSet<AppTile> x)
+    private static HashSet<string> ConvertTileSet(HashSet<AppTile> x)
     {
         HashSet<string> result = [];
-        foreach (AppTile tile in x)
+        foreach (var tile in x)
+        {
             result.Add(tile.ToString( ));
+        }
+
         return result;
     }
 
     private void DropTile(object o, DragEventArgs e)
     {
-        IDataObject data = e.Data;
+        var data = e.Data;
         if (!data.GetDataPresent(DataFormats.FileDrop))
+        {
             return;
+        }
+
         if (e.Data.GetData(DataFormats.FileDrop) is not string[] files || files.Length == 0)
+        {
             return;
+        }
+
         AddNewTiles(files);
         RefreshTileList( );
     }
 
     private void ImportClick(object o, RoutedEventArgs e)
     {
-        if (Utils.TrySelectFiles(out string[] fileName, "exe"))
+        if (Utils.TrySelectFiles(out var fileName, "exe"))
+        {
             AddNewTiles(fileName);
+        }
+
         RefreshTileList( );
     }
 

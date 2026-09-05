@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace StartPro.Converter;
@@ -7,7 +7,9 @@ public static class TextDecorationCollectionConverterExtension
     public static string ConvertToString(this TextDecorationCollection collection)
     {
         if (collection == null || collection.Count == 0)
+        {
             return "None";
+        }
 
         Dictionary<TextDecoration, string> decorationMap = new( )
         {
@@ -19,10 +21,12 @@ public static class TextDecorationCollectionConverterExtension
 
         List<string> decorations = [];
 
-        foreach (KeyValuePair<TextDecoration, string> entry in decorationMap)
+        foreach (var entry in decorationMap)
         {
             if (collection.Contains(entry.Key))
+            {
                 decorations.Add(entry.Value);
+            }
         }
 
         return string.Join(", ", decorations);

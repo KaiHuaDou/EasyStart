@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
+
 using DependencyPropertyGenerator;
 
 namespace StartPro.Tile;
@@ -12,18 +13,18 @@ namespace StartPro.Tile;
 [DependencyProperty<bool>("Shadow", DefaultValue = false, OnChanged = nameof(OnShadowChanged))]
 public partial class TileBase : UserControl
 {
-    internal Border border;
-    internal ContextMenu contextMenu;
-    internal Border maskBorder;
-    internal MenuItem SizeHighMenu;
-    internal MenuItem SizeLargeMenu;
-    internal MenuItem SizeMediumMenu;
-    internal MenuItem SizeSmallMenu;
-    internal MenuItem SizeTallMenu;
-    internal MenuItem SizeThinMenu;
-    internal MenuItem SizeWideMenu;
-    internal MenuItem TileDeleteMenu;
-    internal DropShadowEffect TileShadow;
+    internal Border border = null!;
+    internal ContextMenu contextMenu = null!;
+    internal Border maskBorder = null!;
+    internal MenuItem SizeHighMenu = null!;
+    internal MenuItem SizeLargeMenu = null!;
+    internal MenuItem SizeMediumMenu = null!;
+    internal MenuItem SizeSmallMenu = null!;
+    internal MenuItem SizeTallMenu = null!;
+    internal MenuItem SizeThinMenu = null!;
+    internal MenuItem SizeWideMenu = null!;
+    internal MenuItem TileDeleteMenu = null!;
+    internal DropShadowEffect TileShadow = null!;
 
     private bool _contentLoaded;
 
@@ -35,7 +36,7 @@ public partial class TileBase : UserControl
         Refresh( );
     }
 
-    public Panel Owner => Parent as Panel;
+    public Panel? Owner => Parent as Panel;
 
     public int Column
     {
@@ -52,24 +53,27 @@ public partial class TileBase : UserControl
     public void InitializeComponent( )
     {
         if (_contentLoaded)
+        {
             return;
+        }
+
         _contentLoaded = true;
         Uri resourceLocater = new("/StartPro;component/Tile/TileBase_UI.xaml", UriKind.Relative);
-        Grid root = Application.LoadComponent(resourceLocater) as Grid;
+        var root = Application.LoadComponent(resourceLocater) as Grid ?? throw new ObjectDisposedException("");
         Content = root;
 
-        maskBorder = root.FindName("maskBorder") as Border;
-        border = root.FindName("border") as Border;
-        TileShadow = root.FindName("TileShadow") as DropShadowEffect;
-        contextMenu = root.FindName("contextMenu") as ContextMenu;
-        SizeSmallMenu = root.FindName("SizeSmallMenu") as MenuItem;
-        SizeMediumMenu = root.FindName("SizeMediumMenu") as MenuItem;
-        SizeThinMenu = root.FindName("SizeThinMenu") as MenuItem;
-        SizeWideMenu = root.FindName("SizeWideMenu") as MenuItem;
-        SizeTallMenu = root.FindName("SizeTallMenu") as MenuItem;
-        SizeHighMenu = root.FindName("SizeHighMenu") as MenuItem;
-        SizeLargeMenu = root.FindName("SizeLargeMenu") as MenuItem;
-        TileDeleteMenu = root.FindName("TileDeleteMenu") as MenuItem;
+        maskBorder = root.FindName("maskBorder") as Border ?? throw new ObjectDisposedException("");
+        border = root.FindName("border") as Border ?? throw new ObjectDisposedException("");
+        TileShadow = root.FindName("TileShadow") as DropShadowEffect ?? throw new ObjectDisposedException("");
+        contextMenu = root.FindName("contextMenu") as ContextMenu ?? throw new ObjectDisposedException("");
+        SizeSmallMenu = root.FindName("SizeSmallMenu") as MenuItem ?? throw new ObjectDisposedException("");
+        SizeMediumMenu = root.FindName("SizeMediumMenu") as MenuItem ?? throw new ObjectDisposedException("");
+        SizeThinMenu = root.FindName("SizeThinMenu") as MenuItem ?? throw new ObjectDisposedException("");
+        SizeWideMenu = root.FindName("SizeWideMenu") as MenuItem ?? throw new ObjectDisposedException("");
+        SizeTallMenu = root.FindName("SizeTallMenu") as MenuItem ?? throw new ObjectDisposedException("");
+        SizeHighMenu = root.FindName("SizeHighMenu") as MenuItem ?? throw new ObjectDisposedException("");
+        SizeLargeMenu = root.FindName("SizeLargeMenu") as MenuItem ?? throw new ObjectDisposedException("");
+        TileDeleteMenu = root.FindName("TileDeleteMenu") as MenuItem ?? throw new ObjectDisposedException("");
 
         VisualCacheMode = CacheMode = new BitmapCache(1) { SnapsToDevicePixels = true };
 
@@ -95,6 +99,7 @@ public partial class TileBase : UserControl
             Measure(new Size(window.Width, window.Height));
             Arrange(new Rect(0, 0, window.DesiredSize.Width, window.DesiredSize.Height));
         }
+
         if (Owner is Canvas owner)
         {
             MoveToSpace( );
@@ -103,13 +108,15 @@ public partial class TileBase : UserControl
     }
 
     protected virtual void OnShadowChanged(bool newValue)
-        => TileShadow.Opacity = (!App.Settings.UIFlat && newValue) ? 0.4 : 0;
+    {
+        TileShadow.Opacity = (!App.Settings.UIFlat && newValue) ? 0.4 : 0;
+    }
 
     protected virtual void OnTileColorChanged(Brush newValue) { }
 
     protected virtual void OnTileSizeChanged(TileSize newValue)
     {
-        (int, int) tileSize = TileDatas.TileSizes[newValue];
+        var tileSize = TileDatas.TileSizes[newValue];
         MinWidth = Width = tileSize.Item1;
         MinHeight = Height = tileSize.Item2;
         Margin = new Thickness(TileDatas.BaseMargin);
@@ -118,13 +125,42 @@ public partial class TileBase : UserControl
     }
 
     private void RemoveTile(object o, RoutedEventArgs e)
-        => Owner.Children.Remove(this);
+    {
+        Owner?.Children.Remove(this);
+    }
 
-    private void ToSmallClick(object o, RoutedEventArgs e) => TileSize = TileSize.Small;
-    private void ToMediumClick(object o, RoutedEventArgs e) => TileSize = TileSize.Medium;
-    private void ToThinClick(object o, RoutedEventArgs e) => TileSize = TileSize.Thin;
-    private void ToWideClick(object o, RoutedEventArgs e) => TileSize = TileSize.Wide;
-    private void ToHighClick(object o, RoutedEventArgs e) => TileSize = TileSize.High;
-    private void ToTallClick(object o, RoutedEventArgs e) => TileSize = TileSize.Tall;
-    private void ToLargeClick(object o, RoutedEventArgs e) => TileSize = TileSize.Large;
+    private void ToSmallClick(object o, RoutedEventArgs e)
+    {
+        TileSize = TileSize.Small;
+    }
+
+    private void ToMediumClick(object o, RoutedEventArgs e)
+    {
+        TileSize = TileSize.Medium;
+    }
+
+    private void ToThinClick(object o, RoutedEventArgs e)
+    {
+        TileSize = TileSize.Thin;
+    }
+
+    private void ToWideClick(object o, RoutedEventArgs e)
+    {
+        TileSize = TileSize.Wide;
+    }
+
+    private void ToHighClick(object o, RoutedEventArgs e)
+    {
+        TileSize = TileSize.High;
+    }
+
+    private void ToTallClick(object o, RoutedEventArgs e)
+    {
+        TileSize = TileSize.Tall;
+    }
+
+    private void ToLargeClick(object o, RoutedEventArgs e)
+    {
+        TileSize = TileSize.Large;
+    }
 }

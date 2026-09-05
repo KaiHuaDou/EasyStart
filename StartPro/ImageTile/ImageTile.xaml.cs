@@ -1,10 +1,12 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml;
+
 using DependencyPropertyGenerator;
+
 using StartPro.Api;
 
 namespace StartPro.Tile;
@@ -15,7 +17,7 @@ public partial class ImageTile : TileBase, IEditable<ImageTile>
 {
     public ImageTile( )
     {
-        Grid root = Content as Grid;
+        var root = Content as Grid;
         InitializeComponent( );
         userControl.Content = null;
         border.Child = MainImage;
@@ -43,7 +45,10 @@ public partial class ImageTile : TileBase, IEditable<ImageTile>
 
     private void EditTile(object o, RoutedEventArgs e)
     {
-        (this as IEditable<ImageTile>).Edit(Owner);
+        if (Owner is not null)
+        {
+            (this as IEditable<ImageTile>).Edit(Owner);
+        }
     }
 
     partial void OnImagePathChanged(string newValue)

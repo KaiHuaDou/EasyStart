@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
     <assemblyIdentity version="1.0.0.0" name="MyApplication.app"/>
     <trustInfo xmlns="urn:schemas-microsoft-com:asm.v2">
@@ -64,7 +64,7 @@
 
     <!-- 启用 Windows 公共控件和对话框的主题(Windows XP 和更高版本) -->
     
-    <!--<dependency>
+    <dependency>
         <dependentAssembly>
             <assemblyIdentity
                 type="win32"
@@ -75,7 +75,7 @@
                 language="*"
             />
         </dependentAssembly>
-    </dependency>-->
+    </dependency>
     
 
 </assembly>

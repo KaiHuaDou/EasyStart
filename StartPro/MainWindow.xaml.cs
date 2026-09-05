@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -7,13 +7,17 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+
+using Windows.Win32.System.Shutdown;
+
 using StartPro.Api;
 using StartPro.Resources;
 using StartPro.Tile;
-using static StartPro.External.NativeMethods;
+
+using static StartPro.External.Power;
+using static Windows.Win32.PInvoke;
 
 namespace StartPro;
 
@@ -49,7 +53,10 @@ public partial class MainWindow : Window
     public new void Hide( )
     {
         if (Resources["HideWindow"] is not Storyboard hideAnimation)
+        {
             return;
+        }
+
         hideAnimation.Completed += (o, e) => base.Hide( );
         hideAnimation.Begin(MainBorder);
     }
@@ -57,7 +64,10 @@ public partial class MainWindow : Window
     public new void Show( )
     {
         if (Resources["ShowWindow"] is not Storyboard showAnimation)
+        {
             return;
+        }
+
         base.Show( );
         Activate( );
         showAnimation.Begin(MainBorder);
@@ -66,19 +76,23 @@ public partial class MainWindow : Window
     public void ShowHide( )
     {
         if (Visibility == Visibility.Hidden)
+        {
             Show( );
+        }
         else
+        {
             Hide( );
+        }
     }
 
     private void ApplySettings( )
     {
         MainBorder.Background =
-            Utils.TryParseBrush(App.Settings.Background, out Brush back)
+            Utils.TryParseBrush(App.Settings.Background, out var back)
             ? back : Defaults.Background;
         foreach (TileBase tile in TilePanel.Children)
         {
-            tile.Foreground = Utils.TryParseBrush(App.Settings.Foreground, out Brush fore)
+            tile.Foreground = Utils.TryParseBrush(App.Settings.Foreground, out var fore)
                 ? fore : Defaults.Foreground;
         }
     }
@@ -86,7 +100,10 @@ public partial class MainWindow : Window
     private void ClearInfo(object o, RoutedEventArgs e)
     {
         if (InfoBox.SelectedValue is string selectedInfo)
+        {
             App.Infos.Remove(selectedInfo);
+        }
+
         InfoBox.SelectedIndex = 0;
     }
 
@@ -95,7 +112,7 @@ public partial class MainWindow : Window
         InfoBox.SetBinding(ItemsControl.ItemsSourceProperty, new Binding( ) { Source = App.Infos });
         InfoBox.MaxHeight = FunctionPanel.ActualHeight;
         InfoBox.MaxWidth = 0.25 * SystemParameters.WorkArea.Width;
-        void UpdateHeader(object _o, NotifyCollectionChangedEventArgs _e)
+        void UpdateHeader(object? _o, NotifyCollectionChangedEventArgs? _e)
         {
             if (InfoBox.Items.Count == 0)
             {
@@ -107,13 +124,14 @@ public partial class MainWindow : Window
                 InfoGroup.Visibility = Visibility.Visible;
             }
         }
+
         App.Infos.CollectionChanged += UpdateHeader;
         UpdateHeader(null, null);
     }
 
     private void OpenConfigFolder(object o, RoutedEventArgs e)
     {
-        Integration.ExecuteAsAdmin("explorer.exe", $"/e, /select, {Path.Join(Utils.ParentDir, "tiles.xml")}");
+        Integration.ExecuteAsAdmin("explorer.exe", $"/e, /select, {Path.Join(Utils.AppPath, "tiles.xml")}");
     }
 
     private void PowerLock(object o, RoutedEventArgs e)
@@ -126,7 +144,7 @@ public partial class MainWindow : Window
 
     private void PowerLogout(object o, RoutedEventArgs e)
     {
-        if (!ExitWindowsEx(EWX_LOGOFF | EWX_FORCE, 0))
+        if (!ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_LOGOFF | EXIT_WINDOWS_FLAGS.EWX_FORCE, 0))
         {
             App.AddInfo(Info.LogoutFailed);
         }
@@ -136,7 +154,7 @@ public partial class MainWindow : Window
     {
         if (EnableShutdownPrivilege( ))
         {
-            ExitWindowsEx(EWX_REBOOT | EWX_FORCE, 0);
+            ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT | EXIT_WINDOWS_FLAGS.EWX_FORCE, 0);
         }
         else
         {
@@ -148,7 +166,7 @@ public partial class MainWindow : Window
     {
         if (EnableShutdownPrivilege( ))
         {
-            ExitWindowsEx(EWX_SHUTDOWN | EWX_FORCE, 0);
+            ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_SHUTDOWN | EXIT_WINDOWS_FLAGS.EWX_FORCE, 0);
         }
         else
         {
@@ -192,10 +210,14 @@ public partial class MainWindow : Window
     }
 
     private void TaskbarMenuExit(object o, RoutedEventArgs e)
-        => Application.Current.Shutdown( );
+    {
+        Application.Current.Shutdown( );
+    }
 
     private void TaskbarMenuShow(object o, RoutedEventArgs e)
-        => ShowHide( );
+    {
+        ShowHide( );
+    }
 
     private void WindowClosing(object o, CancelEventArgs e)
     {
@@ -205,12 +227,16 @@ public partial class MainWindow : Window
     }
 
     private void WindowDeactivated(object o, EventArgs e)
-        => Hide( );
+    {
+        Hide( );
+    }
 
     private void WindowExit(object o, RoutedEventArgs e)
-        => Application.Current.Shutdown( );
+    {
+        Application.Current.Shutdown( );
+    }
 
-    private void WindowLoaded(object o, RoutedEventArgs e)
+    private async void WindowLoaded(object o, RoutedEventArgs e)
     {
         TilePanel.ResizeToFit( );
         SwitchAppList(null, null);
@@ -219,7 +245,7 @@ public partial class MainWindow : Window
 #if DEBUG
         App.AddInfo(Info.DebugModeNoLoad);
 #else
-        Task.Factory.StartNew(( ) =>
+        await Task.Run(( ) =>
         {
             SystemApp.LoadApps( );
             Dispatcher.BeginInvoke(( ) =>

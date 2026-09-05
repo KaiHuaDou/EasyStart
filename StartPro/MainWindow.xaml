@@ -1,4 +1,4 @@
-﻿<Window x:Class="StartPro.MainWindow"
+<Window x:Class="StartPro.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:StartPro"
@@ -73,16 +73,20 @@
                                 <Button Click="ShowSetting" Content="&#xE713;" ToolTip="{x:Static text:Info.Setting}" />
                                 <Button Click="WindowExit" Content="&#xE711;" ToolTip="{x:Static text:Info.Exit}" />
                                 <Button x:Name="SaveDataButton"
-                                        Click="SaveData" Content="&#xE74E;" ToolTip="{x:Static text:Info.SaveData}" />
+                                        Click="SaveData" Content="&#xE74E;"
+                                        ToolTip="{x:Static text:Info.SaveData}" />
                                 <Button Click="OpenConfigFolder" Content="&#xE838;" ToolTip="{x:Static text:Info.OpenConfigFolder}" />
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="{x:Static text:AppTile.AppTileGroup}">
                             <StackPanel>
                                 <ToggleButton x:Name="AppListSwitchButton"
-                                              Click="SwitchAppList" Content="&#xE700;" ToolTip="{x:Static text:Info.SwitchAppList}" />
+                                              Click="SwitchAppList" Content="&#xE700;"
+                                              ToolTip="{x:Static text:Info.SwitchAppList}" />
                                 <Button Click="AddAppTile" Content="&#xE710;" ToolTip="{x:Static text:Info.AddAppTile}" />
-                                <Button Click="ImportSystemStart" Content="&#xE8B6;" ToolTip="{x:Static text:Info.ImportSystemStart}" />
+                                <Button x:Name="ImportSystemStartButton"
+                                        Click="ImportSystemStart" Content="&#xE8B6;"
+                                        ToolTip="{x:Static text:Info.ImportSystemStart}" />
                                 <Button Click="ImportAppTile" Content="&#xE8B5;" ToolTip="{x:Static text:Info.ImportAppTile}" />
                             </StackPanel>
                         </GroupBox>

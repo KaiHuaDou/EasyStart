@@ -1,12 +1,15 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Windows.Input;
+
 using Microsoft.Win32;
+
 using NHotkey;
 using NHotkey.Wpf;
+
 using StartPro.Resources;
 
 namespace StartPro.Api;
@@ -21,12 +24,13 @@ public static class Integration
     {
         try
         {
-            using RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+            using var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
             if (key is null)
             {
                 App.AddInfo(Info.AddStartupFailedRegistry);
                 return false;
             }
+
             key.SetValue(AppName, AppPath);
             return true;
         }
@@ -42,13 +46,14 @@ public static class Integration
         {
             App.AddInfo(string.Format(Info.AddStartupFailedException, ex.Message));
         }
+
         return false;
     }
     public static void ExecuteAsAdmin(string executable, string arguments = "")
     {
-        WindowsIdentity identity = WindowsIdentity.GetCurrent( );
+        var identity = WindowsIdentity.GetCurrent( );
         WindowsPrincipal principal = new(identity);
-        bool isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
+        var isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
         try
         {
             Process.Start(new ProcessStartInfo( )
@@ -68,12 +73,13 @@ public static class Integration
     {
         try
         {
-            using RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run");
+            using var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run");
             if (key is null)
             {
                 App.AddInfo(string.Format(Info.ReadStartupFailed, "找不到注册表键"));
                 return false;
             }
+
             return key.GetValue(AppName)?.ToString( ) != AppPath;
         }
         catch (Exception ex)
@@ -115,16 +121,18 @@ public static class Integration
     {
         try
         {
-            using RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+            using var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
             if (key is null)
             {
                 App.AddInfo(Info.DeleteStartupFailedRegistry);
                 return false;
             }
+
             if (key.GetValue(AppName) != null)
             {
                 key.DeleteValue(AppName);
             }
+
             return true;
         }
         catch (UnauthorizedAccessException)
@@ -139,15 +147,16 @@ public static class Integration
         {
             App.AddInfo(string.Format(Info.DeleteStartupFailedException, ex.Message));
         }
+
         return false;
     }
 
     public static bool ResolveShortcut(string lnk, out string target, out string arguments)
     {
-        target = null;
-        arguments = null;
-        dynamic shell = null;
-        dynamic shortcut = null;
+        target = "";
+        arguments = "";
+        dynamic shell = null!;
+        dynamic shortcut = null!;
 
         try
         {
@@ -158,11 +167,16 @@ public static class Integration
                 return false;
             }
 
-            Type shellType = Type.GetTypeFromProgID("WScript.Shell");
-            shell = Activator.CreateInstance(shellType);
+            var shellType = Type.GetTypeFromProgID("WScript.Shell");
+            if (shellType is null)
+            {
+                return false;
+            }
+
+            shell = Activator.CreateInstance(shellType)!;
             shortcut = shell.CreateShortcut(lnk);
 
-            target = shortcut.TargetPath as string;
+            target = shortcut.TargetPath as string ?? throw new InvalidOperationException( );
             arguments = shortcut.Arguments as string ?? string.Empty;
 
             return !string.IsNullOrWhiteSpace(target);
@@ -178,6 +192,7 @@ public static class Integration
             {
                 try { Marshal.ReleaseComObject(shortcut); } catch { }
             }
+
             if (shell is not null)
             {
                 try { Marshal.ReleaseComObject(shell); } catch { }

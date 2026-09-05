@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Threading;
+
 using SingleInstanceCore;
+
 using StartPro.Api;
 using StartPro.Tile;
 
@@ -11,10 +13,10 @@ namespace StartPro;
 
 public partial class App : Application, ISingleInstance
 {
-    public static List<TileBase> Tiles { get; private set; }
-    public static Settings Settings { get; private set; }
-    public static ObservableCollection<string> Infos { get; private set; }
-    public static MainWindow TileWindow => Current.MainWindow as MainWindow;
+    public static Collection<TileBase> Tiles { get; private set; } = [];
+    public static Settings Settings { get; private set; } = new( );
+    public static ObservableCollection<string> Infos { get; private set; } = [];
+    public static MainWindow TileWindow => (Current.MainWindow as MainWindow)!;
 
     public static class Program
     {
@@ -44,7 +46,9 @@ public partial class App : Application, ISingleInstance
     private void AppStartup(object o, StartupEventArgs e)
     {
         if (!this.InitializeAsFirstInstance("EasyStartInstanceInvariantVersion"))
+        {
             Current.Shutdown( );
+        }
 
         Infos = []; // 必须先初始化以捕获所有错误
         Settings = Settings.Read( );
@@ -60,7 +64,10 @@ public partial class App : Application, ISingleInstance
         Current.MainWindow = mainWindow;
     }
 
-    public void OnInstanceInvoked(string[] args) => TileWindow?.Show( );
+    public void OnInstanceInvoked(string[] args)
+    {
+        TileWindow?.Show( );
+    }
 
     private void AppDispatcherUnhandledException(object o, DispatcherUnhandledExceptionEventArgs e)
     {

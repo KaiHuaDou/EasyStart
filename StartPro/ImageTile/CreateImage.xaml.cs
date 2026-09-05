@@ -1,7 +1,8 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+
 using StartPro.Api;
 
 namespace StartPro.Tile;
@@ -9,17 +10,18 @@ public partial class CreateImage : Window, IEditor<ImageTile>
 {
     public CreateImage( ) : this(null) { }
     public IEditor<ImageTile> Core => this;
-    public ImageTile Item { get; set; }
-    public ImageTile Original { get; set; }
+    public ImageTile? Item { get; set; }
+    public ImageTile? Original { get; set; }
 
-    public CreateImage(ImageTile t)
+    public CreateImage(ImageTile? t)
     {
         InitializeComponent( );
         Core.Init(t);
+        var item = Item;
         Title = t is null ? StartPro.Resources.Tile.TitleCreate : StartPro.Resources.Tile.TitleEdit;
-        sizeBox.SelectedIndex = (int) Item.TileSize;
-        imageBox.Text = Item.ImagePath;
-        stretchBox.SelectedIndex = (int) Item.Stretch;
+        sizeBox.SelectedIndex = (int) (item?.TileSize ?? TileSize.Medium);
+        imageBox.Text = item?.ImagePath ?? "";
+        stretchBox.SelectedIndex = (int) (item?.Stretch ?? Stretch.UniformToFill);
         Core.InsertTile(mainPanel);
     }
 
@@ -35,7 +37,7 @@ public partial class CreateImage : Window, IEditor<ImageTile>
 
     private void SelectImage(object o, RoutedEventArgs e)
     {
-        if (Utils.TrySelectFile(out string fileName, "img"))
+        if (Utils.TrySelectFile(out var fileName, "img"))
         {
             imageBox.Text = fileName;
             ImageChanged(o, e);
@@ -43,20 +45,32 @@ public partial class CreateImage : Window, IEditor<ImageTile>
     }
 
     private void ShadowBoxChecked(object o, RoutedEventArgs e)
-        => Item?.Shadow = shadowBox.IsChecked == true;
+    {
+        Item?.Shadow = shadowBox.IsChecked == true;
+    }
 
     private void StretchChanged(object o, SelectionChangedEventArgs e)
-        => Item?.Stretch = (Stretch) stretchBox.SelectedIndex;
+    {
+        Item?.Stretch = (Stretch) stretchBox.SelectedIndex;
+    }
 
     private void TaskCancel(object o, RoutedEventArgs e)
-        => Core.OnCancel(this);
+    {
+        Core.OnCancel(this);
+    }
 
     private void TaskOk(object o, RoutedEventArgs e)
-        => Core.OnOk(this);
+    {
+        Core.OnOk(this);
+    }
 
     private void TileSizeChanged(object o, SelectionChangedEventArgs e)
-        => Core.OnTileSizeChanged(sizeBox);
+    {
+        Core.OnTileSizeChanged(sizeBox);
+    }
 
     private void WindowClosing(object o, CancelEventArgs e)
-        => Core.OnWindowClosing(mainPanel);
+    {
+        Core.OnWindowClosing(mainPanel);
+    }
 }

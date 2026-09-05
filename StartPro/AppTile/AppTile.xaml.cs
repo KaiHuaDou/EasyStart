@@ -1,12 +1,13 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Xml;
+
 using DependencyPropertyGenerator;
+
 using StartPro.Api;
 
 namespace StartPro.Tile;
@@ -30,7 +31,7 @@ public partial class AppTile : TileBase, IEditable<AppTile>
 
     public AppTile( )
     {
-        Grid root = Content as Grid;
+        var root = Content as Grid;
         InitializeComponent( );
         Utils.AppendContexts(ContextMenu, contextMenu);
 
@@ -40,7 +41,7 @@ public partial class AppTile : TileBase, IEditable<AppTile>
         border.Child = RootPanel;
         Content = root;
 
-        Foreground = Utils.TryParseBrush(App.Settings.Foreground, out Brush fore)
+        Foreground = Utils.TryParseBrush(App.Settings.Foreground, out var fore)
             ? fore : Defaults.Foreground;
     }
 
@@ -79,13 +80,19 @@ public partial class AppTile : TileBase, IEditable<AppTile>
 
     private void EditTile(object o, RoutedEventArgs e)
     {
-        (this as IEditable<AppTile>).Edit(Owner);
+        if (Owner is not null)
+        {
+            (this as IEditable<AppTile>).Edit(Owner);
+        }
     }
 
-    partial void OnAppIconChanged(string newValue)
+    partial void OnAppIconChanged(string? newValue)
     {
-        if (Utils.TryParseImageSource(newValue, out ImageSource source))
+        if (newValue is not null
+            && Utils.TryParseImageSource(newValue, out var source))
+        {
             image.Source = source;
+        }
     }
 
     partial void OnAppPathChanged(string newValue)
@@ -120,7 +127,9 @@ public partial class AppTile : TileBase, IEditable<AppTile>
     private void TileLeftButtonUp(object o, MouseButtonEventArgs e)
     {
         if (IsDragging || !IsEnabled)
+        {
             return;
+        }
 
         try
         {
@@ -135,6 +144,7 @@ public partial class AppTile : TileBase, IEditable<AppTile>
         {
             App.AddInfo($"无法启动程序: {ex.Message}");
         }
+
         App.TileWindow.Hide( );
     }
 }

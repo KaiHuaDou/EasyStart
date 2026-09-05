@@ -1,4 +1,4 @@
-﻿using System.Windows.Controls;
+using System.Windows.Controls;
 
 namespace StartPro.Tile;
 
@@ -10,10 +10,11 @@ public interface IEditable<TTile>
     void Edit(Panel parent)
     {
         parent.Children.Remove(this as TTile);
-        IEditor<TTile> dialog = Editor;
+        var dialog = Editor;
         dialog.ShowDialog( );
-        dialog.Item.IsEnabled = true;
-        parent.Children.Add(dialog.Item);
-        dialog.Item.Refresh( );
+        var item = dialog.Item;
+        item?.IsEnabled = true;
+        parent.Children.Add(item);
+        item?.Refresh( );
     }
 }

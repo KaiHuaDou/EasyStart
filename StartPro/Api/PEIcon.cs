@@ -1,10 +1,15 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using static StartPro.External.NativeMethods;
+
+using Windows.Win32.Foundation;
+using Windows.Win32.Graphics.Gdi;
+using Windows.Win32.UI.Shell;
+
+using static Windows.Win32.PInvoke;
 
 namespace StartPro.Api;
 
@@ -14,44 +19,46 @@ public static class PEIcon
     {
         if (string.IsNullOrEmpty(path))
         {
-            source = null;
+            source = new BitmapImage( );
             return false;
         }
-        IntPtr imgPtr = ComplexBitmap(path);
+
+        var imgPtr = ComplexBitmap(path);
         return FromBitmap(imgPtr, out source);
     }
 
     public static IntPtr ComplexBitmap(string path)
     {
         if (string.IsNullOrEmpty(path))
+        {
             return IntPtr.Zero;
+        }
 
-        IntPtr pImgFactory = IntPtr.Zero;
+        IShellItemImageFactory? factory = null;
         try
         {
-            Guid iid = IID_IShellItemImageFactory;
-            SHCreateItemFromParsingName(path, IntPtr.Zero, ref iid, out pImgFactory);
-            if (pImgFactory == IntPtr.Zero
-                || Marshal.GetObjectForIUnknown(pImgFactory) is not IShellItemImageFactory factory)
+            if (SHCreateItemFromParsingName(path, null, out IShellItemImageFactory item).Failed)
             {
                 return IntPtr.Zero;
             }
 
-            Marshal.Release(pImgFactory);
-            pImgFactory = IntPtr.Zero;
-
-            SIZE size = new(256, 256);
-            IntPtr hBitmap = IntPtr.Zero;
-            factory.GetImage(size, SIIGBF.RESIZETOFIT | SIIGBF.BIGGERSIZEOK, out hBitmap);
-            return hBitmap;
-
+            factory = item;
+            unsafe
+            {
+                HBITMAP hBitmap;
+                factory.GetImage(new SIZE(256, 256), SIIGBF.SIIGBF_BIGGERSIZEOK, &hBitmap);
+                return (IntPtr) hBitmap;
+            }
         }
         catch { }
         finally
         {
-            if (pImgFactory != IntPtr.Zero)
-                Marshal.Release(pImgFactory);
+            if (factory is not null)
+            {
+                Marshal.ReleaseComObject(factory);
+            }
         }
+
         return IntPtr.Zero;
     }
 
@@ -59,14 +66,15 @@ public static class PEIcon
     {
         if (string.IsNullOrEmpty(path))
         {
-            source = null;
+            source = new BitmapImage( );
             return false;
         }
-        Icon icon = DirectIcon(path);
+
+        var icon = DirectIcon(path);
         return FromIcon(icon, out source);
     }
 
-    public static Icon DirectIcon(string path)
+    public static Icon? DirectIcon(string path)
     {
         try
         {
@@ -81,9 +89,12 @@ public static class PEIcon
 
     public static bool FromBitmap(IntPtr bitmap, out BitmapSource source)
     {
-        source = null;
+        source = new BitmapImage( );
         if (bitmap == IntPtr.Zero)
+        {
             return false;
+        }
+
         try
         {
             source = Imaging.CreateBitmapSourceFromHBitmap(
@@ -92,28 +103,36 @@ public static class PEIcon
                 Int32Rect.Empty,
                 BitmapSizeOptions.FromEmptyOptions( ));
 
-            if (source is null)
-                return false;
-            else if (source.CanFreeze)
+            if (source.CanFreeze)
+            {
                 source.Freeze( );
+            }
+
             return true;
         }
         catch { }
         finally
         {
-            DeleteObject(bitmap);
+            DeleteObject((HGDIOBJ) bitmap);
         }
+
         return false;
     }
 
-    public static bool FromIcon(Icon icon, out BitmapSource source)
+    public static bool FromIcon(Icon? icon, out BitmapSource source)
     {
-        source = null;
+        source = new BitmapImage( );
         if (icon is null)
+        {
             return false;
-        IntPtr handle = icon.Handle;
+        }
+
+        var handle = icon.Handle;
         if (handle == IntPtr.Zero)
+        {
             return false;
+        }
+
         try
         {
             source = Imaging.CreateBitmapSourceFromHIcon(
@@ -121,10 +140,11 @@ public static class PEIcon
                 Int32Rect.Empty,
                 BitmapSizeOptions.FromEmptyOptions( ));
 
-            if (source is null)
-                return false;
-            else if (source.CanFreeze)
+            if (source.CanFreeze)
+            {
                 source.Freeze( );
+            }
+
             return true;
         }
         catch { }
@@ -132,6 +152,7 @@ public static class PEIcon
         {
             icon.Dispose( );
         }
+
         return false;
     }
 }

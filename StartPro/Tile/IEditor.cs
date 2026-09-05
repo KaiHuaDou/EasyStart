@@ -1,17 +1,21 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace StartPro.Tile;
 
 public interface IEditor<TTile> where TTile : TileBase, new()
 {
-    TTile Item { get; set; }
-    TTile Original { get; set; }
+    TTile? Item { get; set; }
+    TTile? Original { get; set; }
 
-    Window Owner { get => (this as Window)?.Owner; set => (this as Window)?.Owner = value; }
-    void ShowDialog( ) => (this as Window)?.ShowDialog( );
+    Window? Owner { get => (this as Window)?.Owner; set => (this as Window)?.Owner = value; }
 
-    void Init(TTile t)
+    void ShowDialog( )
+    {
+        (this as Window)?.ShowDialog( );
+    }
+
+    void Init(TTile? t)
     {
         if (t is null)
         {
@@ -22,6 +26,7 @@ public interface IEditor<TTile> where TTile : TileBase, new()
             Original = t;
             Item = TileBase.Clone(t);
         }
+
         Item.IsEnabled = false;
     }
 
@@ -46,7 +51,9 @@ public interface IEditor<TTile> where TTile : TileBase, new()
     void OnTileSizeChanged(ComboBox sizeBox)
     {
         if (Item != null && sizeBox != null)
+        {
             Item.TileSize = (TileSize) sizeBox.SelectedIndex;
+        }
     }
 
     void OnWindowClosing(Panel mainPanel)

@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+
 using StartPro.Resources;
 
 namespace StartPro.Api;
@@ -33,14 +34,16 @@ public static class UIThemesExtensions
         { UIThemes.Classic, "pack://application:,,,/PresentationFramework.Classic;component/themes/Classic.xaml" },
     };
 
-    public static Uri GetUri(this UIThemes theme) => new(ThemeUris[theme]);
+    public static Uri GetUri(this UIThemes theme)
+    {
+        return new(ThemeUris[theme]);
+    }
 }
 
 public class Settings
 {
-    private static readonly string xml = Path.Join(Utils.ParentDir, "settings.json");
+    private static readonly string xml = Path.Join(Utils.AppPath, "settings.json");
     private static readonly FileInfo File = new(xml);
-    private static FileStream FileStream => new(File.FullName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
     public string Background
     {
@@ -62,7 +65,7 @@ public class Settings
     {
         try
         {
-            using FileStream fileStream = FileStream;
+            using var fileStream = new FileStream(File.FullName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
             return JsonSerializer.Deserialize(fileStream, SettingsContext.Default.Settings) ?? new Settings( );
         }
         catch
@@ -77,7 +80,7 @@ public class Settings
     {
         try
         {
-            using FileStream fileStream = FileStream;
+            using var fileStream = new FileStream(File.FullName, FileMode.Create, FileAccess.ReadWrite);
             JsonSerializer.Serialize(fileStream, this, SettingsContext.Default.Settings);
         }
         catch (Exception ex)
@@ -85,14 +88,16 @@ public class Settings
             App.AddInfo(string.Format(Info.ConfigWriteFailed, ex.Message));
             return false;
         }
+
         return true;
     }
 }
 
 [JsonSourceGenerationOptions(
+    AllowTrailingCommas = true,
     PropertyNameCaseInsensitive = true,
     ReadCommentHandling = JsonCommentHandling.Skip,
-    AllowTrailingCommas = true,
+    IndentSize = 4,
     WriteIndented = true
 )]
 [JsonSerializable(typeof(Settings))]

@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.ComponentModel;
-using System.Windows;
 using System.Windows.Media;
 using System.Xml;
+
 using StartPro.Api;
 
 namespace StartPro.Tile;
@@ -39,7 +39,7 @@ public partial class TileBase
     public static T Clone<T>(T tile) where T : TileBase, new()
     {
         XmlDocument doc = new( );
-        XmlElement root = doc.CreateElement("Tile");
+        var root = doc.CreateElement("Tile");
         doc.AppendChild(root);
         tile.WriteAttributes(ref root);
         T result = new( );
@@ -52,32 +52,37 @@ public static class XmlNodeExtend
 {
     public static T FromAttribute<T>(this XmlNode node, string name, T fallback)
     {
-        string s = node.GetAttribute(name);
+        var s = node.GetAttribute(name);
         if (string.IsNullOrWhiteSpace(s) || s == "__DEFAULT__")
+        {
             return fallback;
+        }
 
-        Type type = typeof(T);
+        var type = typeof(T);
         if (type.IsEnum)
         {
-            return Enum.TryParse(type, s, true, out object? enumVal) ? (T) enumVal : fallback;
-        }
-        if (type == typeof(bool))
-        {
-            return bool.TryParse(s, out bool boolVal) ? (T) (object) boolVal : fallback;
-        }
-        if (type == typeof(double))
-        {
-            return double.TryParse(s, out double doubleVal) ? (T) (object) doubleVal : fallback;
-        }
-        if (type == typeof(int))
-        {
-            return int.TryParse(s, out int doubleVal) ? (T) (object) doubleVal : fallback;
+            return Enum.TryParse(type, s, true, out var enumVal) ? (T) enumVal : fallback;
         }
 
-        TypeConverter conv = TypeDescriptor.GetConverter(type);
+        if (type == typeof(bool))
+        {
+            return bool.TryParse(s, out var boolVal) ? (T) (object) boolVal : fallback;
+        }
+
+        if (type == typeof(double))
+        {
+            return double.TryParse(s, out var doubleVal) ? (T) (object) doubleVal : fallback;
+        }
+
+        if (type == typeof(int))
+        {
+            return int.TryParse(s, out var doubleVal) ? (T) (object) doubleVal : fallback;
+        }
+
+        var conv = TypeDescriptor.GetConverter(type);
         try
         {
-            object o = conv.ConvertFromString(s);
+            var o = conv.ConvertFromString(s);
             return o is T t ? t : fallback;
         }
         catch
@@ -87,5 +92,7 @@ public static class XmlNodeExtend
     }
 
     public static string? GetAttribute(this XmlNode node, string name)
-        => (node.Attributes?.GetNamedItem(name) as XmlAttribute)?.Value;
+    {
+        return (node.Attributes?.GetNamedItem(name) as XmlAttribute)?.Value;
+    }
 }

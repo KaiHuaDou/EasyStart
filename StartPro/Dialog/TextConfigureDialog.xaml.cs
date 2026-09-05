@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -15,9 +15,9 @@ public partial class TextConfigureDialog : Window
         InitializeComponent( );
     }
 
-    public TextConfigureDialog(TextConfig textConfig) : this( )
+    public TextConfigureDialog(TextConfig? textConfig) : this( )
     {
-        TextConfig = textConfig;
+        TextConfig = textConfig ?? new( );
         fontFamilyBox.ItemsSource = Fonts.SystemFontFamilies;
         fontSizeBox.Text = TextConfig.FontSize.ToString( );
         fontFamilyBox.SelectedItem = TextConfig.FontFamily;
@@ -57,13 +57,25 @@ public partial class TextConfigureDialog : Window
     {
         TextDecorationCollection textDecorations = [];
         if (textDecorationBaseLineBlock.IsChecked == true)
+        {
             textDecorations.Add(TextDecorations.Baseline);
+        }
+
         if (TextDecorationUnderLineBlock.IsChecked == true)
+        {
             textDecorations.Add(TextDecorations.Underline);
+        }
+
         if (textDecorationOverLineBlock.IsChecked == true)
+        {
             textDecorations.Add(TextDecorations.OverLine);
+        }
+
         if (textDecorationStrikeThroughBlock.IsChecked == true)
+        {
             textDecorations.Add(TextDecorations.Strikethrough);
+        }
+
         IsSelected = true;
         TextConfig = new TextConfig
         {
