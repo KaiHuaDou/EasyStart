@@ -10,11 +10,11 @@ using System.Windows.Data;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
-using Windows.Win32.System.Shutdown;
-
 using StartPro.Api;
 using StartPro.Resources;
 using StartPro.Tile;
+
+using Windows.Win32.System.Shutdown;
 
 using static StartPro.External.Power;
 using static Windows.Win32.PInvoke;
@@ -144,7 +144,7 @@ public partial class MainWindow : Window
 
     private void PowerLogout(object o, RoutedEventArgs e)
     {
-        if (!ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_LOGOFF | EXIT_WINDOWS_FLAGS.EWX_FORCE, 0))
+        if (!ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_LOGOFF, 0))
         {
             App.AddInfo(Info.LogoutFailed);
         }
@@ -242,18 +242,18 @@ public partial class MainWindow : Window
         SwitchAppList(null, null);
         InitInfoBox( );
 
-#if DEBUG
-        App.AddInfo(Info.DebugModeNoLoad);
-#else
         await Task.Run(( ) =>
         {
+#if DEBUG            
+            Dispatcher.BeginInvoke(( ) => App.AddInfo(Info.DebugModeNoLoad));
+#else
             SystemApp.LoadApps( );
             Dispatcher.BeginInvoke(( ) =>
             {
                 SystemApp.LoadIcon( );
                 AppList.ItemsSource = SystemApp.Apps;
             });
-        });
 #endif
+        });
     }
 }

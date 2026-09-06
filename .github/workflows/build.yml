@@ -17,14 +17,21 @@ jobs:
 
       - name: Install .NET
         uses: actions/setup-dotnet@v6
-        with:
-          dotnet-version: 9.x
 
-      - name: Publish App
-        run: dotnet publish -p:PublishProfile=FolderProfile
+      - name: Publish EasyStart
+        run: dotnet publish -p:PublishProfile=FolderProfile -c Release
 
-      - name: Upload App
+      - name: Upload EasyStart
         uses: actions/upload-artifact@v7
         with:
           name: EasyStart
+          path: ./StartPro/bin/publish/*
+
+      - name: Publish EasyStart with runtime
+        run: dotnet publish -p:PublishProfile=FolderProfile -c Release --self-contained
+
+      - name: Upload EasyStart with runtime
+        uses: actions/upload-artifact@v7
+        with:
+          name: EasyStart-with-runtime
           path: ./StartPro/bin/publish/*

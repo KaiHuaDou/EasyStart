@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -68,7 +67,7 @@ public static partial class SystemTiles
             .Where(static e => e.Name.LocalName == "Group");
         var groupWidthRaw = xml
             .Descendants( )
-            .First(static e => e.Name.LocalName == "LayoutOptions")?
+            .FirstOrDefault(static e => e.Name.LocalName == "LayoutOptions")?
             .Attribute("StartTileGroupCellWidth")?
             .Value ?? "8";
         var groupWidth = int.TryParse(groupWidthRaw, out var _width) ? _width : 0;
@@ -108,6 +107,7 @@ public static partial class SystemTiles
 
     [GeneratedRegex(@"(?<=(.+\.)).+(?=_)")]
     private static partial Regex AUMIDRegex( );
+
     private static string ExtractName(string path)
     {
         path = path.Trim( ).Trim('"');
@@ -127,7 +127,8 @@ public static partial class SystemTiles
 
     private static bool GetXml(out XDocument xml)
     {
-        xml = null!;
+        xml = new XDocument( );
+
         var tempFile = Path.Combine(Path.GetTempPath( ), $"StartPro_StartMenuExport_{Random.Shared.Next( )}.xml");
         ProcessStartInfo psi = new( )
         {
@@ -184,9 +185,11 @@ public static partial class SystemTiles
 
     private static TileRaw ParseTileData(XElement tile, int row, int col)
     {
-        var size = SizeMap[tile.Attribute("Size")?.Value ?? "2x2"];
+        var size = SizeMap.GetValueOrDefault(tile.Attribute("Size")?.Value ?? "2x2", TileSize.Medium);
+
         string name, path, arguments, icon;
         path = arguments = icon = string.Empty;
+
         if (tile.Name.LocalName == "Tile")
         {
             var id = tile.Attribute("AppUserModelID")!.Value;
@@ -211,17 +214,17 @@ public static partial class SystemTiles
         return new TileRaw(name, path, arguments, icon, size, row, col);
     }
 }
+
 #endif
 
 #if WINDOWS
 public class SystemApp
 {
-    public static ReadOnlyCollection<SystemApp> Apps = new(Array.Empty<SystemApp>( ));
-    private readonly static string SystemAppsPath = Environment.ExpandEnvironmentVariables("%ProgramData%\\Microsoft\\Windows\\Start Menu\\Programs");
-    private readonly static string UserAppsPath = Environment.ExpandEnvironmentVariables("%AppData%\\Microsoft\\Windows\\Start Menu\\Programs");
-
-    private IntPtr appIcon;
+    public static ReadOnlyCollection<SystemApp> Apps { get; private set; } = new(Array.Empty<SystemApp>( ));
     public BitmapSource AppIcon { get; set; } = new BitmapImage( );
+
+    private static readonly string SystemAppsPath = Environment.ExpandEnvironmentVariables("%ProgramData%\\Microsoft\\Windows\\Start Menu\\Programs");
+    private static readonly string UserAppsPath = Environment.ExpandEnvironmentVariables("%AppData%\\Microsoft\\Windows\\Start Menu\\Programs");
 
     public string AppName { get; set; } = string.Empty;
 
@@ -240,10 +243,10 @@ public class SystemApp
     {
         foreach (var app in Apps)
         {
-            app.AppIcon = PEIcon.FromIcon(Icon.FromHandle(app.appIcon), out var source)
-                ? source ?? new BitmapImage( )
-                : PEIcon.FromBitmap(app.appIcon, out var source1)
-                    ? source1 ?? new BitmapImage( )
+            app.AppIcon = PEIcon.Direct(app.AppPath, out var direct)
+                ? direct ?? new BitmapImage( )
+                : PEIcon.Complex(app.AppPath, out var complex)
+                    ? complex ?? new BitmapImage( )
                     : new BitmapImage( );
             app.AppIcon.Freeze( );
         }
@@ -252,22 +255,21 @@ public class SystemApp
     private static SystemApp FromLazy(string appPath)
     {
         var appName = Path.GetFileNameWithoutExtension(appPath);
-        return appPath.EndsWith("*.lnk", StringComparison.InvariantCultureIgnoreCase)
+        return appPath.EndsWith(".lnk", StringComparison.InvariantCultureIgnoreCase)
             && Integration.ResolveShortcut(appPath, out var target, out var arguments)
             ? new SystemApp
             {
                 AppName = appName,
                 AppPath = target ?? string.Empty,
                 Arguments = arguments ?? string.Empty,
-                appIcon = PEIcon.DirectIcon(target ?? string.Empty)?.Handle ?? IntPtr.Zero,
             }
             : new SystemApp
             {
                 AppName = appName,
                 AppPath = appPath,
                 Arguments = string.Empty,
-                appIcon = PEIcon.ComplexBitmap(appPath)
             };
     }
 }
+
 #endif

@@ -1,3 +1,5 @@
+#pragma warning disable CA2227 // TextDecorations 集合反序列化重新赋值
+
 using System.Windows;
 using System.Windows.Media;
 using System.Xml;

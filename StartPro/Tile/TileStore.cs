@@ -88,6 +88,7 @@ public static class TileStore
         catch (Exception ex)
         {
             App.AddInfo($"无法保存磁贴: {ex.Message}");
+            App.Log(ex, "warning");
             return false;
         }
 

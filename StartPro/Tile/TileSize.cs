@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace StartPro.Tile;
 
@@ -9,10 +9,10 @@ public enum TileSize
 
 public static class TileDatas
 {
-    public static readonly int BaseSize = 54;
-    public static readonly int BaseMargin = App.Settings.UIFlat ? 4 : 10;
-    public static readonly int BaseRadius = App.Settings.UIFlat ? 0 : 10;
-    public static readonly int BlockSize = BaseSize + BaseMargin;
+    public static int BaseSize => 54;
+    public static int BaseMargin => App.Settings.UIFlat ? 4 : 10;
+    public static int BaseRadius => App.Settings.UIFlat ? 0 : 10;
+    public static int BlockSize => BaseSize + BaseMargin;
 
     public static readonly Dictionary<TileSize, (int, int)> TileSizes = new( )
     {

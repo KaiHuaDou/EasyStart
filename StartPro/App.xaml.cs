@@ -1,6 +1,8 @@
+#pragma warning disable CA1034 // WPF 标准要求
+
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -16,7 +18,7 @@ public partial class App : Application, ISingleInstance
     public static Collection<TileBase> Tiles { get; private set; } = [];
     public static Settings Settings { get; private set; } = new( );
     public static ObservableCollection<string> Infos { get; private set; } = [];
-    public static MainWindow TileWindow => (Current.MainWindow as MainWindow)!;
+    public static MainWindow? TileWindow => Current.MainWindow as MainWindow;
 
     public static class Program
     {
@@ -72,15 +74,22 @@ public partial class App : Application, ISingleInstance
     private void AppDispatcherUnhandledException(object o, DispatcherUnhandledExceptionEventArgs e)
     {
 #if !DEBUG
-        if (MainWindow?.IsLoaded == true)
+        if (TileWindow?.IsLoaded == true)
         {
             AddInfo($"{e.Exception.Message}");
+            Log(e.Exception);
         }
         else
         {
             MessageBox.Show($"{e.Exception.Message}\n{e.Exception.StackTrace}", "严重错误", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+
         e.Handled = true;
 #endif
+    }
+
+    public static void Log(Exception ex, string name = "error")
+    {
+        File.WriteAllText(Path.Join(Utils.AppPath, $"{name}.log"), $"{DateTime.Now:yyyyMMdd-HH:mm:ss}\n{ex.Message}\n{ex.StackTrace}\n\n");
     }
 }

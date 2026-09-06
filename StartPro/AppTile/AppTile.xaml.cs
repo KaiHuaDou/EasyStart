@@ -110,18 +110,19 @@ public partial class AppTile : TileBase, IEditable<AppTile>
         try
         {
             Integration.ExecuteAsAdmin("explorer.exe", $"/e, /select, {AppPath}");
-            App.TileWindow.Hide( );
+            App.TileWindow?.Hide( );
         }
-        catch (Win32Exception)
+        catch (Win32Exception ex)
         {
             App.AddInfo("无法打开应用所在目录");
+            App.Log(ex, "warning");
         }
     }
 
     private void RunAsAdmin(object o, RoutedEventArgs e)
     {
         Integration.ExecuteAsAdmin(AppPath);
-        App.TileWindow.Hide( );
+        App.TileWindow?.Hide( );
     }
 
     private void TileLeftButtonUp(object o, MouseButtonEventArgs e)
@@ -143,8 +144,9 @@ public partial class AppTile : TileBase, IEditable<AppTile>
         catch (Exception ex)
         {
             App.AddInfo($"无法启动程序: {ex.Message}");
+            App.Log(ex, "warning");
         }
 
-        App.TileWindow.Hide( );
+        App.TileWindow?.Hide( );
     }
 }

@@ -34,17 +34,20 @@ public static class Integration
             key.SetValue(AppName, AppPath);
             return true;
         }
-        catch (UnauthorizedAccessException)
+        catch (UnauthorizedAccessException ex)
         {
             App.AddInfo(Info.AddStartupFailedPermission);
+            App.Log(ex, "warning");
         }
-        catch (IOException)
+        catch (IOException ex)
         {
             App.AddInfo(Info.AddStartupFailedIO);
+            App.Log(ex, "warning");
         }
         catch (Exception ex)
         {
             App.AddInfo(string.Format(Info.AddStartupFailedException, ex.Message));
+            App.Log(ex, "warning");
         }
 
         return false;
@@ -64,9 +67,10 @@ public static class Integration
                 Verb = isAdmin ? "" : "runas"
             });
         }
-        catch
+        catch (Exception ex)
         {
             App.AddInfo(Info.RunAsAdminFailed);
+            App.Log(ex, "warning");
         }
     }
     public static bool ReadStartup( )
@@ -85,6 +89,7 @@ public static class Integration
         catch (Exception ex)
         {
             App.AddInfo(string.Format(Info.ReadStartupFailed, ex.Message));
+            App.Log(ex, "warning");
             return false;
         }
     }
@@ -107,13 +112,15 @@ public static class Integration
             }
             );
         }
-        catch (HotkeyAlreadyRegisteredException)
+        catch (HotkeyAlreadyRegisteredException ex)
         {
             App.AddInfo(Info.HotkeyRegisterFailedInUse);
+            App.Log(ex, "warning");
         }
         catch (Exception ex)
         {
             App.AddInfo(string.Format(Info.HotkeyRegisterFailedException, ex.Message));
+            App.Log(ex, "warning");
         }
     }
 
@@ -135,17 +142,20 @@ public static class Integration
 
             return true;
         }
-        catch (UnauthorizedAccessException)
+        catch (UnauthorizedAccessException ex)
         {
             App.AddInfo(Info.DeleteStartupFailedPermission);
+            App.Log(ex, "warning");
         }
-        catch (IOException)
+        catch (IOException ex)
         {
             App.AddInfo(Info.DeleteStartupFailedIO);
+            App.Log(ex, "warning");
         }
         catch (Exception ex)
         {
             App.AddInfo(string.Format(Info.DeleteStartupFailedException, ex.Message));
+            App.Log(ex, "warning");
         }
 
         return false;
@@ -184,6 +194,7 @@ public static class Integration
         catch (Exception ex)
         {
             App.AddInfo(string.Format(Info.ParseShortcutFailed, ex.Message));
+            App.Log(ex, "warning");
             return false;
         }
         finally
